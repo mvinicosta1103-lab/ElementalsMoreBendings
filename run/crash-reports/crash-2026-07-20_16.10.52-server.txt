@@ -1,0 +1,174 @@
+---- Minecraft Crash Report ----
+// You're mean.
+
+Time: 2026-07-20 16:10:52
+Description: Exception ticking world
+
+java.lang.NullPointerException: Cannot invoke "it.unimi.dsi.fastutil.longs.LongArrayList.getLong(int)" because "this.wrapped" is null
+	at MC-BOOTSTRAP/it.unimi.dsi.fastutil@8.5.12/it.unimi.dsi.fastutil.longs.LongOpenHashSet$SetIterator.nextLong(LongOpenHashSet.java:551) ~[fastutil-8.5.12.jar%23137!/:?] {}
+	at MC-BOOTSTRAP/it.unimi.dsi.fastutil@8.5.12/it.unimi.dsi.fastutil.longs.LongCollection.removeIf(LongCollection.java:274) ~[fastutil-8.5.12.jar%23137!/:?] {re:computing_frames}
+	at MC-BOOTSTRAP/it.unimi.dsi.fastutil@8.5.12/it.unimi.dsi.fastutil.longs.LongCollection.removeIf(LongCollection.java:306) ~[fastutil-8.5.12.jar%23137!/:?] {re:computing_frames}
+	at MC-BOOTSTRAP/it.unimi.dsi.fastutil@8.5.12/it.unimi.dsi.fastutil.longs.AbstractLongCollection.removeIf(AbstractLongCollection.java:163) ~[fastutil-8.5.12.jar%23137!/:?] {re:computing_frames}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.world.level.entity.PersistentEntitySectionManager.processUnloads(PersistentEntitySectionManager.java:240) ~[neoforge-21.1.235.jar%23189!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.world.level.entity.PersistentEntitySectionManager.tick(PersistentEntitySectionManager.java:256) ~[neoforge-21.1.235.jar%23189!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ServerLevel.tick(ServerLevel.java:435) ~[neoforge-21.1.235.jar%23189!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:fabric-api-lookup-api-v1.mixins.json:ServerWorldMixin from mod fabric_api_lookup_api_v1,pl:mixin:APP:fabric-lifecycle-events-v1.mixins.json:ServerWorldMixin from mod fabric_lifecycle_events_v1,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:1052) ~[neoforge-21.1.235.jar%23189!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:fabric-resource-loader-v0.mixins.json:MinecraftServerMixin from mod fabric_resource_loader_v0,pl:mixin:APP:fabric-message-api-v1.mixins.json:MinecraftServerMixin from mod fabric_message_api_v1,pl:mixin:APP:fabric-lifecycle-events-v1.mixins.json:MinecraftServerMixin from mod fabric_lifecycle_events_v1,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:932) ~[neoforge-21.1.235.jar%23189!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:fabric-resource-loader-v0.mixins.json:MinecraftServerMixin from mod fabric_resource_loader_v0,pl:mixin:APP:fabric-message-api-v1.mixins.json:MinecraftServerMixin from mod fabric_message_api_v1,pl:mixin:APP:fabric-lifecycle-events-v1.mixins.json:MinecraftServerMixin from mod fabric_lifecycle_events_v1,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:113) ~[neoforge-21.1.235.jar%23189!/:?] {re:classloading,pl:runtimedistcleaner:A}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:713) ~[neoforge-21.1.235.jar%23189!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:fabric-resource-loader-v0.mixins.json:MinecraftServerMixin from mod fabric_resource_loader_v0,pl:mixin:APP:fabric-message-api-v1.mixins.json:MinecraftServerMixin from mod fabric_message_api_v1,pl:mixin:APP:fabric-lifecycle-events-v1.mixins.json:MinecraftServerMixin from mod fabric_lifecycle_events_v1,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:267) ~[neoforge-21.1.235.jar%23189!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:fabric-resource-loader-v0.mixins.json:MinecraftServerMixin from mod fabric_resource_loader_v0,pl:mixin:APP:fabric-message-api-v1.mixins.json:MinecraftServerMixin from mod fabric_message_api_v1,pl:mixin:APP:fabric-lifecycle-events-v1.mixins.json:MinecraftServerMixin from mod fabric_lifecycle_events_v1,pl:mixin:A}
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?] {re:mixin}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Server thread
+Stacktrace:
+	at MC-BOOTSTRAP/it.unimi.dsi.fastutil@8.5.12/it.unimi.dsi.fastutil.longs.LongOpenHashSet$SetIterator.nextLong(LongOpenHashSet.java:551) ~[fastutil-8.5.12.jar%23137!/:?] {}
+	at MC-BOOTSTRAP/it.unimi.dsi.fastutil@8.5.12/it.unimi.dsi.fastutil.longs.LongCollection.removeIf(LongCollection.java:274) ~[fastutil-8.5.12.jar%23137!/:?] {re:computing_frames}
+	at MC-BOOTSTRAP/it.unimi.dsi.fastutil@8.5.12/it.unimi.dsi.fastutil.longs.LongCollection.removeIf(LongCollection.java:306) ~[fastutil-8.5.12.jar%23137!/:?] {re:computing_frames}
+	at MC-BOOTSTRAP/it.unimi.dsi.fastutil@8.5.12/it.unimi.dsi.fastutil.longs.AbstractLongCollection.removeIf(AbstractLongCollection.java:163) ~[fastutil-8.5.12.jar%23137!/:?] {re:computing_frames}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.world.level.entity.PersistentEntitySectionManager.processUnloads(PersistentEntitySectionManager.java:240) ~[neoforge-21.1.235.jar%23189!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.world.level.entity.PersistentEntitySectionManager.tick(PersistentEntitySectionManager.java:256) ~[neoforge-21.1.235.jar%23189!/:?] {re:classloading}
+-- Affected level --
+Details:
+	All players: 1 total; [ServerPlayer['Dev'/8, l='ServerLevel[Test Addon]', x=-174.43, y=64.00, z=-64.42]]
+	Chunk stats: 2653
+	Level dimension: minecraft:overworld
+	Level spawn location: World: (0,86,0), Section: (at 0,6,0 in 0,5,0; chunk contains blocks 0,-64,0 to 15,319,15), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,-64,0 to 511,319,511)
+	Level time: 24351 game time, 11098 day time
+	Level name: Test Addon
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Commands: true
+	Level weather: Rain time: 11646 (now: false), thunder time: 32050 (now: false)
+	Known server brands: neoforge
+	Removed feature flags: 
+	Level was modded: true
+	Level storage version: 0x04ABD - Anvil
+	Loaded entity count: 279
+Stacktrace:
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ServerLevel.fillReportDetails(ServerLevel.java:1745) ~[neoforge-21.1.235.jar%23189!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:fabric-api-lookup-api-v1.mixins.json:ServerWorldMixin from mod fabric_api_lookup_api_v1,pl:mixin:APP:fabric-lifecycle-events-v1.mixins.json:ServerWorldMixin from mod fabric_lifecycle_events_v1,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:1055) ~[neoforge-21.1.235.jar%23189!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:fabric-resource-loader-v0.mixins.json:MinecraftServerMixin from mod fabric_resource_loader_v0,pl:mixin:APP:fabric-message-api-v1.mixins.json:MinecraftServerMixin from mod fabric_message_api_v1,pl:mixin:APP:fabric-lifecycle-events-v1.mixins.json:MinecraftServerMixin from mod fabric_lifecycle_events_v1,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:932) ~[neoforge-21.1.235.jar%23189!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:fabric-resource-loader-v0.mixins.json:MinecraftServerMixin from mod fabric_resource_loader_v0,pl:mixin:APP:fabric-message-api-v1.mixins.json:MinecraftServerMixin from mod fabric_message_api_v1,pl:mixin:APP:fabric-lifecycle-events-v1.mixins.json:MinecraftServerMixin from mod fabric_lifecycle_events_v1,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:113) ~[neoforge-21.1.235.jar%23189!/:?] {re:classloading,pl:runtimedistcleaner:A}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:713) ~[neoforge-21.1.235.jar%23189!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:fabric-resource-loader-v0.mixins.json:MinecraftServerMixin from mod fabric_resource_loader_v0,pl:mixin:APP:fabric-message-api-v1.mixins.json:MinecraftServerMixin from mod fabric_message_api_v1,pl:mixin:APP:fabric-lifecycle-events-v1.mixins.json:MinecraftServerMixin from mod fabric_lifecycle_events_v1,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:267) ~[neoforge-21.1.235.jar%23189!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:fabric-resource-loader-v0.mixins.json:MinecraftServerMixin from mod fabric_resource_loader_v0,pl:mixin:APP:fabric-message-api-v1.mixins.json:MinecraftServerMixin from mod fabric_message_api_v1,pl:mixin:APP:fabric-lifecycle-events-v1.mixins.json:MinecraftServerMixin from mod fabric_lifecycle_events_v1,pl:mixin:A}
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?] {re:mixin}
+
+
+-- System Details --
+Details:
+	Minecraft Version: 1.21.1
+	Minecraft Version ID: 1.21.1
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 21.0.10, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode, sharing), Oracle Corporation
+	Memory: 508210432 bytes (484 MiB) / 1541406720 bytes (1470 MiB) up to 4133486592 bytes (3942 MiB)
+	CPUs: 16
+	Processor Vendor: AuthenticAMD
+	Processor Name: AMD Ryzen 7 5700G with Radeon Graphics         
+	Identifier: AuthenticAMD Family 25 Model 80 Stepping 0
+	Microarchitecture: Zen 3
+	Frequency (GHz): 3.79
+	Number of physical packages: 1
+	Number of physical CPUs: 8
+	Number of logical CPUs: 16
+	Graphics card #0 name: AMD Radeon(TM) Graphics
+	Graphics card #0 vendor: Advanced Micro Devices, Inc.
+	Graphics card #0 VRAM (MiB): 512.00
+	Graphics card #0 deviceId: VideoController1
+	Graphics card #0 versionInfo: 31.0.21925.1001
+	Memory slot #0 capacity (MiB): 16384.00
+	Memory slot #0 clockSpeed (GHz): 3.20
+	Memory slot #0 type: DDR4
+	Virtual memory max (MiB): 24978.35
+	Virtual memory used (MiB): 18612.33
+	Swap memory total (MiB): 9216.00
+	Swap memory used (MiB): 405.71
+	Space in storage for jna.tmpdir (MiB): <path not set>
+	Space in storage for org.lwjgl.system.SharedLibraryExtractPath (MiB): <path not set>
+	Space in storage for io.netty.native.workdir (MiB): <path not set>
+	Space in storage for java.io.tmpdir (MiB): available: 271169.94, total: 487373.00
+	Space in storage for workdir (MiB): available: 271169.94, total: 487373.00
+	JVM Flags: 0 total; 
+	Server Running: true
+	Player Count: 1 / 8; [ServerPlayer['Dev'/8, l='ServerLevel[Test Addon]', x=-174.43, y=64.00, z=-64.42]]
+	Active Data Packs: vanilla, mod_data, mod/fabric_transfer_api_v1, mod/fabric_renderer_api_v1, mod/geckolib, mod/fabric_item_api_v1, mod/fabric_model_loading_api_v1, mod/fabric_rendering_fluids_v1, mod/commonnetworking (incompatible), mod/fabric_screen_handler_api_v1, mod/fabric_resource_loader_v0, mod/fabric_rendering_v1, mod/fabric_renderer_indigo, mod/fabric_convention_tags_v1, mod/neoforge, mod/fabric_block_view_api_v2, mod/fabric_convention_tags_v2, mod/fabric_command_api_v2, mod/fabric_data_attachment_api_v1, mod/fabric_screen_api_v1, mod/fabric_particles_v1, mod/fabric_api,forgified_fabric_api, mod/fabric_content_registries_v0, mod/fabric_transitive_access_wideners_v1, mod/fabric_game_rule_api_v1, mod/fabric_api_base, mod/fabric_api_lookup_api_v1, mod/fabric_blockrenderlayer_v1, mod/fabric_block_api_v1, mod/fabric_resource_conditions_api_v1, mod/fabric_item_group_api_v1, mod/fabric_gametest_api_v1, mod/fabric_biome_api_v1, mod/fabric_entity_events_v1, mod/fabric_registry_sync_v0, mod/fabric_recipe_api_v1, mod/fabric_loot_api_v2, mod/fabric_object_builder_api_v1, mod/fabric_loot_api_v3, mod/fabric_rendering_data_attachment_v1, mod/fabric_networking_api_v1, mod/fabric_sound_api_v1, mod/lodestone (incompatible), mod/fabric_message_api_v1, mod/elementals (incompatible), mod/elementalssubbending, mod/elementalmorebendings, mod/fabric_lifecycle_events_v1, mod/fabric_data_generation_api_v1, mod/fabric_events_interaction_v0, mod/fabric_key_binding_api_v1, mod/fabric_client_tags_api_v1, fabric
+	Available Data Packs: bundle, trade_rebalance, vanilla, fabric, mod/commonnetworking (incompatible), mod/elementalmorebendings, mod/elementals (incompatible), mod/elementalssubbending, mod/fabric_api,forgified_fabric_api, mod/fabric_api_base, mod/fabric_api_lookup_api_v1, mod/fabric_biome_api_v1, mod/fabric_block_api_v1, mod/fabric_block_view_api_v2, mod/fabric_blockrenderlayer_v1, mod/fabric_client_tags_api_v1, mod/fabric_command_api_v2, mod/fabric_content_registries_v0, mod/fabric_convention_tags_v1, mod/fabric_convention_tags_v2, mod/fabric_data_attachment_api_v1, mod/fabric_data_generation_api_v1, mod/fabric_entity_events_v1, mod/fabric_events_interaction_v0, mod/fabric_game_rule_api_v1, mod/fabric_gametest_api_v1, mod/fabric_item_api_v1, mod/fabric_item_group_api_v1, mod/fabric_key_binding_api_v1, mod/fabric_lifecycle_events_v1, mod/fabric_loot_api_v2, mod/fabric_loot_api_v3, mod/fabric_message_api_v1, mod/fabric_model_loading_api_v1, mod/fabric_networking_api_v1, mod/fabric_object_builder_api_v1, mod/fabric_particles_v1, mod/fabric_recipe_api_v1, mod/fabric_registry_sync_v0, mod/fabric_renderer_api_v1, mod/fabric_renderer_indigo, mod/fabric_rendering_data_attachment_v1, mod/fabric_rendering_fluids_v1, mod/fabric_rendering_v1, mod/fabric_resource_conditions_api_v1, mod/fabric_resource_loader_v0, mod/fabric_screen_api_v1, mod/fabric_screen_handler_api_v1, mod/fabric_sound_api_v1, mod/fabric_transfer_api_v1, mod/fabric_transitive_access_wideners_v1, mod/geckolib, mod/lodestone (incompatible), mod/neoforge, mod_data
+	Enabled Feature Flags: minecraft:vanilla
+	World Generation: Stable
+	World Seed: 8334960882864639383
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Definitely; Client brand changed to 'neoforge'; Server brand changed to 'neoforge'
+	Launched Version: 21.1.235
+	ModLauncher: 11.0.5+main.901c6ea8
+	ModLauncher launch target: forgeclientdev
+	ModLauncher services: 
+		sponge-mixin-0.15.2+mixin.0.8.7.jar mixin PLUGINSERVICE 
+		loader-4.0.42.jar slf4jfixer PLUGINSERVICE 
+		loader-4.0.42.jar runtime_enum_extender PLUGINSERVICE 
+		at-modlauncher-10.0.1.jar accesstransformer PLUGINSERVICE 
+		loader-4.0.42.jar runtimedistcleaner PLUGINSERVICE 
+		modlauncher-11.0.5.jar mixin TRANSFORMATIONSERVICE 
+		modlauncher-11.0.5.jar fml TRANSFORMATIONSERVICE 
+	FML Language Providers: 
+		__fabric_loader_bootstrap@2.5.68+0.18.4+1.21.1
+		javafml@4.0
+		lowcodefml@4.0
+		minecraft@4.0
+	Mod List: 
+		common-networking-neoforge-1.0.21-1.21.1.jar      |Common Networking             |commonnetworking              |1.0.21-1.21.1       |Manifest: NOSIGNATURE
+		main                                              |Elemental More Bendings       |elementalmorebendings         |1.0.0               |Manifest: NOSIGNATURE
+		elementals-neoforge-1.21.1-5.0.0.jar              |Elementals                    |elementals                    |5.0.0               |Manifest: NOSIGNATURE
+		ElementalsSubbending-NEOFORGE-1.21.1-INSTALL.jar  |Elementals Subbending         |elementalssubbending          |1.4+1.21.1          |Manifest: NOSIGNATURE
+		forgified-fabric-api-0.116.7+2.2.4+1.21.1.jar     |Forgified Fabric API          |fabric_api                    |0.116.7+2.2.4+1.21.1|Manifest: NOSIGNATURE
+		fabric-api-base-0.4.42+d1308ded19.jar             |Forgified Fabric API Base     |fabric_api_base               |0.4.42+d1308ded19   |Manifest: NOSIGNATURE
+		fabric-api-lookup-api-v1-1.6.71+c290471319.jar    |Forgified Fabric API Lookup AP|fabric_api_lookup_api_v1      |1.6.71+c290471319   |Manifest: NOSIGNATURE
+		fabric-biome-api-v1-13.0.31+1e62d33c19.jar        |Forgified Fabric Biome API (v1|fabric_biome_api_v1           |13.0.31+1e62d33c19  |Manifest: NOSIGNATURE
+		fabric-block-api-v1-1.1.0+b0c22bb819.jar          |Forgified Fabric Block API (v1|fabric_block_api_v1           |1.1.0+b0c22bb819    |Manifest: NOSIGNATURE
+		fabric-blockrenderlayer-v1-1.1.52+c290471319.jar  |Forgified Fabric BlockRenderLa|fabric_blockrenderlayer_v1    |1.1.52+c290471319   |Manifest: NOSIGNATURE
+		fabric-block-view-api-v2-1.0.11+e9036fd419.jar    |Forgified Fabric BlockView API|fabric_block_view_api_v2      |1.0.11+e9036fd419   |Manifest: NOSIGNATURE
+		fabric-client-tags-api-v1-1.1.15+e053909619.jar   |Forgified Fabric Client Tags  |fabric_client_tags_api_v1     |1.1.15+e053909619   |Manifest: NOSIGNATURE
+		fabric-command-api-v2-2.2.28+36d727be19.jar       |Forgified Fabric Command API (|fabric_command_api_v2         |2.2.28+36d727be19   |Manifest: NOSIGNATURE
+		fabric-content-registries-v0-8.0.19+5e0d320019.jar|Forgified Fabric Content Regis|fabric_content_registries_v0  |8.0.19+5e0d320019   |Manifest: NOSIGNATURE
+		fabric-convention-tags-v1-2.1.5+7f945d5b19.jar    |Forgified Fabric Convention Ta|fabric_convention_tags_v1     |2.1.5+7f945d5b19    |Manifest: NOSIGNATURE
+		fabric-convention-tags-v2-2.11.1+87e5848019.jar   |Forgified Fabric Convention Ta|fabric_convention_tags_v2     |2.11.1+87e5848019   |Manifest: NOSIGNATURE
+		fabric-data-attachment-api-v1-1.4.5+26d408aa19.jar|Forgified Fabric Data Attachme|fabric_data_attachment_api_v1 |1.4.5+26d408aa19    |Manifest: NOSIGNATURE
+		fabric-data-generation-api-v1-20.2.34+a4c3605619.j|Forgified Fabric Data Generati|fabric_data_generation_api_v1 |20.2.34+a4c3605619  |Manifest: NOSIGNATURE
+		fabric-entity-events-v1-1.8.0+5ede667619.jar      |Forgified Fabric Entity Events|fabric_entity_events_v1       |1.8.0+5ede667619    |Manifest: NOSIGNATURE
+		fabric-events-interaction-v0-0.7.13+86e0887119.jar|Forgified Fabric Events Intera|fabric_events_interaction_v0  |0.7.13+86e0887119   |Manifest: NOSIGNATURE
+		fabric-game-rule-api-v1-1.0.53+36d727be19.jar     |Forgified Fabric Game Rule API|fabric_game_rule_api_v1       |1.0.53+36d727be19   |Manifest: NOSIGNATURE
+		fabric-gametest-api-v1-2.0.5+29f188ce19.jar       |Forgified Fabric Game Test API|fabric_gametest_api_v1        |2.0.5+29f188ce19    |Manifest: NOSIGNATURE
+		fabric-item-api-v1-11.2.0+0c57911319.jar          |Forgified Fabric Item API (v1)|fabric_item_api_v1            |11.2.0+0c57911319   |Manifest: NOSIGNATURE
+		fabric-item-group-api-v1-4.1.7+e324903319.jar     |Forgified Fabric Item Group AP|fabric_item_group_api_v1      |4.1.7+e324903319    |Manifest: NOSIGNATURE
+		fabric-key-binding-api-v1-1.0.47+62cc7ce119.jar   |Forgified Fabric Key Binding A|fabric_key_binding_api_v1     |1.0.47+62cc7ce119   |Manifest: NOSIGNATURE
+		fabric-lifecycle-events-v1-2.6.0+e40d8add19.jar   |Forgified Fabric Lifecycle Eve|fabric_lifecycle_events_v1    |2.6.0+e40d8add19    |Manifest: NOSIGNATURE
+		fabric-loot-api-v2-3.0.15+a3ee712d19.jar          |Forgified Fabric Loot API (v2)|fabric_loot_api_v2            |3.0.15+a3ee712d19   |Manifest: NOSIGNATURE
+		fabric-loot-api-v3-1.0.3+333dfad919.jar           |Forgified Fabric Loot API (v3)|fabric_loot_api_v3            |1.0.3+333dfad919    |Manifest: NOSIGNATURE
+		fabric-message-api-v1-6.0.14+6a754fce19.jar       |Forgified Fabric Message API (|fabric_message_api_v1         |6.0.14+6a754fce19   |Manifest: NOSIGNATURE
+		fabric-model-loading-api-v1-2.1.0+6e8f52c719.jar  |Forgified Fabric Model Loading|fabric_model_loading_api_v1   |2.1.0+6e8f52c719    |Manifest: NOSIGNATURE
+		fabric-networking-api-v1-4.3.0+30a980d919.jar     |Forgified Fabric Networking AP|fabric_networking_api_v1      |4.3.0+30a980d919    |Manifest: NOSIGNATURE
+		fabric-object-builder-api-v1-15.2.1+cc242efd19.jar|Forgified Fabric Object Builde|fabric_object_builder_api_v1  |15.2.1+cc242efd19   |Manifest: NOSIGNATURE
+		fabric-particles-v1-4.0.2+824f924c19.jar          |Forgified Fabric Particles (v1|fabric_particles_v1           |4.0.2+824f924c19    |Manifest: NOSIGNATURE
+		fabric-recipe-api-v1-5.0.15+59440bcc19.jar        |Forgified Fabric Recipe API (v|fabric_recipe_api_v1          |5.0.15+59440bcc19   |Manifest: NOSIGNATURE
+		fabric-registry-sync-v0-5.3.1+f9aace1619.jar      |Forgified Fabric Registry Sync|fabric_registry_sync_v0       |5.3.1+f9aace1619    |Manifest: NOSIGNATURE
+		fabric-renderer-indigo-1.7.1+9125b6dc19.jar       |Forgified Fabric Renderer - In|fabric_renderer_indigo        |1.7.1+9125b6dc19    |Manifest: NOSIGNATURE
+		fabric-renderer-api-v1-3.4.1+9125b6dc19.jar       |Forgified Fabric Renderer API |fabric_renderer_api_v1        |3.4.1+9125b6dc19    |Manifest: NOSIGNATURE
+		fabric-rendering-v1-5.1.0+1a09bd5a19.jar          |Forgified Fabric Rendering (v1|fabric_rendering_v1           |5.1.0+1a09bd5a19    |Manifest: NOSIGNATURE
+		fabric-rendering-data-attachment-v1-0.3.49+73761d2|Forgified Fabric Rendering Dat|fabric_rendering_data_attachme|0.3.49+73761d2e19   |Manifest: NOSIGNATURE
+		fabric-rendering-fluids-v1-3.1.6+a51883b219.jar   |Forgified Fabric Rendering Flu|fabric_rendering_fluids_v1    |3.1.6+a51883b219    |Manifest: NOSIGNATURE
+		fabric-resource-conditions-api-v1-4.3.0+5bdd099819|Forgified Fabric Resource Cond|fabric_resource_conditions_api|4.3.0+5bdd099819    |Manifest: NOSIGNATURE
+		fabric-resource-loader-v0-1.3.1+4ea8954419.jar    |Forgified Fabric Resource Load|fabric_resource_loader_v0     |1.3.1+4ea8954419    |Manifest: NOSIGNATURE
+		fabric-screen-api-v1-2.0.25+0ae1214819.jar        |Forgified Fabric Screen API (v|fabric_screen_api_v1          |2.0.25+0ae1214819   |Manifest: NOSIGNATURE
+		fabric-screen-handler-api-v1-1.3.90+8dbc56dd19.jar|Forgified Fabric Screen Handle|fabric_screen_handler_api_v1  |1.3.90+8dbc56dd19   |Manifest: NOSIGNATURE
+		fabric-sound-api-v1-1.0.23+10b84f8419.jar         |Forgified Fabric Sound API (v1|fabric_sound_api_v1           |1.0.23+10b84f8419   |Manifest: NOSIGNATURE
+		fabric-transfer-api-v1-5.4.3+a25cb45619.jar       |Forgified Fabric Transfer API |fabric_transfer_api_v1        |5.4.3+a25cb45619    |Manifest: NOSIGNATURE
+		fabric-transitive-access-wideners-v1-6.2.0+6c854b6|Forgified Fabric Transitive Ac|fabric_transitive_access_widen|6.2.0+6c854b6f19    |Manifest: NOSIGNATURE
+		geckolib-neoforge-1.21.1-4.8.4.jar                |GeckoLib 4                    |geckolib                      |4.8.4               |Manifest: NOSIGNATURE
+		lodestone-1.21.1-1.8.2.jar                        |Lodestone                     |lodestone                     |1.8.2               |Manifest: NOSIGNATURE
+		neoforge-21.1.235.jar                             |Minecraft                     |minecraft                     |1.21.1              |Manifest: NOSIGNATURE
+		neoforge-21.1.235.jar                             |NeoForge                      |neoforge                      |21.1.235            |Manifest: NOSIGNATURE
+	Crash Report UUID: 2e86dfbb-334f-4b2d-8d30-63d36ffa48b1
+	FML: 4.0.42
+	NeoForge: 21.1.235
