@@ -4,3 +4,5 @@
 /bending element remove Air Dev
 /bending element remove Water Dev
 /bending element add Water Dev
+/time set day
+/subbending grant Dev Plant

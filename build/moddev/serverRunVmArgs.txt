@@ -14,5 +14,5 @@ jdk.naming.dns/com.sun.jndi.dns=java.naming
 -Djava.net.preferIPv6Addresses=system
 -DignoreList=mixinextras-neoforge-0.5.3.jar,client-extra,neoforge-
 -DlegacyClassPath.file=C:\\Users\\Vinicius\\Desktop\\ObsidianWakeAddon\\build\\moddev\\serverLegacyClasspath.txt
--Dneoforge.enabledGameTestNamespaces=obsidianwake
+-Dneoforge.enabledGameTestNamespaces=elementalmorebendings
 -Dforge.logging.markers=REGISTRIES

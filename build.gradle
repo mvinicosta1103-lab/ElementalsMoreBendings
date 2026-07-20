@@ -49,7 +49,7 @@ neoForge {
 }
 
 dependencies {
-    // Precisa do Elementals-neoforge.jar aqui dentro pra enxergar as classes
+    // Precisa do elementals-neoforge.jar aqui dentro pra enxergar as classes
     // Bender / Element / Ability / Upgrade. Veja o README pra saber onde pegar o arquivo.
     implementation files(fileTree(dir: 'libs', include: ['*.jar']))
 }
