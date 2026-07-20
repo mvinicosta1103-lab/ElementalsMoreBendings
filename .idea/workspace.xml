@@ -5,82 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="V1">
-      <change afterPath="$PROJECT_DIR$/.idea/modules/elementalmorebendings.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/ElementalMoreBendingsMod.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/plant/abilities/AbilitySupport.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/plant/abilities/OvergrowthSpikesAbility.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/plant/abilities/ThornBarrageAbility.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/plant/abilities/VineArcAbility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/obsidianwake.main.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/obsidianwake/ObsidianWakeMod.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/obsidianwake/abilities/AbilitySupport.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/obsidianwake/abilities/EruptionAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/obsidianwake/abilities/LavaSurfAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/obsidianwake/abilities/MoltenGripAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/obsidianwake/abilities/ObsidianFormAbility$ObsidianFormState.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/obsidianwake/abilities/ObsidianFormAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/obsidianwake/abilities/ObsidianPillarAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/generated/sources/modMetadata/META-INF/neoforge.mods.toml" beforeDir="false" afterPath="$PROJECT_DIR$/build/generated/sources/modMetadata/META-INF/neoforge.mods.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/moddev/clientRunVmArgs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/moddev/clientRunVmArgs.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/moddev/serverRunVmArgs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/moddev/serverRunVmArgs.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/META-INF/neoforge.mods.toml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/META-INF/neoforge.mods.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/obsidianwake/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/obsidianwake/lang/en_us.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/MoltenGripAbility.class.uniqueId0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ObsidianWakeMod.class.uniqueId1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/command_history.txt" beforeDir="false" afterPath="$PROJECT_DIR$/run/command_history.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" beforeDir="false" afterPath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-19-1.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-19-2.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-19-3.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-19-4.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-19-5.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-6.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-19-6.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-7.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-19-7.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-8.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-19-8.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-9.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-19-9.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-1.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-2.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-3.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-4.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-5.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/latest.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/latest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/DIM-1/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/DIM-1/data/raids.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/DIM1/data/raids_end.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/DIM1/data/raids_end.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/advancements/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/advancements/380df991-f603-344c-a090-369bad2a924a.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/elementals.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/data/elementals.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/data/raids.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/random_sequences.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/data/random_sequences.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/level.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/level.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/level.dat_old" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/level.dat_old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/playerdata/380df991-f603-344c-a090-369bad2a924a.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/playerdata/380df991-f603-344c-a090-369bad2a924a.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/playerdata/380df991-f603-344c-a090-369bad2a924a.dat_old" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/playerdata/380df991-f603-344c-a090-369bad2a924a.dat_old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/session.lock" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/session.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/stats/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/stats/380df991-f603-344c-a090-369bad2a924a.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/usercache.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/usercache.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/obsidianwake/ObsidianWakeMod.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/obsidianwake/abilities/AbilitySupport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/lava/abilities/AbilitySupport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/obsidianwake/abilities/EruptionAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/lava/abilities/EruptionAbility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/obsidianwake/abilities/LavaSurfAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/lava/abilities/LavaSurfAbility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/obsidianwake/abilities/MoltenGripAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/lava/abilities/MoltenGripAbility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/obsidianwake/abilities/ObsidianFormAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/lava/abilities/ObsidianFormAbility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/obsidianwake/abilities/ObsidianPillarAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/lava/abilities/ObsidianPillarAbility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/obsidianwake/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/obsidianwake/lang/en_us.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/templates/META-INF/neoforge.mods.toml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/templates/META-INF/neoforge.mods.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -334,7 +259,15 @@
       <option name="project" value="LOCAL" />
       <updated>1784513209532</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="V1">
+      <option name="closed" value="true" />
+      <created>1784515629245</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1784515629245</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
