@@ -8,7 +8,10 @@ import com.example.elementalmorebendings.lava.abilities.ObsidianPillarAbility;
 import com.example.elementalmorebendings.plant.abilities.OvergrowthSpikesAbility;
 import com.example.elementalmorebendings.plant.abilities.ThornBarrageAbility;
 import com.example.elementalmorebendings.plant.abilities.VineArcAbility;
+import com.example.elementalmorebendings.mud.abilities.MudElement;
 import com.mojang.logging.LogUtils;
+import com.example.elementalmorebendings.command.MoreBendingsCommand;
+import com.example.elementalmorebendings.command.MoreBendingsElementRegistry;
 import dev.saperate.elementals.elements.Element;
 import dev.saperate.elementals.elements.Upgrade;
 import net.neoforged.bus.api.IEventBus;
@@ -16,6 +19,8 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import org.slf4j.Logger;
+import net.neoforged.neoforge.common.NeoForge;
+
 
 import java.util.Arrays;
 
@@ -56,11 +61,19 @@ public class ElementalMoreBendingsMod {
 
     public ElementalMoreBendingsMod(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::onLoadComplete);
+        NeoForge.EVENT_BUS.addListener(MoreBendingsCommand::onRegisterCommands);
+
     }
 
     private void onLoadComplete(FMLLoadCompleteEvent event) {
+        registerMudElement();
         extendLavaTree();
         extendPlantTree();
+    }
+
+    private void registerMudElement() {
+        new MudElement();
+        LOGGER.info("[ElementalMoreBendings] Elemento 'Mud' registrado com sucesso.");
     }
 
     // ------------------------------------------------------------------
