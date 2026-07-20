@@ -9,6 +9,7 @@ import com.example.elementalmorebendings.plant.abilities.OvergrowthSpikesAbility
 import com.example.elementalmorebendings.plant.abilities.ThornBarrageAbility;
 import com.example.elementalmorebendings.plant.abilities.VineArcAbility;
 import com.example.elementalmorebendings.mud.abilities.MudElement;
+import com.example.elementalmorebendings.registry.ModEntities;
 import com.mojang.logging.LogUtils;
 import com.example.elementalmorebendings.command.MoreBendingsCommand;
 import com.example.elementalmorebendings.command.MoreBendingsElementRegistry;
@@ -17,6 +18,7 @@ import dev.saperate.elementals.elements.Upgrade;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import org.slf4j.Logger;
 import net.neoforged.neoforge.common.NeoForge;
@@ -52,6 +54,14 @@ import java.util.Arrays;
  * ({@code lava.abilities} e {@code plant.abilities}), cada um com sua
  * própria classe {@code AbilitySupport} package-private — não há conflito
  * porque os pacotes são diferentes.
+ * <p>
+ * NOVO: no construtor, {@link ModEntities#init()} força o carregamento
+ * estático de {@code ModEntities}, o que registra o EntityType do
+ * MudBallEntity via {@code Services.REGISTRY.registerEntity(...)} cedo o
+ * bastante (antes do RegisterEvent de EntityType disparar). O renderer do
+ * lado cliente é registrado separadamente em {@link #onClientSetup}, que só
+ * dispara no lado físico do cliente — mantendo classes client-only
+ * (MudBallEntityRenderer) fora do carregamento em dedicated server.
  */
 @Mod(ElementalMoreBendingsMod.MODID)
 public class ElementalMoreBendingsMod {
@@ -60,9 +70,24 @@ public class ElementalMoreBendingsMod {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public ElementalMoreBendingsMod(IEventBus modEventBus, ModContainer modContainer) {
+        // Força o registro do EntityType do Mud Ball (comum a ambos os lados).
+        ModEntities.init();
+
         modEventBus.addListener(this::onLoadComplete);
+        modEventBus.addListener(this::onClientSetup);
         NeoForge.EVENT_BUS.addListener(MoreBendingsCommand::onRegisterCommands);
 
+    }
+
+    /**
+     * Só dispara no lado físico do cliente. É aqui que registramos o
+     * renderer do Mud Ball, porque {@code MudBallEntityRenderer} referencia
+     * classes client-only (RenderSystem, PoseStack...) que não existem em
+     * um dedicated server.
+     */
+    private void onClientSetup(FMLClientSetupEvent event) {
+        ModEntities.registerClientRenderer();
+        LOGGER.info("[ElementalMoreBendings] Renderer do Mud Ball registrado no cliente.");
     }
 
     private void onLoadComplete(FMLLoadCompleteEvent event) {

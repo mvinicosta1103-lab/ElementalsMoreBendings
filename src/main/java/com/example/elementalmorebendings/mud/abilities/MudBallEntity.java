@@ -6,6 +6,7 @@ import dev.saperate.elementals.data.PlayerData;
 import dev.saperate.elementals.entities.common.AbstractElementalsEntity;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -20,19 +21,6 @@ import net.minecraft.world.level.block.Blocks;
 
 import static dev.saperate.elementals.utils.SapsUtils.getEntityLookVector;
 
-/**
- * MudBallEntity ("Mud Ball")
- * <p>
- * Praticamente uma cópia estrutural da AirBallEntity do jar base (mesmo
- * padrão de "bola controlada -> arremessada" que estende
- * AbstractElementalsEntity), só que sem explosão — em vez disso causa dano
- * direto e, se "mudBallBlindnessI" estiver desbloqueado, Cegueira, igual ao
- * que o nome do upgrade já sugeria antes de a Ability existir de verdade.
- * O visual (dois cubos girando, renderizados via block atlas) é feito por
- * {@link MudBallEntityRenderer}, copiando o truque da AirBallEntityRenderer
- * mas usando a textura vanilla de Mud (elementals:block/mud), então não
- * precisa de nenhum bloco/model novo pra ficar "costurada" no atlas.
- */
 public class MudBallEntity extends AbstractElementalsEntity<Player> {
 
     public MudBallEntity(EntityType<MudBallEntity> type, Level world) {
@@ -72,7 +60,7 @@ public class MudBallEntity extends AbstractElementalsEntity<Player> {
 
     private void moveEntity() {
         if (getIsControlled()) {
-            moveEntityTowardsGoal(getEntityLookVector(getOwner(), 2.5)
+            moveEntityTowardsGoal(getEntityLookVector(getOwner(), 2.5f)
                     .subtract(0, 0.3, 0)
                     .toVector3f());
         }
@@ -119,7 +107,7 @@ public class MudBallEntity extends AbstractElementalsEntity<Player> {
 
     private void onCollision() {
         if (!level().isClientSide) {
-            level().sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.MUD.defaultBlockState()),
+            ((ServerLevel) level()).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.MUD.defaultBlockState()),
                     getX(), getY() + 0.3, getZ(), 25, 0.3, 0.3, 0.3, 0.05);
         }
         discard();
