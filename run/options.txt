@@ -71,7 +71,7 @@ notificationDisplayTime:1.0
 useNativeTransport:true
 mainHand:"right"
 attackIndicator:1
-tutorialStep:movement
+tutorialStep:none
 mouseWheelSensitivity:1.0
 rawMouseInput:true
 glDebugVerbosity:1
@@ -136,10 +136,10 @@ key_key.elementals.cycle:key.keyboard.z
 key_key.elementalssubbending.avatar_state_toggle:key.keyboard.i
 key_key.elementalssubbending.avatar_air_gust:key.keyboard.o
 key_key.elementalssubbending.avatar_earth_shrapnel:key.keyboard.n
-key_key.elementalssubbending.avatar_water_wave:key.keyboard.period
-key_key.elementalssubbending.avatar_water_homing_projectiles:key.keyboard.b
+key_key.elementalssubbending.avatar_water_wave:key.keyboard.page.down
+key_key.elementalssubbending.avatar_water_homing_projectiles:key.keyboard.page.up
 key_key.elementalssubbending.avatar_fire_split_shot:key.keyboard.comma
-key_key.elementalssubbending.avatar_earth_launch:key.keyboard.n
+key_key.elementalssubbending.avatar_earth_launch:key.keyboard.period
 soundCategory_master:1.0
 soundCategory_music:1.0
 soundCategory_record:1.0

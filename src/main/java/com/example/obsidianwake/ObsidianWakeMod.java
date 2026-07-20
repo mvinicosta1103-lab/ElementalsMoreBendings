@@ -20,17 +20,26 @@ import java.util.Arrays;
  * Este mod não modifica o addon Elementals Subbending. Quando todos os mods
  * já terminaram de carregar (FMLLoadCompleteEvent — nesse ponto o
  * LavaElement do addon já existe), ele pega o Element "Lava" já registrado
- * e acrescenta novos nós de topo na árvore de upgrades + registra as
- * habilidades novas como bindáveis.
+ * e acrescenta as novas habilidades DENTRO dos ramos que o addon do
+ * Jsumpter já criou (lavaFlow, lavaSpike, magmaArmor, lavaShuriken) +
+ * registra as habilidades novas como bindáveis.
  *
- * IMPORTANTE sobre keybinds: o Elementals só tem 4 slots de tecla por
- * elemento (bind1-bind4). O addon do Jsumpter já ocupa os 4 com lavaFlow,
- * lavaSpike, magmaArmor e lavaShuriken. Nenhuma habilidade nova adicionada
- * por outro mod ganha uma tecla automaticamente — isso é assim mesmo pro
- * addon original, não é um bug daqui. O jogador precisa abrir o mesmo menu
- * de vínculo de habilidades que já usou pras 4 originais e trocar um dos
- * slots pra uma das novas (obsidianForm, eruption, lavaSurf, moltenGrip,
- * obsidianPillar).
+ * IMPORTANTE — por que os nós ficam dentro dos ramos existentes e não
+ * direto na raiz: a UpgradeTreeScreen (a tela da árvore, do próprio
+ * Elementals) só sabe desenhar 4 ramos saindo da raiz (um pra cima, um pra
+ * esquerda, um pra direita, um pra baixo — o código dela literalmente checa
+ * "if (len >= 1)", "if (len >= 2)", "if (len >= 3)" e "if (len == 4)", sem
+ * nenhum caso pra mais de 4). O addon do Jsumpter já usa os 4 slots com
+ * lavaFlow, lavaSpike, magmaArmor e lavaShuriken. Se a gente adicionasse
+ * nós novos como filhos DIRETOS da raiz (root.children), o array passaria
+ * de 4 para 9 itens — e aí NENHUM nó de índice 4 em diante é desenhado
+ * (bug original), e pior: como len deixa de ser exatamente 4, a condição
+ * "if (len == 4)" também vira falsa, e o próprio lavaShuriken (índice 3,
+ * original do addon) some da tela junto. Por isso agora cada habilidade
+ * nova é anexada como um FILHO A MAIS de um nó já existente dentro de um
+ * dos 4 ramos — isso mantém root.children.length em 4 e a árvore desenha
+ * normalmente, porque o desenho dentro de cada ramo é recursivo e não tem
+ * esse limite.
  */
 @Mod(ObsidianWakeMod.MODID)
 public class ObsidianWakeMod {
@@ -51,33 +60,66 @@ public class ObsidianWakeMod {
             return;
         }
 
-        Upgrade[] newNodes = new Upgrade[]{
-                buildObsidianForm(),
-                buildEruption(),
-                buildLavaSurf(),
-                buildMoltenGrip(),
-                buildObsidianPillar()
-        };
+        // Anexa cada nó novo dentro de um dos 4 ramos que o addon do
+        // Jsumpter já criou, em vez de como filho direto da raiz.
+        Upgrade obsidianForm = buildObsidianForm();
+        Upgrade eruption = buildEruption();
+        Upgrade lavaSurf = buildLavaSurf();
+        Upgrade moltenGrip = buildMoltenGrip();
+        Upgrade obsidianPillar = buildObsidianPillar();
 
-        for (Upgrade node : newNodes) {
-            node.setParent(lava.root);
-        }
+        attachToBranch(lava.root, "lavaFlow", obsidianForm);
+        attachToBranch(lava.root, "lavaSpike", eruption);
+        attachToBranch(lava.root, "magmaArmor", lavaSurf);
+        attachToBranch(lava.root, "lavaShuriken", moltenGrip);
+        attachToBranch(lava.root, "lavaFlow", obsidianPillar); // 2º nó no mesmo ramo, sem problema
 
-        Upgrade[] expanded = Arrays.copyOf(lava.root.children, lava.root.children.length + newNodes.length);
-        System.arraycopy(newNodes, 0, expanded, lava.root.children.length, newNodes.length);
-        lava.root.children = expanded;
+        // O addon do Jsumpter já ocupa os slots 0-3 (Ability1-4 = R, G, V, [C]),
+        // chamando addAbility(ability, true) pra lavaFlow, lavaSpike, magmaArmor
+        // e lavaShuriken nessa ordem. Por isso fixamos as 5 habilidades novas
+        // explicitamente nos slots 4 a 8 (Ability5-9), em vez de usar
+        // addAbility(ability, true) — que só ia empilhar no próximo índice livre
+        // e não deixaria claro qual tecla cada uma usa.
+        lava.addAbility(new ObsidianFormAbility(), 4);
+        lava.addAbility(new EruptionAbility(), 5);
+        lava.addAbility(new LavaSurfAbility(), 6);
+        lava.addAbility(new MoltenGripAbility(), 7);
+        lava.addAbility(new ObsidianPillarAbility(), 8);
 
-        lava.addAbility(new ObsidianFormAbility(), true);
-        lava.addAbility(new EruptionAbility(), true);
-        lava.addAbility(new LavaSurfAbility(), true);
-        lava.addAbility(new MoltenGripAbility(), true);
-        lava.addAbility(new ObsidianPillarAbility(), true);
+        // Registra qual slot cada ramo novo usa, pra tooltip da árvore
+        // ("Use: %tecla%") mostrar a tecla certa em vez de herdar a do
+        // ramo onde o nó está pendurado (lavaFlow/lavaSpike/etc).
+        lava.registerUpgradeKeybind("obsidianForm", 4);
+        lava.registerUpgradeKeybind("eruption", 5);
+        lava.registerUpgradeKeybind("lavaSurf", 6);
+        lava.registerUpgradeKeybind("moltenGrip", 7);
+        lava.registerUpgradeKeybind("obsidianPillar", 8);
 
         lava.root.calculateXPos();
 
         LOGGER.info("[ObsidianWake] 5 novas habilidades adicionadas à árvore de Lava " +
-                "(obsidianForm, eruption, lavaSurf, moltenGrip, obsidianPillar). " +
-                "Lembre-se: elas precisam ser vinculadas manualmente a um dos 4 slots de tecla.");
+                "(obsidianForm=Ability5, eruption=Ability6, lavaSurf=Ability7, " +
+                "moltenGrip=Ability8, obsidianPillar=Ability9). Configure essas teclas " +
+                "em Opções > Controles, se ainda não tiverem uma tecla atribuída.");
+    }
+
+    /**
+     * Anexa newNode como um filho a mais do nó já existente chamado
+     * branchRootName (um dos 4 filhos diretos da raiz, ou qualquer
+     * descendente dele). Preserva root.children.length == 4, que é o que
+     * a UpgradeTreeScreen exige pra desenhar o ramo corretamente.
+     */
+    private static void attachToBranch(Upgrade root, String branchRootName, Upgrade newNode) {
+        Upgrade branch = root.getUpgradeByNameRecursive(branchRootName);
+        if (branch == null) {
+            LOGGER.warn("[ObsidianWake] Ramo '{}' não encontrado na árvore de Lava — " +
+                    "nó '{}' não foi adicionado.", branchRootName, newNode.name);
+            return;
+        }
+        Upgrade[] expanded = Arrays.copyOf(branch.children, branch.children.length + 1);
+        expanded[branch.children.length] = newNode;
+        branch.children = expanded;
+        newNode.setParent(branch);
     }
 
     private static Upgrade buildObsidianForm() {
