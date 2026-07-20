@@ -91,8 +91,8 @@ public class MudElement extends Element {
 
         // Bônus (slots 4 e 5) — mesmo padrão de índice fixo usado em
         // ElementalMoreBendingsMod para as habilidades extras de Lava/Plant
-       // this.addAbility(new MudShellAbility(), 4);
-       // this.addAbility(new MudSurgeAbility(), 5);
+       this.addAbility(new MudShellAbility(), 4);
+       this.addAbility(new MudSurgeAbility(), 5);
         this.registerUpgradeKeybind("mudShell", 4);
         this.registerUpgradeKeybind("mudSurge", 5);
     }
