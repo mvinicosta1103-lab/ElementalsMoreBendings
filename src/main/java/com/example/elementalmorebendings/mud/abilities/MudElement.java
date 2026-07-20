@@ -1,7 +1,5 @@
-package com.example.elementalmorebendings.mud;
+package com.example.elementalmorebendings.mud.abilities;
 
-import com.example.elementalmorebendings.mud.abilities.MudBallAbility;
-import com.example.elementalmorebendings.mud.abilities.MudSlideAbility;
 import com.example.elementalmorebendings.mud.abilities.MudWallAbility;
 import com.example.elementalmorebendings.mud.abilities.QuicksandAbility;
 import dev.saperate.elementals.data.Bender;
@@ -66,8 +64,6 @@ public class MudElement extends Element {
 
         this.addAbility(new MudWallAbility(), true);
         this.addAbility(new QuicksandAbility(), true);
-        this.addAbility(new MudSlideAbility(), true);
-        this.addAbility(new MudBallAbility(), true);
     }
 
     public static Element get() {
