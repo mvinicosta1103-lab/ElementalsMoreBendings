@@ -141,7 +141,7 @@ key_key.elementalssubbending.avatar_water_homing_projectiles:key.keyboard.page.u
 key_key.elementalssubbending.avatar_fire_split_shot:key.keyboard.comma
 key_key.elementalssubbending.avatar_earth_launch:key.keyboard.period
 soundCategory_master:1.0
-soundCategory_music:1.0
+soundCategory_music:0.0
 soundCategory_record:1.0
 soundCategory_weather:1.0
 soundCategory_block:1.0

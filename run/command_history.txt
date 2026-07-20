@@ -1,2 +1,5 @@
 /subbending grant Dev Lava
 /bending level add 1000000 Dev
+/bending element remove Fire Dev
+/bending element remove Air Dev
+/bending element remove Water Dev
