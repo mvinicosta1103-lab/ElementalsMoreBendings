@@ -24,6 +24,8 @@ public class ThornBarrageAbility implements Ability {
     private static final float BASE_COST = 20.0f;
     private static final int THORN_COUNT = 7;
     private static final double SPREAD_DEGREES = 26.0;
+    // Duração do efeito de "levar dano ao longo do tempo" aplicado a cada acerto: 10 segundos (20 ticks/s).
+    private static final int BLEED_DURATION_TICKS = 20 * 10;
 
     public void onCall(Bender bender, long deltaT) {
         Player player2 = bender.player;
@@ -39,7 +41,9 @@ public class ThornBarrageAbility implements Ability {
 
         double range = bender.plrData.canUseUpgrade("thornBarrageRangeI") ? 12.0 : 9.0;
         float damage = bender.plrData.canUseUpgrade("thornBarragePowerI") ? 3.0f : 2.0f;
-        int poisonDuration = bender.plrData.canUseUpgrade("thornBarragePowerI") ? 70 : 40;
+        // Nível do efeito (amplifier): com o upgrade de poder, o dano contínuo é mais forte,
+        // mas a duração de 10s por acerto é sempre a mesma.
+        int poisonAmplifier = bender.plrData.canUseUpgrade("thornBarragePowerI") ? 1 : 0;
 
         ServerLevel world = player.serverLevel();
         Vec3 eye = player.getEyePosition();
@@ -70,7 +74,8 @@ public class ThornBarrageAbility implements Ability {
                     new net.minecraft.world.phys.AABB(eye, end).inflate(0.6),
                     e -> e.isAlive() && e != player && e.distanceToSqr(eye) <= range * range)) {
                 target.hurt(world.damageSources().playerAttack(player), damage);
-                target.addEffect(new MobEffectInstance(MobEffects.POISON, poisonDuration, 0));
+                // Cada acerto renova o efeito de dano contínuo por mais 10 segundos.
+                target.addEffect(new MobEffectInstance(MobEffects.POISON, BLEED_DURATION_TICKS, poisonAmplifier));
                 world.sendParticles(ParticleTypes.HAPPY_VILLAGER,
                         target.getX(), target.getY(0.6), target.getZ(), 6, 0.25, 0.25, 0.25, 0.01);
             }
