@@ -83,7 +83,7 @@ final class AbilitySupport {
      *                 inclinar a barriga do arco pra um dos lados.
      */
     static void spawnArc(ServerLevel world, Vec3 start, Vec3 end, Vec3 sideways,
-                          double bulgeHeight, int points) {
+                         double bulgeHeight, int points) {
         Vec3 chord = end.subtract(start);
         for (int i = 0; i <= points; i++) {
             double t = (double) i / points;
