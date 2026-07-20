@@ -6,3 +6,4 @@
 /bending element add Water Dev
 /time set day
 /subbending grant Dev Plant
+/morebendings grant Dev Mud
