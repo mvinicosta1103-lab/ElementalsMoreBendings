@@ -27,14 +27,6 @@
   "upgrade.elementals.eruptionPowerI.description": " The eruption deals significantly more damage.",
   "upgrade.elementals.eruptionPowerI.icon": "i",
 
-  "upgrade.elementals.lavaSurf": "Lava Surf",
-  "upgrade.elementals.lavaSurf.description": " Toggle: while standing on lava, gain speed and immunity to fire and lava damage.",
-  "upgrade.elementals.lavaSurf.use": " Toggle %d",
-  "upgrade.elementals.lavaSurf.icon": "magma_armor",
-  "upgrade.elementals.lavaSurfSpeedI": "Faster Surfing",
-  "upgrade.elementals.lavaSurfSpeedI.description": " Increases your speed boost while surfing lava.",
-  "upgrade.elementals.lavaSurfSpeedI.icon": "i",
-
   "upgrade.elementals.moltenGrip": "Molten Grip",
   "upgrade.elementals.moltenGrip.description": " Grab the nearest enemy in front of you with a tendril of magma and pull them in.",
   "upgrade.elementals.moltenGrip.use": " Use: %d",

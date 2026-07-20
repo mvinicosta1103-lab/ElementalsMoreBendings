@@ -3,3 +3,4 @@
 /bending element remove Fire Dev
 /bending element remove Air Dev
 /bending element remove Water Dev
+/bending element add Water Dev
