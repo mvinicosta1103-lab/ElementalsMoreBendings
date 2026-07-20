@@ -73,6 +73,7 @@ public class ElementalMoreBendingsMod {
 
     private void registerMudElement() {
         new MudElement();
+        MoreBendingsElementRegistry.register("Mud");
         LOGGER.info("[ElementalMoreBendings] Elemento 'Mud' registrado com sucesso.");
     }
 
