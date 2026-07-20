@@ -1,0 +1,9 @@
+{
+  "enabled": true,
+  "disableFirebending": true,
+  "firebendingWeaknessMultiplier": 0.15,
+  "eventMessages": true,
+  "eclipseFrequencyDays": 80,
+  "eclipseStartTime": 5600,
+  "eclipseDurationTicks": 1800
+}

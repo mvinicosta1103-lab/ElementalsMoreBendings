@@ -4,133 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="">
+    <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="V1">
+      <change afterPath="$PROJECT_DIR$/libs/forgified-fabric-api-0.116.7+2.2.4+1.21.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs/lodestone-1.21.1-1.8.2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/checksums/md5-checksums.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/checksums/sha1-checksums.bin" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/AndroidProjectSystem.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/obsidianwake.main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thai Lesson.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/obsidianwake/ObsidianWakeMod.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/obsidianwake/abilities/ObsidianFormAbility$ObsidianFormState.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/obsidianwake/abilities/ObsidianFormAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/moddev/minecraft_assets.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/moddev/minecraft_assets.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/META-INF/neoforge.mods.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/obsidianwake/lang/en_us.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ObsidianFormAbility$ObsidianFormState.class.uniqueId0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ObsidianFormAbility.class.uniqueId1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ObsidianWakeMod.class.uniqueId2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/createMinecraftArtifacts/nfrt_artifact_manifest.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/createMinecraftArtifacts/nfrt_artifact_manifest.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/downloadAssets/nfrt_artifact_manifest.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/downloadAssets/nfrt_artifact_manifest.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/neoformruntime/20260718-215154_mergeMappings/config/joined.tsrg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/neoformruntime/20260718-215154_mergeMappings/console_output.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/neoformruntime/20260718-215155_extractServer/console_output.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/neoformruntime/20260718-215157_merge/console_output.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/neoformruntime/20260718-215200_rename/console_output.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/neoformruntime/20260718-215200_rename/libraries.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/neoformruntime/20260718-215204_decompile/console_output.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/neoformruntime/20260718-215204_decompile/libraries.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/neoformruntime/20260718-215245_patch/console_output.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/neoformruntime/20260718-215249_applyNeoforgePatches/console_output.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/neoformruntime/20260718-215251_transformSources/ats/accesstransformer.cfg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/neoformruntime/20260718-215251_transformSources/console_output.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/neoformruntime/20260718-215251_transformSources/libraries.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/neoformruntime/20260718-215251_transformSources/problems.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/neoformruntime/20260718-215305_recompile/output.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/command_history.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/elementals.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/elementalssubbending-avatar.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/elementalssubbending-day-of-black-sun.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/elementalssubbending-lion-turtle.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/elementalssubbending-progression.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/elementalssubbending-sozins-comet.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/fml.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/lodestone-client.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/neoforge-client.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/neoforge-common.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/neoforge-server.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2026-07-18_22.06.32-fml.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2026-07-18_22.43.16-fml.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/data/fabricDefaultResourcePacks.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/downloads/log.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-18-2.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-18-3.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-18-4.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-18-5.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-18-6.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-18-7.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-1.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-2.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-3.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-4.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-5.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/latest.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/mods/ElementalsSubbending-NEOFORGE-1.21.1-INSTALL.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/mods/PlayerAnimationLibNeoforge-1.1.4+mc.1.21.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/mods/bendingposes-1.0.0-alpha.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/mods/common-networking-neoforge-1.0.21-1.21.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/mods/elementals-neoforge-1.21.1-5.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/mods/forgified-fabric-api-0.116.7+2.2.4+1.21.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/mods/geckolib-neoforge-1.21.1-4.8.4.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/mods/lodestone-1.21.1-1.8.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/mods/player-animation-lib-forge-2.0.4+1.21.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/options.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/DIM-1/data/neoforge_data_attachments.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/DIM-1/data/raids.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/DIM1/data/neoforge_data_attachments.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/DIM1/data/raids_end.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/advancements/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/elementals.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/elementalssubbending_avatar_cycle.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/elementalssubbending_energy_bending.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/elementalssubbending_sozins_comet.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/neoforge_data_attachments.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/raids.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/random_sequences.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.-1.-1.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.-1.0.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.0.-1.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.0.0.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/level.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/level.dat_old" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/playerdata/380df991-f603-344c-a090-369bad2a924a.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/playerdata/380df991-f603-344c-a090-369bad2a924a.dat_old" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.-1.-1.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.-1.0.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.0.-1.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.0.0.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.-1.-1.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.-1.0.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.0.-1.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.0.0.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/serverconfig/readme.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/stats/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/usercache.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/usernamecache.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/obsidianwake/ObsidianWakeMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/obsidianwake/ObsidianWakeMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/obsidianwake/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/obsidianwake/lang/en_us.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +32,28 @@
         <task path="$PROJECT_DIR$">
           <activation />
         </task>
-        <projects_view />
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="obsidianwake" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="obsidianwake" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="obsidianwake" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="mod development" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
       </state>
     </system>
   </component>
@@ -178,17 +83,29 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.ObsidianWakeAddon [runClient].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Vinicius/Desktop/ObsidianWakeAddon/libs",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\libs" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.ObsidianWakeAddon [runClient]">
     <configuration name="Client" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
       <module name="obsidianwake.main" />
@@ -209,6 +126,36 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ObsidianWakeAddon [runClient]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="runClient" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.ObsidianWakeAddon [runClient]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -226,9 +173,38 @@
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
     </task>
+    <task id="LOCAL-00001" summary="V1">
+      <option name="closed" value="true" />
+      <created>1784505617089</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1784505617089</updated>
+    </task>
+    <task id="LOCAL-00002" summary="V1">
+      <option name="closed" value="true" />
+      <created>1784505652933</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1784505652933</updated>
+    </task>
+    <task id="LOCAL-00003" summary="V1">
+      <option name="closed" value="true" />
+      <created>1784505676205</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1784505676205</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="V1" />
+    <option name="LAST_COMMIT_MESSAGE" value="V1" />
   </component>
 </project>

@@ -1,0 +1,45 @@
+{
+  "minecraft:recipes/decorations/crafting_table": {
+    "criteria": {
+      "unlock_right_away": "2026-07-19 21:43:52 -0300"
+    },
+    "done": true
+  },
+  "elementals:root": {
+    "criteria": {
+      "trigger": "2026-07-19 21:43:52 -0300"
+    },
+    "done": true
+  },
+  "elementals:waterbending": {
+    "criteria": {
+      "element": "2026-07-19 21:43:53 -0300"
+    },
+    "done": true
+  },
+  "elementals:earthbending": {
+    "criteria": {
+      "element": "2026-07-19 21:43:53 -0300"
+    },
+    "done": true
+  },
+  "elementals:airbending": {
+    "criteria": {
+      "element": "2026-07-19 21:43:53 -0300"
+    },
+    "done": true
+  },
+  "elementals:firebending": {
+    "criteria": {
+      "element": "2026-07-19 21:43:53 -0300"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:jungle": "2026-07-19 21:43:53 -0300"
+    },
+    "done": false
+  },
+  "DataVersion": 3955
+}
