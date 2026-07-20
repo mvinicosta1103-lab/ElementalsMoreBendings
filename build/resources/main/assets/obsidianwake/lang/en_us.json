@@ -38,7 +38,7 @@
   "upgrade.elementals.moltenGrip": "Molten Grip",
   "upgrade.elementals.moltenGrip.description": " Grab the nearest enemy in front of you with a tendril of magma and pull them in.",
   "upgrade.elementals.moltenGrip.use": " Use: %d",
-  "upgrade.elementals.moltenGrip.icon": "lava_shuriken",
+  "upgrade.elementals.moltenGrip.icon": "molten_grip",
   "upgrade.elementals.moltenGripRangeI": "Longer Reach I",
   "upgrade.elementals.moltenGripRangeI.description": " Increases the grab range.",
   "upgrade.elementals.moltenGripRangeI.icon": "i",
