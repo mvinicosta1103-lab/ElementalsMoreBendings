@@ -21,17 +21,33 @@ import dev.saperate.elementals.elements.Upgrade;
  * <p>
  * Fusão base: Earth + Water (lama = terra + água), no mesmo espírito de
  * Lava (Earth + Fire) e Plant (Water).
+ * <p>
+ * IMPORTANTE — exatamente 4 ramos na raiz: a UpgradeTreeScreen do jar base
+ * só sabe desenhar até 4 filhos saindo da raiz (mesmo limite documentado em
+ * ElementalMoreBendingsMod, onde as habilidades extras de Lava/Plant são
+ * anexadas DENTRO de ramos existentes em vez de na raiz). A árvore antiga
+ * de Mud tinha 5 ramos na raiz (mudWall, quicksand, mudSlide, mudBall e
+ * mudMastery), o que também contribuía pra árvore não desenhar direito.
+ * Por isso "mudMastery" agora é um nó-folha DENTRO do ramo "mudBall" (o
+ * capstone continua exigindo os upgrades dos 4 ramos via
+ * isSkillTreeComplete, só que sem ocupar um 5º slot na raiz).
  */
 public class MudElement extends Element {
 
     public MudElement() {
         super("Mud", new Upgrade[]{
-                // Ramo 1 — Defesa: parede de lama que sobe do chão
+                // Ramo 1 — Defesa: parede de lama que sobe do chão, mais a
+                // habilidade bônus "mudShell" (casca de lama endurecida,
+                // Resistência a dano) anexada como filho extra do mesmo ramo
                 new Upgrade("mudWall", new Upgrade[]{
                         new Upgrade("mudWallHeightI", new Upgrade[]{
                                 new Upgrade("mudWallHeightII", 2)
                         }, 1),
-                        new Upgrade("mudWallWidthI", 1)
+                        new Upgrade("mudWallWidthI", 1),
+                        new Upgrade("mudShell", new Upgrade[]{
+                                new Upgrade("mudShellDurationI", 1),
+                                new Upgrade("mudShellHardenedI", 2)
+                        }, 2)
                 }, 2),
 
                 // Ramo 2 — Controle: poça de areia movediça que afunda e prende
@@ -42,28 +58,43 @@ public class MudElement extends Element {
                         new Upgrade("quicksandGripI", 2)
                 }, 3),
 
-                // Ramo 3 — Mobilidade: onda de lama que arrasta o jogador
+                // Ramo 3 — Mobilidade: onda de lama que arrasta o jogador e
+                // empurra quem estiver no caminho, mais a habilidade bônus
+                // "mudSurge" (puxão rápido pra frente/cima)
                 new Upgrade("mudSlide", new Upgrade[]{
                         new Upgrade("mudSlideDistanceI", new Upgrade[]{
                                 new Upgrade("mudSlideDistanceII", 2)
                         }, 1),
-                        new Upgrade("mudSlideSpeedI", 1)
+                        new Upgrade("mudSlideSpeedI", 1),
+                        new Upgrade("mudSurge", new Upgrade[]{
+                                new Upgrade("mudSurgePowerI", 1)
+                        }, 2)
                 }, 2),
 
-                // Ramo 4 — Ataque: bola de lama endurecida à distância
+                // Ramo 4 — Ataque: bola de lama endurecida arremessada à
+                // distância (modelo igual ao Air Ball, com textura de mud) +
+                // capstone mudMastery aninhado aqui pra não criar um 5º ramo
                 new Upgrade("mudBall", new Upgrade[]{
                         new Upgrade("mudBallPowerI", new Upgrade[]{
                                 new Upgrade("mudBallPowerII", 2)
                         }, 1),
-                        new Upgrade("mudBallBlindnessI", 1)
-                }, 3),
-
-                // Capstone — igual ao plantMastery/estilo do jar base
-                new Upgrade("mudMastery", 4)
+                        new Upgrade("mudBallBlindnessI", new Upgrade[]{
+                                new Upgrade("mudMastery", 4)
+                        }, 1)
+                }, 3)
         });
 
         this.addAbility(new MudWallAbility(), true);
         this.addAbility(new QuicksandAbility(), true);
+        this.addAbility(new MudSlideAbility(), true);
+        this.addAbility(new MudBallAbility(), true);
+
+        // Bônus (slots 4 e 5) — mesmo padrão de índice fixo usado em
+        // ElementalMoreBendingsMod para as habilidades extras de Lava/Plant
+        this.addAbility(new MudShellAbility(), 4);
+        this.addAbility(new MudSurgeAbility(), 5);
+        this.registerUpgradeKeybind("mudShell", 4);
+        this.registerUpgradeKeybind("mudSurge", 5);
     }
 
     public static Element get() {

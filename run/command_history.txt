@@ -7,3 +7,4 @@
 /time set day
 /subbending grant Dev Plant
 /morebendings grant Dev Mud
+/bending element add Air Dev
