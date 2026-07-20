@@ -29,7 +29,7 @@
 
   "upgrade.elementals.lavaSurf": "Lava Surf",
   "upgrade.elementals.lavaSurf.description": " Toggle: while standing on lava, gain speed and immunity to fire and lava damage.",
-  "upgrade.elementals.lavaSurf.use": " Toggle",
+  "upgrade.elementals.lavaSurf.use": " Toggle %d",
   "upgrade.elementals.lavaSurf.icon": "magma_armor",
   "upgrade.elementals.lavaSurfSpeedI": "Faster Surfing",
   "upgrade.elementals.lavaSurfSpeedI.description": " Increases your speed boost while surfing lava.",
