@@ -92,7 +92,7 @@
 
   "upgrade.elementals.mudWall": "Mud Wall",
   "upgrade.elementals.mudWall.description": " Raises a wall of mud in front of you.",
-  "upgrade.elementals.mudWall.icon": "mudWall",
+  "upgrade.elementals.mudWall.icon": "mud_wall",
   "upgrade.elementals.mudWall.use": " Use: %d",
   "upgrade.elementals.mudWallHeightI": "Height I",
   "upgrade.elementals.mudWallHeightI.description": " The mud wall rises higher.",
@@ -118,7 +118,7 @@
   "upgrade.elementals.quicksandGripI.icon": "i",
   "upgrade.elementals.mudSlide": "Mud Slide",
   "upgrade.elementals.mudSlide.description": " Ride a wave of mud that drags you and nearby enemies forward.",
-  "upgrade.elementals.mudSlide.icon": "mudSlide",
+  "upgrade.elementals.mudSlide.icon": "mud_slide",
   "upgrade.elementals.mudSlide.use": " Use: %d",
   "upgrade.elementals.mudSlideDistanceI": "Distance I",
   "upgrade.elementals.mudSlideDistanceI.description": " Mud slide travels farther.",
@@ -131,7 +131,7 @@
   "upgrade.elementals.mudSlideSpeedI.icon": "i",
   "upgrade.elementals.mudBall": "Mud Ball",
   "upgrade.elementals.mudBall.description": " Launch a hardened ball of mud at range.",
-  "upgrade.elementals.mudBall.icon": "mudBall",
+  "upgrade.elementals.mudBall.icon": "mud_ball",
   "upgrade.elementals.mudBall.use": " Use: %d",
   "upgrade.elementals.mudBallPowerI": "Power I",
   "upgrade.elementals.mudBallPowerI.description": " Mud ball deals more damage.",
@@ -144,5 +144,5 @@
   "upgrade.elementals.mudBallBlindnessI.icon": "i",
   "upgrade.elementals.mudMastery": "Mud Mastery",
   "upgrade.elementals.mudMastery.description": " You have mastered every technique of Mud bending.",
-  "upgrade.elementals.mudMastery.icon": "mudMastery"
+  "upgrade.elementals.mudMastery.icon": "mud_mastery"
 }
