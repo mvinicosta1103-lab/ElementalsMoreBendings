@@ -82,6 +82,28 @@ elemento `"Lava"` (criado pelo addon do Jsumpter). Se achar, ele:
 Se o addon do Jsumpter não estiver instalado, o mod avisa no log e não faz
 nada — não quebra o jogo.
 
+## Habilidades incluídas agora
+
+- **Obsidian Wake** (`obsidianForm`) — seca lava próxima e endurece em obsidiana.
+- **Eruption** (`eruption`) — golpe de área, queima e empurra tudo perto do impacto.
+- **Lava Surf** (`lavaSurf`) — toggle: imunidade a fogo/lava + velocidade enquanto surfa em lava.
+- **Molten Grip** (`moltenGrip`) — agarra e puxa o inimigo mais próximo à frente.
+- **Obsidian Pillar** (`obsidianPillar`) — junta obsidiana próxima e a lança pra cima em forma de espinho. É a habilidade que dá "controle" de obsidiana pro Lava bender, do mesmo jeito que Terra controla pedra — só que só funciona com obsidiana, e só pra quem tem Lava desbloqueado.
+
+## Sobre o problema do keybind
+
+O Elementals só tem **4 teclas de habilidade no total por elemento**
+(bind1 a bind4) — não é "uma tecla por habilidade". O addon do Jsumpter já
+usa as 4 (`lavaFlow`, `lavaSpike`, `magmaArmor`, `lavaShuriken`). Isso
+significa que **nenhuma habilidade nova, de nenhum addon, ganha tecla
+própria automaticamente** — nem as suas, nem se o Jsumpter mesmo
+adicionasse uma quinta habilidade no mod dele.
+
+Pra usar qualquer uma das 5 habilidades novas, você precisa abrir o mesmo
+menu que já usou pra vincular as 4 originais (a tela da árvore de skills,
+normalmente clicando no ícone da habilidade) e trocar um dos 4 slots pra
+uma das novas. Isso não é um bug — é assim que o mod base funciona.
+
 ## Pendências
 
 - **Ícone**: por enquanto reaproveita o ícone do `lavaFlow`

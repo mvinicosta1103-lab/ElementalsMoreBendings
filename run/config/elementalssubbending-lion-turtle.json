@@ -1,7 +1,0 @@
-{
-  "dropBrokenCollisionBlocks": false,
-  "autoAttachBackBlocks": false,
-  "debugAttachedBlocks": false,
-  "maxAttachedBlocks": 24000,
-  "movementStepTicks": 18
-}

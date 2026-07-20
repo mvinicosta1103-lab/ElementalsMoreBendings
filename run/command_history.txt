@@ -1,2 +1,0 @@
-/subbending grant Dev Lava
-/bending level add 100000000 Dev
