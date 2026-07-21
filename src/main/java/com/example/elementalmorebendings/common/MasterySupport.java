@@ -35,13 +35,6 @@ import dev.saperate.elementals.elements.Upgrade;
 public final class MasterySupport {
     private MasterySupport() {}
 
-    /**
-     * @param bender      o jogador/bender sendo checado.
-     * @param elementName nome do Element (ex.: "Mud", "Lava", "Plant").
-     * @return true se o bender possui o elemento e já desbloqueou (comprou)
-     *         absolutamente todos os nós da árvore de upgrades desse
-     *         elemento — isto é, "masterizou" a subbending inteira.
-     */
     public static boolean isElementMastered(Bender bender, String elementName) {
         if (bender == null || bender.plrData == null || elementName == null) {
             return false;
