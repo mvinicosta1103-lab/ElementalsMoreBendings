@@ -1,13 +1,13 @@
-[20jul.2026 21:49:13.673] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeclientdev, --version, 21.1.235, --assetIndex, 17, --assetsDir, C:\\Users\\Vinicius\\.gradle\\caches\\neoformruntime\\assets, --gameDir, ., --fml.fmlVersion, 4.0.42, --fml.mcVersion, 1.21.1, --fml.neoForgeVersion, 21.1.235, --fml.neoFormVersion, 20240808.144430]
-[20jul.2026 21:49:13.677] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: JVM identified as Oracle Corporation Java HotSpot(TM) 64-Bit Server VM 21.0.10+8-LTS-217
-[20jul.2026 21:49:13.678] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 11.0.5+main.901c6ea8 starting: java version 21.0.10 by Oracle Corporation; OS Windows 11 arch amd64 version 10.0
-[20jul.2026 21:49:13.832] [main/INFO] [net.neoforged.fml.loading.ImmediateWindowHandler/]: Loading ImmediateWindowProvider fmlearlywindow
-[20jul.2026 21:49:13.970] [main/INFO] [EARLYDISPLAY/]: Trying GL version 4.6
-[20jul.2026 21:49:14.053] [main/INFO] [EARLYDISPLAY/]: Requested GL version 4.6 got version 4.6
-[20jul.2026 21:49:14.186] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=union:/C:/Users/Vinicius/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.2+mixin.0.8.7/2af2f021d8e02a0220dc27a7a72b4666d66d44ca/sponge-mixin-0.15.2+mixin.0.8.7.jar%23138!/ Service=ModLauncher Env=CLIENT
-[20jul.2026 21:49:14.411] [pool-2-thread-1/INFO] [EARLYDISPLAY/]: GL info: AMD Radeon(TM) Graphics GL version 4.6.0 Core Profile Context 26.5.2.260413, ATI Technologies Inc.
-[20jul.2026 21:49:15.338] [main/INFO] [net.neoforged.fml.loading.moddiscovery.locators.JarInJarDependencyLocator/]: Found 45 dependencies adding them to mods collection
-[20jul.2026 21:49:15.343] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/]: 
+[20jul.2026 22:20:38.130] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeclientdev, --version, 21.1.235, --assetIndex, 17, --assetsDir, C:\\Users\\Vinicius\\.gradle\\caches\\neoformruntime\\assets, --gameDir, ., --fml.fmlVersion, 4.0.42, --fml.mcVersion, 1.21.1, --fml.neoForgeVersion, 21.1.235, --fml.neoFormVersion, 20240808.144430]
+[20jul.2026 22:20:38.133] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: JVM identified as Oracle Corporation Java HotSpot(TM) 64-Bit Server VM 21.0.10+8-LTS-217
+[20jul.2026 22:20:38.135] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 11.0.5+main.901c6ea8 starting: java version 21.0.10 by Oracle Corporation; OS Windows 11 arch amd64 version 10.0
+[20jul.2026 22:20:38.265] [main/INFO] [net.neoforged.fml.loading.ImmediateWindowHandler/]: Loading ImmediateWindowProvider fmlearlywindow
+[20jul.2026 22:20:38.386] [main/INFO] [EARLYDISPLAY/]: Trying GL version 4.6
+[20jul.2026 22:20:38.466] [main/INFO] [EARLYDISPLAY/]: Requested GL version 4.6 got version 4.6
+[20jul.2026 22:20:38.585] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=union:/C:/Users/Vinicius/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.2+mixin.0.8.7/2af2f021d8e02a0220dc27a7a72b4666d66d44ca/sponge-mixin-0.15.2+mixin.0.8.7.jar%23138!/ Service=ModLauncher Env=CLIENT
+[20jul.2026 22:20:38.813] [pool-2-thread-1/INFO] [EARLYDISPLAY/]: GL info: AMD Radeon(TM) Graphics GL version 4.6.0 Core Profile Context 26.5.2.260413, ATI Technologies Inc.
+[20jul.2026 22:20:39.813] [main/INFO] [net.neoforged.fml.loading.moddiscovery.locators.JarInJarDependencyLocator/]: Found 45 dependencies adding them to mods collection
+[20jul.2026 22:20:39.819] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/]: 
      Mod List:
 		Name Version (Mod Id)
 
@@ -62,93 +62,93 @@
 		Lodestone 1.8.2 (lodestone)
 		Minecraft 1.21.1 (minecraft)
 		NeoForge 21.1.235 (neoforge)
-[20jul.2026 21:49:16.646] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
-[20jul.2026 21:49:16.649] [main/INFO] [mixin/]: Compatibility level set to JAVA_21
-[20jul.2026 21:49:16.839] [main/INFO] [net.fabricmc.loader.impl.bootstrap.FabricLoaderBootstrap/]: Propagating FML mod list to Fabric Loader
-[20jul.2026 21:49:16.891] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgeclientdev' with arguments [--version, 21.1.235, --gameDir, ., --assetsDir, C:\Users\Vinicius\.gradle\caches\neoformruntime\assets, --assetIndex, 17]
-[20jul.2026 21:49:16.976] [main/WARN] [mixin/]: Reference map 'geckolib.refmap.json' for geckolib.mixins.json could not be read. If this is a development environment you can ignore this message
-[20jul.2026 21:49:17.008] [main/WARN] [mixin/]: Reference map 'lodestone.refmap.json' for lodestone.mixins.json could not be read. If this is a development environment you can ignore this message
-[20jul.2026 21:49:17.009] [main/WARN] [mixin/]: Reference map 'elementals.refmap.json' for elementals.mixins.json could not be read. If this is a development environment you can ignore this message
-[20jul.2026 21:49:18.204] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.3).
-[20jul.2026 21:49:20.679] [Datafixer Bootstrap/INFO] [com.mojang.datafixers.DataFixerBuilder/]: 229 Datafixer optimizations took 505 milliseconds
-[20jul.2026 21:49:28.540] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
-[20jul.2026 21:49:28.542] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
-[20jul.2026 21:49:28.546] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
-[20jul.2026 21:49:28.547] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
-[20jul.2026 21:49:28.548] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
-[20jul.2026 21:49:28.730] [Render thread/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/Vinicius/Desktop/ObsidianWakeAddon/build/moddev/artifacts/neoforge-21.1.235.jar%23189!/assets/.mcassetsroot' uses unexpected schema
-[20jul.2026 21:49:28.730] [Render thread/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/Vinicius/Desktop/ObsidianWakeAddon/build/moddev/artifacts/neoforge-21.1.235.jar%23189!/data/.mcassetsroot' uses unexpected schema
-[20jul.2026 21:49:28.777] [Render thread/INFO] [com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService/]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
-[20jul.2026 21:49:28.787] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Setting user: Dev
-[20jul.2026 21:49:29.064] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Backend library: LWJGL version 3.3.3+5
-[20jul.2026 21:49:29.493] [modloading-worker-0/INFO] [net.fabricmc.fabric.impl.client.indigo.Indigo/]: [Indigo] Registering Indigo renderer!
-[20jul.2026 21:49:29.536] [modloading-worker-0/INFO] [elementals/]: Initialising the cool stuff...
-[20jul.2026 21:49:29.550] [modloading-worker-0/INFO] [net.neoforged.neoforge.common.NeoForgeMod/NEOFORGE-MOD]: NeoForge mod loading, version 21.1.235, for MC 1.21.1
-[20jul.2026 21:49:30.170] [modloading-worker-0/INFO] [elementalssubbending/]: Elementals Subbending loaded.
-[20jul.2026 21:49:30.176] [modloading-worker-0/INFO] [com.example.elementalmorebendings.ElementalMoreBendingsMod/]: [ElementalMoreBendings] Renderer do Mud Ball registrado no cliente.
-[20jul.2026 21:49:31.147] [Render thread/INFO] [net.neoforged.neoforge.gametest.GameTestHooks/]: Enabled Gametest Namespaces: [elementalmorebendings]
-[20jul.2026 21:49:31.557] [Render thread/INFO] [net.minecraft.server.packs.resources.ReloadableResourceManager/]: Reloading ResourceManager: vanilla, fabric, mod_resources, mod/fabric_transfer_api_v1, mod/fabric_renderer_api_v1, mod/geckolib, mod/fabric_item_api_v1, mod/fabric_model_loading_api_v1, mod/fabric_rendering_fluids_v1, mod/commonnetworking, mod/fabric_screen_handler_api_v1, mod/fabric_resource_loader_v0, mod/fabric_rendering_v1, mod/fabric_renderer_indigo, mod/fabric_convention_tags_v1, mod/neoforge, mod/fabric_block_view_api_v2, mod/fabric_convention_tags_v2, mod/fabric_command_api_v2, mod/fabric_data_attachment_api_v1, mod/fabric_screen_api_v1, mod/fabric_particles_v1, mod/fabric_api,forgified_fabric_api, mod/fabric_content_registries_v0, mod/fabric_transitive_access_wideners_v1, mod/fabric_game_rule_api_v1, mod/fabric_api_base, mod/fabric_api_lookup_api_v1, mod/fabric_blockrenderlayer_v1, mod/fabric_block_api_v1, mod/fabric_resource_conditions_api_v1, mod/fabric_item_group_api_v1, mod/fabric_gametest_api_v1, mod/fabric_biome_api_v1, mod/fabric_entity_events_v1, mod/fabric_registry_sync_v0, mod/fabric_recipe_api_v1, mod/fabric_loot_api_v2, mod/fabric_object_builder_api_v1, mod/fabric_loot_api_v3, mod/fabric_rendering_data_attachment_v1, mod/fabric_networking_api_v1, mod/fabric_sound_api_v1, mod/lodestone, mod/fabric_message_api_v1, mod/elementals, mod/elementalssubbending, mod/elementalmorebendings, mod/fabric_lifecycle_events_v1, mod/fabric_data_generation_api_v1, mod/fabric_events_interaction_v0, mod/fabric_key_binding_api_v1, mod/fabric_client_tags_api_v1
-[20jul.2026 21:49:31.936] [Worker-Main-13/INFO] [net.minecraft.client.gui.font.providers.UnihexProvider/]: Found unifont_all_no_pua-15.1.05.hex, loading
-[20jul.2026 21:49:31.980] [Worker-Main-4/INFO] [net.minecraft.client.gui.font.providers.UnihexProvider/]: Found unifont_jp_patch-15.1.05.hex, loading
-[20jul.2026 21:49:32.943] [Worker-Main-4/WARN] [net.minecraft.client.resources.model.ModelBakery/]: Unable to load model: 'elementals:item/moon_planks' referenced from: elementals:item/moon_planks: java.io.FileNotFoundException: elementals:models/item/moon_planks.json
-[20jul.2026 21:49:32.944] [Worker-Main-4/WARN] [net.minecraft.client.resources.model.ModelBakery/]: Unable to load model: 'elementals:item/moon_stripped_log' referenced from: elementals:item/moon_stripped_log: java.io.FileNotFoundException: elementals:models/item/moon_stripped_log.json
-[20jul.2026 21:49:32.949] [Worker-Main-4/WARN] [net.minecraft.client.resources.model.ModelBakery/]: Unable to load model: 'elementals:item/moon_peach_leaves' referenced from: elementals:item/moon_peach_leaves: java.io.FileNotFoundException: elementals:models/item/moon_peach_leaves.json
-[20jul.2026 21:49:32.950] [Worker-Main-4/WARN] [net.minecraft.client.resources.model.ModelBakery/]: Unable to load model: 'elementals:item/moon_log' referenced from: elementals:item/moon_log: java.io.FileNotFoundException: elementals:models/item/moon_log.json
-[20jul.2026 21:49:33.808] [Worker-Main-4/WARN] [net.minecraft.client.resources.model.ModelManager/]: Missing textures in model elementals:glider#inventory:
+[20jul.2026 22:20:41.105] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[20jul.2026 22:20:41.108] [main/INFO] [mixin/]: Compatibility level set to JAVA_21
+[20jul.2026 22:20:41.248] [main/INFO] [net.fabricmc.loader.impl.bootstrap.FabricLoaderBootstrap/]: Propagating FML mod list to Fabric Loader
+[20jul.2026 22:20:41.283] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgeclientdev' with arguments [--version, 21.1.235, --gameDir, ., --assetsDir, C:\Users\Vinicius\.gradle\caches\neoformruntime\assets, --assetIndex, 17]
+[20jul.2026 22:20:41.379] [main/WARN] [mixin/]: Reference map 'geckolib.refmap.json' for geckolib.mixins.json could not be read. If this is a development environment you can ignore this message
+[20jul.2026 22:20:41.402] [main/WARN] [mixin/]: Reference map 'lodestone.refmap.json' for lodestone.mixins.json could not be read. If this is a development environment you can ignore this message
+[20jul.2026 22:20:41.405] [main/WARN] [mixin/]: Reference map 'elementals.refmap.json' for elementals.mixins.json could not be read. If this is a development environment you can ignore this message
+[20jul.2026 22:20:42.426] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.3).
+[20jul.2026 22:20:44.314] [Datafixer Bootstrap/INFO] [com.mojang.datafixers.DataFixerBuilder/]: 229 Datafixer optimizations took 367 milliseconds
+[20jul.2026 22:20:50.080] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[20jul.2026 22:20:50.081] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[20jul.2026 22:20:50.084] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[20jul.2026 22:20:50.085] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[20jul.2026 22:20:50.086] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[20jul.2026 22:20:50.214] [Render thread/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/Vinicius/Desktop/ObsidianWakeAddon/build/moddev/artifacts/neoforge-21.1.235.jar%23189!/assets/.mcassetsroot' uses unexpected schema
+[20jul.2026 22:20:50.214] [Render thread/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/Vinicius/Desktop/ObsidianWakeAddon/build/moddev/artifacts/neoforge-21.1.235.jar%23189!/data/.mcassetsroot' uses unexpected schema
+[20jul.2026 22:20:50.248] [Render thread/INFO] [com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService/]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[20jul.2026 22:20:50.256] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Setting user: Dev
+[20jul.2026 22:20:50.446] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Backend library: LWJGL version 3.3.3+5
+[20jul.2026 22:20:50.798] [modloading-worker-0/INFO] [net.fabricmc.fabric.impl.client.indigo.Indigo/]: [Indigo] Registering Indigo renderer!
+[20jul.2026 22:20:50.835] [modloading-worker-0/INFO] [elementals/]: Initialising the cool stuff...
+[20jul.2026 22:20:50.848] [modloading-worker-0/INFO] [net.neoforged.neoforge.common.NeoForgeMod/NEOFORGE-MOD]: NeoForge mod loading, version 21.1.235, for MC 1.21.1
+[20jul.2026 22:20:51.315] [modloading-worker-0/INFO] [elementalssubbending/]: Elementals Subbending loaded.
+[20jul.2026 22:20:51.318] [modloading-worker-0/INFO] [com.example.elementalmorebendings.ElementalMoreBendingsMod/]: [ElementalMoreBendings] Renderer do Mud Ball registrado no cliente.
+[20jul.2026 22:20:52.110] [Render thread/INFO] [net.neoforged.neoforge.gametest.GameTestHooks/]: Enabled Gametest Namespaces: [elementalmorebendings]
+[20jul.2026 22:20:52.366] [Render thread/INFO] [net.minecraft.server.packs.resources.ReloadableResourceManager/]: Reloading ResourceManager: vanilla, fabric, mod_resources, mod/fabric_transfer_api_v1, mod/fabric_renderer_api_v1, mod/geckolib, mod/fabric_item_api_v1, mod/fabric_model_loading_api_v1, mod/fabric_rendering_fluids_v1, mod/commonnetworking, mod/fabric_screen_handler_api_v1, mod/fabric_resource_loader_v0, mod/fabric_rendering_v1, mod/fabric_renderer_indigo, mod/fabric_convention_tags_v1, mod/neoforge, mod/fabric_block_view_api_v2, mod/fabric_convention_tags_v2, mod/fabric_command_api_v2, mod/fabric_data_attachment_api_v1, mod/fabric_screen_api_v1, mod/fabric_particles_v1, mod/fabric_api,forgified_fabric_api, mod/fabric_content_registries_v0, mod/fabric_transitive_access_wideners_v1, mod/fabric_game_rule_api_v1, mod/fabric_api_base, mod/fabric_api_lookup_api_v1, mod/fabric_blockrenderlayer_v1, mod/fabric_block_api_v1, mod/fabric_resource_conditions_api_v1, mod/fabric_item_group_api_v1, mod/fabric_gametest_api_v1, mod/fabric_biome_api_v1, mod/fabric_entity_events_v1, mod/fabric_registry_sync_v0, mod/fabric_recipe_api_v1, mod/fabric_loot_api_v2, mod/fabric_object_builder_api_v1, mod/fabric_loot_api_v3, mod/fabric_rendering_data_attachment_v1, mod/fabric_networking_api_v1, mod/fabric_sound_api_v1, mod/lodestone, mod/fabric_message_api_v1, mod/elementals, mod/elementalssubbending, mod/elementalmorebendings, mod/fabric_lifecycle_events_v1, mod/fabric_data_generation_api_v1, mod/fabric_events_interaction_v0, mod/fabric_key_binding_api_v1, mod/fabric_client_tags_api_v1
+[20jul.2026 22:20:52.658] [Worker-Main-9/INFO] [net.minecraft.client.gui.font.providers.UnihexProvider/]: Found unifont_all_no_pua-15.1.05.hex, loading
+[20jul.2026 22:20:52.754] [Worker-Main-6/INFO] [net.minecraft.client.gui.font.providers.UnihexProvider/]: Found unifont_jp_patch-15.1.05.hex, loading
+[20jul.2026 22:20:53.419] [Worker-Main-2/WARN] [net.minecraft.client.resources.model.ModelBakery/]: Unable to load model: 'elementals:item/moon_planks' referenced from: elementals:item/moon_planks: java.io.FileNotFoundException: elementals:models/item/moon_planks.json
+[20jul.2026 22:20:53.420] [Worker-Main-2/WARN] [net.minecraft.client.resources.model.ModelBakery/]: Unable to load model: 'elementals:item/moon_stripped_log' referenced from: elementals:item/moon_stripped_log: java.io.FileNotFoundException: elementals:models/item/moon_stripped_log.json
+[20jul.2026 22:20:53.423] [Worker-Main-2/WARN] [net.minecraft.client.resources.model.ModelBakery/]: Unable to load model: 'elementals:item/moon_peach_leaves' referenced from: elementals:item/moon_peach_leaves: java.io.FileNotFoundException: elementals:models/item/moon_peach_leaves.json
+[20jul.2026 22:20:53.425] [Worker-Main-2/WARN] [net.minecraft.client.resources.model.ModelBakery/]: Unable to load model: 'elementals:item/moon_log' referenced from: elementals:item/moon_log: java.io.FileNotFoundException: elementals:models/item/moon_log.json
+[20jul.2026 22:20:54.642] [Worker-Main-2/WARN] [net.minecraft.client.resources.model.ModelManager/]: Missing textures in model elementals:glider#inventory:
     minecraft:textures/atlas/blocks.png:elementals:item/texture
-[20jul.2026 21:49:33.933] [Worker-Main-15/INFO] [com.example.elementalmorebendings.ElementalMoreBendingsMod/]: [ElementalMoreBendings] Elemento 'Mud' registrado com sucesso.
-[20jul.2026 21:49:33.939] [Worker-Main-15/INFO] [com.example.elementalmorebendings.ElementalMoreBendingsMod/]: [ElementalMoreBendings] 5 novas habilidades adicionadas à árvore de Lava (obsidianForm=Ability5, eruption=Ability6, lavaSurf=Ability7, moltenGrip=Ability8, obsidianPillar=Ability9). Configure essas teclas em Opções > Controles, se ainda não tiverem uma tecla atribuída.
-[20jul.2026 21:49:33.944] [Worker-Main-15/INFO] [com.example.elementalmorebendings.ElementalMoreBendingsMod/]: [ElementalMoreBendings] 3 novas habilidades adicionadas à árvore de Plant (vineArc=Ability4, thornBarrage=Ability5, overgrowthSpikes=Ability6). Configure essas teclas em Opções > Controles, se ainda não tiverem uma tecla atribuída.
-[20jul.2026 21:49:34.135] [Render thread/WARN] [net.minecraft.client.sounds.SoundEngine/]: Missing sound for event: minecraft:item.goat_horn.play
-[20jul.2026 21:49:34.135] [Render thread/WARN] [net.minecraft.client.sounds.SoundEngine/]: Missing sound for event: minecraft:entity.goat.screaming.horn_break
-[20jul.2026 21:49:34.214] [Render thread/INFO] [com.mojang.blaze3d.audio.Library/]: OpenAL initialized on device OpenAL Soft on Alto-falantes (High Definition Audio Device)
-[20jul.2026 21:49:34.215] [Render thread/INFO] [net.minecraft.client.sounds.SoundEngine/SOUNDS]: Sound engine started
-[20jul.2026 21:49:34.330] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
-[20jul.2026 21:49:34.340] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
-[20jul.2026 21:49:34.341] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
-[20jul.2026 21:49:34.341] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
-[20jul.2026 21:49:34.344] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
-[20jul.2026 21:49:34.353] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
-[20jul.2026 21:49:34.353] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
-[20jul.2026 21:49:34.353] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
-[20jul.2026 21:49:34.353] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
-[20jul.2026 21:49:34.499] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x0 minecraft:textures/atlas/particles.png-atlas
-[20jul.2026 21:49:34.631] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x0 minecraft:textures/atlas/paintings.png-atlas
-[20jul.2026 21:49:34.631] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x0 minecraft:textures/atlas/mob_effects.png-atlas
-[20jul.2026 21:49:34.631] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 64x64x0 minecraft:textures/atlas/map_decorations.png-atlas
-[20jul.2026 21:49:34.631] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x512x0 minecraft:textures/atlas/gui.png-atlas
-[20jul.2026 21:49:34.661] [Render thread/WARN] [net.minecraft.client.renderer.ShaderInstance/]: Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
-[20jul.2026 21:49:34.734] [Render thread/INFO] [team.lodestar.lodestone.LodestoneLib/]: Registering shaders for mod: lodestone
-[20jul.2026 21:49:34.789] [Render thread/INFO] [team.lodestar.lodestone.LodestoneLib/]: Loaded geometry program: lodestone:nineslice/nine_slice
-[20jul.2026 21:49:34.793] [Render thread/INFO] [team.lodestar.lodestone.LodestoneLib/]: Loaded geometry program: lodestone:nineslice/distorted/distorted_nine_slice_texture
-[20jul.2026 21:49:34.846] [Render thread/INFO] [net.neoforged.neoforge.client.entity.animation.json.AnimationLoader/]: Loaded 0 entity animations
-[20jul.2026 21:51:30.021] [Render thread/INFO] [net.minecraft.world.item.crafting.RecipeManager/]: Loaded 1294 recipes
-[20jul.2026 21:51:30.215] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 1413 advancements
-[20jul.2026 21:51:30.881] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Starting integrated minecraft server version 1.21.1
-[20jul.2026 21:51:30.881] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Generating keypair
-[20jul.2026 21:51:31.753] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Preparing start region for dimension minecraft:overworld
-[20jul.2026 21:51:32.118] [progressListener/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
-[20jul.2026 21:51:32.221] [Server thread/INFO] [net.neoforged.neoforge.server.permission.PermissionAPI/]: Successfully initialized permission handler neoforge:default_handler
-[20jul.2026 21:51:32.222] [Server thread/WARN] [net.neoforged.neoforge.common.TagConventionLogWarning/]: 
+[20jul.2026 22:20:54.780] [Worker-Main-4/INFO] [com.example.elementalmorebendings.ElementalMoreBendingsMod/]: [ElementalMoreBendings] Elemento 'Mud' registrado com sucesso.
+[20jul.2026 22:20:54.789] [Worker-Main-4/INFO] [com.example.elementalmorebendings.ElementalMoreBendingsMod/]: [ElementalMoreBendings] 5 novas habilidades adicionadas à árvore de Lava (obsidianForm=Ability5, eruption=Ability6, lavaSurf=Ability7, moltenGrip=Ability8, obsidianPillar=Ability9). Configure essas teclas em Opções > Controles, se ainda não tiverem uma tecla atribuída.
+[20jul.2026 22:20:54.795] [Worker-Main-4/INFO] [com.example.elementalmorebendings.ElementalMoreBendingsMod/]: [ElementalMoreBendings] 3 novas habilidades adicionadas à árvore de Plant (vineArc=Ability4, thornBarrage=Ability5, overgrowthSpikes=Ability6). Configure essas teclas em Opções > Controles, se ainda não tiverem uma tecla atribuída.
+[20jul.2026 22:20:54.966] [Render thread/WARN] [net.minecraft.client.sounds.SoundEngine/]: Missing sound for event: minecraft:item.goat_horn.play
+[20jul.2026 22:20:54.967] [Render thread/WARN] [net.minecraft.client.sounds.SoundEngine/]: Missing sound for event: minecraft:entity.goat.screaming.horn_break
+[20jul.2026 22:20:55.048] [Render thread/INFO] [com.mojang.blaze3d.audio.Library/]: OpenAL initialized on device OpenAL Soft on Alto-falantes (High Definition Audio Device)
+[20jul.2026 22:20:55.050] [Render thread/INFO] [net.minecraft.client.sounds.SoundEngine/SOUNDS]: Sound engine started
+[20jul.2026 22:20:55.196] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
+[20jul.2026 22:20:55.206] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
+[20jul.2026 22:20:55.207] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
+[20jul.2026 22:20:55.207] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
+[20jul.2026 22:20:55.209] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
+[20jul.2026 22:20:55.219] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
+[20jul.2026 22:20:55.221] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
+[20jul.2026 22:20:55.221] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
+[20jul.2026 22:20:55.221] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
+[20jul.2026 22:20:55.312] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x0 minecraft:textures/atlas/particles.png-atlas
+[20jul.2026 22:20:55.315] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x0 minecraft:textures/atlas/paintings.png-atlas
+[20jul.2026 22:20:55.316] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x0 minecraft:textures/atlas/mob_effects.png-atlas
+[20jul.2026 22:20:55.316] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 64x64x0 minecraft:textures/atlas/map_decorations.png-atlas
+[20jul.2026 22:20:55.316] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x512x0 minecraft:textures/atlas/gui.png-atlas
+[20jul.2026 22:20:55.351] [Render thread/WARN] [net.minecraft.client.renderer.ShaderInstance/]: Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
+[20jul.2026 22:20:55.417] [Render thread/INFO] [team.lodestar.lodestone.LodestoneLib/]: Registering shaders for mod: lodestone
+[20jul.2026 22:20:55.476] [Render thread/INFO] [team.lodestar.lodestone.LodestoneLib/]: Loaded geometry program: lodestone:nineslice/nine_slice
+[20jul.2026 22:20:55.480] [Render thread/INFO] [team.lodestar.lodestone.LodestoneLib/]: Loaded geometry program: lodestone:nineslice/distorted/distorted_nine_slice_texture
+[20jul.2026 22:20:55.532] [Render thread/INFO] [net.neoforged.neoforge.client.entity.animation.json.AnimationLoader/]: Loaded 0 entity animations
+[20jul.2026 22:21:45.607] [Render thread/INFO] [net.minecraft.world.item.crafting.RecipeManager/]: Loaded 1294 recipes
+[20jul.2026 22:21:45.800] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 1413 advancements
+[20jul.2026 22:21:46.219] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Starting integrated minecraft server version 1.21.1
+[20jul.2026 22:21:46.219] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Generating keypair
+[20jul.2026 22:21:46.983] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Preparing start region for dimension minecraft:overworld
+[20jul.2026 22:21:47.410] [progressListener/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[20jul.2026 22:21:47.502] [progressListener/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Time elapsed: 509 ms
+[20jul.2026 22:21:47.502] [Server thread/INFO] [net.neoforged.neoforge.server.permission.PermissionAPI/]: Successfully initialized permission handler neoforge:default_handler
+[20jul.2026 22:21:47.505] [Server thread/WARN] [net.neoforged.neoforge.common.TagConventionLogWarning/]: 
    Dev warning - Legacy Tags detected. Please migrate your 'forge' namespace tags to the 'c' namespace! See net.neoforged.neoforge.common.Tags.java for all tags.
    NOTE: Many tags have been moved around or renamed. Some new ones were added so please review the new tags.
     And make sure you follow tag conventions for new tags! The convention is `c` with nouns generally being plural and adjectives being singular.
    You can disable this message in NeoForge's common config by setting `logLegacyTagWarnings` to "SILENCED" or see individual tags with "DEV_VERBOSE".
 
-[20jul.2026 21:51:32.225] [Server thread/WARN] [net.fabricmc.fabric.impl.tag.convention.v2.TranslationConventionLogWarnings/]: 
+[20jul.2026 22:21:47.507] [Server thread/WARN] [net.fabricmc.fabric.impl.tag.convention.v2.TranslationConventionLogWarnings/]: 
 	Dev warning - Untranslated Item Tags detected. Please translate your item tags so other mods such as recipe viewers can properly display your tag's name.
 	The format desired is tag.item.<namespace>.<path> for the translation key with slashes in path turned into periods.
 	To disable this message, set this system property in your runs: `-Dfabric-tag-conventions-v2.missingTagTranslationWarning=SILENCED`.
 	To see individual untranslated item tags found, set the system property to `-Dfabric-tag-conventions-v2.missingTagTranslationWarning=VERBOSE`.
 	Default is `SHORT`.
 
-[20jul.2026 21:51:32.233] [progressListener/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Time elapsed: 469 ms
-[20jul.2026 21:51:32.336] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Changing view distance to 7, from 10
-[20jul.2026 21:51:32.336] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Changing simulation distance to 9, from 0
-[20jul.2026 21:51:33.470] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: Dev[local:E:820c9e37] logged in with entity id 11 at (-151.69999998807907, 64.0, -130.465579686132)
-[20jul.2026 21:51:33.584] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Dev joined the game
-[20jul.2026 21:51:33.750] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 74 advancements
-[20jul.2026 21:51:33.908] [Render thread/WARN] [net.minecraft.client.renderer.texture.TextureManager/]: Failed to load texture: elementals:textures/gui/mud_upgrade_button.png
+[20jul.2026 22:21:47.603] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Changing view distance to 7, from 10
+[20jul.2026 22:21:47.604] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Changing simulation distance to 9, from 0
+[20jul.2026 22:21:48.597] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: Dev[local:E:4fb069a3] logged in with entity id 11 at (-156.09326346245848, 67.0, -121.87242959295232)
+[20jul.2026 22:21:48.697] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Dev joined the game
+[20jul.2026 22:21:48.878] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 77 advancements
+[20jul.2026 22:21:49.011] [Render thread/WARN] [net.minecraft.client.renderer.texture.TextureManager/]: Failed to load texture: elementals:textures/gui/mud_upgrade_button.png
 java.io.FileNotFoundException: elementals:textures/gui/mud_upgrade_button.png
 	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.packs.resources.ResourceProvider.lambda$getResourceOrThrow$1(ResourceProvider.java:18) ~[neoforge-21.1.235.jar%23189!/:?]
 	at java.base/java.util.Optional.orElseThrow(Optional.java:403) ~[?:?]
@@ -190,7 +190,7 @@ java.io.FileNotFoundException: elementals:textures/gui/mud_upgrade_button.png
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
 	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?]
-[20jul.2026 21:51:33.911] [Render thread/WARN] [net.minecraft.client.renderer.texture.TextureManager/]: Failed to load texture: elementals:textures/gui/mud_upgrade_button.png
+[20jul.2026 22:21:49.015] [Render thread/WARN] [net.minecraft.client.renderer.texture.TextureManager/]: Failed to load texture: elementals:textures/gui/mud_upgrade_button.png
 java.io.FileNotFoundException: elementals:textures/gui/mud_upgrade_button.png
 	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.packs.resources.ResourceProvider.lambda$getResourceOrThrow$1(ResourceProvider.java:18) ~[neoforge-21.1.235.jar%23189!/:?]
 	at java.base/java.util.Optional.orElseThrow(Optional.java:403) ~[?:?]
@@ -233,7 +233,7 @@ java.io.FileNotFoundException: elementals:textures/gui/mud_upgrade_button.png
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
 	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?]
-[20jul.2026 21:51:33.914] [Render thread/WARN] [net.minecraft.client.renderer.texture.TextureManager/]: Failed to load texture: elementals:textures/gui/symbol/mud.png
+[20jul.2026 22:21:49.018] [Render thread/WARN] [net.minecraft.client.renderer.texture.TextureManager/]: Failed to load texture: elementals:textures/gui/symbol/mud.png
 java.io.FileNotFoundException: elementals:textures/gui/symbol/mud.png
 	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.packs.resources.ResourceProvider.lambda$getResourceOrThrow$1(ResourceProvider.java:18) ~[neoforge-21.1.235.jar%23189!/:?]
 	at java.base/java.util.Optional.orElseThrow(Optional.java:403) ~[?:?]
@@ -275,7 +275,7 @@ java.io.FileNotFoundException: elementals:textures/gui/symbol/mud.png
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
 	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?]
-[20jul.2026 21:51:33.917] [Render thread/WARN] [net.minecraft.client.renderer.texture.TextureManager/]: Failed to load texture: elementals:textures/gui/symbol/mud.png
+[20jul.2026 22:21:49.020] [Render thread/WARN] [net.minecraft.client.renderer.texture.TextureManager/]: Failed to load texture: elementals:textures/gui/symbol/mud.png
 java.io.FileNotFoundException: elementals:textures/gui/symbol/mud.png
 	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.packs.resources.ResourceProvider.lambda$getResourceOrThrow$1(ResourceProvider.java:18) ~[neoforge-21.1.235.jar%23189!/:?]
 	at java.base/java.util.Optional.orElseThrow(Optional.java:403) ~[?:?]
@@ -318,122 +318,33 @@ java.io.FileNotFoundException: elementals:textures/gui/symbol/mud.png
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
 	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?]
-[20jul.2026 21:51:37.913] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 77 advancements
-[20jul.2026 21:52:07.186] [Render thread/WARN] [net.minecraft.client.renderer.texture.TextureManager/]: Failed to load texture: elementals:textures/gui/mud_icon.png
-java.io.FileNotFoundException: elementals:textures/gui/mud_icon.png
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.packs.resources.ResourceProvider.lambda$getResourceOrThrow$1(ResourceProvider.java:18) ~[neoforge-21.1.235.jar%23189!/:?]
-	at java.base/java.util.Optional.orElseThrow(Optional.java:403) ~[?:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.packs.resources.ResourceProvider.getResourceOrThrow(ResourceProvider.java:18) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/geckolib@4.8.4/software.bernie.geckolib.cache.texture.AnimatableTexture.load(AnimatableTexture.java:40) ~[geckolib-neoforge-1.21.1-4.8.4.jar%23196!/:4.8.4]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.renderer.texture.TextureManager.loadTexture(TextureManager.java:92) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.renderer.texture.TextureManager.register(TextureManager.java:63) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.renderer.texture.TextureManager.wrapOperation$zba000$geckolib$replaceAnimatableTexture(TextureManager.java:1031) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.renderer.texture.TextureManager.getTexture(TextureManager.java:112) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/com.mojang.blaze3d.systems.RenderSystem._setShaderTexture(RenderSystem.java:725) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/com.mojang.blaze3d.systems.RenderSystem.setShaderTexture(RenderSystem.java:718) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/elementals@5.0.0/dev.saperate.elementals.client.gui.UpgradeTreeScreen.drawTexture(UpgradeTreeScreen.java:474) ~[elementals-neoforge-1.21.1-5.0.0.jar%23193!/:5.0.0]
-	at TRANSFORMER/elementals@5.0.0/dev.saperate.elementals.client.gui.UpgradeTreeScreen.drawUpgradeButton(UpgradeTreeScreen.java:280) ~[elementals-neoforge-1.21.1-5.0.0.jar%23193!/:5.0.0]
-	at TRANSFORMER/elementals@5.0.0/dev.saperate.elementals.client.gui.UpgradeTreeScreen.drawTree(UpgradeTreeScreen.java:310) ~[elementals-neoforge-1.21.1-5.0.0.jar%23193!/:5.0.0]
-	at TRANSFORMER/elementals@5.0.0/dev.saperate.elementals.client.gui.UpgradeTreeScreen.drawTree(UpgradeTreeScreen.java:363) ~[elementals-neoforge-1.21.1-5.0.0.jar%23193!/:5.0.0]
-	at TRANSFORMER/elementals@5.0.0/dev.saperate.elementals.client.gui.UpgradeTreeScreen.drawTree(UpgradeTreeScreen.java:363) ~[elementals-neoforge-1.21.1-5.0.0.jar%23193!/:5.0.0]
-	at TRANSFORMER/elementals@5.0.0/dev.saperate.elementals.client.gui.UpgradeTreeScreen.render(UpgradeTreeScreen.java:155) ~[elementals-neoforge-1.21.1-5.0.0.jar%23193!/:5.0.0]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.gui.screens.Screen.renderWithTooltip(Screen.java:112) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/neoforge@21.1.235/net.neoforged.neoforge.client.ClientHooks.drawScreenInternal(ClientHooks.java:429) ~[neoforge-21.1.235.jar%23190!/:?]
-	at TRANSFORMER/neoforge@21.1.235/net.neoforged.neoforge.client.ClientHooks.drawScreen(ClientHooks.java:423) ~[neoforge-21.1.235.jar%23190!/:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.renderer.GameRenderer.render(GameRenderer.java:1098) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.Minecraft.runTick(Minecraft.java:1201) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.Minecraft.run(Minecraft.java:813) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.main.Main.main(Main.java:230) ~[neoforge-21.1.235.jar%23189!/:?]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at MC-BOOTSTRAP/fml_loader@4.0.42/net.neoforged.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:136) ~[loader-4.0.42.jar%23146!/:4.0]
-	at MC-BOOTSTRAP/fml_loader@4.0.42/net.neoforged.fml.loading.targets.CommonLaunchHandler.clientService(CommonLaunchHandler.java:124) ~[loader-4.0.42.jar%23146!/:4.0]
-	at MC-BOOTSTRAP/fml_loader@4.0.42/net.neoforged.fml.loading.targets.NeoForgeClientDevLaunchHandler.runService(NeoForgeClientDevLaunchHandler.java:23) ~[loader-4.0.42.jar%23146!/:4.0]
-	at MC-BOOTSTRAP/fml_loader@4.0.42/net.neoforged.fml.loading.targets.CommonLaunchHandler.lambda$launchService$4(CommonLaunchHandler.java:118) ~[loader-4.0.42.jar%23146!/:4.0]
-	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:30) [modlauncher-11.0.5.jar%23128!/:?]
-	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53) [modlauncher-11.0.5.jar%23128!/:?]
-	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71) [modlauncher-11.0.5.jar%23128!/:?]
-	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.Launcher.run(Launcher.java:103) [modlauncher-11.0.5.jar%23128!/:?]
-	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.Launcher.main(Launcher.java:74) [modlauncher-11.0.5.jar%23128!/:?]
-	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26) [modlauncher-11.0.5.jar%23128!/:?]
-	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) [modlauncher-11.0.5.jar%23128!/:?]
-	at cpw.mods.bootstraplauncher@2.0.2/cpw.mods.bootstraplauncher.BootstrapLauncher.run(BootstrapLauncher.java:210) [bootstraplauncher-2.0.2.jar:?]
-	at cpw.mods.bootstraplauncher@2.0.2/cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:69) [bootstraplauncher-2.0.2.jar:?]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?]
-[20jul.2026 21:52:07.188] [Render thread/WARN] [net.minecraft.client.renderer.texture.TextureManager/]: Failed to load texture: elementals:textures/gui/mud_icon.png
-java.io.FileNotFoundException: elementals:textures/gui/mud_icon.png
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.packs.resources.ResourceProvider.lambda$getResourceOrThrow$1(ResourceProvider.java:18) ~[neoforge-21.1.235.jar%23189!/:?]
-	at java.base/java.util.Optional.orElseThrow(Optional.java:403) ~[?:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.packs.resources.ResourceProvider.getResourceOrThrow(ResourceProvider.java:18) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.renderer.texture.SimpleTexture$TextureImage.load(SimpleTexture.java:83) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.renderer.texture.SimpleTexture.getTextureImage(SimpleTexture.java:57) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.renderer.texture.SimpleTexture.load(SimpleTexture.java:30) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.renderer.texture.TextureManager.loadTexture(TextureManager.java:92) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.renderer.texture.TextureManager.register(TextureManager.java:63) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.renderer.texture.TextureManager.getTexture(TextureManager.java:113) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/com.mojang.blaze3d.systems.RenderSystem._setShaderTexture(RenderSystem.java:725) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/com.mojang.blaze3d.systems.RenderSystem.setShaderTexture(RenderSystem.java:718) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/elementals@5.0.0/dev.saperate.elementals.client.gui.UpgradeTreeScreen.drawTexture(UpgradeTreeScreen.java:474) ~[elementals-neoforge-1.21.1-5.0.0.jar%23193!/:5.0.0]
-	at TRANSFORMER/elementals@5.0.0/dev.saperate.elementals.client.gui.UpgradeTreeScreen.drawUpgradeButton(UpgradeTreeScreen.java:280) ~[elementals-neoforge-1.21.1-5.0.0.jar%23193!/:5.0.0]
-	at TRANSFORMER/elementals@5.0.0/dev.saperate.elementals.client.gui.UpgradeTreeScreen.drawTree(UpgradeTreeScreen.java:310) ~[elementals-neoforge-1.21.1-5.0.0.jar%23193!/:5.0.0]
-	at TRANSFORMER/elementals@5.0.0/dev.saperate.elementals.client.gui.UpgradeTreeScreen.drawTree(UpgradeTreeScreen.java:363) ~[elementals-neoforge-1.21.1-5.0.0.jar%23193!/:5.0.0]
-	at TRANSFORMER/elementals@5.0.0/dev.saperate.elementals.client.gui.UpgradeTreeScreen.drawTree(UpgradeTreeScreen.java:363) ~[elementals-neoforge-1.21.1-5.0.0.jar%23193!/:5.0.0]
-	at TRANSFORMER/elementals@5.0.0/dev.saperate.elementals.client.gui.UpgradeTreeScreen.render(UpgradeTreeScreen.java:155) ~[elementals-neoforge-1.21.1-5.0.0.jar%23193!/:5.0.0]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.gui.screens.Screen.renderWithTooltip(Screen.java:112) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/neoforge@21.1.235/net.neoforged.neoforge.client.ClientHooks.drawScreenInternal(ClientHooks.java:429) ~[neoforge-21.1.235.jar%23190!/:?]
-	at TRANSFORMER/neoforge@21.1.235/net.neoforged.neoforge.client.ClientHooks.drawScreen(ClientHooks.java:423) ~[neoforge-21.1.235.jar%23190!/:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.renderer.GameRenderer.render(GameRenderer.java:1098) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.Minecraft.runTick(Minecraft.java:1201) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.Minecraft.run(Minecraft.java:813) ~[neoforge-21.1.235.jar%23189!/:?]
-	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.main.Main.main(Main.java:230) ~[neoforge-21.1.235.jar%23189!/:?]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at MC-BOOTSTRAP/fml_loader@4.0.42/net.neoforged.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:136) ~[loader-4.0.42.jar%23146!/:4.0]
-	at MC-BOOTSTRAP/fml_loader@4.0.42/net.neoforged.fml.loading.targets.CommonLaunchHandler.clientService(CommonLaunchHandler.java:124) ~[loader-4.0.42.jar%23146!/:4.0]
-	at MC-BOOTSTRAP/fml_loader@4.0.42/net.neoforged.fml.loading.targets.NeoForgeClientDevLaunchHandler.runService(NeoForgeClientDevLaunchHandler.java:23) ~[loader-4.0.42.jar%23146!/:4.0]
-	at MC-BOOTSTRAP/fml_loader@4.0.42/net.neoforged.fml.loading.targets.CommonLaunchHandler.lambda$launchService$4(CommonLaunchHandler.java:118) ~[loader-4.0.42.jar%23146!/:4.0]
-	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:30) [modlauncher-11.0.5.jar%23128!/:?]
-	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53) [modlauncher-11.0.5.jar%23128!/:?]
-	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71) [modlauncher-11.0.5.jar%23128!/:?]
-	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.Launcher.run(Launcher.java:103) [modlauncher-11.0.5.jar%23128!/:?]
-	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.Launcher.main(Launcher.java:74) [modlauncher-11.0.5.jar%23128!/:?]
-	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26) [modlauncher-11.0.5.jar%23128!/:?]
-	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) [modlauncher-11.0.5.jar%23128!/:?]
-	at cpw.mods.bootstraplauncher@2.0.2/cpw.mods.bootstraplauncher.BootstrapLauncher.run(BootstrapLauncher.java:210) [bootstraplauncher-2.0.2.jar:?]
-	at cpw.mods.bootstraplauncher@2.0.2/cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:69) [bootstraplauncher-2.0.2.jar:?]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?]
-[20jul.2026 21:52:07.231] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
-[20jul.2026 21:52:07.258] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:overworld
-[20jul.2026 21:52:07.335] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:the_end
-[20jul.2026 21:52:07.335] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:the_nether
-[20jul.2026 21:53:06.231] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
-[20jul.2026 21:53:06.246] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:overworld
-[20jul.2026 21:53:06.318] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:the_end
-[20jul.2026 21:53:06.319] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:the_nether
-[20jul.2026 21:53:08.515] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: [Dev: Set own game mode to Creative Mode]
-[20jul.2026 21:53:08.527] [Render thread/INFO] [net.minecraft.client.gui.components.ChatComponent/]: [System] [CHAT] Set own game mode to Creative Mode
-[20jul.2026 21:53:29.631] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
-[20jul.2026 21:53:29.646] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:overworld
-[20jul.2026 21:53:29.683] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:the_end
-[20jul.2026 21:53:29.685] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:the_nether
-[20jul.2026 21:54:42.198] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: Dev lost connection: Disconnected
-[20jul.2026 21:54:42.199] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Dev left the game
-[20jul.2026 21:54:42.216] [Server thread/INFO] [net.minecraft.server.network.ServerCommonPacketListenerImpl/]: Stopping singleplayer server as player logged out
-[20jul.2026 21:54:42.232] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Stopping server
-[20jul.2026 21:54:42.234] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving players
-[20jul.2026 21:54:42.234] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving worlds
-[20jul.2026 21:54:42.335] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:overworld
-[20jul.2026 21:54:42.659] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:the_end
-[20jul.2026 21:54:42.663] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:the_nether
-[20jul.2026 21:54:42.678] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (Test Addon): All chunks are saved
-[20jul.2026 21:54:42.679] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
-[20jul.2026 21:54:42.679] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
-[20jul.2026 21:54:42.679] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage: All dimensions are saved
-[20jul.2026 21:54:43.411] [Render thread/INFO] [team.lodestar.lodestone.LodestoneLib/]: Shutting down Lodestone
-[20jul.2026 21:54:43.427] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Stopping!
-[20jul.2026 21:54:43.446] [Render thread/INFO] [team.lodestar.lodestone.LodestoneLib/]: Closed geometry program: lodestone:nineslice/nine_slice
-[20jul.2026 21:54:43.446] [Render thread/INFO] [team.lodestar.lodestone.LodestoneLib/]: Closed geometry program: lodestone:nineslice/distorted/distorted_nine_slice_texture
+[20jul.2026 22:22:23.625] [Render thread/WARN] [net.minecraft.client.sounds.SoundEngine/SOUNDS]: Unable to play empty soundEvent: minecraft:entity.salmon.ambient
+[20jul.2026 22:22:43.762] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
+[20jul.2026 22:22:43.787] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:overworld
+[20jul.2026 22:22:43.872] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:the_end
+[20jul.2026 22:22:43.873] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:the_nether
+[20jul.2026 22:23:08.132] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: [Dev: Set own game mode to Survival Mode]
+[20jul.2026 22:23:08.144] [Render thread/INFO] [net.minecraft.client.gui.components.ChatComponent/]: [System] [CHAT] Set own game mode to Survival Mode
+[20jul.2026 22:23:18.893] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: [Dev: Set own game mode to Creative Mode]
+[20jul.2026 22:23:18.896] [Render thread/INFO] [net.minecraft.client.gui.components.ChatComponent/]: [System] [CHAT] Set own game mode to Creative Mode
+[20jul.2026 22:23:37.313] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
+[20jul.2026 22:23:37.436] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:overworld
+[20jul.2026 22:23:37.465] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:the_end
+[20jul.2026 22:23:37.465] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:the_nether
+[20jul.2026 22:23:42.776] [Render thread/INFO] [team.lodestar.lodestone.LodestoneLib/]: Shutting down Lodestone
+[20jul.2026 22:23:42.780] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Stopping!
+[20jul.2026 22:23:42.833] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: Dev lost connection: Disconnected
+[20jul.2026 22:23:42.833] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Dev left the game
+[20jul.2026 22:23:42.848] [Server thread/INFO] [net.minecraft.server.network.ServerCommonPacketListenerImpl/]: Stopping singleplayer server as player logged out
+[20jul.2026 22:23:42.862] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Stopping server
+[20jul.2026 22:23:42.864] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving players
+[20jul.2026 22:23:42.864] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving worlds
+[20jul.2026 22:23:42.943] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:overworld
+[20jul.2026 22:23:43.302] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:the_end
+[20jul.2026 22:23:43.307] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Addon]'/minecraft:the_nether
+[20jul.2026 22:23:43.329] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (Test Addon): All chunks are saved
+[20jul.2026 22:23:43.330] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[20jul.2026 22:23:43.330] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[20jul.2026 22:23:43.330] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage: All dimensions are saved
+[20jul.2026 22:23:43.470] [Render thread/INFO] [team.lodestar.lodestone.LodestoneLib/]: Closed geometry program: lodestone:nineslice/nine_slice
+[20jul.2026 22:23:43.470] [Render thread/INFO] [team.lodestar.lodestone.LodestoneLib/]: Closed geometry program: lodestone:nineslice/distorted/distorted_nine_slice_texture
