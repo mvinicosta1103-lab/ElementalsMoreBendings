@@ -1,5 +1,6 @@
 package com.example.elementalmorebendings.lava.abilities;
 
+import com.example.elementalmorebendings.common.MasterySupport;
 import dev.saperate.elementals.Elementals;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Element;
@@ -27,8 +28,36 @@ final class AbilitySupport {
                 && bender.plrData.canUseUpgrade(upgradeName);
     }
 
+    /**
+     * Lava Mastery: quando TODOS os upgrades da árvore de Lava estão
+     * desbloqueados (os 4 ramos originais do addon Elementals Subbending +
+     * as 5 habilidades que este addon anexa neles + qualquer nó que venha
+     * a ser adicionado no futuro — checagem genérica, ver
+     * {@link MasterySupport}), a subbending é considerada masterizada.
+     * Quem já dominou a subbending inteira não sofre mais o "cansaço" de
+     * gastar Chi pra usar habilidades de Lava — todo custo, inicial ou por
+     * tick, é dispensado.
+     */
+    static boolean hasLavaMastery(Bender bender) {
+        return MasterySupport.isElementMastered(bender, "Lava");
+    }
+
+    /** Gasto de custo inicial (cast), já ciente de Lava Mastery. */
     static boolean spendUnlocked(Bender bender, String upgradeName, float cost) {
-        return isUnlocked(bender, upgradeName) && bender.reduceChi(cost);
+        if (!isUnlocked(bender, upgradeName)) {
+            return false;
+        }
+        return hasLavaMastery(bender) || bender.reduceChi(cost);
+    }
+
+    /** Gasto de custo inicial (cast) sem checar upgrade separado — pra habilidades que já garantem estar desbloqueadas antes de chamar isto. */
+    static boolean spendChi(Bender bender, float cost) {
+        return hasLavaMastery(bender) || bender.reduceChi(cost);
+    }
+
+    /** Gasto de custo por tick (canais/toggles), já ciente de Lava Mastery. */
+    static boolean spendChiPerTick(Bender bender, float cost) {
+        return hasLavaMastery(bender) || bender.reduceChi(cost, false);
     }
 
     static boolean canDamageBlocks(ServerLevel world) {

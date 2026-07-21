@@ -35,7 +35,7 @@ public class LavaSurfAbility implements Ability {
     public void onBackgroundTick(Bender bender, Object data) {
         Player player = bender.player;
 
-        if (!AbilitySupport.isUnlocked(bender, "lavaSurf") || !bender.reduceChi(TICK_COST, false)) {
+        if (!AbilitySupport.isUnlocked(bender, "lavaSurf") || !AbilitySupport.spendChiPerTick(bender, TICK_COST)) {
             bender.removeAbilityFromBackground(this);
             return;
         }

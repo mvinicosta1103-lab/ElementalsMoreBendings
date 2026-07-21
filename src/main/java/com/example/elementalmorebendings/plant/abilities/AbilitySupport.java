@@ -1,5 +1,6 @@
 package com.example.elementalmorebendings.plant.abilities;
 
+import com.example.elementalmorebendings.common.MasterySupport;
 import dev.saperate.elementals.Elementals;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Element;
@@ -37,8 +38,36 @@ final class AbilitySupport {
                 && bender.plrData.canUseUpgrade(upgradeName);
     }
 
+    /**
+     * Plant Mastery: quando TODOS os upgrades da árvore de Plant estão
+     * desbloqueados (os 3 ramos originais do addon Elementals Subbending +
+     * as 3 habilidades que este addon anexa neles + qualquer nó que venha
+     * a ser adicionado no futuro — checagem genérica, ver
+     * {@link MasterySupport}), a subbending é considerada masterizada.
+     * Quem já dominou a subbending inteira não sofre mais o "cansaço" de
+     * gastar Chi pra usar habilidades de Plant — todo custo, inicial ou
+     * por tick, é dispensado.
+     */
+    static boolean hasPlantMastery(Bender bender) {
+        return MasterySupport.isElementMastered(bender, "Plant");
+    }
+
+    /** Gasto de custo inicial (cast), já ciente de Plant Mastery. */
     static boolean spendUnlocked(Bender bender, String upgradeName, float cost) {
-        return isUnlocked(bender, upgradeName) && bender.reduceChi(cost);
+        if (!isUnlocked(bender, upgradeName)) {
+            return false;
+        }
+        return hasPlantMastery(bender) || bender.reduceChi(cost);
+    }
+
+    /** Gasto de custo inicial (cast) sem checar upgrade separado. */
+    static boolean spendChi(Bender bender, float cost) {
+        return hasPlantMastery(bender) || bender.reduceChi(cost);
+    }
+
+    /** Gasto de custo por tick (canais/toggles), já ciente de Plant Mastery. */
+    static boolean spendChiPerTick(Bender bender, float cost) {
+        return hasPlantMastery(bender) || bender.reduceChi(cost, false);
     }
 
     static boolean canDamageBlocks(ServerLevel world) {

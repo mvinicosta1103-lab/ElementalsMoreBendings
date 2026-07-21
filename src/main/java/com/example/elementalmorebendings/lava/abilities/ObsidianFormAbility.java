@@ -48,7 +48,7 @@ public class ObsidianFormAbility implements Ability {
             return;
         }
 
-        if (!bender.reduceChi(BASE_COST)) {
+        if (!AbilitySupport.spendChi(bender, BASE_COST)) {
             bender.setCurrAbility(null);
             return;
         }
