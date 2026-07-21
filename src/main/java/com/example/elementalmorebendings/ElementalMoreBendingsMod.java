@@ -15,11 +15,13 @@ import com.example.elementalmorebendings.command.MoreBendingsCommand;
 import com.example.elementalmorebendings.command.MoreBendingsElementRegistry;
 import dev.saperate.elementals.elements.Element;
 import dev.saperate.elementals.elements.Upgrade;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
 import org.slf4j.Logger;
 import net.neoforged.neoforge.common.NeoForge;
 
@@ -59,9 +61,12 @@ import java.util.Arrays;
  * estático de {@code ModEntities}, o que registra o EntityType do
  * MudBallEntity via {@code Services.REGISTRY.registerEntity(...)} cedo o
  * bastante (antes do RegisterEvent de EntityType disparar). O renderer do
- * lado cliente é registrado separadamente em {@link #onClientSetup}, que só
- * dispara no lado físico do cliente — mantendo classes client-only
- * (MudBallEntityRenderer) fora do carregamento em dedicated server.
+ * lado cliente também é registrado aqui no construtor (atrás de um check
+ * de {@code Dist.CLIENT}), porque {@code EntityRenderersEvent.RegisterRenderers}
+ * dispara antes do {@code FMLClientSetupEvent} — registrar dentro deste
+ * último era tarde demais e deixava a MudBallEntity sem renderer,
+ * causando NullPointerException em EntityRenderDispatcher.shouldRender
+ * assim que uma bola de lama entrava em cena.
  */
 @Mod(ElementalMoreBendingsMod.MODID)
 public class ElementalMoreBendingsMod {
@@ -73,21 +78,31 @@ public class ElementalMoreBendingsMod {
         // Força o registro do EntityType do Mud Ball (comum a ambos os lados).
         ModEntities.init();
 
+        // IMPORTANTE: registerClientRenderer() precisa ser chamado AQUI, no
+        // construtor, e não dentro de onClientSetup (FMLClientSetupEvent).
+        // Por baixo dos panos, Services.REGISTRY.registerClientEntityRenderer
+        // funciona registrando um listener para o evento
+        // EntityRenderersEvent.RegisterRenderers no modEventBus — e esse
+        // evento dispara ANTES do FMLClientSetupEvent no ciclo de vida do
+        // NeoForge (RegisterEvent -> FMLCommonSetupEvent ->
+        // EntityRenderersEvent.RegisterRenderers -> FMLClientSetupEvent).
+        // Registrar o listener dentro de onClientSetup era tarde demais: o
+        // RegisterRenderers já tinha passado, o MudBallEntity nunca ganhava
+        // um EntityRenderer associado no EntityRenderDispatcher, e a
+        // primeira vez que o jogo tentava desenhar a entidade
+        // (EntityRenderDispatcher.shouldRender) ela crashava com
+        // NullPointerException porque "entityrenderer" era null.
+        // O check de Dist evita carregar MudBallEntityRenderer (que usa
+        // classes client-only como RenderSystem/PoseStack) num servidor
+        // dedicado.
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            ModEntities.registerClientRenderer();
+            LOGGER.info("[ElementalMoreBendings] Renderer do Mud Ball registrado no cliente.");
+        }
+
         modEventBus.addListener(this::onLoadComplete);
-        modEventBus.addListener(this::onClientSetup);
         NeoForge.EVENT_BUS.addListener(MoreBendingsCommand::onRegisterCommands);
 
-    }
-
-    /**
-     * Só dispara no lado físico do cliente. É aqui que registramos o
-     * renderer do Mud Ball, porque {@code MudBallEntityRenderer} referencia
-     * classes client-only (RenderSystem, PoseStack...) que não existem em
-     * um dedicated server.
-     */
-    private void onClientSetup(FMLClientSetupEvent event) {
-        ModEntities.registerClientRenderer();
-        LOGGER.info("[ElementalMoreBendings] Renderer do Mud Ball registrado no cliente.");
     }
 
     private void onLoadComplete(FMLLoadCompleteEvent event) {
