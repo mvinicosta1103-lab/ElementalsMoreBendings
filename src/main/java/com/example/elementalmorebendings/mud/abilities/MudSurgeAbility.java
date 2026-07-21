@@ -48,7 +48,7 @@ public class MudSurgeAbility implements Ability {
     public void onBackgroundTick(Bender bender, Object data) {
         Player player = bender.player;
 
-        if (!AbilitySupport.isUnlocked(bender, "mudSurge") || !bender.reduceChi(TICK_COST, false)) {
+        if (!AbilitySupport.isUnlocked(bender, "mudSurge")) {
             bender.removeAbilityFromBackground(this);
             return;
         }
@@ -58,7 +58,12 @@ public class MudSurgeAbility implements Ability {
                 || player.level().getBlockState(player.blockPosition()).is(Blocks.MUD);
 
         if (!onMud) {
-            return; // continua "armado", mas só empurra quando estiver sobre lama
+            return; // continua "armado" sem gastar chi; só cobra/empurra quando estiver sobre lama
+        }
+
+        if (!bender.reduceChi(TICK_COST, false)) {
+            bender.removeAbilityFromBackground(this);
+            return;
         }
 
         boolean empowered = bender.plrData.canUseUpgrade("mudSurgePowerI");
