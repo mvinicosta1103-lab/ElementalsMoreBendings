@@ -8,3 +8,4 @@
 /subbending grant Dev Plant
 /morebendings grant Dev Mud
 /bending element add Air Dev
+/morebendings grant Dev Crystal
