@@ -1,164 +1,46 @@
 {
-  "minecraft:recipes/decorations/crafting_table": {
-    "criteria": {
-      "unlock_right_away": "2026-07-19 21:43:52 -0300"
-    },
-    "done": true
-  },
-  "elementals:root": {
-    "criteria": {
-      "trigger": "2026-07-19 21:43:52 -0300"
-    },
-    "done": true
-  },
   "elementals:waterbending": {
     "criteria": {
-      "element": "2026-07-19 21:43:53 -0300"
+      "element": "2026-07-20 23:12:36 -0300"
     },
     "done": true
   },
   "elementals:earthbending": {
     "criteria": {
-      "element": "2026-07-19 21:43:53 -0300"
+      "element": "2026-07-20 23:12:36 -0300"
     },
     "done": true
   },
   "elementals:airbending": {
     "criteria": {
-      "element": "2026-07-19 21:43:53 -0300"
+      "element": "2026-07-20 23:12:36 -0300"
     },
     "done": true
   },
   "elementals:firebending": {
     "criteria": {
-      "element": "2026-07-19 21:43:53 -0300"
+      "element": "2026-07-20 23:12:36 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/crafting_table": {
+    "criteria": {
+      "unlock_right_away": "2026-07-20 23:12:36 -0300"
+    },
+    "done": true
+  },
+  "elementals:root": {
+    "criteria": {
+      "trigger": "2026-07-20 23:12:36 -0300"
     },
     "done": true
   },
   "minecraft:adventure/adventuring_time": {
     "criteria": {
-      "minecraft:jungle": "2026-07-19 21:43:53 -0300",
-      "minecraft:river": "2026-07-19 23:05:35 -0300",
-      "minecraft:plains": "2026-07-19 23:05:37 -0300"
+      "minecraft:badlands": "2026-07-20 23:12:37 -0300",
+      "minecraft:river": "2026-07-20 23:12:55 -0300"
     },
     "done": false
-  },
-  "minecraft:adventure/root": {
-    "criteria": {
-      "killed_something": "2026-07-19 22:32:20 -0300"
-    },
-    "done": true
-  },
-  "minecraft:adventure/kill_all_mobs": {
-    "criteria": {
-      "minecraft:enderman": "2026-07-19 23:43:05 -0300",
-      "minecraft:zombie": "2026-07-20 18:03:03 -0300",
-      "minecraft:creeper": "2026-07-20 20:51:38 -0300",
-      "minecraft:husk": "2026-07-19 22:32:20 -0300"
-    },
-    "done": false
-  },
-  "minecraft:adventure/kill_a_mob": {
-    "criteria": {
-      "minecraft:husk": "2026-07-19 22:32:20 -0300"
-    },
-    "done": true
-  },
-  "elementals:metalbending": {
-    "criteria": {
-      "element": "2026-07-19 22:48:49 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/tools/flint_and_steel": {
-    "criteria": {
-      "has_obsidian": "2026-07-19 23:04:01 -0300"
-    },
-    "done": true
-  },
-  "minecraft:story/form_obsidian": {
-    "criteria": {
-      "obsidian": "2026-07-19 23:04:01 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/decorations/enchanting_table": {
-    "criteria": {
-      "has_obsidian": "2026-07-19 23:04:01 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/transportation/mangrove_boat": {
-    "criteria": {
-      "in_water": "2026-07-19 23:05:33 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/transportation/acacia_boat": {
-    "criteria": {
-      "in_water": "2026-07-19 23:05:33 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/transportation/cherry_boat": {
-    "criteria": {
-      "in_water": "2026-07-19 23:05:33 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/transportation/bamboo_raft": {
-    "criteria": {
-      "in_water": "2026-07-19 23:05:33 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/transportation/spruce_boat": {
-    "criteria": {
-      "in_water": "2026-07-19 23:05:33 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/transportation/birch_boat": {
-    "criteria": {
-      "in_water": "2026-07-19 23:05:33 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/transportation/oak_boat": {
-    "criteria": {
-      "in_water": "2026-07-19 23:05:33 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/transportation/jungle_boat": {
-    "criteria": {
-      "in_water": "2026-07-19 23:05:33 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/transportation/dark_oak_boat": {
-    "criteria": {
-      "in_water": "2026-07-19 23:05:33 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/food/baked_potato_from_campfire_cooking": {
-    "criteria": {
-      "has_potato": "2026-07-20 21:51:37 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/food/baked_potato_from_smoking": {
-    "criteria": {
-      "has_potato": "2026-07-20 21:51:37 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/food/baked_potato": {
-    "criteria": {
-      "has_potato": "2026-07-20 21:51:37 -0300"
-    },
-    "done": true
   },
   "DataVersion": 3955
 }

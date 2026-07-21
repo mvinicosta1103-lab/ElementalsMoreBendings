@@ -9,15 +9,9 @@
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/ElementalMoreBendingsMod.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/ElementalMoreBendingsMod.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/command/MoreBendingsCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/command/MoreBendingsCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/assets/obsidianwake/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/obsidianwake/lang/en_us.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/AbilitySupport.class.uniqueId0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/AbilitySupport.class.uniqueId1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/MasterySupport.class.uniqueId2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/command_history.txt" beforeDir="false" afterPath="$PROJECT_DIR$/run/command_history.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" beforeDir="false" afterPath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-20-1.log.gz" afterDir="false" />
@@ -43,6 +37,7 @@
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-28.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-20-28.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-29.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-20-29.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-20-3.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-30.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-20-30.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-20-4.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-20-5.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-6.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-20-6.log.gz" afterDir="false" />
@@ -58,22 +53,37 @@
       <change beforePath="$PROJECT_DIR$/run/logs/latest.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/latest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/DIM-1/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/DIM-1/data/raids.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/DIM1/data/raids_end.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/DIM1/data/raids_end.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/advancements/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/advancements/380df991-f603-344c-a090-369bad2a924a.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/elementals.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/data/elementals.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/data/raids.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/random_sequences.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/data/random_sequences.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/random_sequences.dat" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.-1.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.-1.-1.mca" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.-1.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.-1.0.mca" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.0.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.0.-1.mca" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.0.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.0.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/icon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/level.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/level.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/level.dat_old" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/level.dat_old" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/playerdata/380df991-f603-344c-a090-369bad2a924a.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/playerdata/380df991-f603-344c-a090-369bad2a924a.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/playerdata/380df991-f603-344c-a090-369bad2a924a.dat_old" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/playerdata/380df991-f603-344c-a090-369bad2a924a.dat_old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.-1.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.-1.-1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.-1.-2.mca" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.-1.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.-1.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.-2.-1.mca" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.-2.-2.mca" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.-2.0.mca" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.0.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.0.-1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.0.-2.mca" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.0.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.0.0.mca" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.-1.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/region/r.-1.-1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.-1.-2.mca" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.-1.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/region/r.-1.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.-2.-1.mca" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.-2.-2.mca" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.-2.0.mca" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.0.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/region/r.0.-1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.0.-2.mca" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.0.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/region/r.0.0.mca" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/session.lock" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/session.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/stats/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/stats/380df991-f603-344c-a090-369bad2a924a.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/usercache.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/usercache.json" afterDir="false" />
     </list>
@@ -152,23 +162,23 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0000017686346978" />
-      <entry key="S5" value="1.00754769332964" />
-      <entry key="S10" value="1.1227789351899338" />
-      <entry key="S30" value="1.8216169117745031" />
-      <entry key="S60" value="2.5695224733527295" />
-      <entry key="M2" value="3.5546454112124435" />
-      <entry key="M5" value="4.7318147752584165" />
-      <entry key="M10" value="5.302512159940726" />
-      <entry key="M15" value="5.519518412632679" />
-      <entry key="M30" value="5.751630219665196" />
-      <entry key="H1" value="5.873707412598206" />
-      <entry key="H2" value="5.936317038469775" />
-      <entry key="H4" value="5.9680231142700135" />
-      <entry key="D1" value="5.994651606775536" />
-      <entry key="W1" value="5.999235479278487" />
+      <entry key="MS100" value="1.0000004209055884" />
+      <entry key="MS500" value="1.0530685593395739" />
+      <entry key="S2" value="1.494442568986491" />
+      <entry key="S5" value="1.9293352954397183" />
+      <entry key="S10" value="2.2921472694639413" />
+      <entry key="S30" value="2.7062836566411033" />
+      <entry key="S60" value="2.868966289607815" />
+      <entry key="M2" value="3.711472050183641" />
+      <entry key="M5" value="9.37691707725936" />
+      <entry key="M10" value="15.90841906369463" />
+      <entry key="M15" value="19.43307158342708" />
+      <entry key="M30" value="24.52573541585606" />
+      <entry key="H1" value="28.516852406549937" />
+      <entry key="H2" value="31.307480437305856" />
+      <entry key="H4" value="33.015886596386665" />
+      <entry key="D1" value="34.647536078311056" />
+      <entry key="W1" value="34.94907633073138" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -190,23 +200,23 @@
       <entry key="W1" value="0.0" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9395227492140118" />
-      <entry key="MS500" value="0.9876008614453725" />
-      <entry key="S2" value="0.9968874588773028" />
-      <entry key="S5" value="1.006288822765018" />
-      <entry key="S10" value="1.1220576273260354" />
-      <entry key="S30" value="1.8211884567418122" />
-      <entry key="S60" value="2.5691986550953194" />
-      <entry key="M2" value="3.554406069694004" />
-      <entry key="M5" value="4.731680875239667" />
-      <entry key="M10" value="5.3024358534161875" />
-      <entry key="M15" value="5.519465161845162" />
-      <entry key="M30" value="5.75160231954" />
-      <entry key="H1" value="5.873693126936374" />
-      <entry key="H2" value="5.936309809531676" />
-      <entry key="H4" value="5.968019477992238" />
-      <entry key="D1" value="5.994650997676038" />
-      <entry key="W1" value="5.999235392189182" />
+      <entry key="MS100" value="5.257361635019132E-5" />
+      <entry key="MS500" value="0.18359108466716986" />
+      <entry key="S2" value="1.0765649741902144" />
+      <entry key="S5" value="1.6895478721521118" />
+      <entry key="S10" value="2.130928558374891" />
+      <entry key="S30" value="2.6343996554470013" />
+      <entry key="S60" value="2.829805770134978" />
+      <entry key="M2" value="3.6909502006250046" />
+      <entry key="M5" value="9.368347923465176" />
+      <entry key="M10" value="15.904018244628604" />
+      <entry key="M15" value="19.430100903705995" />
+      <entry key="M30" value="24.524224830697776" />
+      <entry key="H1" value="28.516087458220998" />
+      <entry key="H2" value="31.307094602984485" />
+      <entry key="H4" value="33.015692650979894" />
+      <entry key="D1" value="34.64750359033176" />
+      <entry key="W1" value="34.94907168526685" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -353,14 +363,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
-    </task>
-    <task id="LOCAL-00014" summary="V1">
-      <option name="closed" value="true" />
-      <created>1784565178982</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1784565178982</updated>
     </task>
     <task id="LOCAL-00015" summary="V1">
       <option name="closed" value="true" />
@@ -746,7 +748,15 @@
       <option name="project" value="LOCAL" />
       <updated>1784598966480</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="V1">
+      <option name="closed" value="true" />
+      <created>1784599706407</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1784599706409</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

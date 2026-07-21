@@ -161,8 +161,9 @@
   "upgrade.elementals.mudBallBlindnessI.icon": "mud_ball",
   "upgrade.elementals.mudMastery": "Mud Mastery",
   "upgrade.elementals.mudMastery.description": " You have mastered every technique of Mud bending. Your Chi no longer drains from using Mud abilities.",
-  "upgrade.elementals.mudMastery.icon": "mud_mastery",
-  "upgrade.elementals.bendingMud.icon": "mud",
+  "upgrade.elementals.bendingMud": "Mud Bending",
+  "upgrade.elementals.bendingMud.description": " Allows you to gain control of Mud, increase your focus on the most fluid aspects of the mud..",
+  "upgrade.elementals.bendingMud.icon": "symbol/mud",
 
   "upgrade.elementals.crystalWall": "Crystal Wall",
   "upgrade.elementals.crystalWall.description": " Crystallize the ground in front of you into a wall of solid amethyst.",
@@ -239,5 +240,7 @@
   "upgrade.elementals.crystalMastery": "Crystal Mastery",
   "upgrade.elementals.crystalMastery.description": " You have mastered every technique of Crystal bending. Your Chi no longer drains from using Crystal abilities.",
   "upgrade.elementals.crystalMastery.icon": "crystal_mastery",
-  "upgrade.elementals.bendingCrystal.icon": "crystal"
+  "upgrade.elementals.bendingCrystal": "Crystal Bending",
+  "upgrade.elementals.bendingCrystal.description": " Allows you to gain control of crystal, crystallizing earth and stone into sharp, gleaming amethyst.",
+  "upgrade.elementals.bendingCrystal.icon": "symbol/crystal"
 }
