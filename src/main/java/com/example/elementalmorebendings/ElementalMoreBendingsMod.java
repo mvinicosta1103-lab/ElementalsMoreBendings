@@ -9,6 +9,7 @@ import com.example.elementalmorebendings.plant.abilities.OvergrowthSpikesAbility
 import com.example.elementalmorebendings.plant.abilities.ThornBarrageAbility;
 import com.example.elementalmorebendings.plant.abilities.VineArcAbility;
 import com.example.elementalmorebendings.mud.abilities.MudElement;
+import com.example.elementalmorebendings.crystal.abilities.CrystalElement;
 import com.example.elementalmorebendings.registry.ModEntities;
 import com.mojang.logging.LogUtils;
 import com.example.elementalmorebendings.command.MoreBendingsCommand;
@@ -36,6 +37,11 @@ import java.util.Arrays;
  * elementos "Lava" e "Plant" do addon já existem), ele pega os dois
  * Elements já registrados e acrescenta habilidades novas DENTRO dos ramos
  * que o addon do Jsumpter já criou, sem tocar no jar original.
+ * <p>
+ * NOVO: "Crystal" segue exatamente o mesmo caminho de "Mud" — elemento
+ * novo, sem equivalente no jar base, registrado aqui via
+ * {@code registerCrystalElement()} (ver {@code CrystalElement}, em
+ * {@code crystal.abilities}).
  * <p>
  * IMPORTANTE — por que os nós ficam dentro dos ramos existentes e não
  * direto na raiz: a UpgradeTreeScreen (a tela da árvore, do próprio
@@ -107,6 +113,7 @@ public class ElementalMoreBendingsMod {
 
     private void onLoadComplete(FMLLoadCompleteEvent event) {
         registerMudElement();
+        registerCrystalElement();
         extendLavaTree();
         extendPlantTree();
     }
@@ -115,6 +122,12 @@ public class ElementalMoreBendingsMod {
         new MudElement();
         MoreBendingsElementRegistry.register("Mud");
         LOGGER.info("[ElementalMoreBendings] Elemento 'Mud' registrado com sucesso.");
+    }
+
+    private void registerCrystalElement() {
+        new CrystalElement();
+        MoreBendingsElementRegistry.register("Crystal");
+        LOGGER.info("[ElementalMoreBendings] Elemento 'Crystal' registrado com sucesso.");
     }
 
     // ------------------------------------------------------------------
