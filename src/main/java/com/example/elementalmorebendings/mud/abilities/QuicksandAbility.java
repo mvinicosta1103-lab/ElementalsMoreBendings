@@ -89,7 +89,7 @@ public class QuicksandAbility implements Ability {
         }
 
         // O canal só continua enquanto o jogador mantiver o agachar segurado.
-        if (!player.isShiftKeyDown() || !bender.reduceChi(TICK_COST, false)) {
+        if (!player.isShiftKeyDown() || !AbilitySupport.spendChiPerTick(bender, TICK_COST)) {
             release(bender, state);
             bender.setCurrAbility(null);
             return;

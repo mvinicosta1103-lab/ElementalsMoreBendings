@@ -24,7 +24,7 @@ public class MudBallAbility implements Ability {
     private static final float THROW_SPEED = 0.9f;
 
     public void onCall(Bender bender, long deltaT) {
-        if (!bender.reduceChi(BASE_COST)) {
+        if (!AbilitySupport.spendChi(bender, BASE_COST)) {
             if (bender.abilityData == null) {
                 bender.setCurrAbility(null);
             } else {

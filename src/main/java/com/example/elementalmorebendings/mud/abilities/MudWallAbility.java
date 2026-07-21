@@ -30,6 +30,14 @@ import java.util.TreeMap;
  * por um tempo e depois afundar/sumir do mesmo jeito camada por camada,
  * restaurando o bloco original de cada posição em vez de simplesmente virar
  * ar ou desaparecer tudo de uma vez.
+ * <p>
+ * Cada conjuração é <b>independente</b>: o jogador pode erguer várias
+ * paredes em lugares diferentes ao mesmo tempo, cada uma subindo/descendo
+ * no seu próprio ritmo, em vez de uma nova parede substituir/teleportar a
+ * anterior. Pra não deixar acumular paredes demais (principalmente agora
+ * que Mud Mastery deixa o custo de graça), só as {@code MAX_CONCURRENT_WALLS}
+ * mais recentes ficam de pé por vez — ao ultrapassar o limite, a mais
+ * antiga é derrubada/restaurada na hora pra abrir espaço pra nova.
  */
 public class MudWallAbility implements Ability {
 
@@ -37,6 +45,7 @@ public class MudWallAbility implements Ability {
     private static final double PLACE_DISTANCE = 3.0;
     private static final int TICKS_PER_LAYER = 2;
     private static final int HOLD_DURATION_TICKS = 160; // ~8s de pé
+    private static final int MAX_CONCURRENT_WALLS = 3;
 
     public void onCall(Bender bender, long deltaT) {
         Player player2 = bender.player;
@@ -75,14 +84,25 @@ public class MudWallAbility implements Ability {
 
         List<List<BlockPos>> layers = new ArrayList<>(layerMap.values());
 
-        Object previous = bender.getBackgroundAbilityData(this);
-        if (previous instanceof MudStructureAnimator previousAnimator) {
-            previousAnimator.cancelAndRestoreAll();
+        Object previousData = bender.getBackgroundAbilityData(this);
+        List<MudStructureAnimator> activeWalls;
+        if (previousData instanceof List<?> rawList) {
+            @SuppressWarnings("unchecked")
+            List<MudStructureAnimator> casted = (List<MudStructureAnimator>) rawList;
+            activeWalls = casted;
+        } else {
+            activeWalls = new ArrayList<>();
         }
 
-        MudStructureAnimator animator = new MudStructureAnimator(world, layers, originalStates,
-                Blocks.MUD.defaultBlockState(), TICKS_PER_LAYER, HOLD_DURATION_TICKS);
-        bender.addBackgroundAbility(this, animator);
+        // Não deixa acumular paredes demais: derruba a mais antiga na hora
+        // pra abrir espaço, em vez de negar a nova conjuração.
+        while (activeWalls.size() >= MAX_CONCURRENT_WALLS) {
+            activeWalls.remove(0).cancelAndRestoreAll();
+        }
+
+        activeWalls.add(new MudStructureAnimator(world, layers, originalStates,
+                Blocks.MUD.defaultBlockState(), TICKS_PER_LAYER, HOLD_DURATION_TICKS));
+        bender.addBackgroundAbility(this, activeWalls);
 
         bender.setCurrAbility(null);
     }
@@ -136,11 +156,17 @@ public class MudWallAbility implements Ability {
     }
 
     public void onBackgroundTick(Bender bender, Object data) {
-        if (!(data instanceof MudStructureAnimator animator)) {
+        if (!(data instanceof List<?> rawList)) {
             bender.removeAbilityFromBackground(this);
             return;
         }
-        if (animator.tick()) {
+
+        @SuppressWarnings("unchecked")
+        List<MudStructureAnimator> activeWalls = (List<MudStructureAnimator>) rawList;
+
+        activeWalls.removeIf(MudStructureAnimator::tick);
+
+        if (activeWalls.isEmpty()) {
             bender.removeAbilityFromBackground(this);
         }
     }

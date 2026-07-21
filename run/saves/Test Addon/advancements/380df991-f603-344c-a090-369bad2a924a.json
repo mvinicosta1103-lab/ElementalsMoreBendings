@@ -142,5 +142,23 @@
     },
     "done": true
   },
+  "minecraft:recipes/food/baked_potato_from_campfire_cooking": {
+    "criteria": {
+      "has_potato": "2026-07-20 21:51:37 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/food/baked_potato_from_smoking": {
+    "criteria": {
+      "has_potato": "2026-07-20 21:51:37 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/food/baked_potato": {
+    "criteria": {
+      "has_potato": "2026-07-20 21:51:37 -0300"
+    },
+    "done": true
+  },
   "DataVersion": 3955
 }

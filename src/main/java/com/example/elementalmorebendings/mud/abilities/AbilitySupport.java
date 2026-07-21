@@ -29,8 +29,36 @@ final class AbilitySupport {
                 && bender.plrData.canUseUpgrade(upgradeName);
     }
 
+    /**
+     * Mud Mastery é o capstone da árvore inteira de Mud (só desbloqueável
+     * depois de todos os outros upgrades dos 4 ramos, via
+     * {@link MudElement#isSkillTreeComplete}). Quem já dominou a subbending
+     * inteira não sofre mais o "cansaço" de gastar Chi pra usar habilidades
+     * de Mud — todo custo, inicial ou por tick, é dispensado.
+     */
+    static boolean hasMudMastery(Bender bender) {
+        Element element = Element.getElement("Mud");
+        return element != null && "Mud".equals(element.getName())
+                && bender.hasElement(element)
+                && bender.plrData.canUseUpgrade("mudMastery");
+    }
+
+    /** Gasto de custo inicial (cast), já ciente de Mud Mastery. */
     static boolean spendUnlocked(Bender bender, String upgradeName, float cost) {
-        return isUnlocked(bender, upgradeName) && bender.reduceChi(cost);
+        if (!isUnlocked(bender, upgradeName)) {
+            return false;
+        }
+        return hasMudMastery(bender) || bender.reduceChi(cost);
+    }
+
+    /** Gasto de custo inicial (cast) sem checar upgrade separado — pra habilidades que o próprio addAbility já garante estarem desbloqueadas. */
+    static boolean spendChi(Bender bender, float cost) {
+        return hasMudMastery(bender) || bender.reduceChi(cost);
+    }
+
+    /** Gasto de custo por tick (canais/toggles), já ciente de Mud Mastery. */
+    static boolean spendChiPerTick(Bender bender, float cost) {
+        return hasMudMastery(bender) || bender.reduceChi(cost, false);
     }
 
     /** Encerra a habilidade corrente do bender (equivalente ao padrão AbilitySupport.finish do jar base). */

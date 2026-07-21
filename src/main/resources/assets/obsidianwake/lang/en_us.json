@@ -140,11 +140,11 @@
   "upgrade.elementals.mudSlideSpeedI.description": " Mud slide moves faster.",
   "upgrade.elementals.mudSlideSpeedI.icon": "mud_slide",
   "upgrade.elementals.mudSurge": "Mud Surge",
-  "upgrade.elementals.mudSurge.description": " Toggle: while active and standing on mud, surf across it, continuously accelerating in the direction you're looking.",
+  "upgrade.elementals.mudSurge.description": " A quick surge of mud pulls you forward and upward, like a short dash.",
   "upgrade.elementals.mudSurge.icon": "mud_slide",
   "upgrade.elementals.mudSurge.use": " Use: %d",
   "upgrade.elementals.mudSurgePowerI": "Power I",
-  "upgrade.elementals.mudSurgePowerI.description": " Mud Surge accelerates faster and reaches a much higher top speed.",
+  "upgrade.elementals.mudSurgePowerI.description": " Mud Surge pulls you forward and upward with much more force.",
   "upgrade.elementals.mudSurgePowerI.icon": "mud_slide",
   "upgrade.elementals.mudBall": "Mud Ball",
   "upgrade.elementals.mudBall.description": " Launch a hardened ball of mud at range.",
@@ -160,6 +160,7 @@
   "upgrade.elementals.mudBallBlindnessI.description": " Mud ball briefly blinds the target on impact.",
   "upgrade.elementals.mudBallBlindnessI.icon": "mud_ball",
   "upgrade.elementals.mudMastery": "Mud Mastery",
-  "upgrade.elementals.mudMastery.description": " You have mastered every technique of Mud bending.",
-  "upgrade.elementals.mudMastery.icon": "mud_mastery"
+  "upgrade.elementals.mudMastery.description": " You have mastered every technique of Mud bending. Your Chi no longer drains from using Mud abilities.",
+  "upgrade.elementals.mudMastery.icon": "mud_mastery",
+  "upgrade.elementals.bendingMud.icon": "mud"
 }
