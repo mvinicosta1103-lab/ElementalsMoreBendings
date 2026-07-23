@@ -2,7 +2,6 @@ package com.example.elementalmorebendings.crystal.abilities;
 
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
-import dev.saperate.elementals.elements.earth.EarthElement;
 import dev.saperate.elementals.entities.earth.EarthBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -123,7 +122,7 @@ public class CrystalSpikeAbility implements Ability {
                     for (int y = -3; y <= 1; y++) {
                         BlockPos pos = center.offset(x, y, z);
                         BlockState state = world.getBlockState(pos);
-                        if (!state.isAir() && EarthElement.isBlockBendable(state, bender)) {
+                        if (!state.isAir() && AbilitySupport.isCrystalBendable(state, bender)) {
                             found.add(pos.immutable());
                             if (found.size() >= max) break search;
                         }

@@ -1,14 +1,17 @@
 package com.example.elementalmorebendings.crystal.abilities;
 
+import com.example.elementalmorebendings.common.AddonTags;
 import com.example.elementalmorebendings.common.MasterySupport;
 import dev.saperate.elementals.Elementals;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Element;
+import dev.saperate.elementals.elements.earth.EarthElement;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
@@ -47,6 +50,27 @@ final class AbilitySupport {
      */
     static boolean hasCrystalMastery(Bender bender) {
         return MasterySupport.isElementMastered(bender, "Crystal");
+    }
+
+    /**
+     * Todo bloco de minério (ver {@link AddonTags#ORE_BLOCKS}) conta como
+     * "dobrável" pra quem já tiver adquirido a subbending Crystal — basta
+     * ter o elemento, sem precisar de nenhum upgrade específico. Reflete o
+     * pedido de que Crystal permita dobrar/controlar todos os minérios.
+     */
+    static boolean isOreBendable(BlockState state, Bender bender) {
+        Element crystal = CrystalElement.get();
+        return crystal != null && bender.hasElement(crystal) && state.is(AddonTags.ORE_BLOCKS);
+    }
+
+    /**
+     * Substitui as chamadas diretas a {@code EarthElement.isBlockBendable}
+     * nas habilidades de Crystal: continua valendo tudo que Earth (e Metal,
+     * se aplicável) já bendam, e ACRESCENTA qualquer minério quando o
+     * bender tiver Crystal — mesmo que o bloco não esteja na tag de Earth.
+     */
+    static boolean isCrystalBendable(BlockState state, Bender bender) {
+        return EarthElement.isBlockBendable(state, bender) || isOreBendable(state, bender);
     }
 
     /** Gasto de custo inicial (cast), já ciente de Crystal Mastery. */

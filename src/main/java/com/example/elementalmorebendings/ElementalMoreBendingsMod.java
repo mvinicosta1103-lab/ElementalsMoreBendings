@@ -10,6 +10,7 @@ import com.example.elementalmorebendings.plant.abilities.ThornBarrageAbility;
 import com.example.elementalmorebendings.plant.abilities.VineArcAbility;
 import com.example.elementalmorebendings.mud.abilities.MudElement;
 import com.example.elementalmorebendings.crystal.abilities.CrystalElement;
+import com.example.elementalmorebendings.crystal.abilities.CrystalOreSenseHandler;
 import com.example.elementalmorebendings.registry.ModEntities;
 import com.mojang.logging.LogUtils;
 import com.example.elementalmorebendings.command.MoreBendingsCommand;
@@ -108,6 +109,7 @@ public class ElementalMoreBendingsMod {
 
         modEventBus.addListener(this::onLoadComplete);
         NeoForge.EVENT_BUS.addListener(MoreBendingsCommand::onRegisterCommands);
+        NeoForge.EVENT_BUS.addListener(CrystalOreSenseHandler::onPlayerTick);
 
     }
 

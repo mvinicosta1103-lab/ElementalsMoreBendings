@@ -1,4 +1,4 @@
-package com.example.elementalmorebendings.crystal.abilities;
+package com.example.elementalmorebendings.sand.abilities;
 
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
@@ -18,24 +18,24 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * CrystalWallAbility ("crystalWall")
- * Ramo 1 (Defesa) — cristaliza o chão na frente do jogador numa parede de
- * ametista maciça, na direção pra onde ele está olhando. Mesmo padrão de
- * {@code MudWallAbility}, usando {@link CrystalStructureAnimator} pra
- * erguer a parede camada por camada e depois recolhê-la, restaurando os
- * blocos originais.
+ * SandWallAbility ("sandWall")
+ * Ramo 1 (Defesa) — compacta a areia/terra na frente do jogador numa
+ * parede de arenito maciça, na direção pra onde ele está olhando. Mesmo
+ * padrão de {@code CrystalWallAbility}/{@code MudWallAbility}, usando
+ * {@link SandStructureAnimator} pra erguer a parede camada por camada e
+ * depois recolhê-la, restaurando os blocos originais.
  * <p>
  * Cada conjuração é independente: várias paredes podem coexistir em
  * lugares diferentes ao mesmo tempo, cada uma subindo/descendo no seu
  * próprio ritmo. Só as {@code MAX_CONCURRENT_WALLS} mais recentes ficam de
  * pé por vez.
  */
-public class CrystalWallAbility implements Ability {
+public class SandWallAbility implements Ability {
 
-    private static final float BASE_COST = 20.0f;
+    private static final float BASE_COST = 18.0f;
     private static final double PLACE_DISTANCE = 3.0;
     private static final int TICKS_PER_LAYER = 2;
-    private static final int HOLD_DURATION_TICKS = 160; // ~8s de pé
+    private static final int HOLD_DURATION_TICKS = 140; // ~7s de pé
     private static final int MAX_CONCURRENT_WALLS = 3;
 
     public void onCall(Bender bender, long deltaT) {
@@ -45,14 +45,14 @@ public class CrystalWallAbility implements Ability {
             return;
         }
 
-        if (!AbilitySupport.spendUnlocked(bender, "crystalWall", BASE_COST)) {
+        if (!AbilitySupport.spendUnlocked(bender, "sandWall", BASE_COST)) {
             bender.setCurrAbility(null);
             return;
         }
 
-        int height = bender.plrData.canUseUpgrade("crystalWallHeightII") ? 4
-                : (bender.plrData.canUseUpgrade("crystalWallHeightI") ? 3 : 2);
-        int halfWidth = bender.plrData.canUseUpgrade("crystalWallWidthI") ? 2 : 1;
+        int height = bender.plrData.canUseUpgrade("sandWallHeightII") ? 4
+                : (bender.plrData.canUseUpgrade("sandWallHeightI") ? 3 : 2);
+        int halfWidth = bender.plrData.canUseUpgrade("sandWallWidthI") ? 2 : 1;
 
         ServerLevel world = player.serverLevel();
         Vec3 forward = player.getLookAngle().multiply(1.0, 0.0, 1.0);
@@ -76,10 +76,10 @@ public class CrystalWallAbility implements Ability {
         List<List<BlockPos>> layers = new ArrayList<>(layerMap.values());
 
         Object previousData = bender.getBackgroundAbilityData(this);
-        List<CrystalStructureAnimator> activeWalls;
+        List<SandStructureAnimator> activeWalls;
         if (previousData instanceof List<?> rawList) {
             @SuppressWarnings("unchecked")
-            List<CrystalStructureAnimator> casted = (List<CrystalStructureAnimator>) rawList;
+            List<SandStructureAnimator> casted = (List<SandStructureAnimator>) rawList;
             activeWalls = casted;
         } else {
             activeWalls = new ArrayList<>();
@@ -89,8 +89,8 @@ public class CrystalWallAbility implements Ability {
             activeWalls.remove(0).cancelAndRestoreAll();
         }
 
-        activeWalls.add(new CrystalStructureAnimator(world, layers, originalStates,
-                Blocks.AMETHYST_BLOCK.defaultBlockState(), TICKS_PER_LAYER, HOLD_DURATION_TICKS));
+        activeWalls.add(new SandStructureAnimator(world, layers, originalStates,
+                Blocks.SANDSTONE.defaultBlockState(), TICKS_PER_LAYER, HOLD_DURATION_TICKS));
         bender.addBackgroundAbility(this, activeWalls);
 
         bender.setCurrAbility(null);
@@ -119,7 +119,7 @@ public class CrystalWallAbility implements Ability {
                 if (!current.isAir() && !current.getFluidState().isEmpty()) {
                     continue; // não substitui água/lava no meio da parede
                 }
-                if (!AbilitySupport.isCrystalBendable(current, bender) && !current.isAir()) {
+                if (!AbilitySupport.isSandBendable(current, bender) && !current.isAir()) {
                     continue; // respeita blocos protegidos/não-bendable
                 }
                 if (!player.mayInteract((Level) world, pos)) {
@@ -151,9 +151,9 @@ public class CrystalWallAbility implements Ability {
         }
 
         @SuppressWarnings("unchecked")
-        List<CrystalStructureAnimator> activeWalls = (List<CrystalStructureAnimator>) rawList;
+        List<SandStructureAnimator> activeWalls = (List<SandStructureAnimator>) rawList;
 
-        activeWalls.removeIf(CrystalStructureAnimator::tick);
+        activeWalls.removeIf(SandStructureAnimator::tick);
 
         if (activeWalls.isEmpty()) {
             bender.removeAbilityFromBackground(this);

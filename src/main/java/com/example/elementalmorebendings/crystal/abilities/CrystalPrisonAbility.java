@@ -2,7 +2,6 @@ package com.example.elementalmorebendings.crystal.abilities;
 
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
-import dev.saperate.elementals.elements.earth.EarthElement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -131,7 +130,7 @@ public class CrystalPrisonAbility implements Ability {
                 if (!current.isAir() && !current.getFluidState().isEmpty()) {
                     continue;
                 }
-                if (!EarthElement.isBlockBendable(current, bender) && !current.isAir()) {
+                if (!AbilitySupport.isCrystalBendable(current, bender) && !current.isAir()) {
                     continue;
                 }
                 if (!caster.mayInteract((Level) world, pos)) {
