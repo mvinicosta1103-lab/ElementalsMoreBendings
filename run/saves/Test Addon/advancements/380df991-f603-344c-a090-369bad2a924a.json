@@ -42,5 +42,59 @@
     },
     "done": false
   },
+  "minecraft:recipes/decorations/ladder": {
+    "criteria": {
+      "has_stick": "2026-07-22 21:31:16 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/emerald": {
+    "criteria": {
+      "has_emerald_block": "2026-07-22 21:29:39 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/campfire": {
+    "criteria": {
+      "has_stick": "2026-07-22 21:31:16 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/wooden_hoe": {
+    "criteria": {
+      "has_stick": "2026-07-22 21:31:16 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/wooden_pickaxe": {
+    "criteria": {
+      "has_stick": "2026-07-22 21:31:16 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/wooden_axe": {
+    "criteria": {
+      "has_stick": "2026-07-22 21:31:16 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/wooden_shovel": {
+    "criteria": {
+      "has_stick": "2026-07-22 21:31:16 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/wooden_sword": {
+    "criteria": {
+      "has_stick": "2026-07-22 21:31:16 -0300"
+    },
+    "done": true
+  },
+  "elementals:earthbending_seismic_sense": {
+    "criteria": {
+      "ability_used": "2026-07-22 21:28:41 -0300"
+    },
+    "done": true
+  },
   "DataVersion": 3955
 }

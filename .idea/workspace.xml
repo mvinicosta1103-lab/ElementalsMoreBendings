@@ -5,24 +5,44 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="V1">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/common/AddonTags.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/CrystalOreSenseHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/sand/abilities/AbilitySupport.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/libs/elementalmorebendings-1.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/crystal_icons_placeholder.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/ElementalMoreBendingsMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/ElementalMoreBendingsMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/AbilitySupport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/AbilitySupport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/CrystalPrisonAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/CrystalPrisonAbility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/CrystalSpikeAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/CrystalSpikeAbility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/CrystalWallAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/CrystalWallAbility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/crystal_icons_placeholder.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" beforeDir="false" afterPath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-21-1.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-21-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-21-2.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-1.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-2.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-3.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-4.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-5.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/latest.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/latest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/DIM-1/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/DIM-1/data/raids.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/DIM1/data/raids_end.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/DIM1/data/raids_end.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/advancements/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/advancements/380df991-f603-344c-a090-369bad2a924a.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/elementals.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/data/elementals.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/data/raids.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.-1.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.-1.-1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.-1.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.-1.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.0.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.0.-1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.0.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.0.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/level.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/level.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/level.dat_old" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/level.dat_old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/playerdata/380df991-f603-344c-a090-369bad2a924a.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/playerdata/380df991-f603-344c-a090-369bad2a924a.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/playerdata/380df991-f603-344c-a090-369bad2a924a.dat_old" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/playerdata/380df991-f603-344c-a090-369bad2a924a.dat_old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.-1.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/region/r.-1.-1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.-1.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/region/r.-1.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.0.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/region/r.0.-1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.0.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/region/r.0.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/stats/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Test Addon/stats/380df991-f603-344c-a090-369bad2a924a.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/usercache.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/usercache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/common/AddonTags.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/common/AddonTags.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,6 +98,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -105,23 +126,23 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0000004209055884" />
-      <entry key="MS500" value="1.0530685593395739" />
-      <entry key="S2" value="1.494442568986491" />
-      <entry key="S5" value="1.9293352954397183" />
-      <entry key="S10" value="2.2921472694639413" />
-      <entry key="S30" value="2.7062836566411033" />
-      <entry key="S60" value="2.868966289607815" />
-      <entry key="M2" value="3.711472050183641" />
-      <entry key="M5" value="9.37691707725936" />
-      <entry key="M10" value="15.90841906369463" />
-      <entry key="M15" value="19.43307158342708" />
-      <entry key="M30" value="24.52573541585606" />
-      <entry key="H1" value="28.516852406549937" />
-      <entry key="H2" value="31.307480437305856" />
-      <entry key="H4" value="33.015886596386665" />
-      <entry key="D1" value="34.647536078311056" />
-      <entry key="W1" value="34.94907633073138" />
+      <entry key="MS100" value="1.4263176253233738" />
+      <entry key="MS500" value="1.8879801704613954" />
+      <entry key="S2" value="2.4320754019612876" />
+      <entry key="S5" value="2.896716278378908" />
+      <entry key="S10" value="3.2726881550875877" />
+      <entry key="S30" value="3.698603577996797" />
+      <entry key="S60" value="3.864892522022526" />
+      <entry key="M2" value="4.708836075395755" />
+      <entry key="M5" value="10.374252626592746" />
+      <entry key="M10" value="16.90615871474743" />
+      <entry key="M15" value="20.43123077351891" />
+      <entry key="M30" value="25.524573780502507" />
+      <entry key="H1" value="29.516177063372215" />
+      <entry key="H2" value="32.30710971934924" />
+      <entry key="H4" value="34.01569112204512" />
+      <entry key="D1" value="35.64750188910849" />
+      <entry key="W1" value="35.949071404050166" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -143,23 +164,23 @@
       <entry key="W1" value="0.0" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="5.257361635019132E-5" />
-      <entry key="MS500" value="0.18359108466716986" />
-      <entry key="S2" value="1.0765649741902144" />
-      <entry key="S5" value="1.6895478721521118" />
-      <entry key="S10" value="2.130928558374891" />
-      <entry key="S30" value="2.6343996554470013" />
-      <entry key="S60" value="2.829805770134978" />
-      <entry key="M2" value="3.6909502006250046" />
-      <entry key="M5" value="9.368347923465176" />
-      <entry key="M10" value="15.904018244628604" />
-      <entry key="M15" value="19.430100903705995" />
-      <entry key="M30" value="24.524224830697776" />
-      <entry key="H1" value="28.516087458220998" />
-      <entry key="H2" value="31.307094602984485" />
-      <entry key="H4" value="33.015692650979894" />
-      <entry key="D1" value="34.64750359033176" />
-      <entry key="W1" value="34.94907168526685" />
+      <entry key="MS100" value="0.42633985893382165" />
+      <entry key="MS500" value="0.9980408244060324" />
+      <entry key="S2" value="1.9899042504717783" />
+      <entry key="S5" value="2.644076041447018" />
+      <entry key="S10" value="3.1043486358135204" />
+      <entry key="S30" value="3.6240857051298656" />
+      <entry key="S60" value="3.8243676655950805" />
+      <entry key="M2" value="4.687618577405731" />
+      <entry key="M5" value="10.36540175775754" />
+      <entry key="M10" value="16.901616435895143" />
+      <entry key="M15" value="20.428165649569404" />
+      <entry key="M30" value="25.523015902955848" />
+      <entry key="H1" value="29.51538845091073" />
+      <entry key="H2" value="32.30671204840238" />
+      <entry key="H4" value="34.01549125717198" />
+      <entry key="D1" value="35.64746841438971" />
+      <entry key="W1" value="35.94906661761887" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -214,7 +235,7 @@
       <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\libs" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.ObsidianWakeAddon [build]">
+  <component name="RunManager" selected="Gradle.ObsidianWakeAddon [runClient]">
     <configuration name="Client" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
       <module name="elementalmorebendings.main" />
@@ -287,8 +308,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.ObsidianWakeAddon [build]" />
         <item itemvalue="Gradle.ObsidianWakeAddon [runClient]" />
+        <item itemvalue="Gradle.ObsidianWakeAddon [build]" />
       </list>
     </recent_temporary>
   </component>
@@ -307,14 +328,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
-    </task>
-    <task id="LOCAL-00021" summary="V1">
-      <option name="closed" value="true" />
-      <created>1784572224906</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1784572224906</updated>
     </task>
     <task id="LOCAL-00022" summary="V1">
       <option name="closed" value="true" />
@@ -700,7 +713,15 @@
       <option name="project" value="LOCAL" />
       <updated>1784642696232</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="V1">
+      <option name="closed" value="true" />
+      <created>1784765816699</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1784765816699</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
