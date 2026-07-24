@@ -5,258 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="V1">
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/checksums/checksums.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileChanges/last-build.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.3.0/checksums/checksums.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.3.0/checksums/md5-checksums.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.3.0/checksums/sha1-checksums.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.3.0/executionHistory/executionHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.3.0/executionHistory/executionHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.3.0/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.3.0/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.3.0/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.3.0/gc.properties" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/AndroidProjectSystem.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/elementalmorebendings.main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_07_2026_21_00_[Changes]/executionHistory.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_07_2026_21_00_[Changes]/executionHistory.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_07_2026_21_00_[Changes]/fileHashes.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_07_2026_21_00_[Changes]/fileHashes.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_07_2026_21_00_[Changes]/outputFiles.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_07_2026_21_00_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_07_2026_21_00__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/elementalmorebendings.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/elementalmorebendings.main.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/ElementalMoreBendingsMod.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/command/MoreBendingsCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/command/MoreBendingsElementRegistry.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/common/AddonTags.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/common/MasterySupport.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/crystal/abilities/AbilitySupport.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/crystal/abilities/CrystalArmorAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/crystal/abilities/CrystalDashAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/crystal/abilities/CrystalElement.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/crystal/abilities/CrystalOreSenseHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/crystal/abilities/CrystalPrisonAbility$PrisonState.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/crystal/abilities/CrystalPrisonAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/crystal/abilities/CrystalSpikeAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/crystal/abilities/CrystalStepAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/crystal/abilities/CrystalStructureAnimator$Phase.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/crystal/abilities/CrystalStructureAnimator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/crystal/abilities/CrystalWallAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/lava/abilities/AbilitySupport.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/lava/abilities/EruptionAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/lava/abilities/LavaSurfAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/lava/abilities/MoltenGripAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/lava/abilities/ObsidianFormAbility$ObsidianFormState.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/lava/abilities/ObsidianFormAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/lava/abilities/ObsidianPillarAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/mud/abilities/AbilitySupport.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/mud/abilities/MudBallAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/mud/abilities/MudBallEntity.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/mud/abilities/MudBallEntityRenderer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/mud/abilities/MudElement.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/mud/abilities/MudShellAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/mud/abilities/MudSlideAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/mud/abilities/MudStructureAnimator$Phase.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/mud/abilities/MudStructureAnimator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/mud/abilities/MudSurgeAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/mud/abilities/MudWallAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/mud/abilities/QuicksandAbility$QuicksandState.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/mud/abilities/QuicksandAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/plant/abilities/AbilitySupport.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/plant/abilities/OvergrowthSpikesAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/plant/abilities/RootGraspAbility$GraspState.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/plant/abilities/RootGraspAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/plant/abilities/ThornBarrageAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/plant/abilities/VineArcAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/registry/ModEntities.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/sand/abilities/AbilitySupport.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/sand/abilities/SandArmorAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/sand/abilities/SandStructureAnimator$Phase.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/sand/abilities/SandStructureAnimator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/elementalmorebendings/sand/abilities/SandWallAbility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/generated/sources/modMetadata/META-INF/neoforge.mods.toml" beforeDir="false" afterPath="$PROJECT_DIR$/build/generated/sources/modMetadata/META-INF/neoforge.mods.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/moddev/clientRunVmArgs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/moddev/clientRunVmArgs.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/moddev/minecraft_assets.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/moddev/minecraft_assets.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/moddev/serverRunVmArgs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/moddev/serverRunVmArgs.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/META-INF/neoforge.mods.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/data/elementalmorebendings/tags/block/ore_block.json.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/crystal.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/crystal_armor_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/crystal_dash_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/crystal_mastery_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/crystal_plain_upgrade_button.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/crystal_prison_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/crystal_spike_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/crystal_step_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/crystal_upgrade_button.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/crystal_wall_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/molten_grip_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/mud.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/mud_ball_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/mud_mastery_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/mud_plain_upgrade_button.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/mud_slide_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/mud_upgrade_button.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/mud_wall_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementals/textures/gui/quicksand_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/obsidianwake/lang/en_us.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/AbilitySupport.class.uniqueId4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/CrystalArmorAbility.class.uniqueId8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/CrystalDashAbility.class.uniqueId5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/CrystalElement.class.uniqueId7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/CrystalPrisonAbility$PrisonState.class.uniqueId2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/CrystalPrisonAbility.class.uniqueId3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/CrystalSpikeAbility.class.uniqueId0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/CrystalStepAbility.class.uniqueId6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/CrystalWallAbility.class.uniqueId1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ElementalMoreBendingsMod.class.uniqueId9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/createMinecraftArtifacts/nfrt_artifact_manifest.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/createMinecraftArtifacts/nfrt_artifact_manifest.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/downloadAssets/nfrt_artifact_manifest.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/downloadAssets/nfrt_artifact_manifest.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/command_history.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/elementals.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/elementalssubbending-avatar.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/elementalssubbending-day-of-black-sun.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/elementalssubbending-lion-turtle.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/elementalssubbending-progression.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/elementalssubbending-sozins-comet.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/fml.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/lodestone-client.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/neoforge-client.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/neoforge-common.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/neoforge-server.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2026-07-19_21.02.27-fml.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2026-07-19_21.04.19-fml.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2026-07-19_21.36.34-fml.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2026-07-19_21.39.11-fml.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2026-07-20_16.10.52-server.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2026-07-20_18.21.44-client.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2026-07-20_18.22.56-client.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2026-07-20_20.15.16-client.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2026-07-20_20.17.52-client.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2026-07-20_20.39.08-client.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2026-07-20_20.40.54-client.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2026-07-20_20.41.58-client.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2026-07-20_20.43.35-client.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/data/fabricDefaultResourcePacks.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/downloads/log.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-10.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-11.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-12.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-13.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-2.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-3.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-4.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-5.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-6.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-7.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-8.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-19-9.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-10.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-11.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-12.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-13.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-14.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-15.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-16.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-17.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-18.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-19.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-2.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-20.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-21.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-22.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-23.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-24.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-25.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-26.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-27.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-28.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-29.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-3.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-30.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-31.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-32.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-33.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-4.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-5.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-6.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-7.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-8.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-20-9.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-21-2.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-21-3.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-21-4.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-1.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-2.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-3.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-4.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-5.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/latest.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/options.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/DIM-1/data/neoforge_data_attachments.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/DIM-1/data/raids.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/DIM1/data/neoforge_data_attachments.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/DIM1/data/raids_end.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/advancements/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/elementals.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/elementalssubbending_avatar_cycle.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/elementalssubbending_energy_bending.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/elementalssubbending_sozins_comet.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/neoforge_data_attachments.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/raids.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/data/random_sequences.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.-1.-1.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.-1.0.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.0.-1.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/entities/r.0.0.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/level.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/level.dat_old" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/playerdata/380df991-f603-344c-a090-369bad2a924a.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/playerdata/380df991-f603-344c-a090-369bad2a924a.dat_old" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.-1.-1.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.-1.0.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.0.-1.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/poi/r.0.0.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.-1.-1.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.-1.0.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.0.-1.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/region/r.0.0.mca" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/serverconfig/readme.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/session.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Test Addon/stats/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/screenshots/2026-07-20_19.08.54.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/usercache.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/usernamecache.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/yagami/elementalsmorebendings/morebendings/CommonClass.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/yagami/elementalsmorebendings/morebendings/Constants.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/yagami/elementalsmorebendings/morebendings/elements/AirSubbendings/gas/GasBending.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/yagami/elementalsmorebendings/morebendings/elements/AirSubbendings/gas/GasSuffocateAbility.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/yagami/elementalsmorebendings/morebendings/elements/EarthSubbendings/crystal/CrystalBending.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/yagami/elementalsmorebendings/morebendings/elements/EarthSubbendings/crystal/CrystalShardAbility.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/yagami/elementalsmorebendings/morebendings/elements/EarthSubbendings/mud/MudBending.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/yagami/elementalsmorebendings/morebendings/elements/EarthSubbendings/mud/MudSurgeAbility.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/yagami/elementalsmorebendings/morebendings/elements/WaterSubbendings/plant/PlantBending.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/yagami/elementalsmorebendings/morebendings/elements/WaterSubbendings/plant/PlantVineWhipAbility.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/yagami/elementalsmorebendings/morebendings/registry/ModAbilities.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -419,7 +189,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Vinicius/Desktop/ObsidianWakeAddon/libs&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Vinicius/Desktop/ObsidianWakeAddon&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -430,11 +200,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\libs" />
       <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\libs\ElementalsSubbending-NEOFORGE-1.21.1-INSTALL.jar!\assets\elementals\textures\gui" />
       <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\resources\assets\gui\png\earth\mud" />
       <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\resources" />
       <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\resources\png" />
+      <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\java\com\example\obsidianwake\plant\abilities" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\resources\assets\gui\png\earth\lava" />
@@ -536,22 +306,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
-    </task>
-    <task id="LOCAL-00025" summary="V1">
-      <option name="closed" value="true" />
-      <created>1784577097303</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1784577097303</updated>
-    </task>
-    <task id="LOCAL-00026" summary="V1">
-      <option name="closed" value="true" />
-      <created>1784577209618</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1784577209618</updated>
     </task>
     <task id="LOCAL-00027" summary="V1">
       <option name="closed" value="true" />
@@ -929,7 +683,23 @@
       <option name="project" value="LOCAL" />
       <updated>1784923897666</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="V1">
+      <option name="closed" value="true" />
+      <created>1784927981667</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1784927981667</updated>
+    </task>
+    <task id="LOCAL-00075" summary="V1">
+      <option name="closed" value="true" />
+      <created>1784928049330</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1784928049330</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
