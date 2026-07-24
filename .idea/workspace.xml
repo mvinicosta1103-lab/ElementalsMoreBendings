@@ -4,14 +4,85 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="V1" />
+    <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="V1">
+      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/ElementalMoreBendingsMod.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/command/MoreBendingsCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/command/MoreBendingsElementRegistry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/common/AddonTags.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/common/MasterySupport.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/AbilitySupport.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/CrystalArmorAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/CrystalDashAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/CrystalElement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/CrystalOreSenseHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/CrystalPrisonAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/CrystalSpikeAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/CrystalStepAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/CrystalStructureAnimator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/crystal/abilities/CrystalWallAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/lava/abilities/AbilitySupport.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/lava/abilities/EruptionAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/lava/abilities/LavaSurfAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/lava/abilities/MoltenGripAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/lava/abilities/ObsidianFormAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/lava/abilities/ObsidianPillarAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/mud/abilities/AbilitySupport.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/mud/abilities/MudBallAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/mud/abilities/MudBallEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/mud/abilities/MudBallEntityRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/mud/abilities/MudElement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/mud/abilities/MudShellAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/mud/abilities/MudSlideAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/mud/abilities/MudStructureAnimator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/mud/abilities/MudSurgeAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/mud/abilities/MudWallAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/mud/abilities/QuicksandAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/plant/abilities/AbilitySupport.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/plant/abilities/OvergrowthSpikesAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/plant/abilities/RootGraspAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/plant/abilities/ThornBarrageAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/plant/abilities/VineArcAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/registry/ModEntities.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/sand/abilities/AbilitySupport.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/sand/abilities/SandArmorAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/sand/abilities/SandStructureAnimator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/elementalmorebendings/sand/abilities/SandWallAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/data/elementalmorebendings/tags/block/ore_block.json.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/crystal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/crystal_armor_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/crystal_dash_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/crystal_mastery_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/crystal_plain_upgrade_button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/crystal_prison_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/crystal_spike_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/crystal_step_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/crystal_upgrade_button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/crystal_wall_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/molten_grip_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/mud.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/mud_ball_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/mud_mastery_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/mud_plain_upgrade_button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/mud_slide_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/mud_upgrade_button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/mud_wall_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementals/textures/gui/quicksand_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/obsidianwake/lang/en_us.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/templates/META-INF/neoforge.mods.toml" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="205" />
+    <option name="cachedIndexableFilesCount" value="214" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -26,7 +97,17 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="elementalmorebendings" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="elementalmorebendings" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -267,14 +348,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
-    </task>
-    <task id="LOCAL-00024" summary="V1">
-      <option name="closed" value="true" />
-      <created>1784576980263</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1784576980265</updated>
     </task>
     <task id="LOCAL-00025" summary="V1">
       <option name="closed" value="true" />
@@ -660,7 +733,15 @@
       <option name="project" value="LOCAL" />
       <updated>1784766796637</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="V1">
+      <option name="closed" value="true" />
+      <created>1784923897664</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1784923897666</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
