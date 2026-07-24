@@ -1,0 +1,10 @@
+{
+  "avatarStateCooldownSeconds": 600,
+  "avatarStateRingSize": 1.0,
+  "worldHasAvatar": true,
+  "allowOfflineAvatarReassignment": false,
+  "avatarCycleGrantsTimedBending": true,
+  "avatarAbilitiesDamageBlocks": true,
+  "permanentAvatarUuid": "",
+  "permanentAvatarName": ""
+}
