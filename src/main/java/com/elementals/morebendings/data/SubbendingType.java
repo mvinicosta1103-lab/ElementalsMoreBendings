@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
  */
 public enum SubbendingType {
     GAS("gas", "Gas Bending"),
+    FLYING("flying", "Flying"),
     PLANT("plant", "Plant Bending"),
     MUD("mud", "Mud Bending"),
     CRYSTAL("crystal", "Crystal Bending");
