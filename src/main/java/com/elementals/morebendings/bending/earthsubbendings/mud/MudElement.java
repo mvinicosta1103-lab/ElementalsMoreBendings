@@ -1,4 +1,4 @@
-package com.elementals.morebendings.bending.mud;
+package com.elementals.morebendings.bending.earthsubbendings.mud;
 
 public class MudElement {
     public static final String SUBBENDING_NAME = "Mud Bending";

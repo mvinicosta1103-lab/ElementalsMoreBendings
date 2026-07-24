@@ -1,4 +1,4 @@
-package com.elementals.morebendings.bending.plant;
+package com.elementals.morebendings.bending.watersubbendings.plant;
 
 public class PlantElement {
     public static final String SUBBENDING_NAME = "Plant Bending";

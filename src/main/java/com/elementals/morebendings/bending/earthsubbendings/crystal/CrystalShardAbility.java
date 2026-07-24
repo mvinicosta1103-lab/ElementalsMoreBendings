@@ -1,4 +1,4 @@
-package com.elementals.morebendings.bending.crystal;
+package com.elementals.morebendings.bending.earthsubbendings.crystal;
 
 public class CrystalShardAbility {
     public static void register() {

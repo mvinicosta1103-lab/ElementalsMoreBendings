@@ -5,12 +5,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="V1">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/commands/MoreBendingCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/data/PlayerSubbendingData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/data/SubbendingType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/registry/ModAttachments.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/atmosphere/AtmosphereElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/atmosphere/PressurePointAbility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/flying/FlyingAbility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/flying/FlyingElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/mist/HeavyFogAbility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/mist/MistElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/EchoingVoiceAbility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/SoundElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/temperature/TemperatureElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/temperature/TotalZeroAbility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/voiding/VoidBallAbility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/voiding/VoidElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/bone/BoneControlAbility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/bone/BoneElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/glass/GlassElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/glass/GlassShardsAbility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/lava/LavaElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/lava/LavaPoolAbility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/petrification/PetrificationElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/petrification/StaticLegsAbility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/sand/SandElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/sand/SandTornadoAbility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/firesubbendings/combustion/CombustionElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/firesubbendings/combustion/CombustionExplosionAbility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/firesubbendings/lightning/LightningElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/firesubbendings/lightning/LightningShootAbility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/firesubbendings/plasma/PlasmaClawsAbility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/firesubbendings/plasma/PlasmaElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/firesubbendings/radiation/RadiationElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/firesubbendings/radiation/RadioactiveSmokeAbility.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/ElementalsMoreBendingsMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/ElementalsMoreBendingsMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/crystal/CrystalElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/crystal/CrystalElement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/crystal/CrystalShardAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/crystal/CrystalShardAbility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/gas/GasElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/gas/GasElement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/gas/GasSuffocateAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/gas/GasSuffocateAbility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/mud/MudElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/mud/MudElement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/mud/MudSurgeAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/mud/MudSurgeAbility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/plant/PlantElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/watersubbendings/plant/PlantElement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/plant/PlantVineWhipAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/watersubbendings/plant/PlantVineWhipAbility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/registry/ModAbilities.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/registry/ModAbilities.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,23 +127,23 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.551829806655741" />
-      <entry key="MS500" value="2.561403720129074" />
-      <entry key="S2" value="3.3192976107475936" />
-      <entry key="S5" value="3.842220306775667" />
-      <entry key="S10" value="4.2417574208723465" />
-      <entry key="S30" value="4.6869146310245355" />
-      <entry key="S60" value="4.858780448518331" />
-      <entry key="M2" value="5.705111244786467" />
-      <entry key="M5" value="11.370969309258486" />
-      <entry key="M10" value="17.903483212300586" />
-      <entry key="M15" value="21.429075138965302" />
-      <entry key="M30" value="26.52322723644983" />
-      <entry key="H1" value="30.515398492940033" />
-      <entry key="H2" value="33.306683622056944" />
-      <entry key="H4" value="35.01546680545042" />
-      <entry key="D1" value="36.64746270940475" />
-      <entry key="W1" value="36.94906575959681" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.0" />
+      <entry key="S10" value="1.0000000010660508" />
+      <entry key="S30" value="1.0010473288717305" />
+      <entry key="S60" value="1.0370396479342026" />
+      <entry key="M2" value="1.2508343472580692" />
+      <entry key="M5" value="2.11595969272006" />
+      <entry key="M10" value="5.0109801588478735" />
+      <entry key="M15" value="8.777940533085825" />
+      <entry key="M30" value="17.98752763349177" />
+      <entry key="H1" value="27.522374502412468" />
+      <entry key="H2" value="34.83429257064734" />
+      <entry key="H4" value="39.47867376973071" />
+      <entry key="D1" value="44.00998728177006" />
+      <entry key="W1" value="44.85672795321958" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -131,23 +165,23 @@
       <entry key="W1" value="0.0" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.5518384086450432" />
-      <entry key="MS500" value="1.6524264528874364" />
-      <entry key="S2" value="2.851259372505939" />
-      <entry key="S5" value="3.5755199781704707" />
-      <entry key="S10" value="4.065557736477854" />
-      <entry key="S30" value="4.609471894413841" />
-      <entry key="S60" value="4.816738245212662" />
-      <entry key="M2" value="5.683119500472097" />
-      <entry key="M5" value="11.361804754489429" />
-      <entry key="M10" value="17.898783396209144" />
-      <entry key="M15" value="21.425904831569422" />
-      <entry key="M30" value="26.52161668627821" />
-      <entry key="H1" value="30.514583523527232" />
-      <entry key="H2" value="33.30627276739141" />
-      <entry key="H4" value="35.01526034739178" />
-      <entry key="D1" value="36.64742813563581" />
-      <entry key="W1" value="36.949060816153775" />
+      <entry key="MS100" value="0.9592641193252643" />
+      <entry key="MS500" value="0.9917167307382933" />
+      <entry key="S2" value="0.9979227189990506" />
+      <entry key="S5" value="0.999168569213607" />
+      <entry key="S10" value="0.9995841992269001" />
+      <entry key="S30" value="1.0009085862720255" />
+      <entry key="S60" value="1.0369680202017755" />
+      <entry key="M2" value="1.2507909269279653" />
+      <entry key="M5" value="2.115830726155805" />
+      <entry key="M10" value="5.010464649849396" />
+      <entry key="M15" value="8.777216002026051" />
+      <entry key="M30" value="17.986754652900185" />
+      <entry key="H1" value="27.52180670887209" />
+      <entry key="H2" value="34.8339475981904" />
+      <entry key="H4" value="39.47848345384154" />
+      <entry key="D1" value="44.00995283175668" />
+      <entry key="W1" value="44.85672296130369" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -295,22 +329,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
-    </task>
-    <task id="LOCAL-00031" summary="V1">
-      <option name="closed" value="true" />
-      <created>1784581415660</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1784581415660</updated>
-    </task>
-    <task id="LOCAL-00032" summary="V1">
-      <option name="closed" value="true" />
-      <created>1784581522713</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1784581522713</updated>
     </task>
     <task id="LOCAL-00033" summary="V1">
       <option name="closed" value="true" />
@@ -688,7 +706,23 @@
       <option name="project" value="LOCAL" />
       <updated>1784929323607</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="V1">
+      <option name="closed" value="true" />
+      <created>1784930537191</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1784930537191</updated>
+    </task>
+    <task id="LOCAL-00081" summary="V1">
+      <option name="closed" value="true" />
+      <created>1784930836345</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1784930836345</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

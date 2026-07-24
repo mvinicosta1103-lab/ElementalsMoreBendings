@@ -1,4 +1,4 @@
-package com.elementals.morebendings.bending.gas;
+package com.elementals.morebendings.bending.airsubbendings.gas;
 
 public class GasSuffocateAbility {
     public static void register() {

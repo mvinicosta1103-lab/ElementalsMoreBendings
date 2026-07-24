@@ -1,4 +1,4 @@
-package com.elementals.morebendings.bending.gas;
+package com.elementals.morebendings.bending.airsubbendings.gas;
 
 public class GasElement {
     public static final String SUBBENDING_NAME = "Gas Bending";

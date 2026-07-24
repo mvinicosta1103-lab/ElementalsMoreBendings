@@ -1,9 +1,9 @@
 package com.elementals.morebendings.registry;
 
-import com.elementals.morebendings.bending.gas.GasSuffocateAbility;
-import com.elementals.morebendings.bending.plant.PlantVineWhipAbility;
-import com.elementals.morebendings.bending.mud.MudSurgeAbility;
-import com.elementals.morebendings.bending.crystal.CrystalShardAbility;
+import com.elementals.morebendings.bending.airsubbendings.gas.GasSuffocateAbility;
+import com.elementals.morebendings.bending.watersubbendings.plant.PlantVineWhipAbility;
+import com.elementals.morebendings.bending.earthsubbendings.mud.MudSurgeAbility;
+import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalShardAbility;
 
 public class ModAbilities {
 
