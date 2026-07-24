@@ -1,9 +1,0 @@
-{
-  "cometEnabled": true,
-  "eventFrequencyDays": 100,
-  "eventDurationTicks": 4000,
-  "cometSize": 1.0,
-  "brightness": 1.0,
-  "firebenderPowerMultiplier": 3.0,
-  "firebenderCooldownMultiplier": 0.5
-}

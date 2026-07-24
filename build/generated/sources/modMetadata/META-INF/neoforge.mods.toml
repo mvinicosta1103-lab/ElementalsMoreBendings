@@ -3,40 +3,38 @@ loaderVersion="[1,)" #mandatory
 license="All Rights Reserved"
 
 [[mods]] #mandatory
-modId="elementalmorebendings" #mandatory
+modId="elementalsmorebendings" #mandatory
 version="1.0.0" #mandatory
-displayName="Elemental More Bendings" #mandatory
+displayName="Elementals: More Bendings" #mandatory
 description='''
-Adiciona novas habilidades às árvores de skills de Lava e Plant do addon
-Elementals Subbending (Obsidian Wake, Eruption, Lava Surf, Molten Grip,
-Obsidian Pillar para Lava; Vine Arc, Thorn Barrage, Overgrowth Spikes para
-Plant), sem modificar o addon original.
+Adiciona novas sub-habilidades (Gas, Plant, Mud, Crystal) ao addon
+Elementals Subbending, sem modificar o addon original.
 '''
 
-[[dependencies.elementalmorebendings]]
-modId="neoforge"
-type="required"
-versionRange="[21.1.235,)"
-ordering="NONE"
-side="BOTH"
+[[dependencies.elementalsmorebendings]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.1.235,)"
+    ordering="NONE"
+    side="BOTH"
 
-[[dependencies.elementalmorebendings]]
-modId="minecraft"
-type="required"
-versionRange="[1.21.1]"
-ordering="NONE"
-side="BOTH"
+[[dependencies.elementalsmorebendings]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.1]"
+    ordering="NONE"
+    side="BOTH"
 
-[[dependencies.elementalmorebendings]]
-modId="elementals"
-type="required"
-versionRange="[1.0.0,)"
-ordering="AFTER"
-side="BOTH"
+[[dependencies.elementalsmorebendings]]
+    modId="elementals"
+    type="required"
+    versionRange="[1.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
 
-[[dependencies.elementalmorebendings]]
-modId="elementalssubbending"
-type="required"
-versionRange="[1.0.0,)"
-ordering="AFTER"
-side="BOTH"
+[[dependencies.elementalsmorebendings]]
+    modId="elementalssubbending"
+    type="required"
+    versionRange="[1.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
