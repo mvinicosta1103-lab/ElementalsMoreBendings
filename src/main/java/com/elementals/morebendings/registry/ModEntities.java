@@ -23,7 +23,7 @@ public class ModEntities {
 
     public static final Supplier<EntityType<CrystalShardEntity>> CRYSTAL_SHARD =
             ENTITY_TYPES.register("crystal_shard",
-                    () -> EntityType.Builder.of(CrystalShardEntity::new, MobCategory.MISC)
+                    () -> EntityType.Builder.<CrystalShardEntity>of(CrystalShardEntity::new, MobCategory.MISC)
                             .noSummon()
                             .sized(0.25f, 0.25f)
                             .clientTrackingRange(64)
