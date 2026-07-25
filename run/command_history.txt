@@ -4,3 +4,4 @@
 /morebending grant Dev mud
 /morebending grant Dev bone
 /morebending grant Dev sand
+/morebending grant Dev gas
