@@ -2,26 +2,27 @@ package com.elementals.morebendings.bending.earthsubbendings.crystal;
 
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
-
-import java.util.List;
 
 /**
- * "crystalShard" — habilidade raiz da árvore de Crystal. Dispara espinhos
- * de cristal na direção que o jogador está olhando, causando dano direto
- * em quem for atingido.
+ * "crystalShard" — habilidade raiz da árvore de Crystal. Dispara uma
+ * barragem de estilhaços de cristal na direção que o jogador está olhando.
+ *
+ * Antes isso era um hitscan instantâneo (raycast na hora + partículas, sem
+ * entidade nenhuma — dano garantido pra quem estivesse na linha). Agora
+ * cada estilhaço é uma {@link CrystalShardEntity} de verdade: sai voando,
+ * tem hitbox própria, e pode simplesmente errar o alvo — mais parecido
+ * com uma saraivada de flechas de cristal do que um laser.
  */
 public class CrystalShardAbility implements Ability {
 
-    private static final double RANGE = 8.0;
-    private static final double WIDTH = 1.0;
-    private static final float DAMAGE = 4.0f; // 2 corações
+    private static final int SHARD_COUNT = 6;
+    private static final float SPEED = 2.2f;
+    /** Espalhamento em graus — quanto maior, mais "aberta" fica a barragem. */
+    private static final float DIVERGENCE = 4.0f;
 
     @Override
     public void onCall(Bender bender, long heldTimeMs) {
@@ -30,27 +31,25 @@ public class CrystalShardAbility implements Ability {
             return;
         }
 
-        Vec3 look = player.getLookAngle();
-        Vec3 origin = player.position().add(0, player.getBoundingBox().getYsize() * 0.5, 0);
-        Vec3 target = origin.add(look.scale(RANGE));
-
-        AABB area = new AABB(origin, target).inflate(WIDTH);
-        List<LivingEntity> hit = level.getEntitiesOfClass(LivingEntity.class, area,
-                entity -> entity != player && entity.isAlive());
-
-        DamageSource source = level.damageSources().indirectMagic(player, player);
-        for (LivingEntity entity : hit) {
-            entity.hurt(source, DAMAGE);
+        for (int i = 0; i < SHARD_COUNT; i++) {
+            CrystalShardEntity shard = new CrystalShardEntity(level, player);
+            // setDeltaMovement(shooter, pitch, yaw, roll, speed, divergence) já vem
+            // pronto no AbstractElementalsEntity do mod base — calcula a direção a
+            // partir da mira do jogador, aplica um espalhamento aleatório
+            // (divergence) e herda a velocidade do jogador. Perfeito pra uma
+            // barragem: cada estilhaço sai com um desvio levemente diferente.
+            shard.setDeltaMovement(player, player.getXRot(), player.getYRot(), 0.0f, SPEED, DIVERGENCE);
+            level.addFreshEntity(shard);
         }
 
-        for (int i = 0; i <= 20; i++) {
-            Vec3 point = origin.add(look.scale(RANGE * i / 20.0));
-            level.sendParticles(ParticleTypes.CRIT, point.x, point.y, point.z, 2, 0.1, 0.1, 0.1, 0.01);
-        }
+        level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 0.6f, 1.4f);
+
+        bender.setCurrAbility(null); // libera a trava pra poder usar de novo
     }
 
     @Override
     public void onRemove(Bender bender) {
-        // Sem estado persistente pra limpar.
+        bender.setCurrAbility(null);
     }
 }

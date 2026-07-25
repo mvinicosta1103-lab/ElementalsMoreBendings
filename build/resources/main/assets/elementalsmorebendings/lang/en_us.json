@@ -8,6 +8,14 @@
   "ability.elementalsmorebendings.mud_surge": "Mud Surge",
   "ability.elementalsmorebendings.crystal_shard": "Crystal Shards",
 
+  "upgrade.elementals.mudSurge": "Mud Surge",
+  "upgrade.elementals.mudSurge.description": "Sends a wave of mud in the direction you're looking, slowing anyone caught in it.",
+  "upgrade.elementals.mudSurge.use": "Use: %d",
+
+  "upgrade.elementals.crystalShard": "Crystal Shards",
+  "upgrade.elementals.crystalShard.description": "Fires a spike of crystal in the direction you're looking, dealing damage to whatever it hits.",
+  "upgrade.elementals.crystalShard.use": "Use: %d",
+
   "upgrade.elementalsmorebendings.gasCloud": "Gas Cloud",
   "upgrade.elementalsmorebendings.gasCloud.description": "Release a cloud of gas around you, dazing and slowing every living thing caught inside.",
 

@@ -37,6 +37,7 @@
   },
   "minecraft:adventure/adventuring_time": {
     "criteria": {
+      "minecraft:forest": "2026-07-25 11:42:05 -0300",
       "minecraft:stony_shore": "2026-07-24 18:27:22 -0300"
     },
     "done": false
