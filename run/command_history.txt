@@ -2,3 +2,4 @@
 /bending level add 10000000 Dev
 /morebending grant Dev crystal
 /morebending grant Dev mud
+/morebending grant Dev bone
