@@ -21,6 +21,17 @@ import java.util.List;
  *
  * Efeito: dispara uma onda de lama na direção que o jogador está olhando;
  * qualquer entidade viva atingida recebe Lentidão por um tempo curto.
+ *
+ * Instantânea (sem {@link #onTick} / sem estado próprio): por isso, igual a
+ * {@code CrystalShardAbility}, é OBRIGATÓRIO chamar
+ * {@code bender.setCurrAbility(null)} no final do {@link #onCall} (e também
+ * em {@link #onRemove}). O framework marca {@code currAbility} como "em uso"
+ * assim que a tecla é pressionada e só aceita uma nova ativação -- de
+ * QUALQUER habilidade, não só desta -- depois que ela for liberada de volta
+ * pra {@code null}. Sem essa chamada, depois do primeiro uso o bender fica
+ * travado nesta ability pra sempre: toda tecla de habilidade apertada depois
+ * (mesmo de outro elemento) cai em {@code onAbilityPress} (no-op) em vez de
+ * {@code onCall}.
  */
 public class MudSurgeAbility implements Ability {
 
@@ -33,6 +44,7 @@ public class MudSurgeAbility implements Ability {
     public void onCall(Bender bender, long heldTimeMs) {
         Player player = bender.player;
         if (!(player.level() instanceof ServerLevel level)) {
+            bender.setCurrAbility(null);
             return;
         }
 
@@ -53,10 +65,12 @@ public class MudSurgeAbility implements Ability {
             Vec3 point = origin.add(look.scale(RANGE * i / 20.0));
             level.sendParticles(ParticleTypes.SPLASH, point.x, point.y, point.z, 3, 0.2, 0.1, 0.2, 0.01);
         }
+
+        bender.setCurrAbility(null); // libera a trava pra poder usar de novo (e usar outras abilities)
     }
 
     @Override
     public void onRemove(Bender bender) {
-        // Sem estado persistente pra limpar.
+        bender.setCurrAbility(null);
     }
 }
