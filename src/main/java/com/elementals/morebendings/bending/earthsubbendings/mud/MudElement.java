@@ -23,9 +23,11 @@ public class MudElement extends Element {
 
     public MudElement() {
         super(NAME, new Upgrade[]{
-                new Upgrade("mudSurge", 0) // habilidade única, grátis, por enquanto
+                new Upgrade("mudSurge", 0), // grátis
+                new Upgrade("mudTrap", 0)   // grátis -- ver MudTrapAbility
         });
         addAbility(new MudSurgeAbility(), 0);
+        addAbility(new MudTrapAbility(), 1);
     }
 
     /** Registra a instância única no mod base. Chame uma vez, no load do mod. */
@@ -54,6 +56,8 @@ public class MudElement extends Element {
 
     @Override
     public boolean isSkillTreeComplete(Bender bender) {
-        return bender.hasElement(this) && bender.getData().canUseUpgrade("mudSurge");
+        return bender.hasElement(this)
+                && bender.getData().canUseUpgrade("mudSurge")
+                && bender.getData().canUseUpgrade("mudTrap");
     }
 }

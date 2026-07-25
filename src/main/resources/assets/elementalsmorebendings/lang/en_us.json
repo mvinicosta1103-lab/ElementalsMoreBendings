@@ -6,11 +6,16 @@
   "ability.elementalsmorebendings.gas_suffocate": "Suffocate",
   "ability.elementalsmorebendings.plant_vine_whip": "Vine Whip",
   "ability.elementalsmorebendings.mud_surge": "Mud Surge",
+  "ability.elementalsmorebendings.mud_trap": "Mud Trap",
   "ability.elementalsmorebendings.crystal_shard": "Crystal Shards",
 
   "upgrade.elementals.mudSurge": "Mud Surge",
   "upgrade.elementals.mudSurge.description": "Sends a wave of mud in the direction you're looking, slowing anyone caught in it.",
   "upgrade.elementals.mudSurge.use": "Use: %d",
+
+  "upgrade.elementals.mudTrap": "Mud Trap",
+  "upgrade.elementals.mudTrap.description": "Traces a line of mud toward your target, dragging them underground where they'll suffocate. Hold crouch to keep them trapped.",
+  "upgrade.elementals.mudTrap.use": "Use: %d",
 
   "upgrade.elementals.crystalShard": "Crystal Shards",
   "upgrade.elementals.crystalShard.description": "Fires a spike of crystal in the direction you're looking, dealing damage to whatever it hits.",

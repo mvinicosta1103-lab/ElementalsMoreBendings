@@ -1,5 +1,6 @@
 package com.elementals.morebendings;
 
+import com.elementals.morebendings.bending.earthsubbendings.mud.MudTrapManager;
 import com.elementals.morebendings.commands.MoreBendingCommand;
 import com.elementals.morebendings.network.ModNetworking;
 import com.elementals.morebendings.registry.ModAttachments;
@@ -39,6 +40,10 @@ public class ElementalsMoreBendingsMod {
 
         // RegisterCommandsEvent é disparado no bus "de jogo", não no mod bus.
         NeoForge.EVENT_BUS.addListener(this::registerCommands);
+
+        // Dirige as armadilhas de mudTrap ativas (afundar/sufocar/soltar) --
+        // ver MudTrapManager. Independente do sistema de onTick do mod base.
+        NeoForge.EVENT_BUS.addListener(MudTrapManager::onServerTick);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
