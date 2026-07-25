@@ -12,8 +12,11 @@ import net.minecraft.resources.ResourceLocation;
 /**
  * Registro central dos pacotes do addon, no mesmo estilo de
  * {@code dev.saperate.elementals.network.ElementalsNetworking} do mod base
- * (mesma lib commonnetwork, já presente em libs/). Chamado uma vez em
- * {@code CommonClass.init()}.
+ * (mesma lib commonnetwork, já presente em libs/). Chamado uma vez no
+ * construtor de {@code ElementalsMoreBendingsMod} (NÃO em
+ * {@code CommonClass.init()} / {@code FMLCommonSetupEvent} — nessa altura o
+ * {@code RegisterPayloadHandlersEvent} da commonnetwork já disparou e os
+ * pacotes PLAY não podem mais ser adicionados).
  */
 public final class ModNetworking {
 
