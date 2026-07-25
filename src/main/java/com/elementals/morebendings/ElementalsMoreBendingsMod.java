@@ -2,6 +2,7 @@ package com.elementals.morebendings;
 
 import com.elementals.morebendings.bending.earthsubbendings.bone.BloodProximityTracker;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudTrapManager;
+import com.elementals.morebendings.bending.earthsubbendings.sand.SandTornadoManager;
 import com.elementals.morebendings.commands.MoreBendingCommand;
 import com.elementals.morebendings.network.ModNetworking;
 import com.elementals.morebendings.registry.ModAttachments;
@@ -45,6 +46,10 @@ public class ElementalsMoreBendingsMod {
         // Dirige as armadilhas de mudTrap ativas (afundar/sufocar/soltar) --
         // ver MudTrapManager. Independente do sistema de onTick do mod base.
         NeoForge.EVENT_BUS.addListener(MudTrapManager::onServerTick);
+
+        // Dirige os tornados de sandTornado ativos (giro/sucção/dano) --
+        // ver SandTornadoManager. Mesmo esquema do MudTrapManager.
+        NeoForge.EVENT_BUS.addListener(SandTornadoManager::onServerTick);
 
         // Verifica em background se algum Earth bender chegou perto o
         // suficiente de um Blood bender pra desbloquear o pré-requisito de
