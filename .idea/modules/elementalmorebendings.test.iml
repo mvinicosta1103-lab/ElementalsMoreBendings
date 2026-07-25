@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="elementalmorebendings:test" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="com.elementals.morebendings" external.system.module.type="sourceSet" external.system.module.version="1.0.0" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <output-test url="file://$MODULE_DIR$/../../build/classes/java/test" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../src/test" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="elementalmorebendings.main" />
+    <orderEntry type="module-library">
+      <library name="Gradle: common-networking-neoforge-1.0.21-1.21.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/common-networking-neoforge-1.0.21-1.21.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Gradle: elementals-neoforge-1.21.1-5.0.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/elementals-neoforge-1.21.1-5.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Gradle: ElementalsSubbending-NEOFORGE-1.21.1-INSTALL.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/ElementalsSubbending-NEOFORGE-1.21.1-INSTALL.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Gradle: forgified-fabric-api-0.116.7+2.2.4+1.21.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/forgified-fabric-api-0.116.7+2.2.4+1.21.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Gradle: geckolib-neoforge-1.21.1-4.8.4.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/geckolib-neoforge-1.21.1-4.8.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Gradle: lodestone-1.21.1-1.8.2.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/lodestone-1.21.1-1.8.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+  <component name="TestModuleProperties" production-module="elementalmorebendings.main" />
+</module>
