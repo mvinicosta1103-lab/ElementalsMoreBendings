@@ -1,1 +1,3 @@
 /morebending grant Dev crystal
+/bending level add 10000000 Dev
+/morebending grant Dev crystal

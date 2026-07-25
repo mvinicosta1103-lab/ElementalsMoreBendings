@@ -6,5 +6,36 @@
   "ability.elementalsmorebendings.gas_suffocate": "Suffocate",
   "ability.elementalsmorebendings.plant_vine_whip": "Vine Whip",
   "ability.elementalsmorebendings.mud_surge": "Mud Surge",
-  "ability.elementalsmorebendings.crystal_shard": "Crystal Shards"
+  "ability.elementalsmorebendings.crystal_shard": "Crystal Shards",
+
+  "upgrade.elementalsmorebendings.gasCloud": "Gas Cloud",
+  "upgrade.elementalsmorebendings.gasCloud.description": "Release a cloud of gas around you, dazing and slowing every living thing caught inside.",
+
+  "upgrade.elementalsmorebendings.gasCloudSizeI": "Larger Cloud I",
+  "upgrade.elementalsmorebendings.gasCloudSizeI.description": "Increases the radius of Gas Cloud by 0.75 blocks.",
+  "upgrade.elementalsmorebendings.gasCloudSizeII": "Larger Cloud II",
+  "upgrade.elementalsmorebendings.gasCloudSizeII.description": "Increases the radius of Gas Cloud by another 0.75 blocks.",
+
+  "upgrade.elementalsmorebendings.gasVentI": "Faster Venting I",
+  "upgrade.elementalsmorebendings.gasVentI.description": "Reduces the cooldown of Gas Cloud by 1 second.",
+  "upgrade.elementalsmorebendings.gasVentII": "Faster Venting II",
+  "upgrade.elementalsmorebendings.gasVentII.description": "Reduces the cooldown of Gas Cloud by another 1 second.",
+
+  "upgrade.elementalsmorebendings.gasSpecialization": "Specialization",
+  "upgrade.elementalsmorebendings.gasSpecialization.description": "Choose a single path for your Gas Cloud: Suffocate, Leak, or Ignite. Only one can be active at a time.",
+
+  "upgrade.elementalsmorebendings.gasSuffocate": "Suffocate",
+  "upgrade.elementalsmorebendings.gasSuffocate.description": "Your Gas Cloud instantly damages everyone caught inside it.",
+  "upgrade.elementalsmorebendings.gasSuffocateDamageI": "Suffocating Grip I",
+  "upgrade.elementalsmorebendings.gasSuffocateDamageI.description": "Increases Suffocate's damage by 1.5.",
+  "upgrade.elementalsmorebendings.gasSuffocateDamageII": "Suffocating Grip II",
+  "upgrade.elementalsmorebendings.gasSuffocateDamageII.description": "Increases Suffocate's damage by another 1.5.",
+
+  "upgrade.elementalsmorebendings.gasLeak": "Leak",
+  "upgrade.elementalsmorebendings.gasLeak.description": "Your Gas Cloud leaves a lingering cloud behind, slowing and dazing anyone who walks through it.",
+  "upgrade.elementalsmorebendings.gasLeakDurationI": "Lingering Leak I",
+  "upgrade.elementalsmorebendings.gasLeakDurationI.description": "Increases the duration of the lingering cloud by 5 seconds.",
+
+  "upgrade.elementalsmorebendings.gasIgnite": "Ignite",
+  "upgrade.elementalsmorebendings.gasIgnite.description": "Ignites your Gas Cloud, causing an instant explosion centered on you. High risk, high reward."
 }

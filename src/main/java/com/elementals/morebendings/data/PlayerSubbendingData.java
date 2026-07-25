@@ -33,7 +33,11 @@ public class PlayerSubbendingData {
             Codec.STRING.listOf().fieldOf("unlocked").forGetter(data -> data.unlocked.stream()
                     .map(SubbendingType::getId)
                     .collect(Collectors.toList())),
-            Codec.unboundedMap(Codec.STRING, Codec.INT).fieldOf("points").forGetter(data -> data.points),
+            Codec.unboundedMap(Codec.STRING, Codec.INT).fieldOf("points").forGetter(data -> {
+                Map<String, Integer> out = new HashMap<>();
+                data.points.forEach((type, value) -> out.put(type.getId(), value));
+                return out;
+            }),
             Codec.unboundedMap(Codec.STRING, Codec.STRING.listOf()).fieldOf("upgrades").forGetter(data -> {
                 Map<String, List<String>> out = new HashMap<>();
                 data.upgrades.forEach((type, nodes) -> out.put(type.getId(), List.copyOf(nodes)));
