@@ -16,7 +16,8 @@ public enum SubbendingType {
     FLYING("flying", "Flying"),
     PLANT("plant", "Plant Bending"),
     MUD("mud", "Mud Bending"),
-    CRYSTAL("crystal", "Crystal Bending");
+    CRYSTAL("crystal", "Crystal Bending"),
+    BONE("bone", "Bone Bending");
 
     private final String id;
     private final String displayName;

@@ -3,11 +3,13 @@
   "subbending.elementalsmorebendings.plant": "Plant Bending",
   "subbending.elementalsmorebendings.mud": "Mud Bending",
   "subbending.elementalsmorebendings.crystal": "Crystal Bending",
+  "subbending.elementalsmorebendings.bone": "Bone Bending",
   "ability.elementalsmorebendings.gas_suffocate": "Suffocate",
   "ability.elementalsmorebendings.plant_vine_whip": "Vine Whip",
   "ability.elementalsmorebendings.mud_surge": "Mud Surge",
   "ability.elementalsmorebendings.mud_trap": "Mud Trap",
   "ability.elementalsmorebendings.crystal_shard": "Crystal Shards",
+  "ability.elementalsmorebendings.bone_control": "Bone Control",
 
   "upgrade.elementals.mudSurge": "Mud Surge",
   "upgrade.elementals.mudSurge.description": "Sends a wave of mud in the direction you're looking, slowing anyone caught in it.",
@@ -20,6 +22,11 @@
   "upgrade.elementals.crystalShard": "Crystal Shards",
   "upgrade.elementals.crystalShard.description": "Fires a spike of crystal in the direction you're looking, dealing damage to whatever it hits.",
   "upgrade.elementals.crystalShard.use": "Use: %d",
+
+  "upgrade.elementals.boneControl": "Bone Control",
+  "upgrade.elementals.boneControl.description": "Conjures a bone spike you can freely steer up/down, side to side, and closer/further with your aim and scroll wheel, then hurl at will.",
+  "upgrade.elementals.boneControl.use": "Use: %d",
+  "upgrade.elementals.boneControl.icon": "earth_spikes",
 
   "upgrade.elementalsmorebendings.gasCloud": "Gas Cloud",
   "upgrade.elementalsmorebendings.gasCloud.description": "Release a cloud of gas around you, dazing and slowing every living thing caught inside.",

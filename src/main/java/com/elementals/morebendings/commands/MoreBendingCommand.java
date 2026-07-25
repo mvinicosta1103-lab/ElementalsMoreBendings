@@ -1,5 +1,6 @@
 package com.elementals.morebendings.commands;
 
+import com.elementals.morebendings.bending.earthsubbendings.bone.BoneElement;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalElement;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudElement;
 import com.elementals.morebendings.data.PlayerSubbendingData;
@@ -24,13 +25,13 @@ import net.minecraft.server.level.ServerPlayer;
  * /morebending remove <player> <subbending>
  *
  * Requer permissão de operador (nível 2), igual aos comandos vanilla de
- * /gamemode e /xp. <subbending> aceita: gas, plant, mud, crystal (com
+ * /gamemode e /xp. <subbending> aceita: gas, plant, mud, crystal, bone (com
  * autocomplete no jogo).
  */
 public class MoreBendingCommand {
 
     private static final SimpleCommandExceptionType UNKNOWN_SUBBENDING = new SimpleCommandExceptionType(
-            Component.literal("Sub-bending desconhecida. Use: gas, plant, mud ou crystal."));
+            Component.literal("Sub-bending desconhecida. Use: gas, plant, mud, crystal ou bone."));
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("morebending")
@@ -47,6 +48,17 @@ public class MoreBendingCommand {
                                         .executes(ctx -> run(ctx, false))))));
     }
 
+    /** Mensagem de motivo pra cada regra de elegibilidade -- usada tanto pro
+     * grant quanto pra deixar claro pro operador o que falta pro jogador. */
+    private static String eligibilityMessage(SubbendingType type) {
+        return switch (type) {
+            case MUD, CRYSTAL -> "precisa ter Earth e ter masterizado a árvore de Earth inteira";
+            case BONE -> "precisa ter Earth e já ter estado a até "
+                    + (int) BoneElement.BLOOD_PROXIMITY_RANGE + " blocos de um Blood bender em algum momento";
+            default -> "não atende aos requisitos";
+        };
+    }
+
     private static java.util.concurrent.CompletableFuture<com.mojang.brigadier.suggestion.Suggestions> suggestSubbendings(
             CommandContext<CommandSourceStack> ctx, com.mojang.brigadier.suggestion.SuggestionsBuilder builder) {
         return SharedSuggestionProvider.suggest(SubbendingType.ids(), builder);
@@ -57,10 +69,11 @@ public class MoreBendingCommand {
         String rawId = StringArgumentType.getString(ctx, "subbending");
         SubbendingType type = SubbendingType.byId(rawId).orElseThrow(UNKNOWN_SUBBENDING::create);
 
-        // Mud e Crystal já são Elements de verdade (ver MudElement/CrystalElement)
-        // — precisam passar pelo Bender do mod base, com a masterização de
-        // Earth como pré-requisito, em vez do PlayerSubbendingData antigo.
-        if (type == SubbendingType.MUD || type == SubbendingType.CRYSTAL) {
+        // Mud, Crystal e Bone já são Elements de verdade (ver
+        // MudElement/CrystalElement/BoneElement) — precisam passar pelo
+        // Bender do mod base, cada um com seu próprio pré-requisito de
+        // aquisição, em vez do PlayerSubbendingData antigo.
+        if (type == SubbendingType.MUD || type == SubbendingType.CRYSTAL || type == SubbendingType.BONE) {
             return runRealElement(ctx.getSource(), target, type, grant);
         }
 
@@ -88,13 +101,18 @@ public class MoreBendingCommand {
 
     /**
      * Caminho pras sub-bendings que já são {@code Element} de verdade
-     * (Mud, Crystal). Concessão exige ter Earth E ter masterizado a árvore
-     * de Earth inteira; sem isso, o comando falha com uma mensagem
-     * explicando o motivo, e nada é alterado no jogador.
+     * (Mud, Crystal, Bone). Cada uma tem sua própria regra de elegibilidade
+     * (ver {@link #eligibilityMessage}); sem ela, o comando falha com uma
+     * mensagem explicando o motivo, e nada é alterado no jogador.
      */
     private static int runRealElement(CommandSourceStack source, ServerPlayer target, SubbendingType type, boolean grant) {
         Bender bender = Bender.getBender(target);
-        Element element = type == SubbendingType.MUD ? MudElement.get() : CrystalElement.get();
+        Element element = switch (type) {
+            case MUD -> MudElement.get();
+            case CRYSTAL -> CrystalElement.get();
+            case BONE -> BoneElement.get();
+            default -> throw new IllegalArgumentException("Sub-bending sem Element real: " + type);
+        };
         String playerName = target.getName().getString();
 
         if (grant) {
@@ -102,13 +120,15 @@ public class MoreBendingCommand {
                 source.sendFailure(Component.literal(playerName + " já tinha " + type.getDisplayName() + "."));
                 return 0;
             }
-            boolean eligible = type == SubbendingType.MUD
-                    ? MudElement.canAcquire(bender)
-                    : CrystalElement.canAcquire(bender);
+            boolean eligible = switch (type) {
+                case MUD -> MudElement.canAcquire(bender);
+                case CRYSTAL -> CrystalElement.canAcquire(bender);
+                case BONE -> BoneElement.canAcquire(bender);
+                default -> false;
+            };
             if (!eligible) {
-                source.sendFailure(Component.literal(playerName
-                        + " precisa ter Earth e ter masterizado a árvore de Earth inteira antes de poder receber "
-                        + type.getDisplayName() + "."));
+                source.sendFailure(Component.literal(playerName + " " + eligibilityMessage(type)
+                        + " antes de poder receber " + type.getDisplayName() + "."));
                 return 0;
             }
             bender.addElement(element, true);

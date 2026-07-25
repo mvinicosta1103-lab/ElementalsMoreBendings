@@ -42,15 +42,21 @@ public class PlayerSubbendingData {
                 Map<String, List<String>> out = new HashMap<>();
                 data.upgrades.forEach((type, nodes) -> out.put(type.getId(), List.copyOf(nodes)));
                 return out;
-            })
+            }),
+            // Pré-requisito de Bone Bending: "já esteve a até 20 blocos de um Blood
+            // bender" é um evento histórico, não um estado atual -- por isso vira uma
+            // flag persistida (ver BloodProximityTracker, que é quem liga isso pra
+            // true), em vez de ser recalculado toda vez a partir da posição atual.
+            Codec.BOOL.optionalFieldOf("metBloodBender", false).forGetter(data -> data.metBloodBender)
     ).apply(instance, PlayerSubbendingData::fromSaved));
 
     private final Set<SubbendingType> unlocked = EnumSet.noneOf(SubbendingType.class);
     private final Map<SubbendingType, Integer> points = new HashMap<>();
     private final Map<SubbendingType, Set<String>> upgrades = new HashMap<>();
+    private boolean metBloodBender = false;
 
     private static PlayerSubbendingData fromSaved(List<String> unlockedIds, Map<String, Integer> points,
-                                                  Map<String, List<String>> upgrades) {
+                                                  Map<String, List<String>> upgrades, boolean metBloodBender) {
         PlayerSubbendingData data = new PlayerSubbendingData();
         for (String id : unlockedIds) {
             SubbendingType.byId(id).ifPresent(data.unlocked::add);
@@ -58,7 +64,22 @@ public class PlayerSubbendingData {
         points.forEach((id, value) -> SubbendingType.byId(id).ifPresent(type -> data.points.put(type, value)));
         upgrades.forEach((id, nodes) -> SubbendingType.byId(id)
                 .ifPresent(type -> data.upgrades.put(type, new HashSet<>(nodes))));
+        data.metBloodBender = metBloodBender;
         return data;
+    }
+
+    /** @return true se este jogador já foi detectado a até {@code BoneElement.BLOOD_PROXIMITY_RANGE}
+     * blocos de um Blood bender em algum momento (ver {@link
+     * com.elementals.morebendings.bending.earthsubbendings.bone.BloodProximityTracker}). */
+    public boolean hasMetBloodBender() {
+        return metBloodBender;
+    }
+
+    /** Não existe "des-marcar" de propósito -- uma vez satisfeito, o pré-requisito
+     * fica satisfeito pra sempre (ver regra em {@link
+     * com.elementals.morebendings.bending.earthsubbendings.bone.BoneElement#canAcquire}). */
+    public void setMetBloodBender(boolean value) {
+        this.metBloodBender = value;
     }
 
     public boolean has(SubbendingType type) {

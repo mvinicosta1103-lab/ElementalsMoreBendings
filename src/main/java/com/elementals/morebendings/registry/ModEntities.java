@@ -1,6 +1,7 @@
 package com.elementals.morebendings.registry;
 
 import com.elementals.morebendings.Constants;
+import com.elementals.morebendings.bending.earthsubbendings.bone.BoneSpikeEntity;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalShardEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
@@ -29,6 +30,15 @@ public class ModEntities {
                             .clientTrackingRange(64)
                             .updateInterval(1)
                             .build("crystal_shard"));
+
+    public static final Supplier<EntityType<BoneSpikeEntity>> BONE_SPIKE =
+            ENTITY_TYPES.register("bone_spike",
+                    () -> EntityType.Builder.<BoneSpikeEntity>of(BoneSpikeEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .sized(0.25f, 0.25f)
+                            .clientTrackingRange(64)
+                            .updateInterval(1)
+                            .build("bone_spike"));
 
     private ModEntities() {
     }
