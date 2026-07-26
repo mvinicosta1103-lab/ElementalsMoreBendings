@@ -1,5 +1,6 @@
 package com.elementals.morebendings.bending.airsubbendings.gas;
 
+import com.elementals.morebendings.bending.airsubbendings.common.SpecializationCycle;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -10,8 +11,15 @@ import java.util.List;
 
 /**
  * Ramo de especialização "gasSuffocate" (ver {@link GasElement}) — dano
- * instantâneo de asfixia em quem estiver dentro da nuvem no momento do cast.
- *
+ * direto e instantâneo em todo mundo (mobs inclusos) que estiver dentro
+ * da nuvem no momento do cast. É o caminho "burst" do trio: sem duração,
+ * sem efeito residual -- só dano cru na hora.
+ * <p>
+ * Comprar não é mais exclusivo com Leak/Ignite (ver {@link
+ * SpecializationCycle}); só faz efeito se for a especialização
+ * ATUALMENTE ATIVA pro jogador (alternada pela tecla de "Cycle
+ * Specialization").
+ * <p>
  * Dano escala com:
  *  - gasSuffocateDamageI  → +1.5 de dano
  *  - gasSuffocateDamageII → +1.5 de dano
@@ -21,7 +29,8 @@ public class GasSuffocateAbility {
     private static final float BASE_DAMAGE = 2.0f; // 1 coração
 
     public static void applyOnCloud(ServerPlayer caster, ServerLevel level, double radius) {
-        if (!GasElement.hasUpgrade(caster, GasElement.GAS_SUFFOCATE)) {
+        if (!GasElement.hasUpgrade(caster, GasElement.GAS_SUFFOCATE)
+                || !SpecializationCycle.isGasActive(caster, GasElement.GAS_SUFFOCATE)) {
             return;
         }
         float damage = getDamage(caster);

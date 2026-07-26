@@ -2,6 +2,7 @@ package com.elementals.morebendings.client;
 
 import com.elementals.morebendings.Constants;
 import com.elementals.morebendings.network.packets.CastGasCloudPacket;
+import com.elementals.morebendings.network.packets.CycleSpecializationPacket;
 import com.elementals.morebendings.network.packets.ToggleFlyingPacket;
 import com.mojang.blaze3d.platform.InputConstants;
 import commonnetwork.api.Dispatcher;
@@ -43,10 +44,25 @@ public final class ModKeyMappings {
             CATEGORY
     );
 
+    /**
+     * Troca qual especialização de Gas Cloud/Heavy Fog está ATIVA no
+     * momento (Suffocate/Leak/Ignite ou Choke/Veil/Freeze) -- ver
+     * {@code SpecializationCycle}. Comprar as três não é mais exclusivo;
+     * esta tecla decide qual delas realmente age quando a habilidade é
+     * lançada.
+     */
+    public static final KeyMapping CYCLE_SPECIALIZATION = new KeyMapping(
+            "key." + Constants.MOD_ID + ".cycle_specialization",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_V,
+            CATEGORY
+    );
+
     /** Registrado no mod event bus via RegisterKeyMappingsEvent. */
     public static void register(RegisterKeyMappingsEvent event) {
         event.register(TOGGLE_FLYING);
         event.register(CAST_GAS_CLOUD);
+        event.register(CYCLE_SPECIALIZATION);
     }
 
     /**
@@ -65,6 +81,9 @@ public final class ModKeyMappings {
         }
         while (CAST_GAS_CLOUD.consumeClick()) {
             Dispatcher.sendToServer(new CastGasCloudPacket());
+        }
+        while (CYCLE_SPECIALIZATION.consumeClick()) {
+            Dispatcher.sendToServer(new CycleSpecializationPacket());
         }
     }
 
