@@ -9,6 +9,8 @@ import com.elementals.morebendings.bending.earthsubbendings.petrification.Petrif
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandElement;
 import com.elementals.morebendings.bending.airsubbendings.atmosphere.AtmosphereElement;
 import com.elementals.morebendings.bending.airsubbendings.AirMasteryCheck;
+import com.elementals.morebendings.bending.firesubbendings.FireMasteryCheck;
+import dev.saperate.elementals.elements.fire.FireElement;
 import com.elementals.morebendings.data.PlayerSubbendingData;
 import com.elementals.morebendings.data.SubbendingType;
 import com.elementals.morebendings.registry.ModAttachments;
@@ -34,6 +36,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import com.elementals.morebendings.bending.airsubbendings.gas.GasElement;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistElement;
+import com.elementals.morebendings.bending.firesubbendings.plasma.PlasmaElement;
 
 /**
  * /morebending grant <player> <subbending>
@@ -42,12 +45,12 @@ import com.elementals.morebendings.bending.airsubbendings.mist.MistElement;
  *
  * Requer permissão de operador (nível 2), igual aos comandos vanilla de
  * /gamemode e /xp. <subbending> aceita: gas, plant, mud, crystal, bone, sand,
- * glass, petrification, lava (com autocomplete no jogo).
+ * glass, petrification, lava, atmosphere, mist, plasma (com autocomplete no jogo).
  */
 public class MoreBendingCommand {
 
     private static final SimpleCommandExceptionType UNKNOWN_SUBBENDING = new SimpleCommandExceptionType(
-            Component.literal("Sub-bending desconhecida. Use: Gas, Flying, Plant, Mud, Crystal, Bone, Sand, Glass, Petrification, Lava, Atmosphere ou Mist."));
+            Component.literal("Sub-bending desconhecida. Use: Gas, Flying, Plant, Mud, Crystal, Bone, Sand, Glass, Petrification, Lava, Atmosphere, Mist ou Plasma."));
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("morebending")
@@ -73,6 +76,7 @@ public class MoreBendingCommand {
         return switch (type) {
             case MUD, CRYSTAL, SAND, PETRIFICATION, LAVA -> "precisa ter Earth e ter masterizado a árvore de Earth inteira";
             case ATMOSPHERE, GAS, MIST -> "precisa ter Air e ter masterizado a árvore de Air inteira";
+            case PLASMA -> "precisa ter Fire e ter masterizado a árvore de Fire inteira";
             case BONE -> "precisa ter Earth e já ter estado a até "
                     + (int) BoneElement.BLOOD_PROXIMITY_RANGE + " blocos de um Blood bender em algum momento";
             case GLASS -> "precisa ter obtido Sand Bending antes";
@@ -104,10 +108,11 @@ public class MoreBendingCommand {
             case MUD -> MudElement.get();
             case CRYSTAL -> CrystalElement.get();
             case ATMOSPHERE -> AtmosphereElement.get();
+            case PLASMA -> PlasmaElement.get();
             default -> null;
         };
         if (element == null) {
-            source.sendFailure(Component.literal("Debug só implementado pra Gas/Mist/Mud/Crystal/Atmosphere por enquanto."));
+            source.sendFailure(Component.literal("Debug só implementado pra Gas/Mist/Mud/Crystal/Atmosphere/Plasma por enquanto."));
             return 0;
         }
 
@@ -141,7 +146,8 @@ public class MoreBendingCommand {
                 || type == SubbendingType.BONE || type == SubbendingType.SAND
                 || type == SubbendingType.GLASS || type == SubbendingType.PETRIFICATION
                 || type == SubbendingType.LAVA || type == SubbendingType.ATMOSPHERE
-                || type == SubbendingType.GAS || type == SubbendingType.MIST) {
+                || type == SubbendingType.GAS || type == SubbendingType.MIST
+                || type == SubbendingType.PLASMA) {
             return runRealElement(ctx.getSource(), target, type, grant);
         }
 
@@ -189,6 +195,7 @@ public class MoreBendingCommand {
             case ATMOSPHERE -> AtmosphereElement.get();
             case GAS -> GasElement.get();
             case MIST -> MistElement.get();
+            case PLASMA -> PlasmaElement.get();
             default -> throw new IllegalArgumentException("Sub-bending sem Element real: " + type);
         };
         String playerName = target.getName().getString();
@@ -213,6 +220,15 @@ public class MoreBendingCommand {
                             "Sua árvore de Mist Bending foi reparada -- tente comprar os upgrades de novo."));
                     return 1;
                 }
+                if (type == SubbendingType.PLASMA) {
+                    PlasmaElement.autoUnlockRoot(bender);
+                    syncAndPersist(bender, target);
+                    source.sendSuccess(() -> Component.literal(
+                            "plasmaClaws (nó raiz) sincronizado e persistido pra " + playerName + "."), true);
+                    target.sendSystemMessage(Component.literal(
+                            "Sua árvore de Plasma Bending foi reparada -- tente comprar os upgrades de novo."));
+                    return 1;
+                }
                 source.sendFailure(Component.literal(playerName + " já tinha " + type.getDisplayName() + "."));
                 return 0;
             }
@@ -227,6 +243,7 @@ public class MoreBendingCommand {
                 case ATMOSPHERE -> AtmosphereElement.canAcquire(bender);
                 case GAS -> GasElement.canAcquire(bender);
                 case MIST -> MistElement.canAcquire(bender);
+                case PLASMA -> PlasmaElement.canAcquire(bender);
                 default -> false;
             };
             if (!eligible) {
@@ -248,6 +265,21 @@ public class MoreBendingCommand {
                         }
                     }
                 }
+
+                if (type == SubbendingType.PLASMA && bender.hasElement(FireElement.get())) {
+                    java.util.List<String> missing = FireMasteryCheck.missingRequirements(bender);
+                    if (missing.isEmpty()) {
+                        source.sendFailure(Component.literal(
+                                "Diagnóstico: nenhum nó pendente foi encontrado -- "
+                                        + playerName + " parece já ter tudo. "
+                                        + "Pode ser algum outro motivo de canAcquire falhar."));
+                    } else {
+                        source.sendFailure(Component.literal("Nós de Fire ainda faltando pra " + playerName + ":"));
+                        for (String reason : missing) {
+                            source.sendFailure(Component.literal(" - " + reason));
+                        }
+                    }
+                }
                 return 0;
             }
             bender.addElement(element, true);
@@ -256,6 +288,9 @@ public class MoreBendingCommand {
             }
             if (type == SubbendingType.MIST) {
                 MistElement.autoUnlockRoot(bender);
+            }
+            if (type == SubbendingType.PLASMA) {
+                PlasmaElement.autoUnlockRoot(bender);
             }
             syncAndPersist(bender, target);
             source.sendSuccess(() -> Component.literal(type.getDisplayName() + " concedida a " + playerName + "."), true);
