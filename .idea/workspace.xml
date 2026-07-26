@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="Next phase: Next air subbending.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/common/CloudRootHealer.java" afterDir="false" />
+    <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="Next phase: Next fire subbending.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/firesubbendings/FireMasteryCheck.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/ElementalsMoreBendingsMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/ElementalsMoreBendingsMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/firesubbendings/plasma/PlasmaElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/firesubbendings/plasma/PlasmaElement.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -287,22 +287,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
-    </task>
-    <task id="LOCAL-00086" summary="Sorting things out.">
-      <option name="closed" value="true" />
-      <created>1784938722551</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1784938722551</updated>
-    </task>
-    <task id="LOCAL-00087" summary="Sorting things out.">
-      <option name="closed" value="true" />
-      <created>1784939411464</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
-      <option name="project" value="LOCAL" />
-      <updated>1784939411464</updated>
     </task>
     <task id="LOCAL-00088" summary="Sorting things out.">
       <option name="closed" value="true" />
@@ -680,7 +664,23 @@
       <option name="project" value="LOCAL" />
       <updated>1785097906920</updated>
     </task>
-    <option name="localTasksCounter" value="135" />
+    <task id="LOCAL-00135" summary="Next phase: Next air subbending.">
+      <option name="closed" value="true" />
+      <created>1785100807083</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1785100807083</updated>
+    </task>
+    <task id="LOCAL-00136" summary="Next phase: Next fire subbending.">
+      <option name="closed" value="true" />
+      <created>1785101185017</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1785101185017</updated>
+    </task>
+    <option name="localTasksCounter" value="137" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -704,6 +704,7 @@
     <MESSAGE value="Next phase: Relocalizing PNGs." />
     <MESSAGE value="Next phase: Next bending." />
     <MESSAGE value="Next phase: Next air subbending." />
-    <option name="LAST_COMMIT_MESSAGE" value="Next phase: Next air subbending." />
+    <MESSAGE value="Next phase: Next fire subbending." />
+    <option name="LAST_COMMIT_MESSAGE" value="Next phase: Next fire subbending." />
   </component>
 </project>
