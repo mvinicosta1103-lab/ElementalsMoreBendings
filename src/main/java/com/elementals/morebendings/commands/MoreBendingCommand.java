@@ -14,12 +14,18 @@ import com.elementals.morebendings.data.SubbendingType;
 import com.elementals.morebendings.registry.ModAttachments;
 import com.mojang.brigadier.CommandDispatcher;
 import dev.saperate.elementals.data.Bender;
+import dev.saperate.elementals.data.PlayerData;
+import dev.saperate.elementals.data.StateDataSaverAndLoader;
 import dev.saperate.elementals.elements.Element;
+import dev.saperate.elementals.elements.Upgrade;
 import dev.saperate.elementals.elements.air.AirElement;
+import dev.saperate.elementals.network.packets.common.SyncLevelPacket;
+import dev.saperate.elementals.network.packets.common.SyncUpgradeListPacket;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import commonnetwork.api.Network;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
@@ -32,6 +38,7 @@ import com.elementals.morebendings.bending.airsubbendings.mist.MistElement;
 /**
  * /morebending grant <player> <subbending>
  * /morebending remove <player> <subbending>
+ * /morebending debug <player> <subbending>
  *
  * Requer permissão de operador (nível 2), igual aos comandos vanilla de
  * /gamemode e /xp. <subbending> aceita: gas, plant, mud, crystal, bone, sand,
@@ -40,7 +47,6 @@ import com.elementals.morebendings.bending.airsubbendings.mist.MistElement;
 public class MoreBendingCommand {
 
     private static final SimpleCommandExceptionType UNKNOWN_SUBBENDING = new SimpleCommandExceptionType(
-            // na mensagem de erro (UNKNOWN_SUBBENDING)
             Component.literal("Sub-bending desconhecida. Use: Gas, Flying, Plant, Mud, Crystal, Bone, Sand, Glass, Petrification, Lava, Atmosphere ou Mist."));
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -55,11 +61,14 @@ public class MoreBendingCommand {
                         .then(Commands.argument("player", EntityArgument.player())
                                 .then(Commands.argument("subbending", StringArgumentType.word())
                                         .suggests(MoreBendingCommand::suggestSubbendings)
-                                        .executes(ctx -> run(ctx, false))))));
+                                        .executes(ctx -> run(ctx, false)))))
+                .then(Commands.literal("debug")
+                        .then(Commands.argument("player", EntityArgument.player())
+                                .then(Commands.argument("subbending", StringArgumentType.word())
+                                        .suggests(MoreBendingCommand::suggestSubbendings)
+                                        .executes(MoreBendingCommand::debug)))));
     }
 
-    /** Mensagem de motivo pra cada regra de elegibilidade -- usada tanto pro
-     * grant quanto pra deixar claro pro operador o que falta pro jogador. */
     private static String eligibilityMessage(SubbendingType type) {
         return switch (type) {
             case MUD, CRYSTAL, SAND, PETRIFICATION, LAVA -> "precisa ter Earth e ter masterizado a árvore de Earth inteira";
@@ -74,6 +83,53 @@ public class MoreBendingCommand {
     private static java.util.concurrent.CompletableFuture<com.mojang.brigadier.suggestion.Suggestions> suggestSubbendings(
             CommandContext<CommandSourceStack> ctx, com.mojang.brigadier.suggestion.SuggestionsBuilder builder) {
         return SharedSuggestionProvider.suggest(SubbendingType.ids(), builder);
+    }
+
+    /**
+     * Manda pro jogador o estado REAL que o servidor tem gravado agora — sem
+     * isso a gente só está adivinhando por que a compra não vai pra frente.
+     * Mostra: elemento ativo do bender, se o nó raiz está marcado como
+     * comprado, e o resultado de canBuyUpgrade para cada nó filho direto.
+     */
+    private static int debug(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer target = EntityArgument.getPlayer(ctx, "player");
+        String rawId = StringArgumentType.getString(ctx, "subbending");
+        SubbendingType type = SubbendingType.byId(rawId).orElseThrow(UNKNOWN_SUBBENDING::create);
+        CommandSourceStack source = ctx.getSource();
+
+        Bender bender = Bender.getBender(target);
+        Element element = switch (type) {
+            case GAS -> GasElement.get();
+            case MIST -> MistElement.get();
+            case MUD -> MudElement.get();
+            case CRYSTAL -> CrystalElement.get();
+            case ATMOSPHERE -> AtmosphereElement.get();
+            default -> null;
+        };
+        if (element == null) {
+            source.sendFailure(Component.literal("Debug só implementado pra Gas/Mist/Mud/Crystal/Atmosphere por enquanto."));
+            return 0;
+        }
+
+        PlayerData data = PlayerData.get(target);
+        source.sendSuccess(() -> Component.literal(
+                "elemento ativo (activeElementIndex): " + data.getElement().getName()
+                        + " | tem " + type.getDisplayName() + "? " + bender.hasElement(element)), true);
+
+        Upgrade rootChild = element.root.children[0];
+        boolean rootBought = data.upgrades.getOrDefault(rootChild, false);
+        source.sendSuccess(() -> Component.literal(
+                "nó raiz '" + rootChild.name + "' marcado como comprado no servidor? " + rootBought), true);
+
+        for (Upgrade child : rootChild.children) {
+            boolean canBuy = PlayerData.canBuyUpgrade(data.upgrades, element, child.name,
+                    new java.util.concurrent.atomic.AtomicInteger(data.level));
+            source.sendSuccess(() -> Component.literal(
+                    "  -> " + child.name + " | preço " + child.price
+                            + " | comprável agora pelo servidor? " + canBuy), true);
+        }
+        source.sendSuccess(() -> Component.literal("level atual do jogador: " + data.level), true);
+        return 1;
     }
 
     private static int run(CommandContext<CommandSourceStack> ctx, boolean grant) throws CommandSyntaxException {
@@ -111,13 +167,15 @@ public class MoreBendingCommand {
         }
     }
 
-    /**
-     * Caminho pras sub-bendings que já são {@code Element} de verdade
-     * (Mud, Crystal, Bone, Sand, Glass). Cada uma tem sua própria regra de
-     * elegibilidade (ver {@link #eligibilityMessage}); sem ela, o comando
-     * falha com uma mensagem explicando o motivo, e nada é alterado no
-     * jogador.
-     */
+    /** Manda os pacotes de sincronização + persiste em disco. Chamar sempre
+     * que o estado de upgrades do bender for alterado fora do fluxo normal
+     * de BuyUpgradePacket/ToggleUpgradePacket (que já fazem isso sozinhos). */
+    private static void syncAndPersist(Bender bender, ServerPlayer target) {
+        Network.getNetworkHandler().sendToClient(SyncUpgradeListPacket.createFromBender(bender), target);
+        Network.getNetworkHandler().sendToClient(SyncLevelPacket.createFromBender(bender), target);
+        StateDataSaverAndLoader.getServerState(target.getServer()).setDirty();
+    }
+
     private static int runRealElement(CommandSourceStack source, ServerPlayer target, SubbendingType type, boolean grant) {
         Bender bender = Bender.getBender(target);
         Element element = switch (type) {
@@ -138,21 +196,19 @@ public class MoreBendingCommand {
         if (grant) {
             if (bender.hasElement(element)) {
                 if (type == SubbendingType.GAS) {
-                    // Jogador já tinha Gas de antes do fix do gasCloud --
-                    // roda o mesmo reparo sem precisar remover e conceder
-                    // de novo (o que resetaria o progresso da árvore).
                     GasElement.autoUnlockRoot(bender);
+                    syncAndPersist(bender, target);
                     source.sendSuccess(() -> Component.literal(
-                            "gasCloud (nó raiz) sincronizado pra " + playerName + "."), true);
+                            "gasCloud (nó raiz) sincronizado e persistido pra " + playerName + "."), true);
                     target.sendSystemMessage(Component.literal(
                             "Sua árvore de Gas Bending foi reparada -- tente comprar os upgrades de novo."));
                     return 1;
                 }
                 if (type == SubbendingType.MIST) {
-                    // Mesmo reparo do Gas, pro nó raiz "mistCloud".
                     MistElement.autoUnlockRoot(bender);
+                    syncAndPersist(bender, target);
                     source.sendSuccess(() -> Component.literal(
-                            "mistCloud (nó raiz) sincronizado pra " + playerName + "."), true);
+                            "mistCloud (nó raiz) sincronizado e persistido pra " + playerName + "."), true);
                     target.sendSystemMessage(Component.literal(
                             "Sua árvore de Mist Bending foi reparada -- tente comprar os upgrades de novo."));
                     return 1;
@@ -181,11 +237,6 @@ public class MoreBendingCommand {
                         && bender.hasElement(AirElement.get())) {
                     java.util.List<String> missing = AirMasteryCheck.missingRequirements(bender);
                     if (missing.isEmpty()) {
-                        // hasElement(Air) + todos os nós batendo, mas
-                        // canAcquire ainda deu falso -- normalmente é
-                        // isSkillTreeComplete olhando pro tipo errado de
-                        // "Element" (ex: instância antiga em cache) ou o
-                        // jogador não tem Air de verdade, só a sub-bending.
                         source.sendFailure(Component.literal(
                                 "Diagnóstico: nenhum nó pendente foi encontrado -- "
                                         + playerName + " parece já ter tudo. "
@@ -201,17 +252,12 @@ public class MoreBendingCommand {
             }
             bender.addElement(element, true);
             if (type == SubbendingType.GAS) {
-                // Sem isso, o jogador precisa achar e clicar manualmente no
-                // nó "gasCloud" (preço 0, quase invisível) antes que
-                // QUALQUER outro upgrade da árvore de Gas apareça como
-                // comprável -- ver GasElement#autoUnlockRoot.
                 GasElement.autoUnlockRoot(bender);
             }
             if (type == SubbendingType.MIST) {
-                // Mesmo motivo do gasCloud -- "mistCloud" é o único filho
-                // direto da raiz sintética do Element, ver MistElement#autoUnlockRoot.
                 MistElement.autoUnlockRoot(bender);
             }
+            syncAndPersist(bender, target);
             source.sendSuccess(() -> Component.literal(type.getDisplayName() + " concedida a " + playerName + "."), true);
             target.sendSystemMessage(Component.literal("Você desbloqueou " + type.getDisplayName() + "!"));
             return 1;

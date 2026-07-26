@@ -36,3 +36,7 @@
 /bending element add Mist Dev
 /bending level add 1000 Dev
 /bending element add Gas Dev
+/morebending grant Dev air
+/bending element add Air Dev
+/morebending grant Dev Gas
+/morebending grant Dev Mist
