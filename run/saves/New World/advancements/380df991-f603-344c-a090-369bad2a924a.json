@@ -1,31 +1,7 @@
 {
-  "minecraft:recipes/transportation/mangrove_boat": {
-    "criteria": {
-      "in_water": "2026-07-26 14:25:26 -0300"
-    },
-    "done": true
-  },
-  "elementals:airbending": {
-    "criteria": {
-      "element": "2026-07-26 14:22:49 -0300"
-    },
-    "done": true
-  },
   "minecraft:recipes/decorations/crafting_table": {
     "criteria": {
       "unlock_right_away": "2026-07-26 14:22:45 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/transportation/acacia_boat": {
-    "criteria": {
-      "in_water": "2026-07-26 14:25:26 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/transportation/cherry_boat": {
-    "criteria": {
-      "in_water": "2026-07-26 14:25:26 -0300"
     },
     "done": true
   },
@@ -40,6 +16,30 @@
       "minecraft:stony_shore": "2026-07-26 14:22:46 -0300"
     },
     "done": false
+  },
+  "elementals:airbending": {
+    "criteria": {
+      "element": "2026-07-26 14:22:49 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/mangrove_boat": {
+    "criteria": {
+      "in_water": "2026-07-26 14:25:26 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/acacia_boat": {
+    "criteria": {
+      "in_water": "2026-07-26 14:25:26 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/cherry_boat": {
+    "criteria": {
+      "in_water": "2026-07-26 14:25:26 -0300"
+    },
+    "done": true
   },
   "minecraft:recipes/transportation/bamboo_raft": {
     "criteria": {
