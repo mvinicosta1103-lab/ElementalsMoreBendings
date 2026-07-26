@@ -26,15 +26,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Gradle: ElementalsSubbending-NEOFORGE-1.21.1-INSTALL.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../libs/ElementalsSubbending-NEOFORGE-1.21.1-INSTALL.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="Gradle: forgified-fabric-api-0.116.7+2.2.4+1.21.1.jar">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../../libs/forgified-fabric-api-0.116.7+2.2.4+1.21.1.jar!/" />

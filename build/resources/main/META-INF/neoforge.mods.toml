@@ -31,10 +31,3 @@ Elementals Subbending, sem modificar o addon original.
     versionRange="[1.0.0,)"
     ordering="AFTER"
     side="BOTH"
-
-[[dependencies.elementalsmorebendings]]
-    modId="elementalssubbending"
-    type="required"
-    versionRange="[1.0.0,)"
-    ordering="AFTER"
-    side="BOTH"

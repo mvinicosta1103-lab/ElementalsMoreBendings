@@ -1,11 +1,1 @@
-/morebending grant Dev crystal
-/bending level add 10000000 Dev
-/morebending grant Dev crystal
-/morebending grant Dev mud
-/morebending grant Dev bone
-/morebending grant Dev sand
-/morebending grant Dev gas
-/morebending grant Dev glass
-/morebending grant Dev bone
-/morebending grant Dev petrification
-/morebending grant Dev lava
+/bending element add Lava

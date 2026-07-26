@@ -94,8 +94,8 @@ key_key.left:key.keyboard.a
 key_key.back:key.keyboard.s
 key_key.right:key.keyboard.d
 key_key.jump:key.keyboard.space
-key_key.sneak:key.keyboard.left.control
-key_key.sprint:key.keyboard.left.shift
+key_key.sneak:key.keyboard.left.shift
+key_key.sprint:key.keyboard.left.control
 key_key.drop:key.keyboard.q
 key_key.inventory:key.keyboard.e
 key_key.chat:key.keyboard.t
@@ -136,15 +136,8 @@ key_key.elementals.Ability12:key.keyboard.p
 key_key.elementals.guiKey:key.keyboard.minus
 key_key.elementals.cycle:key.keyboard.z
 key_key.elementals.toggle_blue_fire:key.keyboard.n
-key_key.elementalssubbending.avatar_state_toggle:key.keyboard.i
-key_key.elementalssubbending.avatar_air_gust:key.keyboard.o
-key_key.elementalssubbending.avatar_earth_shrapnel:key.keyboard.period
-key_key.elementalssubbending.avatar_water_wave:key.keyboard.comma
-key_key.elementalssubbending.avatar_water_homing_projectiles:key.keyboard.b
-key_key.elementalssubbending.avatar_fire_split_shot:key.keyboard.j
-key_key.elementalssubbending.avatar_earth_launch:key.keyboard.n
 soundCategory_master:1.0
-soundCategory_music:0.0
+soundCategory_music:1.0
 soundCategory_record:1.0
 soundCategory_weather:1.0
 soundCategory_block:1.0
