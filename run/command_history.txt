@@ -1,6 +1,3 @@
-/bending element add Lava
-/morebending remove Dev lava
-/morebending grant Dev lava
 /bending element add Air
 /bending level add 10000000 Dev
 /bending element add Atmosphere Dev
@@ -40,3 +37,14 @@
 /bending element add Air Dev
 /morebending grant Dev Gas
 /morebending grant Dev Mist
+/bending level add 1000 Dev
+/morebending grant Dev Gas
+/morebending debug Dev Gas
+/morebending grant Dev Gas
+/bending element add Gas Dev
+/morebending grant Dev Gas
+/morebending debug Dev Gas
+/morebending debug Dev Mist
+/morebending grant Dev Mist
+/bending element add Mist
+/morebending debug Dev Mist
