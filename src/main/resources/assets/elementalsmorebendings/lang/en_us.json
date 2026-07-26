@@ -75,34 +75,34 @@
   "upgrade.elementals.atmosphericDome.description": "Surrounds you with a dome of compressed air. Deflects projectiles back at their source, pushes away anything nearby, and shatters light obstructions like leaves and webs. Hold crouch to maintain it.",
   "upgrade.elementals.atmosphericDome.use": "Use: %d",
 
-  "upgrade.elementalsmorebendings.gasCloud": "Gas Cloud",
-  "upgrade.elementalsmorebendings.gasCloud.description": "Release a cloud of gas around you, dazing and slowing every living thing caught inside.",
+  "upgrade.elementals.gasCloud": "Gas Cloud",
+  "upgrade.elementals.gasCloud.description": "Release a cloud of gas around you, dazing and slowing every living thing caught inside.",
 
-  "upgrade.elementalsmorebendings.gasCloudSizeI": "Larger Cloud I",
-  "upgrade.elementalsmorebendings.gasCloudSizeI.description": "Increases the radius of Gas Cloud by 0.75 blocks.",
-  "upgrade.elementalsmorebendings.gasCloudSizeII": "Larger Cloud II",
-  "upgrade.elementalsmorebendings.gasCloudSizeII.description": "Increases the radius of Gas Cloud by another 0.75 blocks.",
+  "upgrade.elementals.gasCloudSizeI": "Larger Cloud I",
+  "upgrade.elementals.gasCloudSizeI.description": "Increases the radius of Gas Cloud by 0.75 blocks.",
+  "upgrade.elementals.gasCloudSizeII": "Larger Cloud II",
+  "upgrade.elementals.gasCloudSizeII.description": "Increases the radius of Gas Cloud by another 0.75 blocks.",
 
-  "upgrade.elementalsmorebendings.gasVentI": "Faster Venting I",
-  "upgrade.elementalsmorebendings.gasVentI.description": "Reduces the cooldown of Gas Cloud by 1 second.",
-  "upgrade.elementalsmorebendings.gasVentII": "Faster Venting II",
-  "upgrade.elementalsmorebendings.gasVentII.description": "Reduces the cooldown of Gas Cloud by another 1 second.",
+  "upgrade.elementals.gasVentI": "Faster Venting I",
+  "upgrade.elementals.gasVentI.description": "Reduces the cooldown of Gas Cloud by 1 second.",
+  "upgrade.elementals.gasVentII": "Faster Venting II",
+  "upgrade.elementals.gasVentII.description": "Reduces the cooldown of Gas Cloud by another 1 second.",
 
-  "upgrade.elementalsmorebendings.gasSpecialization": "Specialization",
-  "upgrade.elementalsmorebendings.gasSpecialization.description": "Choose a single path for your Gas Cloud: Suffocate, Leak, or Ignite. Only one can be active at a time.",
+  "upgrade.elementals.gasSpecialization": "Specialization",
+  "upgrade.elementals.gasSpecialization.description": "Choose a single path for your Gas Cloud: Suffocate, Leak, or Ignite. Only one can be active at a time.",
 
-  "upgrade.elementalsmorebendings.gasSuffocate": "Suffocate",
-  "upgrade.elementalsmorebendings.gasSuffocate.description": "Your Gas Cloud instantly damages everyone caught inside it.",
-  "upgrade.elementalsmorebendings.gasSuffocateDamageI": "Suffocating Grip I",
-  "upgrade.elementalsmorebendings.gasSuffocateDamageI.description": "Increases Suffocate's damage by 1.5.",
-  "upgrade.elementalsmorebendings.gasSuffocateDamageII": "Suffocating Grip II",
-  "upgrade.elementalsmorebendings.gasSuffocateDamageII.description": "Increases Suffocate's damage by another 1.5.",
+  "upgrade.elementals.gasSuffocate": "Suffocate",
+  "upgrade.elementals.gasSuffocate.description": "Your Gas Cloud instantly damages everyone caught inside it.",
+  "upgrade.elementals.gasSuffocateDamageI": "Suffocating Grip I",
+  "upgrade.elementals.gasSuffocateDamageI.description": "Increases Suffocate's damage by 1.5.",
+  "upgrade.elementals.gasSuffocateDamageII": "Suffocating Grip II",
+  "upgrade.elementals.gasSuffocateDamageII.description": "Increases Suffocate's damage by another 1.5.",
 
-  "upgrade.elementalsmorebendings.gasLeak": "Leak",
-  "upgrade.elementalsmorebendings.gasLeak.description": "Your Gas Cloud leaves a lingering cloud behind, slowing and dazing anyone who walks through it.",
-  "upgrade.elementalsmorebendings.gasLeakDurationI": "Lingering Leak I",
-  "upgrade.elementalsmorebendings.gasLeakDurationI.description": "Increases the duration of the lingering cloud by 5 seconds.",
+  "upgrade.elementals.gasLeak": "Leak",
+  "upgrade.elementals.gasLeak.description": "Your Gas Cloud leaves a lingering cloud behind, slowing and dazing anyone who walks through it.",
+  "upgrade.elementals.gasLeakDurationI": "Lingering Leak I",
+  "upgrade.elementals.gasLeakDurationI.description": "Increases the duration of the lingering cloud by 5 seconds.",
 
-  "upgrade.elementalsmorebendings.gasIgnite": "Ignite",
-  "upgrade.elementalsmorebendings.gasIgnite.description": "Ignites your Gas Cloud, causing an instant explosion centered on you. High risk, high reward."
+  "upgrade.elementals.gasIgnite": "Ignite",
+  "upgrade.elementals.gasIgnite.description": "Ignites your Gas Cloud, causing an instant explosion centered on you. High risk, high reward."
 }

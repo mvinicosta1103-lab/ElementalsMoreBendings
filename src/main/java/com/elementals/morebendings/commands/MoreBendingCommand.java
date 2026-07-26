@@ -126,6 +126,7 @@ public class MoreBendingCommand {
             case PETRIFICATION -> PetrificationElement.get();
             case LAVA -> LavaElement.get();
             case ATMOSPHERE -> AtmosphereElement.get();
+            case GAS -> GasElement.get();
             default -> throw new IllegalArgumentException("Sub-bending sem Element real: " + type);
         };
         String playerName = target.getName().getString();
@@ -144,6 +145,7 @@ public class MoreBendingCommand {
                 case PETRIFICATION -> PetrificationElement.canAcquire(bender);
                 case LAVA -> LavaElement.canAcquire(bender);
                 case ATMOSPHERE -> AtmosphereElement.canAcquire(bender);
+                case GAS -> GasElement.canAcquire(bender);
                 default -> false;
             };
             if (!eligible) {

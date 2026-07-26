@@ -1,26 +1,25 @@
 {
   "elementals:airbending": {
     "criteria": {
-      "element": "2026-07-26 10:57:20 -0300"
+      "element": "2026-07-26 11:56:13 -0300"
     },
     "done": true
   },
   "minecraft:recipes/decorations/crafting_table": {
     "criteria": {
-      "unlock_right_away": "2026-07-26 10:56:36 -0300"
+      "unlock_right_away": "2026-07-26 11:54:38 -0300"
     },
     "done": true
   },
   "elementals:root": {
     "criteria": {
-      "trigger": "2026-07-26 10:56:36 -0300"
+      "trigger": "2026-07-26 11:54:38 -0300"
     },
     "done": true
   },
   "minecraft:adventure/adventuring_time": {
     "criteria": {
-      "minecraft:forest": "2026-07-26 10:56:37 -0300",
-      "minecraft:plains": "2026-07-26 11:00:50 -0300"
+      "minecraft:flower_forest": "2026-07-26 11:54:39 -0300"
     },
     "done": false
   },
