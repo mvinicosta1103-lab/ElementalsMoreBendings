@@ -30,3 +30,5 @@
 /bending element remove Gas Dev
 /morebending grant Dev Gas
 /bending element add Gas
+/morebending grant Dev Mist
+/bending element add Mist Dev

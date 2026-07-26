@@ -78,6 +78,7 @@
 
   "upgrade.elementals.gasCloud": "Gas Cloud",
   "upgrade.elementals.gasCloud.description": "Release a cloud of gas around you, dazing and slowing every living thing caught inside.",
+  "upgrade.elementals.gasCloud.use": "Use: %d",
 
   "upgrade.elementals.gasCloudSizeI": "Larger Cloud I",
   "upgrade.elementals.gasCloudSizeI.description": "Increases the radius of Gas Cloud by 0.75 blocks.",
@@ -91,6 +92,7 @@
 
   "upgrade.elementals.gasSpecialization": "Specialization",
   "upgrade.elementals.gasSpecialization.description": "Choose a single path for your Gas Cloud: Suffocate, Leak, or Ignite. Only one can be active at a time.",
+  "upgrade.elementals.gasSpecialization.use": "Use: %d",
 
   "upgrade.elementals.gasSuffocate": "Suffocate",
   "upgrade.elementals.gasSuffocate.description": "Your Gas Cloud instantly damages everyone caught inside it. You are never harmed by your own gas.",
@@ -98,18 +100,22 @@
   "upgrade.elementals.gasSuffocateDamageI.description": "Increases Suffocate's damage by 1.5.",
   "upgrade.elementals.gasSuffocateDamageII": "Suffocating Grip II",
   "upgrade.elementals.gasSuffocateDamageII.description": "Increases Suffocate's damage by another 1.5.",
+  "upgrade.elementals.gasSuffocate.use": "Use: %d",
 
   "upgrade.elementals.gasLeak": "Leak",
+  "upgrade.elementals.gasLeak.use": "Use: %d",
   "upgrade.elementals.gasLeak.description": "Your Gas Cloud leaves a lingering cloud behind, poisoning and dazing anyone who walks through it. You are immune to your own gas.",
   "upgrade.elementals.gasLeakDurationI": "Lingering Leak I",
   "upgrade.elementals.gasLeakDurationI.description": "Increases the duration of the lingering cloud by 5 seconds.",
 
   "upgrade.elementals.gasIgnite": "Ignite",
+  "upgrade.elementals.gasIgnite.use": "Use: %d",
   "upgrade.elementals.gasIgnite.description": "Ignites your Gas Cloud, setting fire to everyone caught inside it. You are never burned by your own gas.",
 
   "subbending.elementalsmorebendings.mist": "Mist Bending",
 
   "upgrade.elementals.mistCloud": "Heavy Fog",
+  "upgrade.elementals.mistCloud.use": "Use: %d",
   "upgrade.elementals.mistCloud.description": "Plants a thick fog around you that lingers for a while, blinding and disorienting everyone caught inside. You are never affected by your own fog.",
   "upgrade.elementals.mistCloudSizeI": "Thicker Fog I",
   "upgrade.elementals.mistCloudSizeI.description": "Increases the radius of Heavy Fog by 0.75 blocks.",
@@ -121,16 +127,20 @@
   "upgrade.elementals.mistVentII.description": "Reduces the cooldown of Heavy Fog by another 1 second.",
   "upgrade.elementals.mistSpecialization": "Specialization",
   "upgrade.elementals.mistSpecialization.description": "Choose a single path for your Heavy Fog: Choke, Veil, or Freeze. Only one can be active at a time.",
+  "upgrade.elementals.mistSpecialization.use": "Use: %d",
   "upgrade.elementals.mistChoke": "Choke",
   "upgrade.elementals.mistChoke.description": "Your fog constantly damages everyone caught inside it. You are never harmed by your own fog.",
+  "upgrade.elementals.mistChoke.use": "Use: %d",
   "upgrade.elementals.mistChokeDamageI": "Choking Grip I",
   "upgrade.elementals.mistChokeDamageI.description": "Increases Choke's damage by 0.5.",
   "upgrade.elementals.mistChokeDamageII": "Choking Grip II",
   "upgrade.elementals.mistChokeDamageII.description": "Increases Choke's damage by another 0.5.",
   "upgrade.elementals.mistVeil": "Veil",
   "upgrade.elementals.mistVeil.description": "Your fog lingers for 5 extra seconds before dissipating.",
+  "upgrade.elementals.mistVeil.use": "Use: %d",
   "upgrade.elementals.mistVeilDurationI": "Lingering Veil I",
   "upgrade.elementals.mistVeilDurationI.description": "Increases the duration of your fog by another 5 seconds.",
   "upgrade.elementals.mistFreeze": "Freeze",
-  "upgrade.elementals.mistFreeze.description": "Chills your fog, heavily slowing everyone caught inside it. You are never slowed by your own fog."
+  "upgrade.elementals.mistFreeze.description": "Chills your fog, heavily slowing everyone caught inside it. You are never slowed by your own fog.",
+  "upgrade.elementals.mistFreeze.use": "Use: %d"
 }

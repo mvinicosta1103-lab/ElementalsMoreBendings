@@ -4,6 +4,7 @@ import com.elementals.morebendings.Constants;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BoneSpikeEntity;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalShardEntity;
 import com.elementals.morebendings.bending.earthsubbendings.glass.GlassShardEntity;
+import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -49,6 +50,23 @@ public class ModEntities {
                             .clientTrackingRange(64)
                             .updateInterval(1)
                             .build("glass_shard"));
+
+    /**
+     * Entidade puramente visual da névoa de Heavy Fog (ver {@code
+     * MistFogEntity}/{@code MistCloudState}) -- não voa, não colide, só
+     * fica parada servindo de "corpo" pro {@code MistFogEntityRenderer}.
+     * Tamanho de hitbox aqui é só nominal (a área de culling de verdade é
+     * recalculada em {@code MistFogEntity#getBoundingBoxForCulling} com
+     * base no raio de verdade da névoa, que varia com os upgrades).
+     */
+    public static final Supplier<EntityType<MistFogEntity>> MIST_FOG =
+            ENTITY_TYPES.register("mist_fog",
+                    () -> EntityType.Builder.<MistFogEntity>of(MistFogEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .sized(1.0f, 2.0f)
+                            .clientTrackingRange(64)
+                            .updateInterval(20)
+                            .build("mist_fog"));
 
     private ModEntities() {
     }
