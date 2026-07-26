@@ -5,6 +5,7 @@
   "subbending.elementalsmorebendings.crystal": "Crystal Bending",
   "subbending.elementalsmorebendings.bone": "Bone Bending",
   "subbending.elementalsmorebendings.sand": "Sand Bending",
+  "subbending.elementalsmorebendings.glass": "Glass Bending",
   "ability.elementalsmorebendings.gas_suffocate": "Suffocate",
   "ability.elementalsmorebendings.plant_vine_whip": "Vine Whip",
   "ability.elementalsmorebendings.mud_surge": "Mud Surge",
@@ -12,6 +13,7 @@
   "ability.elementalsmorebendings.crystal_shard": "Crystal Shards",
   "ability.elementalsmorebendings.bone_control": "Bone Control",
   "ability.elementalsmorebendings.sand_tornado": "Sand Tornado",
+  "ability.elementalsmorebendings.glass_shards": "Glass Shards",
 
   "upgrade.elementals.mudSurge": "Mud Surge",
   "upgrade.elementals.mudSurge.description": "Sends a wave of mud in the direction you're looking, slowing anyone caught in it.",
@@ -33,6 +35,10 @@
   "upgrade.elementals.sandTornado": "Sand Tornado",
   "upgrade.elementals.sandTornado.description": "Whips up a spinning column of sand where you're aiming, sucking in nearby sand blocks and dragging, blinding, and battering anyone caught inside. Hold crouch to keep it going.",
   "upgrade.elementals.sandTornado.use": "Use: %d",
+
+  "upgrade.elementals.glassShards": "Glass Shards",
+  "upgrade.elementals.glassShards.description": "Fires a shard of glass in the direction you're looking, dealing damage to whatever it hits.",
+  "upgrade.elementals.glassShards.use": "Use: %d",
 
   "upgrade.elementalsmorebendings.gasCloud": "Gas Cloud",
   "upgrade.elementalsmorebendings.gasCloud.description": "Release a cloud of gas around you, dazing and slowing every living thing caught inside.",
