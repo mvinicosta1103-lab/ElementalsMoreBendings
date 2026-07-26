@@ -28,13 +28,7 @@ Elementals Subbending, sem modificar o addon original.
 [[dependencies.elementalsmorebendings]]
     modId="elementals"
     type="required"
-    versionRange="[1.0.0,)"
+    versionRange="[5.0.0]"
     ordering="AFTER"
     side="BOTH"
 
-[[dependencies.elementalsmorebendings]]
-    modId="elementalssubbending"
-    type="required"
-    versionRange="[1.0.0,)"
-    ordering="AFTER"
-    side="BOTH"
