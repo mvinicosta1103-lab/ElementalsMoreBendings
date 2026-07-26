@@ -15,14 +15,11 @@ import java.util.stream.Collectors;
  * Guarda, por jogador:
  *  - quais sub-bendings (Gas, Flying, Plant, Mud, Crystal) ele já desbloqueou;
  *  - pra cada sub-bending, quantos "pontos de habilidade" ele tem pra gastar
- *    na skill tree dela e quais nós da árvore (ver {@link
- *    com.elementals.morebendings.bending.airsubbendings.gas.GasSkillTree})
- *    ele já comprou.
- *
+
  * Uma instância disso fica anexada a cada Player via Data Attachment (ver
  * {@link com.elementals.morebendings.registry.ModAttachments}), então
  * persiste entre logins/reinicializações do servidor.
- *
+
  * Por enquanto só o Gas realmente usa pontos/upgrades — os outros continuam
  * sendo só "tem ou não tem" (unlocked). Dá pra estender esse mesmo mapa pras
  * outras sub-bendings quando elas ganharem árvore própria também.

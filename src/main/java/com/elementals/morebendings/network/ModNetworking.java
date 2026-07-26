@@ -1,9 +1,6 @@
 package com.elementals.morebendings.network;
 
 import com.elementals.morebendings.Constants;
-import com.elementals.morebendings.network.packets.BuyGasUpgradePacket;
-import com.elementals.morebendings.network.packets.CastGasCloudPacket;
-import com.elementals.morebendings.network.packets.SyncGasProgressPacket;
 import com.elementals.morebendings.network.packets.ToggleFlyingPacket;
 import commonnetwork.api.Network;
 import commonnetwork.networking.data.Side;
@@ -30,14 +27,9 @@ public final class ModNetworking {
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "sync_gas_progress");
 
     public static void register() {
-        Network.registerPacket(BuyGasUpgradePacket.type(), BuyGasUpgradePacket.class,
-                BuyGasUpgradePacket.STREAM_CODEC, BuyGasUpgradePacket::handle);
-        Network.registerPacket(CastGasCloudPacket.type(), CastGasCloudPacket.class,
-                CastGasCloudPacket.STREAM_CODEC, CastGasCloudPacket::handle);
         Network.registerPacket(ToggleFlyingPacket.type(), ToggleFlyingPacket.class,
                 ToggleFlyingPacket.STREAM_CODEC, ToggleFlyingPacket::handle);
-        Network.registerPacket(SyncGasProgressPacket.type(), SyncGasProgressPacket.class,
-                SyncGasProgressPacket.STREAM_CODEC, SyncGasProgressPacket::handle);
+
     }
 
     public static void expectSideOrThrow(Side current, Side expected) {
