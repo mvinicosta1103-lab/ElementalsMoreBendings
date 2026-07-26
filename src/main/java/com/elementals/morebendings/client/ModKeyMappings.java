@@ -24,7 +24,7 @@ public final class ModKeyMappings {
     public static final KeyMapping TOGGLE_FLYING = new KeyMapping(
             "key." + Constants.MOD_ID + ".toggle_flying",
             InputConstants.Type.KEYSYM,
-            InputConstants.KEY_V,
+            InputConstants.KEY_H,
             CATEGORY
     );
 

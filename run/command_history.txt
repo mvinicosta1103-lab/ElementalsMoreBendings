@@ -5,3 +5,12 @@
 /bending level add 10000000 Dev
 /bending element add Atmosphere Dev
 /morebending grant Dev Flying
+/bending level add 100000000 Dev
+/morebending remove Dev Flying
+/bending level add 1000000 Dev
+/morebending grant Dev Lava
+/morebending remove Dev Lava
+/bending element remove Earth Dev
+/bending element add Air
+/morebending grant Dev Gas
+/morebending grant Dev Flying
