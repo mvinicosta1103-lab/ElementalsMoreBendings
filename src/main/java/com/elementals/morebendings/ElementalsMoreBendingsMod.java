@@ -1,5 +1,6 @@
 package com.elementals.morebendings;
 
+import com.elementals.morebendings.bending.airsubbendings.common.CloudRootHealer;
 import com.elementals.morebendings.bending.airsubbendings.flying.FlyingAbility;
 import com.elementals.morebendings.bending.airsubbendings.gas.GasLeakManager;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BloodProximityTracker;
@@ -64,6 +65,13 @@ public class ElementalsMoreBendingsMod {
         NeoForge.EVENT_BUS.addListener(SandTornadoManager::onServerTick);
 
         NeoForge.EVENT_BUS.addListener(PressureZoneManager::onServerTick);
+
+        // Corrige sozinho, a cada login, qualquer Gas/Mist bender cujo nó
+        // raiz (gasCloud/mistCloud) não esteja marcado como comprado --
+        // sem isso a árvore de upgrades fica travada pra sempre (ver
+        // CloudRootHealer). Substitui a necessidade de rodar
+        // "/morebending grant <player> gas" manualmente como reparo.
+        NeoForge.EVENT_BUS.addListener(CloudRootHealer::onPlayerLoggedIn);
 
         // Verifica em background se algum Earth bender chegou perto o
         // suficiente de um Blood bender pra desbloquear o pré-requisito de
