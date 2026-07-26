@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
  * tiver dados salvos, ou eles vão "perder" a sub-bending sem querer.
  */
 public enum SubbendingType {
-    GAS("Gas", "Gas Bending"),
     FLYING("Flying", "Flying"),
     PLANT("Plant", "Plant Bending"),
     MUD("Mud", "Mud Bending"),

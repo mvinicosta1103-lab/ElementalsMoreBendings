@@ -24,6 +24,7 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import com.elementals.morebendings.bending.airsubbendings.gas.GasElement;
 
 /**
  * /morebending grant <player> <subbending>
@@ -58,9 +59,8 @@ public class MoreBendingCommand {
      * grant quanto pra deixar claro pro operador o que falta pro jogador. */
     private static String eligibilityMessage(SubbendingType type) {
         return switch (type) {
-            // no eligibilityMessage(...)
             case MUD, CRYSTAL, SAND, PETRIFICATION, LAVA -> "precisa ter Earth e ter masterizado a árvore de Earth inteira";
-            case ATMOSPHERE -> "precisa ter Air e ter masterizado a árvore de Air inteira";
+            case ATMOSPHERE, GAS -> "precisa ter Air e ter masterizado a árvore de Air inteira";
             case BONE -> "precisa ter Earth e já ter estado a até "
                     + (int) BoneElement.BLOOD_PROXIMITY_RANGE + " blocos de um Blood bender em algum momento";
             case GLASS -> "precisa ter obtido Sand Bending antes";
@@ -78,16 +78,11 @@ public class MoreBendingCommand {
         String rawId = StringArgumentType.getString(ctx, "subbending");
         SubbendingType type = SubbendingType.byId(rawId).orElseThrow(UNKNOWN_SUBBENDING::create);
 
-        // Mud, Crystal, Bone, Sand, Glass e Petrification já são Elements de
-        // verdade (ver
-        // MudElement/CrystalElement/BoneElement/SandElement/GlassElement/
-        // PetrificationElement) — precisam passar pelo Bender do mod base,
-        // cada um com seu próprio pré-requisito de aquisição, em vez do
-        // PlayerSubbendingData antigo.
         if (type == SubbendingType.MUD || type == SubbendingType.CRYSTAL
                 || type == SubbendingType.BONE || type == SubbendingType.SAND
                 || type == SubbendingType.GLASS || type == SubbendingType.PETRIFICATION
-                || type == SubbendingType.LAVA || type == SubbendingType.ATMOSPHERE) {
+                || type == SubbendingType.LAVA || type == SubbendingType.ATMOSPHERE
+                || type == SubbendingType.GAS) {
             return runRealElement(ctx.getSource(), target, type, grant);
         }
 

@@ -7,21 +7,13 @@ import com.elementals.morebendings.bending.earthsubbendings.mud.MudElement;
 import com.elementals.morebendings.bending.earthsubbendings.petrification.PetrificationElement;
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandElement;
 import com.elementals.morebendings.bending.airsubbendings.atmosphere.AtmosphereElement;
+import com.elementals.morebendings.bending.airsubbendings.gas.GasElement;
 import com.elementals.morebendings.registry.ModAbilities;
 
 public class CommonClass {
 
     public static void init() {
-        Constants.LOG.info("Inicializando sub-bendings comuns (Gas, Plant, Mud, Crystal, Sand, Glass, Petrification, Lava) na 1.21.1...");
-
-        // Mud, Crystal, Sand, Glass, Petrification e Lava agora são
-        // Elements de verdade, registrados no mod base (ver
-        // MudElement/CrystalElement/SandElement/GlassElement/
-        // PetrificationElement/LavaElement) — precisam ser instanciados
-        // uma vez aqui pra entrarem no registro estático do Elementals.
-        // Glass precisa vir depois de Sand só por organização (não há
-        // dependência de ordem de registro real, mas
-        // GlassElement.canAcquire consulta SandElement.get() em runtime).
+        Constants.LOG.info("Inicializando sub-bendings comuns (Plant, Mud, Crystal, Sand, Glass, Petrification, Lava, Atmosphere, Gas) na 1.21.1...");
 
         // EARTH SUBBENDINGS
         MudElement.register();
@@ -33,8 +25,9 @@ public class CommonClass {
 
         // AIR SUBBENDINGS
         AtmosphereElement.register();
+        GasElement.register();
 
-        // Gas/Flying/Plant ainda usam o sistema antigo (PlayerSubbendingData)
+        // Flying/Plant ainda usam o sistema antigo (PlayerSubbendingData)
         // — ainda não convertidos pro mesmo padrão de Element real.
         ModAbilities.registerAbilities();
     }
