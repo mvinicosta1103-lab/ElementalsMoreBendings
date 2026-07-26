@@ -133,6 +133,17 @@ public class MoreBendingCommand {
 
         if (grant) {
             if (bender.hasElement(element)) {
+                if (type == SubbendingType.GAS) {
+                    // Jogador já tinha Gas de antes do fix do gasCloud --
+                    // roda o mesmo reparo sem precisar remover e conceder
+                    // de novo (o que resetaria o progresso da árvore).
+                    GasElement.autoUnlockRoot(bender);
+                    source.sendSuccess(() -> Component.literal(
+                            "gasCloud (nó raiz) sincronizado pra " + playerName + "."), true);
+                    target.sendSystemMessage(Component.literal(
+                            "Sua árvore de Gas Bending foi reparada -- tente comprar os upgrades de novo."));
+                    return 1;
+                }
                 source.sendFailure(Component.literal(playerName + " já tinha " + type.getDisplayName() + "."));
                 return 0;
             }
@@ -154,6 +165,13 @@ public class MoreBendingCommand {
                 return 0;
             }
             bender.addElement(element, true);
+            if (type == SubbendingType.GAS) {
+                // Sem isso, o jogador precisa achar e clicar manualmente no
+                // nó "gasCloud" (preço 0, quase invisível) antes que
+                // QUALQUER outro upgrade da árvore de Gas apareça como
+                // comprável -- ver GasElement#autoUnlockRoot.
+                GasElement.autoUnlockRoot(bender);
+            }
             source.sendSuccess(() -> Component.literal(type.getDisplayName() + " concedida a " + playerName + "."), true);
             target.sendSystemMessage(Component.literal("Você desbloqueou " + type.getDisplayName() + "!"));
             return 1;

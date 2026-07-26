@@ -1,6 +1,7 @@
 package com.elementals.morebendings.network;
 
 import com.elementals.morebendings.Constants;
+import com.elementals.morebendings.network.packets.CastGasCloudPacket;
 import com.elementals.morebendings.network.packets.ToggleFlyingPacket;
 import commonnetwork.api.Network;
 import commonnetwork.networking.data.Side;
@@ -11,9 +12,14 @@ public final class ModNetworking {
     public static final ResourceLocation TOGGLE_FLYING_ID =
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "toggle_flying");
 
+    public static final ResourceLocation CAST_GAS_CLOUD_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cast_gas_cloud");
+
     public static void register() {
         Network.registerPacket(ToggleFlyingPacket.type(), ToggleFlyingPacket.class,
                 ToggleFlyingPacket.STREAM_CODEC, ToggleFlyingPacket::handle);
+        Network.registerPacket(CastGasCloudPacket.type(), CastGasCloudPacket.class,
+                CastGasCloudPacket.STREAM_CODEC, CastGasCloudPacket::handle);
     }
 
     public static void expectSideOrThrow(Side current, Side expected) {

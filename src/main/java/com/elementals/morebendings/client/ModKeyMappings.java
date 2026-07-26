@@ -1,6 +1,7 @@
 package com.elementals.morebendings.client;
 
 import com.elementals.morebendings.Constants;
+import com.elementals.morebendings.network.packets.CastGasCloudPacket;
 import com.elementals.morebendings.network.packets.ToggleFlyingPacket;
 import com.mojang.blaze3d.platform.InputConstants;
 import commonnetwork.api.Dispatcher;
@@ -28,9 +29,24 @@ public final class ModKeyMappings {
             CATEGORY
     );
 
+    /**
+     * Solta o Gas Cloud direto, sem precisar trocar pro elemento Air/Gas
+     * nem usar o slot numérico de habilidade padrão do mod base (ver
+     * {@code GasCloudAbility}). Funciona em qualquer elemento ativo,
+     * desde que o jogador já seja um Gas bender -- o servidor
+     * (CastGasCloudPacket) confirma isso antes de disparar a habilidade.
+     */
+    public static final KeyMapping CAST_GAS_CLOUD = new KeyMapping(
+            "key." + Constants.MOD_ID + ".cast_gas_cloud",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_G,
+            CATEGORY
+    );
+
     /** Registrado no mod event bus via RegisterKeyMappingsEvent. */
     public static void register(RegisterKeyMappingsEvent event) {
         event.register(TOGGLE_FLYING);
+        event.register(CAST_GAS_CLOUD);
     }
 
     /**
@@ -46,6 +62,9 @@ public final class ModKeyMappings {
         }
         while (TOGGLE_FLYING.consumeClick()) {
             Dispatcher.sendToServer(new ToggleFlyingPacket());
+        }
+        while (CAST_GAS_CLOUD.consumeClick()) {
+            Dispatcher.sendToServer(new CastGasCloudPacket());
         }
     }
 

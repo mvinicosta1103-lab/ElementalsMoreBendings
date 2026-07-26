@@ -92,6 +92,31 @@ public class GasElement extends Element {
         return bender.hasElement(get());
     }
 
+    /**
+     * Marca o nó raiz "gasCloud" (preço 0) como já comprado. Chame logo
+     * depois de {@code bender.addElement(GasElement.get(), true)} no
+     * momento da concessão (ver MoreBendingCommand).
+     *
+     * Por quê isso é necessário: no jar base, {@code Upgrade.nextUpgrades}
+     * só "desce" para dentro dos filhos de um nó depois que esse nó já
+     * está marcado como comprado no mapa do jogador (upgrades HashMap).
+     * Como {@code gasCloud} é o ÚNICO filho direto da raiz sintética do
+     * Element (Element(String, Upgrade[]) embrulha o array que a gente
+     * passa em cima de um Upgrade invisível), TODOS os outros nós da
+     * árvore (gasCloudSizeI, gasVentI, gasSpecialization, ...) ficam
+     * fora do alcance de {@code canBuyUpgrade} até alguém clicar
+     * manualmente em gasCloud primeiro — e como o preço dele é 0, esse
+     * clique é fácil de passar batido (o nó parece "só decorativo").
+     * Sem esse clique inicial, a árvore inteira parece travada mesmo
+     * com level de sobra: o clique em qualquer outro nó cai no branch
+     * de "toggle" (que não faz nada pra upgrade nunca comprado) em vez
+     * do branch de "buy".
+     */
+    public static void autoUnlockRoot(Bender bender) {
+        Upgrade cloudNode = get().root.children[0]; // gasCloud
+        bender.getData().upgrades.put(cloudNode, true);
+    }
+
     /** Atalho pras abilities, que só têm o ServerPlayer em mãos. */
     public static boolean isGasBender(ServerPlayer player) {
         Bender bender = Bender.getBender(player);
