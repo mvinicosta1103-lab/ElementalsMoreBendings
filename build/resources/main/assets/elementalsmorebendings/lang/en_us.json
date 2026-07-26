@@ -15,6 +15,12 @@
   "ability.elementalsmorebendings.sand_tornado": "Sand Tornado",
   "ability.elementalsmorebendings.glass_shards": "Glass Shards",
 
+  "subbending.elementalsmorebendings.glass.icon": "symbol/glass",
+  "subbending.elementalsmorebendings.mud.icon": "symbol/mud",
+  "subbending.elementalsmorebendings.crystal.icon": "symbol/crystal",
+  "subbending.elementalsmorebendings.sand.icon": "symbol/sand",
+
+
   "upgrade.elementals.mudSurge": "Mud Surge",
   "upgrade.elementals.mudSurge.description": "Sends a wave of mud in the direction you're looking, slowing anyone caught in it.",
   "upgrade.elementals.mudSurge.use": "Use: %d",

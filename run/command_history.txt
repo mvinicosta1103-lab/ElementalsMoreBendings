@@ -6,3 +6,5 @@
 /morebending grant Dev sand
 /morebending grant Dev gas
 /morebending grant Dev glass
+/morebending grant Dev bone
+/morebending grant Dev petrification
