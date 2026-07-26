@@ -18,3 +18,9 @@
 /bending element add Gas
 /bending level add 100000 Dev
 /bending element add Air Dev
+/morebending grant Dev Gas
+/bending element add Air
+/bending level add 100000
+/bending level add 100000 Dev
+/morebending grant Dev Gas
+/bending element add Gas

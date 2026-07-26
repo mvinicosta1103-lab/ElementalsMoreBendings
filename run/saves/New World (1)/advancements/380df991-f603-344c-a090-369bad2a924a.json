@@ -1,0 +1,27 @@
+{
+  "elementals:airbending": {
+    "criteria": {
+      "element": "2026-07-26 13:35:05 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/crafting_table": {
+    "criteria": {
+      "unlock_right_away": "2026-07-26 13:34:43 -0300"
+    },
+    "done": true
+  },
+  "elementals:root": {
+    "criteria": {
+      "trigger": "2026-07-26 13:34:43 -0300"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:dark_forest": "2026-07-26 13:34:44 -0300"
+    },
+    "done": false
+  },
+  "DataVersion": 3955
+}
