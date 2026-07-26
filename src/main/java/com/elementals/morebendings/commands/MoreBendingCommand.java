@@ -3,6 +3,7 @@ package com.elementals.morebendings.commands;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BoneElement;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalElement;
 import com.elementals.morebendings.bending.earthsubbendings.glass.GlassElement;
+import com.elementals.morebendings.bending.earthsubbendings.lava.LavaElement;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudElement;
 import com.elementals.morebendings.bending.earthsubbendings.petrification.PetrificationElement;
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandElement;
@@ -29,12 +30,12 @@ import net.minecraft.server.level.ServerPlayer;
  *
  * Requer permissão de operador (nível 2), igual aos comandos vanilla de
  * /gamemode e /xp. <subbending> aceita: gas, plant, mud, crystal, bone, sand,
- * glass, petrification (com autocomplete no jogo).
+ * glass, petrification, lava (com autocomplete no jogo).
  */
 public class MoreBendingCommand {
 
     private static final SimpleCommandExceptionType UNKNOWN_SUBBENDING = new SimpleCommandExceptionType(
-            Component.literal("Sub-bending desconhecida. Use: gas, plant, mud, crystal, bone, sand, glass ou petrification."));
+            Component.literal("Sub-bending desconhecida. Use: gas, plant, mud, crystal, bone, sand, glass, petrification ou lava."));
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("morebending")
@@ -55,7 +56,7 @@ public class MoreBendingCommand {
      * grant quanto pra deixar claro pro operador o que falta pro jogador. */
     private static String eligibilityMessage(SubbendingType type) {
         return switch (type) {
-            case MUD, CRYSTAL, SAND, PETRIFICATION -> "precisa ter Earth e ter masterizado a árvore de Earth inteira";
+            case MUD, CRYSTAL, SAND, PETRIFICATION, LAVA -> "precisa ter Earth e ter masterizado a árvore de Earth inteira";
             case BONE -> "precisa ter Earth e já ter estado a até "
                     + (int) BoneElement.BLOOD_PROXIMITY_RANGE + " blocos de um Blood bender em algum momento";
             case GLASS -> "precisa ter obtido Sand Bending antes";
@@ -81,7 +82,8 @@ public class MoreBendingCommand {
         // PlayerSubbendingData antigo.
         if (type == SubbendingType.MUD || type == SubbendingType.CRYSTAL
                 || type == SubbendingType.BONE || type == SubbendingType.SAND
-                || type == SubbendingType.GLASS || type == SubbendingType.PETRIFICATION) {
+                || type == SubbendingType.GLASS || type == SubbendingType.PETRIFICATION
+                || type == SubbendingType.LAVA) {
             return runRealElement(ctx.getSource(), target, type, grant);
         }
 
@@ -123,6 +125,7 @@ public class MoreBendingCommand {
             case SAND -> SandElement.get();
             case GLASS -> GlassElement.get();
             case PETRIFICATION -> PetrificationElement.get();
+            case LAVA -> LavaElement.get();
             default -> throw new IllegalArgumentException("Sub-bending sem Element real: " + type);
         };
         String playerName = target.getName().getString();
@@ -139,6 +142,7 @@ public class MoreBendingCommand {
                 case SAND -> SandElement.canAcquire(bender);
                 case GLASS -> GlassElement.canAcquire(bender);
                 case PETRIFICATION -> PetrificationElement.canAcquire(bender);
+                case LAVA -> LavaElement.canAcquire(bender);
                 default -> false;
             };
             if (!eligible) {

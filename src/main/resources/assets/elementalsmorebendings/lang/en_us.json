@@ -6,6 +6,7 @@
   "subbending.elementalsmorebendings.bone": "Bone Bending",
   "subbending.elementalsmorebendings.sand": "Sand Bending",
   "subbending.elementalsmorebendings.glass": "Glass Bending",
+  "subbending.elementalsmorebendings.lava": "Lava Bending",
   "ability.elementalsmorebendings.gas_suffocate": "Suffocate",
   "ability.elementalsmorebendings.plant_vine_whip": "Vine Whip",
   "ability.elementalsmorebendings.mud_surge": "Mud Surge",
@@ -14,11 +15,16 @@
   "ability.elementalsmorebendings.bone_control": "Bone Control",
   "ability.elementalsmorebendings.sand_tornado": "Sand Tornado",
   "ability.elementalsmorebendings.glass_shards": "Glass Shards",
+  "ability.elementalsmorebendings.lava_pool": "Lava Pool",
 
   "subbending.elementalsmorebendings.glass.icon": "symbol/glass",
   "subbending.elementalsmorebendings.mud.icon": "symbol/mud",
   "subbending.elementalsmorebendings.crystal.icon": "symbol/crystal",
   "subbending.elementalsmorebendings.sand.icon": "symbol/sand",
+  "subbending.elementalsmorebendings.lava.icon": "symbol/lava",
+  "subbending.elementalsmorebendings.petrification.icon": "symbol/petrification",
+
+
 
 
   "upgrade.elementals.mudSurge": "Mud Surge",
@@ -48,6 +54,11 @@
   "upgrade.elementals.glassShards": "Glass Shards",
   "upgrade.elementals.glassShards.description": "Fires a shard of glass in the direction you're looking, dealing damage to whatever it hits.",
   "upgrade.elementals.glassShards.use": "Use: %d",
+
+  "upgrade.elementals.lavaPool": "Lava Pool",
+  "upgrade.elementals.lavaPool.description": "Melts the ground where you're aiming into a pool of real lava. Cools into basalt after a while.",
+  "upgrade.elementals.lavaPool.use": "Use: %d",
+  "upgrade.elementals.lavaPool.icon": "molten_grip",
 
   "upgrade.elementalsmorebendings.gasCloud": "Gas Cloud",
   "upgrade.elementalsmorebendings.gasCloud.description": "Release a cloud of gas around you, dazing and slowing every living thing caught inside.",

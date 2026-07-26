@@ -1,6 +1,7 @@
 package com.elementals.morebendings;
 
 import com.elementals.morebendings.bending.earthsubbendings.bone.BloodProximityTracker;
+import com.elementals.morebendings.bending.earthsubbendings.lava.LavaPoolManager;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudTrapManager;
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandTornadoManager;
 import com.elementals.morebendings.commands.MoreBendingCommand;
@@ -55,6 +56,9 @@ public class ElementalsMoreBendingsMod {
         // suficiente de um Blood bender pra desbloquear o pré-requisito de
         // Bone Bending -- ver BloodProximityTracker.
         NeoForge.EVENT_BUS.addListener(BloodProximityTracker::onServerTick);
+
+        // Esfria as poças de lavaPool ativas depois do tempo -- ver LavaPoolManager.
+        NeoForge.EVENT_BUS.addListener(LavaPoolManager::onServerTick);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

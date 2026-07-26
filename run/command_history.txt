@@ -8,3 +8,4 @@
 /morebending grant Dev glass
 /morebending grant Dev bone
 /morebending grant Dev petrification
+/morebending grant Dev lava
