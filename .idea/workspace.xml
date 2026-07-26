@@ -4,19 +4,79 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="Next phase: Next fire subbending.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/firesubbendings/plasma/PlasmaCooldown.java" afterDir="false" />
+    <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="Next phase: Fix plasma bending.">
+      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ElementalsMoreBendingsMod.class.uniqueId0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/CommonClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/CommonClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/firesubbendings/plasma/PlasmaClawsAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/firesubbendings/plasma/PlasmaClawsAbility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/commands/MoreBendingCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/commands/MoreBendingCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementalsmorebendings/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/elementalsmorebendings/lang/en_us.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/CommonClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/CommonClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/bending/firesubbendings/plasma/PlasmaClawsAbility.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/bending/firesubbendings/plasma/PlasmaClawsAbility.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/bending/firesubbendings/plasma/PlasmaElement.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/bending/firesubbendings/plasma/PlasmaElement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/commands/MoreBendingCommand$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/commands/MoreBendingCommand$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/commands/MoreBendingCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/commands/MoreBendingCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/data/SubbendingType.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/data/SubbendingType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/elementalsmorebendings/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/elementalsmorebendings/lang/en_us.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/command_history.txt" beforeDir="false" afterPath="$PROJECT_DIR$/run/command_history.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" beforeDir="false" afterPath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-1.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-10.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-10.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-11.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-11.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-12.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-12.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-13.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-13.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-14.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-14.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-15.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-15.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-16.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-16.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-17.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-17.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-18.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-18.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-19.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-19.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-2.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-20.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-20.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-21.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-21.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-22.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-22.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-23.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-23.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-24.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-24.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-25.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-25.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-26.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-26.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-27.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-27.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-3.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-4.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-5.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-6.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-6.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-7.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-7.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-8.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-8.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-9.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-9.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-1.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-2.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-3.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-4.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-5.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/latest.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/latest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/DIM-1/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/DIM-1/data/raids.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/DIM1/data/raids_end.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/DIM1/data/raids_end.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/advancements/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/advancements/380df991-f603-344c-a090-369bad2a924a.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/data/elementals.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/data/elementals.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/data/raids.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/data/random_sequences.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/data/random_sequences.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/entities/r.-1.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/entities/r.-1.-1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/entities/r.0.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/entities/r.0.-1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/entities/r.0.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/entities/r.0.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/level.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/level.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/level.dat_old" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/level.dat_old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/playerdata/380df991-f603-344c-a090-369bad2a924a.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/playerdata/380df991-f603-344c-a090-369bad2a924a.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/playerdata/380df991-f603-344c-a090-369bad2a924a.dat_old" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/playerdata/380df991-f603-344c-a090-369bad2a924a.dat_old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/region/r.-1.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/region/r.-1.-1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/region/r.-1.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/region/r.-1.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/region/r.0.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/region/r.0.-1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/region/r.0.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/region/r.0.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/session.lock" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/session.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World/stats/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/stats/380df991-f603-344c-a090-369bad2a924a.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/usercache.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/usercache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/data/SubbendingType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/data/SubbendingType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -296,14 +356,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
-    </task>
-    <task id="LOCAL-00089" summary="Sorting things out.">
-      <option name="closed" value="true" />
-      <created>1784988835137</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1784988835139</updated>
     </task>
     <task id="LOCAL-00090" summary="Sorting things out.">
       <option name="closed" value="true" />
@@ -689,7 +741,15 @@
       <option name="project" value="LOCAL" />
       <updated>1785102188532</updated>
     </task>
-    <option name="localTasksCounter" value="138" />
+    <task id="LOCAL-00138" summary="Next phase: Fix plasma bending.">
+      <option name="closed" value="true" />
+      <created>1785106017843</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1785106017843</updated>
+    </task>
+    <option name="localTasksCounter" value="139" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -714,6 +774,7 @@
     <MESSAGE value="Next phase: Next bending." />
     <MESSAGE value="Next phase: Next air subbending." />
     <MESSAGE value="Next phase: Next fire subbending." />
-    <option name="LAST_COMMIT_MESSAGE" value="Next phase: Next fire subbending." />
+    <MESSAGE value="Next phase: Fix plasma bending." />
+    <option name="LAST_COMMIT_MESSAGE" value="Next phase: Fix plasma bending." />
   </component>
 </project>

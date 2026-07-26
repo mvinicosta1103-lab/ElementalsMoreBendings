@@ -13,6 +13,8 @@
   "subbending.elementalsmorebendings.glass": "Glass Bending",
   "subbending.elementalsmorebendings.lava": "Lava Bending",
   "subbending.elementalsmorebendings.atmosphere": "Atmosphere Bending",
+  "subbending.elementalsmorebendings.plasma": "Plasma Bending",
+  "ability.elementalsmorebendings.plasma_claws": "Plasma Claws",
   "ability.elementalsmorebendings.gas_suffocate": "Suffocate",
   "ability.elementalsmorebendings.plant_vine_whip": "Vine Whip",
   "ability.elementalsmorebendings.mud_surge": "Mud Surge",
@@ -31,6 +33,7 @@
   "subbending.elementalsmorebendings.sand.icon": "symbol/sand",
   "subbending.elementalsmorebendings.lava.icon": "symbol/lava",
   "subbending.elementalsmorebendings.petrification.icon": "symbol/petrification",
+  "subbending.elementalsmorebendings.plasma.icon": "symbol/plasma",
 
 
 
@@ -136,5 +139,39 @@
   "upgrade.elementals.mistFreeze": "Freeze",
   "upgrade.elementals.mistFreeze.description": "Chills your fog, heavily slowing everyone caught inside it. You are never slowed by your own fog.",
   "upgrade.elementals.noSpecialization": "You haven't unlocked any specialization for this ability yet",
-  "upgrade.elementals.cycleSpecializationWrongElement": "You need to have Gas or Mist selected as your active element to cycle its specialization"
+  "upgrade.elementals.cycleSpecializationWrongElement": "You need to have Gas or Mist selected as your active element to cycle its specialization",
+
+  "upgrade.elementals.plasmaClaws": "Plasma Claws",
+  "upgrade.elementals.plasmaClaws.description": "Superheats the air around both your hands into blades of blue plasma. A short-range strike that scorches whatever it hits. If you're holding a tool or weapon, the plasma embeds itself into it instead, empowering the swing with the tool's own strength.",
+  "upgrade.elementals.plasmaClaws.icon": "fire_blue",
+
+  "upgrade.elementals.plasmaReachI": "Longer Claws I",
+  "upgrade.elementals.plasmaReachI.description": "Increases the reach of Plasma Claws by 0.75 blocks.",
+  "upgrade.elementals.plasmaReachII": "Longer Claws II",
+  "upgrade.elementals.plasmaReachII.description": "Increases the reach of Plasma Claws by another 0.75 blocks.",
+
+  "upgrade.elementals.plasmaHeatI": "Faster Ignition I",
+  "upgrade.elementals.plasmaHeatI.description": "Reduces the cooldown of Plasma Claws by 6 ticks.",
+  "upgrade.elementals.plasmaHeatII": "Faster Ignition II",
+  "upgrade.elementals.plasmaHeatII.description": "Reduces the cooldown of Plasma Claws by another 6 ticks.",
+
+  "upgrade.elementals.plasmaSpecialization": "Specialization",
+  "upgrade.elementals.plasmaSpecialization.description": "Choose a single path for your Plasma Claws: Sear, Flare, or Superheat. This choice is permanent.",
+
+  "upgrade.elementals.plasmaSear": "Sear",
+  "upgrade.elementals.plasmaSear.description": "Your claws cut deeper, dealing extra raw damage on every strike.",
+  "upgrade.elementals.plasmaSearDamageI": "Searing Edge I",
+  "upgrade.elementals.plasmaSearDamageI.description": "Increases Sear's bonus damage by 1.5.",
+  "upgrade.elementals.plasmaSearDamageII": "Searing Edge II",
+  "upgrade.elementals.plasmaSearDamageII.description": "Increases Sear's bonus damage by another 2.0.",
+
+  "upgrade.elementals.plasmaFlare": "Flare",
+  "upgrade.elementals.plasmaFlare.description": "Sets whatever you strike ablaze for 3 seconds.",
+  "upgrade.elementals.plasmaFlareDurationI": "Lingering Flare I",
+  "upgrade.elementals.plasmaFlareDurationI.description": "Increases the burn duration of Flare by another 2 seconds.",
+
+  "upgrade.elementals.plasmaSuperheat": "Superheat",
+  "upgrade.elementals.plasmaSuperheat.description": "Your claws unleash overwhelming heat: deals bonus damage, guarantees a strong, long-lasting burn, and scorches anyone standing near your target.",
+
+  "upgrade.elementals.plasmaBlueFireSynergy.description": "If you've mastered Blue Fire, Plasma Claws deals even more damage and burns with blue flame instead of ordinary fire."
 }
