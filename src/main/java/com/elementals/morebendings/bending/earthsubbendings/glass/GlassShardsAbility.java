@@ -2,32 +2,28 @@ package com.elementals.morebendings.bending.earthsubbendings.glass;
 
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
-import dev.saperate.elementals.utils.SapsUtils;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.EntityHitResult;
 
 /**
  * "glassShards" — habilidade raiz (e única, por enquanto) da árvore de
- * Glass. Placeholder simples em modo hitscan (raycast na hora, sem
- * entidade própria) -- igual ao que Crystal usava antes de ganhar a
+ * Glass. Dispara um estilhaço de vidro na mira do jogador.
+ *
+ * Antes isso era um hitscan instantâneo (raycast na hora, sem entidade
+ * própria) -- igual ao que Crystal usava antes de ganhar a
  * {@code CrystalShardEntity} de verdade (ver comentário histórico em
  * {@link com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalShardAbility}).
- * Dispara um estilhaço de vidro na mira do jogador, causando dano leve a
- * quem for atingido.
- *
- * TODO: trocar por uma entidade de projétil de verdade (GlassShardEntity +
- * renderer), no mesmo esquema de CrystalShardEntity/BoneSpikeEntity, assim
- * que a arte/hitbox for definida -- por enquanto é só pra não deixar a
- * sub-bending sem nenhuma ability funcional.
+ * Agora usa uma {@link GlassShardEntity} de verdade: sai voando, tem
+ * hitbox própria e pode simplesmente errar o alvo, no mesmo esquema de
+ * CrystalShardEntity/BoneSpikeEntity.
  */
 public class GlassShardsAbility implements Ability {
 
-    private static final double RANGE = 15.0;
-    private static final float DAMAGE = 3.0f;
+    private static final float SPEED = 2.2f;
+    /** Espalhamento em graus -- bem pequeno, já que é um único estilhaço mirado. */
+    private static final float DIVERGENCE = 1.0f;
 
     @Override
     public void onCall(Bender bender, long heldTimeMs) {
@@ -37,11 +33,12 @@ public class GlassShardsAbility implements Ability {
             return;
         }
 
-        EntityHitResult hit = SapsUtils.raycastEntity(player, RANGE,
-                entity -> entity instanceof LivingEntity && entity != player);
-        if (hit != null && hit.getEntity() instanceof LivingEntity target) {
-            target.hurt(level.damageSources().playerAttack(player), DAMAGE);
-        }
+        GlassShardEntity shard = new GlassShardEntity(level, player);
+        // setDeltaMovement(shooter, pitch, yaw, roll, speed, divergence) já vem pronto
+        // no AbstractElementalsEntity do mod base -- calcula a direção a partir da
+        // mira do jogador e aplica a velocidade/espalhamento.
+        shard.setDeltaMovement(player, player.getXRot(), player.getYRot(), 0.0f, SPEED, DIVERGENCE);
+        level.addFreshEntity(shard);
 
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 0.6f, 1.2f);
