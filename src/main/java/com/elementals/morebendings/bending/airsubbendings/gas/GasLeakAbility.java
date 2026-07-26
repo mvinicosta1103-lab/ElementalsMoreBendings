@@ -1,16 +1,22 @@
 package com.elementals.morebendings.bending.airsubbendings.gas;
 
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AreaEffectCloud;
-import net.minecraft.core.particles.ParticleTypes;
 
 /**
  * Ramo de especialização "gasLeak" (ver {@link GasElement}) — deixa uma
- * nuvem residual ({@link AreaEffectCloud} vanilla) no chão, que continua
- * afetando quem passar por perto por um tempo.
+ * nuvem residual no chão, que continua afetando quem passar por perto
+ * (exceto o próprio caster) por um tempo.
+ *
+ * A {@link AreaEffectCloud} aqui é usada só pra visual/posição — a
+ * aplicação de efeito de verdade é manual, via {@link GasLeakManager},
+ * porque a nuvem vanilla afeta o próprio owner/thrower por padrão e a
+ * regra é o dobrador nunca ser afetado pelo próprio gás.
+ *
+ * Efeitos: Náusea + Envenenamento (não Lentidão — isso é só na explosão
+ * inicial da nuvem em {@link GasCloudAbility}).
  *
  * Duração escala com:
  *  - gasLeakDurationI → +100 ticks (5s)
@@ -24,15 +30,18 @@ public class GasLeakAbility {
         if (!GasElement.hasUpgrade(caster, GasElement.GAS_LEAK)) {
             return;
         }
+        int duration = getDuration(caster);
+
         AreaEffectCloud cloud = new AreaEffectCloud(level, caster.getX(), caster.getY(), caster.getZ());
         cloud.setOwner(caster);
         cloud.setRadius(RADIUS);
-        cloud.setRadiusPerTick((0.0f - cloud.getRadius()) / (float) getDuration(caster));
-        cloud.setDuration(getDuration(caster));
+        cloud.setRadiusPerTick((0.0f - cloud.getRadius()) / (float) duration);
+        cloud.setDuration(duration);
         cloud.setParticle(ParticleTypes.CLOUD);
-        cloud.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1));
-        cloud.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 40, 0));
+        // Sem addEffect aqui de propósito -- ver GasLeakManager.
         level.addFreshEntity(cloud);
+
+        GasLeakManager.register(level, cloud, caster);
     }
 
     public static int getDuration(ServerPlayer player) {

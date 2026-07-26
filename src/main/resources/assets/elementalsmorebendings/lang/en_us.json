@@ -93,17 +93,17 @@
   "upgrade.elementals.gasSpecialization.description": "Choose a single path for your Gas Cloud: Suffocate, Leak, or Ignite. Only one can be active at a time.",
 
   "upgrade.elementals.gasSuffocate": "Suffocate",
-  "upgrade.elementals.gasSuffocate.description": "Your Gas Cloud instantly damages everyone caught inside it.",
+  "upgrade.elementals.gasSuffocate.description": "Your Gas Cloud instantly damages everyone caught inside it. You are never harmed by your own gas.",
   "upgrade.elementals.gasSuffocateDamageI": "Suffocating Grip I",
   "upgrade.elementals.gasSuffocateDamageI.description": "Increases Suffocate's damage by 1.5.",
   "upgrade.elementals.gasSuffocateDamageII": "Suffocating Grip II",
   "upgrade.elementals.gasSuffocateDamageII.description": "Increases Suffocate's damage by another 1.5.",
 
   "upgrade.elementals.gasLeak": "Leak",
-  "upgrade.elementals.gasLeak.description": "Your Gas Cloud leaves a lingering cloud behind, slowing and dazing anyone who walks through it.",
+  "upgrade.elementals.gasLeak.description": "Your Gas Cloud leaves a lingering cloud behind, poisoning and dazing anyone who walks through it. You are immune to your own gas.",
   "upgrade.elementals.gasLeakDurationI": "Lingering Leak I",
   "upgrade.elementals.gasLeakDurationI.description": "Increases the duration of the lingering cloud by 5 seconds.",
 
   "upgrade.elementals.gasIgnite": "Ignite",
-  "upgrade.elementals.gasIgnite.description": "Ignites your Gas Cloud, causing an instant explosion centered on you. High risk, high reward."
+  "upgrade.elementals.gasIgnite.description": "Ignites your Gas Cloud, setting fire to everyone caught inside it. You are never burned by your own gas."
 }

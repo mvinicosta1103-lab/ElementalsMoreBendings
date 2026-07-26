@@ -1,25 +1,79 @@
 {
+  "minecraft:recipes/transportation/mangrove_boat": {
+    "criteria": {
+      "in_water": "2026-07-26 14:25:26 -0300"
+    },
+    "done": true
+  },
+  "elementals:airbending": {
+    "criteria": {
+      "element": "2026-07-26 14:22:49 -0300"
+    },
+    "done": true
+  },
   "minecraft:recipes/decorations/crafting_table": {
     "criteria": {
-      "unlock_right_away": "2026-07-26 11:54:38 -0300"
+      "unlock_right_away": "2026-07-26 14:22:45 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/acacia_boat": {
+    "criteria": {
+      "in_water": "2026-07-26 14:25:26 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/cherry_boat": {
+    "criteria": {
+      "in_water": "2026-07-26 14:25:26 -0300"
     },
     "done": true
   },
   "elementals:root": {
     "criteria": {
-      "trigger": "2026-07-26 11:54:38 -0300"
+      "trigger": "2026-07-26 14:22:45 -0300"
     },
     "done": true
   },
   "minecraft:adventure/adventuring_time": {
     "criteria": {
-      "minecraft:flower_forest": "2026-07-26 11:54:39 -0300"
+      "minecraft:stony_shore": "2026-07-26 14:22:46 -0300"
     },
     "done": false
   },
-  "elementals:airbending": {
+  "minecraft:recipes/transportation/bamboo_raft": {
     "criteria": {
-      "element": "2026-07-26 11:56:13 -0300"
+      "in_water": "2026-07-26 14:25:26 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/spruce_boat": {
+    "criteria": {
+      "in_water": "2026-07-26 14:25:26 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/birch_boat": {
+    "criteria": {
+      "in_water": "2026-07-26 14:25:26 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/oak_boat": {
+    "criteria": {
+      "in_water": "2026-07-26 14:25:26 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/jungle_boat": {
+    "criteria": {
+      "in_water": "2026-07-26 14:25:26 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/dark_oak_boat": {
+    "criteria": {
+      "in_water": "2026-07-26 14:25:26 -0300"
     },
     "done": true
   },

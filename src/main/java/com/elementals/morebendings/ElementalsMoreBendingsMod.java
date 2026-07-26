@@ -1,6 +1,7 @@
 package com.elementals.morebendings;
 
 import com.elementals.morebendings.bending.airsubbendings.flying.FlyingAbility;
+import com.elementals.morebendings.bending.airsubbendings.gas.GasLeakManager;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BloodProximityTracker;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaPoolManager;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudTrapManager;
@@ -70,6 +71,10 @@ public class ElementalsMoreBendingsMod {
 
         // Esfria as poças de lavaPool ativas depois do tempo -- ver LavaPoolManager.
         NeoForge.EVENT_BUS.addListener(LavaPoolManager::onServerTick);
+
+        // Aplica Náusea + Envenenamento em quem estiver dentro de uma nuvem
+        // residual de gasLeak, exceto o próprio caster -- ver GasLeakManager.
+        NeoForge.EVENT_BUS.addListener(GasLeakManager::onServerTick);
 
         // Estamina/partículas do voo da sub-bending Flying -- ver FlyingAbility.
         NeoForge.EVENT_BUS.addListener(FlyingAbility::onServerTick);

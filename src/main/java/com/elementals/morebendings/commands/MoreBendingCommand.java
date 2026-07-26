@@ -8,12 +8,14 @@ import com.elementals.morebendings.bending.earthsubbendings.mud.MudElement;
 import com.elementals.morebendings.bending.earthsubbendings.petrification.PetrificationElement;
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandElement;
 import com.elementals.morebendings.bending.airsubbendings.atmosphere.AtmosphereElement;
+import com.elementals.morebendings.bending.airsubbendings.AirMasteryCheck;
 import com.elementals.morebendings.data.PlayerSubbendingData;
 import com.elementals.morebendings.data.SubbendingType;
 import com.elementals.morebendings.registry.ModAttachments;
 import com.mojang.brigadier.CommandDispatcher;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Element;
+import dev.saperate.elementals.elements.air.AirElement;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -162,6 +164,27 @@ public class MoreBendingCommand {
             if (!eligible) {
                 source.sendFailure(Component.literal(playerName + " " + eligibilityMessage(type)
                         + " antes de poder receber " + type.getDisplayName() + "."));
+
+                if ((type == SubbendingType.GAS || type == SubbendingType.ATMOSPHERE)
+                        && bender.hasElement(AirElement.get())) {
+                    java.util.List<String> missing = AirMasteryCheck.missingRequirements(bender);
+                    if (missing.isEmpty()) {
+                        // hasElement(Air) + todos os nós batendo, mas
+                        // canAcquire ainda deu falso -- normalmente é
+                        // isSkillTreeComplete olhando pro tipo errado de
+                        // "Element" (ex: instância antiga em cache) ou o
+                        // jogador não tem Air de verdade, só a sub-bending.
+                        source.sendFailure(Component.literal(
+                                "Diagnóstico: nenhum nó pendente foi encontrado -- "
+                                        + playerName + " parece já ter tudo. "
+                                        + "Pode ser algum outro motivo de canAcquire falhar."));
+                    } else {
+                        source.sendFailure(Component.literal("Nós de Air ainda faltando pra " + playerName + ":"));
+                        for (String reason : missing) {
+                            source.sendFailure(Component.literal(" - " + reason));
+                        }
+                    }
+                }
                 return 0;
             }
             bender.addElement(element, true);

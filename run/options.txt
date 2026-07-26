@@ -137,7 +137,7 @@ key_key.elementals.guiKey:key.keyboard.minus
 key_key.elementals.cycle:key.keyboard.z
 key_key.elementals.toggle_blue_fire:key.keyboard.n
 key_key.elementalsmorebendings.toggle_flying:key.keyboard.h
-key_key.elementalsmorebendings.cast_gas_cloud:key.keyboard.g
+key_key.elementalsmorebendings.cast_gas_cloud:key.keyboard.period
 soundCategory_master:1.0
 soundCategory_music:0.0
 soundCategory_record:1.0
