@@ -1,10 +1,13 @@
 package com.elementals.morebendings.bending.airsubbendings.flying;
 
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.level.GameType;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,8 +23,31 @@ public class FlyingAbility {
     private static final Set<UUID> flying = new HashSet<>();
     private static final Map<UUID, Integer> stamina = new HashMap<>();
 
+    /**
+     * Não faz nada por conta própria — só documenta que o tick real é
+     * dirigido de fora (ver {@link #onServerTick}, registrado em
+     * {@code ElementalsMoreBendingsMod} via
+     * {@code NeoForge.EVENT_BUS.addListener(FlyingAbility::onServerTick)}),
+     * no mesmo esquema que {@code MudTrapManager}/{@code PressureZoneManager}
+     * usam pros seus próprios ticks.
+     */
     public static void register() {
-        // TODO: Registre o tick no servidor (ex: NeoForge.EVENT_BUS.addListener(...))
+    }
+
+    /**
+     * Registrado via NeoForge.EVENT_BUS em ElementalsMoreBendingsMod. Roda
+     * uma vez por tick de servidor, chamando {@link #tick(ServerPlayer)}
+     * pra cada jogador online (voando ou não, porque a regeneração de
+     * estamina no chão também depende desse loop).
+     */
+    public static void onServerTick(ServerTickEvent.Post event) {
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+        if (server == null) {
+            return;
+        }
+        for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+            tick(player);
+        }
     }
 
     public static boolean toggle(ServerPlayer player) {

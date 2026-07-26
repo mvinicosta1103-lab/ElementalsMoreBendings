@@ -1,4 +1,8 @@
 {
+  "key.categories.elementalsmorebendings": "Elementals: More Bendings",
+  "key.elementalsmorebendings.toggle_flying": "Toggle Flying",
+
+  "subbending.elementalsmorebendings.flying": "Flying",
   "subbending.elementalsmorebendings.gas": "Gas Bending",
   "subbending.elementalsmorebendings.plant": "Plant Bending",
   "subbending.elementalsmorebendings.mud": "Mud Bending",

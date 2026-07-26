@@ -4,3 +4,4 @@
 /bending element add Air
 /bending level add 10000000 Dev
 /bending element add Atmosphere Dev
+/morebending grant Dev Flying

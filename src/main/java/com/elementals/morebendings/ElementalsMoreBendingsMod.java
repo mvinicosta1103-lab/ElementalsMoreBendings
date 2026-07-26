@@ -1,10 +1,12 @@
 package com.elementals.morebendings;
 
+import com.elementals.morebendings.bending.airsubbendings.flying.FlyingAbility;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BloodProximityTracker;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaPoolManager;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudTrapManager;
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandTornadoManager;
 import com.elementals.morebendings.bending.airsubbendings.atmosphere.PressureZoneManager;
+import com.elementals.morebendings.client.ModKeyMappings;
 import com.elementals.morebendings.commands.MoreBendingCommand;
 import com.elementals.morebendings.network.ModNetworking;
 import com.elementals.morebendings.registry.ModAttachments;
@@ -32,6 +34,12 @@ public class ElementalsMoreBendingsMod {
         // servidor dedicado quebra ao tentar carregar essa classe.
         if (FMLEnvironment.dist == Dist.CLIENT) {
             modEventBus.addListener(ClientClass::onRegisterRenderers);
+
+            // Keybind de "ligar/desligar voo" (Flying) -- registro da tecla
+            // em si precisa do mod bus (RegisterKeyMappingsEvent); o listener
+            // que efetivamente lê a tecla e manda o pacote roda no bus de
+            // jogo (ver bloco de NeoForge.EVENT_BUS abaixo).
+            modEventBus.addListener(ModKeyMappings::register);
         }
 
         // IMPORTANTE: tem que ser aqui no construtor, não em CommonClass.init()
@@ -62,6 +70,16 @@ public class ElementalsMoreBendingsMod {
 
         // Esfria as poças de lavaPool ativas depois do tempo -- ver LavaPoolManager.
         NeoForge.EVENT_BUS.addListener(LavaPoolManager::onServerTick);
+
+        // Estamina/partículas do voo da sub-bending Flying -- ver FlyingAbility.
+        NeoForge.EVENT_BUS.addListener(FlyingAbility::onServerTick);
+
+        // Lê a tecla de ligar/desligar voo e manda o ToggleFlyingPacket pro
+        // servidor -- ver ModKeyMappings. Só existe no cliente pelo mesmo
+        // motivo do listener de renderers acima.
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            NeoForge.EVENT_BUS.addListener(ModKeyMappings::onClientTick);
+        }
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

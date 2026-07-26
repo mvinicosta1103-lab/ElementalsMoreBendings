@@ -37,7 +37,7 @@ public class MoreBendingCommand {
 
     private static final SimpleCommandExceptionType UNKNOWN_SUBBENDING = new SimpleCommandExceptionType(
             // na mensagem de erro (UNKNOWN_SUBBENDING)
-            Component.literal("Sub-bending desconhecida. Use: Gas, Plant, Mud, Crystal, Bone, Sand, Glass, Petrification, Lava ou Atmosphere."));
+            Component.literal("Sub-bending desconhecida. Use: Gas, Flying, Plant, Mud, Crystal, Bone, Sand, Glass, Petrification, Lava ou Atmosphere."));
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("morebending")
