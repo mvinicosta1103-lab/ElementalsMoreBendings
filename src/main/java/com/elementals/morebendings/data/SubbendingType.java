@@ -22,7 +22,8 @@ public enum SubbendingType {
     GLASS("Glass", "Glass Bending"),
     PETRIFICATION("Petrification", "Petrification Bending"),
     LAVA("Lava", "Lava Bending"),
-    ATMOSPHERE("Atmosphere", "Atmosphere Bending");
+    ATMOSPHERE("Atmosphere", "Atmosphere Bending"),
+    MIST("Mist", "Mist Bending");
 
     private final String id;
     private final String displayName;

@@ -27,6 +27,7 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import com.elementals.morebendings.bending.airsubbendings.gas.GasElement;
+import com.elementals.morebendings.bending.airsubbendings.mist.MistElement;
 
 /**
  * /morebending grant <player> <subbending>
@@ -40,7 +41,7 @@ public class MoreBendingCommand {
 
     private static final SimpleCommandExceptionType UNKNOWN_SUBBENDING = new SimpleCommandExceptionType(
             // na mensagem de erro (UNKNOWN_SUBBENDING)
-            Component.literal("Sub-bending desconhecida. Use: Gas, Flying, Plant, Mud, Crystal, Bone, Sand, Glass, Petrification, Lava ou Atmosphere."));
+            Component.literal("Sub-bending desconhecida. Use: Gas, Flying, Plant, Mud, Crystal, Bone, Sand, Glass, Petrification, Lava, Atmosphere ou Mist."));
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("morebending")
@@ -62,7 +63,7 @@ public class MoreBendingCommand {
     private static String eligibilityMessage(SubbendingType type) {
         return switch (type) {
             case MUD, CRYSTAL, SAND, PETRIFICATION, LAVA -> "precisa ter Earth e ter masterizado a árvore de Earth inteira";
-            case ATMOSPHERE, GAS -> "precisa ter Air e ter masterizado a árvore de Air inteira";
+            case ATMOSPHERE, GAS, MIST -> "precisa ter Air e ter masterizado a árvore de Air inteira";
             case BONE -> "precisa ter Earth e já ter estado a até "
                     + (int) BoneElement.BLOOD_PROXIMITY_RANGE + " blocos de um Blood bender em algum momento";
             case GLASS -> "precisa ter obtido Sand Bending antes";
@@ -84,7 +85,7 @@ public class MoreBendingCommand {
                 || type == SubbendingType.BONE || type == SubbendingType.SAND
                 || type == SubbendingType.GLASS || type == SubbendingType.PETRIFICATION
                 || type == SubbendingType.LAVA || type == SubbendingType.ATMOSPHERE
-                || type == SubbendingType.GAS) {
+                || type == SubbendingType.GAS || type == SubbendingType.MIST) {
             return runRealElement(ctx.getSource(), target, type, grant);
         }
 
@@ -129,6 +130,7 @@ public class MoreBendingCommand {
             case LAVA -> LavaElement.get();
             case ATMOSPHERE -> AtmosphereElement.get();
             case GAS -> GasElement.get();
+            case MIST -> MistElement.get();
             default -> throw new IllegalArgumentException("Sub-bending sem Element real: " + type);
         };
         String playerName = target.getName().getString();
@@ -146,6 +148,15 @@ public class MoreBendingCommand {
                             "Sua árvore de Gas Bending foi reparada -- tente comprar os upgrades de novo."));
                     return 1;
                 }
+                if (type == SubbendingType.MIST) {
+                    // Mesmo reparo do Gas, pro nó raiz "mistCloud".
+                    MistElement.autoUnlockRoot(bender);
+                    source.sendSuccess(() -> Component.literal(
+                            "mistCloud (nó raiz) sincronizado pra " + playerName + "."), true);
+                    target.sendSystemMessage(Component.literal(
+                            "Sua árvore de Mist Bending foi reparada -- tente comprar os upgrades de novo."));
+                    return 1;
+                }
                 source.sendFailure(Component.literal(playerName + " já tinha " + type.getDisplayName() + "."));
                 return 0;
             }
@@ -159,13 +170,14 @@ public class MoreBendingCommand {
                 case LAVA -> LavaElement.canAcquire(bender);
                 case ATMOSPHERE -> AtmosphereElement.canAcquire(bender);
                 case GAS -> GasElement.canAcquire(bender);
+                case MIST -> MistElement.canAcquire(bender);
                 default -> false;
             };
             if (!eligible) {
                 source.sendFailure(Component.literal(playerName + " " + eligibilityMessage(type)
                         + " antes de poder receber " + type.getDisplayName() + "."));
 
-                if ((type == SubbendingType.GAS || type == SubbendingType.ATMOSPHERE)
+                if ((type == SubbendingType.GAS || type == SubbendingType.ATMOSPHERE || type == SubbendingType.MIST)
                         && bender.hasElement(AirElement.get())) {
                     java.util.List<String> missing = AirMasteryCheck.missingRequirements(bender);
                     if (missing.isEmpty()) {
@@ -194,6 +206,11 @@ public class MoreBendingCommand {
                 // QUALQUER outro upgrade da árvore de Gas apareça como
                 // comprável -- ver GasElement#autoUnlockRoot.
                 GasElement.autoUnlockRoot(bender);
+            }
+            if (type == SubbendingType.MIST) {
+                // Mesmo motivo do gasCloud -- "mistCloud" é o único filho
+                // direto da raiz sintética do Element, ver MistElement#autoUnlockRoot.
+                MistElement.autoUnlockRoot(bender);
             }
             source.sendSuccess(() -> Component.literal(type.getDisplayName() + " concedida a " + playerName + "."), true);
             target.sendSystemMessage(Component.literal("Você desbloqueou " + type.getDisplayName() + "!"));

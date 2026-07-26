@@ -3,6 +3,7 @@ package com.elementals.morebendings;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BoneSpikeEntityRenderer;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalShardEntityRenderer;
 import com.elementals.morebendings.bending.earthsubbendings.glass.GlassShardEntityRenderer;
+import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntityRenderer;
 import com.elementals.morebendings.registry.ModEntities;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
@@ -20,6 +21,7 @@ public class ClientClass {
         event.registerEntityRenderer(ModEntities.CRYSTAL_SHARD.get(), CrystalShardEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.BONE_SPIKE.get(), BoneSpikeEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.GLASS_SHARD.get(), GlassShardEntityRenderer::new);
+        event.registerEntityRenderer(ModEntities.MIST_FOG.get(), MistFogEntityRenderer::new);
     }
 
     private ClientClass() {

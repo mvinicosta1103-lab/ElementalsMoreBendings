@@ -7,6 +7,7 @@ import com.elementals.morebendings.bending.earthsubbendings.lava.LavaPoolManager
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudTrapManager;
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandTornadoManager;
 import com.elementals.morebendings.bending.airsubbendings.atmosphere.PressureZoneManager;
+import com.elementals.morebendings.bending.airsubbendings.mist.MistCloudManager;
 import com.elementals.morebendings.client.ModKeyMappings;
 import com.elementals.morebendings.commands.MoreBendingCommand;
 import com.elementals.morebendings.network.ModNetworking;
@@ -75,6 +76,10 @@ public class ElementalsMoreBendingsMod {
         // Aplica Náusea + Envenenamento em quem estiver dentro de uma nuvem
         // residual de gasLeak, exceto o próprio caster -- ver GasLeakManager.
         NeoForge.EVENT_BUS.addListener(GasLeakManager::onServerTick);
+
+        // Dirige as névoas de Heavy Fog (mistCloud) ativas -- Cegueira +
+        // Escuridão (+ especialização) tick a tick -- ver MistCloudManager.
+        NeoForge.EVENT_BUS.addListener(MistCloudManager::onServerTick);
 
         // Estamina/partículas do voo da sub-bending Flying -- ver FlyingAbility.
         NeoForge.EVENT_BUS.addListener(FlyingAbility::onServerTick);

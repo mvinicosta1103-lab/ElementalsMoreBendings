@@ -105,5 +105,32 @@
   "upgrade.elementals.gasLeakDurationI.description": "Increases the duration of the lingering cloud by 5 seconds.",
 
   "upgrade.elementals.gasIgnite": "Ignite",
-  "upgrade.elementals.gasIgnite.description": "Ignites your Gas Cloud, setting fire to everyone caught inside it. You are never burned by your own gas."
+  "upgrade.elementals.gasIgnite.description": "Ignites your Gas Cloud, setting fire to everyone caught inside it. You are never burned by your own gas.",
+
+  "subbending.elementalsmorebendings.mist": "Mist Bending",
+
+  "upgrade.elementals.mistCloud": "Heavy Fog",
+  "upgrade.elementals.mistCloud.description": "Plants a thick fog around you that lingers for a while, blinding and disorienting everyone caught inside. You are never affected by your own fog.",
+  "upgrade.elementals.mistCloudSizeI": "Thicker Fog I",
+  "upgrade.elementals.mistCloudSizeI.description": "Increases the radius of Heavy Fog by 0.75 blocks.",
+  "upgrade.elementals.mistCloudSizeII": "Thicker Fog II",
+  "upgrade.elementals.mistCloudSizeII.description": "Increases the radius of Heavy Fog by another 0.75 blocks.",
+  "upgrade.elementals.mistVentI": "Faster Condensation I",
+  "upgrade.elementals.mistVentI.description": "Reduces the cooldown of Heavy Fog by 1 second.",
+  "upgrade.elementals.mistVentII": "Faster Condensation II",
+  "upgrade.elementals.mistVentII.description": "Reduces the cooldown of Heavy Fog by another 1 second.",
+  "upgrade.elementals.mistSpecialization": "Specialization",
+  "upgrade.elementals.mistSpecialization.description": "Choose a single path for your Heavy Fog: Choke, Veil, or Freeze. Only one can be active at a time.",
+  "upgrade.elementals.mistChoke": "Choke",
+  "upgrade.elementals.mistChoke.description": "Your fog constantly damages everyone caught inside it. You are never harmed by your own fog.",
+  "upgrade.elementals.mistChokeDamageI": "Choking Grip I",
+  "upgrade.elementals.mistChokeDamageI.description": "Increases Choke's damage by 0.5.",
+  "upgrade.elementals.mistChokeDamageII": "Choking Grip II",
+  "upgrade.elementals.mistChokeDamageII.description": "Increases Choke's damage by another 0.5.",
+  "upgrade.elementals.mistVeil": "Veil",
+  "upgrade.elementals.mistVeil.description": "Your fog lingers for 5 extra seconds before dissipating.",
+  "upgrade.elementals.mistVeilDurationI": "Lingering Veil I",
+  "upgrade.elementals.mistVeilDurationI.description": "Increases the duration of your fog by another 5 seconds.",
+  "upgrade.elementals.mistFreeze": "Freeze",
+  "upgrade.elementals.mistFreeze.description": "Chills your fog, heavily slowing everyone caught inside it. You are never slowed by your own fog."
 }
