@@ -7,6 +7,7 @@ import com.elementals.morebendings.bending.earthsubbendings.lava.LavaElement;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudElement;
 import com.elementals.morebendings.bending.earthsubbendings.petrification.PetrificationElement;
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandElement;
+import com.elementals.morebendings.bending.airsubbendings.atmosphere.AtmosphereElement;
 import com.elementals.morebendings.data.PlayerSubbendingData;
 import com.elementals.morebendings.data.SubbendingType;
 import com.elementals.morebendings.registry.ModAttachments;
@@ -35,7 +36,8 @@ import net.minecraft.server.level.ServerPlayer;
 public class MoreBendingCommand {
 
     private static final SimpleCommandExceptionType UNKNOWN_SUBBENDING = new SimpleCommandExceptionType(
-            Component.literal("Sub-bending desconhecida. Use: gas, plant, mud, crystal, bone, sand, glass, petrification ou lava."));
+            // na mensagem de erro (UNKNOWN_SUBBENDING)
+            Component.literal("Sub-bending desconhecida. Use: Gas, Plant, Mud, Crystal, Bone, Sand, Glass, Petrification, Lava ou Atmosphere."));
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("morebending")
@@ -56,7 +58,9 @@ public class MoreBendingCommand {
      * grant quanto pra deixar claro pro operador o que falta pro jogador. */
     private static String eligibilityMessage(SubbendingType type) {
         return switch (type) {
+            // no eligibilityMessage(...)
             case MUD, CRYSTAL, SAND, PETRIFICATION, LAVA -> "precisa ter Earth e ter masterizado a árvore de Earth inteira";
+            case ATMOSPHERE -> "precisa ter Air e ter masterizado a árvore de Air inteira";
             case BONE -> "precisa ter Earth e já ter estado a até "
                     + (int) BoneElement.BLOOD_PROXIMITY_RANGE + " blocos de um Blood bender em algum momento";
             case GLASS -> "precisa ter obtido Sand Bending antes";
@@ -83,7 +87,7 @@ public class MoreBendingCommand {
         if (type == SubbendingType.MUD || type == SubbendingType.CRYSTAL
                 || type == SubbendingType.BONE || type == SubbendingType.SAND
                 || type == SubbendingType.GLASS || type == SubbendingType.PETRIFICATION
-                || type == SubbendingType.LAVA) {
+                || type == SubbendingType.LAVA || type == SubbendingType.ATMOSPHERE) {
             return runRealElement(ctx.getSource(), target, type, grant);
         }
 
@@ -126,6 +130,7 @@ public class MoreBendingCommand {
             case GLASS -> GlassElement.get();
             case PETRIFICATION -> PetrificationElement.get();
             case LAVA -> LavaElement.get();
+            case ATMOSPHERE -> AtmosphereElement.get();
             default -> throw new IllegalArgumentException("Sub-bending sem Element real: " + type);
         };
         String playerName = target.getName().getString();
@@ -143,6 +148,7 @@ public class MoreBendingCommand {
                 case GLASS -> GlassElement.canAcquire(bender);
                 case PETRIFICATION -> PetrificationElement.canAcquire(bender);
                 case LAVA -> LavaElement.canAcquire(bender);
+                case ATMOSPHERE -> AtmosphereElement.canAcquire(bender);
                 default -> false;
             };
             if (!eligible) {

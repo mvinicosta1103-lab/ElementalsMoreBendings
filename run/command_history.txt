@@ -1,1 +1,6 @@
 /bending element add Lava
+/morebending remove Dev lava
+/morebending grant Dev lava
+/bending element add Air
+/bending level add 10000000 Dev
+/bending element add Atmosphere Dev

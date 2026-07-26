@@ -6,6 +6,7 @@ import com.elementals.morebendings.bending.earthsubbendings.lava.LavaElement;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudElement;
 import com.elementals.morebendings.bending.earthsubbendings.petrification.PetrificationElement;
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandElement;
+import com.elementals.morebendings.bending.airsubbendings.atmosphere.AtmosphereElement;
 import com.elementals.morebendings.registry.ModAbilities;
 
 public class CommonClass {
@@ -21,12 +22,17 @@ public class CommonClass {
         // Glass precisa vir depois de Sand só por organização (não há
         // dependência de ordem de registro real, mas
         // GlassElement.canAcquire consulta SandElement.get() em runtime).
+
+        // EARTH SUBBENDINGS
         MudElement.register();
         CrystalElement.register();
         SandElement.register();
         GlassElement.register();
         PetrificationElement.register();
         LavaElement.register();
+
+        // AIR SUBBENDINGS
+        AtmosphereElement.register();
 
         // Gas/Flying/Plant ainda usam o sistema antigo (PlayerSubbendingData)
         // — ainda não convertidos pro mesmo padrão de Element real.

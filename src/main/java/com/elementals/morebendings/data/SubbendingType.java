@@ -12,16 +12,17 @@ import java.util.stream.Collectors;
  * tiver dados salvos, ou eles vão "perder" a sub-bending sem querer.
  */
 public enum SubbendingType {
-    GAS("gas", "Gas Bending"),
-    FLYING("flying", "Flying"),
-    PLANT("plant", "Plant Bending"),
-    MUD("mud", "Mud Bending"),
-    CRYSTAL("crystal", "Crystal Bending"),
-    BONE("bone", "Bone Bending"),
-    SAND("sand", "Sand Bending"),
-    GLASS("glass", "Glass Bending"),
-    PETRIFICATION("petrification", "Petrification Bending"),
-    LAVA("lava", "Lava Bending");
+    GAS("Gas", "Gas Bending"),
+    FLYING("Flying", "Flying"),
+    PLANT("Plant", "Plant Bending"),
+    MUD("Mud", "Mud Bending"),
+    CRYSTAL("Crystal", "Crystal Bending"),
+    BONE("Bone", "Bone Bending"),
+    SAND("Sand", "Sand Bending"),
+    GLASS("Glass", "Glass Bending"),
+    PETRIFICATION("Petrification", "Petrification Bending"),
+    LAVA("Lava", "Lava Bending"),
+    ATMOSPHERE("Atmosphere", "Atmosphere Bending");
 
     private final String id;
     private final String displayName;

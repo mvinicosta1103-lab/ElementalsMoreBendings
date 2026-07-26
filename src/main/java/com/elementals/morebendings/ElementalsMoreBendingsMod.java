@@ -4,6 +4,7 @@ import com.elementals.morebendings.bending.earthsubbendings.bone.BloodProximityT
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaPoolManager;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudTrapManager;
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandTornadoManager;
+import com.elementals.morebendings.bending.airsubbendings.atmosphere.PressureZoneManager;
 import com.elementals.morebendings.commands.MoreBendingCommand;
 import com.elementals.morebendings.network.ModNetworking;
 import com.elementals.morebendings.registry.ModAttachments;
@@ -51,6 +52,8 @@ public class ElementalsMoreBendingsMod {
         // Dirige os tornados de sandTornado ativos (giro/sucção/dano) --
         // ver SandTornadoManager. Mesmo esquema do MudTrapManager.
         NeoForge.EVENT_BUS.addListener(SandTornadoManager::onServerTick);
+
+        NeoForge.EVENT_BUS.addListener(PressureZoneManager::onServerTick);
 
         // Verifica em background se algum Earth bender chegou perto o
         // suficiente de um Blood bender pra desbloquear o pré-requisito de

@@ -7,6 +7,7 @@
   "subbending.elementalsmorebendings.sand": "Sand Bending",
   "subbending.elementalsmorebendings.glass": "Glass Bending",
   "subbending.elementalsmorebendings.lava": "Lava Bending",
+  "subbending.elementalsmorebendings.atmosphere": "Atmosphere Bending",
   "ability.elementalsmorebendings.gas_suffocate": "Suffocate",
   "ability.elementalsmorebendings.plant_vine_whip": "Vine Whip",
   "ability.elementalsmorebendings.mud_surge": "Mud Surge",
@@ -16,6 +17,8 @@
   "ability.elementalsmorebendings.sand_tornado": "Sand Tornado",
   "ability.elementalsmorebendings.glass_shards": "Glass Shards",
   "ability.elementalsmorebendings.lava_pool": "Lava Pool",
+  "ability.elementalsmorebendings.pressure_point": "Pressure Point",
+  "ability.elementalsmorebendings.atmospheric_dome": "Atmospheric Dome",
 
   "subbending.elementalsmorebendings.glass.icon": "symbol/glass",
   "subbending.elementalsmorebendings.mud.icon": "symbol/mud",
@@ -59,6 +62,14 @@
   "upgrade.elementals.lavaPool.description": "Melts the ground where you're aiming into a pool of real lava. Cools into basalt after a while.",
   "upgrade.elementals.lavaPool.use": "Use: %d",
   "upgrade.elementals.lavaPool.icon": "molten_grip",
+
+  "upgrade.elementals.atmospherePressurePoint": "Pressure Point",
+  "upgrade.elementals.atmospherePressurePoint.description": "Crushes the ground around the point you're standing on. Anyone caught inside is forced to crawl, and starts taking damage if they linger too long.",
+  "upgrade.elementals.atmospherePressurePoint.use": "Use: %d",
+
+  "upgrade.elementals.atmosphericDome": "Atmospheric Dome",
+  "upgrade.elementals.atmosphericDome.description": "Surrounds you with a dome of compressed air. Deflects projectiles back at their source, pushes away anything nearby, and shatters light obstructions like leaves and webs. Hold crouch to maintain it.",
+  "upgrade.elementals.atmosphericDome.use": "Use: %d",
 
   "upgrade.elementalsmorebendings.gasCloud": "Gas Cloud",
   "upgrade.elementalsmorebendings.gasCloud.description": "Release a cloud of gas around you, dazing and slowing every living thing caught inside.",
