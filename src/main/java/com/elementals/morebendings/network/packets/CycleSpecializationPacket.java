@@ -6,15 +6,13 @@ import com.elementals.morebendings.bending.airsubbendings.mist.MistElement;
 import com.elementals.morebendings.network.ModNetworking;
 import commonnetwork.networking.data.PacketContext;
 import commonnetwork.networking.data.Side;
+import dev.saperate.elementals.data.Bender;
+import dev.saperate.elementals.elements.Element;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Cliente → servidor: "troca minha especialização ativa agora" (tecla
@@ -22,10 +20,14 @@ import java.util.List;
  * <p>
  * Diferente de comprar/desbloquear no menu de upgrades -- só decide qual
  * das especializações já compradas produz efeito quando Gas Cloud/Heavy
- * Fog é lançado (ver {@link SpecializationCycle}). Cicla Gas e Mist
- * juntos no mesmo aperto: inofensivo pra quem só tem um dos dois, e
- * conveniente pra quem tem ambos (cada árvore guarda seu próprio estado
- * ativo, independente uma da outra).
+ * Fog é lançado (ver {@link SpecializationCycle}).
+ * <p>
+ * Cicla SÓ a árvore do elemento que o jogador tem selecionado no momento
+ * (o elemento "ativo" do mod base, trocado pelo Cycle Elements dele --
+ * ver {@link Bender#getElement()}), nunca as duas juntas. Se o jogador
+ * tiver Gas E Mist mas estiver com outro elemento selecionado (ou nem
+ * Air), ou selecionado em um elemento sem nenhuma especialização
+ * comprada ainda, nada é trocado e ele recebe um aviso.
  */
 public record CycleSpecializationPacket() {
 
@@ -40,34 +42,31 @@ public record CycleSpecializationPacket() {
         ModNetworking.expectSideOrThrow(ctx.side(), Side.SERVER);
         ServerPlayer player = ctx.sender();
 
-        List<Component> switched = new ArrayList<>();
+        Bender bender = Bender.getBender(player);
+        if (bender == null) {
+            return;
+        }
+        Element active = bender.getElement();
 
-        if (GasElement.isGasBender(player)) {
-            String newGas = SpecializationCycle.cycleGas(player);
-            if (newGas != null) {
-                switched.add(Component.translatable("upgrade.elementals." + newGas));
-            }
+        String newSpecialization;
+        String messageKey;
+
+        if (active == GasElement.get() && GasElement.isGasBender(player)) {
+            newSpecialization = SpecializationCycle.cycleGas(player);
+            messageKey = "upgrade.elementals.noSpecialization";
+        } else if (active == MistElement.get() && MistElement.isMistBender(player)) {
+            newSpecialization = SpecializationCycle.cycleMist(player);
+            messageKey = "upgrade.elementals.noSpecialization";
+        } else {
+            newSpecialization = null;
+            messageKey = "upgrade.elementals.cycleSpecializationWrongElement";
         }
 
-        if (MistElement.isMistBender(player)) {
-            String newMist = SpecializationCycle.cycleMist(player);
-            if (newMist != null) {
-                switched.add(Component.translatable("upgrade.elementals." + newMist));
-            }
-        }
-
-        if (switched.isEmpty()) {
-            player.displayClientMessage(Component.translatable("upgrade.elementals.noSpecialization"), true);
+        if (newSpecialization == null) {
+            player.displayClientMessage(Component.translatable(messageKey), true);
             return;
         }
 
-        MutableComponent message = Component.literal("");
-        for (int i = 0; i < switched.size(); i++) {
-            if (i > 0) {
-                message.append(" / ");
-            }
-            message.append(switched.get(i));
-        }
-        player.displayClientMessage(message, true);
+        player.displayClientMessage(Component.translatable("upgrade.elementals." + newSpecialization), true);
     }
 }

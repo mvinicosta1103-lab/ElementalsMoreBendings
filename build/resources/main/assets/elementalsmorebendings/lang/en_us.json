@@ -134,5 +134,7 @@
   "upgrade.elementals.mistVeilDurationI": "Lingering Veil I",
   "upgrade.elementals.mistVeilDurationI.description": "Increases the duration of your fog by another 5 seconds.",
   "upgrade.elementals.mistFreeze": "Freeze",
-  "upgrade.elementals.mistFreeze.description": "Chills your fog, heavily slowing everyone caught inside it. You are never slowed by your own fog."
+  "upgrade.elementals.mistFreeze.description": "Chills your fog, heavily slowing everyone caught inside it. You are never slowed by your own fog.",
+  "upgrade.elementals.noSpecialization": "You haven't unlocked any specialization for this ability yet",
+  "upgrade.elementals.cycleSpecializationWrongElement": "You need to have Gas or Mist selected as your active element to cycle its specialization"
 }

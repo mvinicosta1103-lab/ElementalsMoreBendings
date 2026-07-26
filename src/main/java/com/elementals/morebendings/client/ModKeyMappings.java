@@ -49,7 +49,8 @@ public final class ModKeyMappings {
      * momento (Suffocate/Leak/Ignite ou Choke/Veil/Freeze) -- ver
      * {@code SpecializationCycle}. Comprar as três não é mais exclusivo;
      * esta tecla decide qual delas realmente age quando a habilidade é
-     * lançada.
+     * lançada. Só afeta a árvore do elemento (Gas ou Mist) que o jogador
+     * tem selecionado no momento -- ver {@code CycleSpecializationPacket}.
      */
     public static final KeyMapping CYCLE_SPECIALIZATION = new KeyMapping(
             "key." + Constants.MOD_ID + ".cycle_specialization",

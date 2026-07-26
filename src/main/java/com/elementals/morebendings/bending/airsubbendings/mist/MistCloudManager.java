@@ -33,6 +33,25 @@ public final class MistCloudManager {
         ACTIVE.put(caster.getUUID(), state);
     }
 
+    /**
+     * Chamado por {@link MistFogEntity#interact} quando alguém clica com o
+     * botão direito na névoa. Só acelera a dissipação se {@code player} for
+     * de fato o caster daquela zona específica -- qualquer outro jogador
+     * clicando não tem efeito algum (não é uma forma de "estragar" a névoa
+     * de outra pessoa).
+     *
+     * @return true se realmente acelerou (era o caster e a névoa ainda não
+     * estava terminando mais rápido que isso de qualquer forma).
+     */
+    public static boolean tryAccelerateDissipation(MistFogEntity entity, ServerPlayer player) {
+        MistCloudState state = ACTIVE.get(player.getUUID());
+        if (state == null || state.getVisualEntity() != entity || state.getCaster() != player) {
+            return false;
+        }
+        state.accelerate();
+        return true;
+    }
+
     /** Registrado via NeoForge.EVENT_BUS.addListener em ElementalsMoreBendingsMod. */
     public static void onServerTick(ServerTickEvent.Post event) {
         if (ACTIVE.isEmpty()) {

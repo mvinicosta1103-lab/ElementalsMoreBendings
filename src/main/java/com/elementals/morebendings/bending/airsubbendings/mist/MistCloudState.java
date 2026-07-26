@@ -38,11 +38,14 @@ public class MistCloudState {
     private static final int BLINDNESS_REFRESH_TICKS = 30;
     private static final int PARTICLE_INTERVAL_TICKS = 5;
 
+    /** Quanto tempo (em ticks) fica faltando quando alguém acelera a dissipação (ver {@link #accelerate()}). */
+    private static final int ACCELERATED_REMAINING_TICKS = 20; // ~1s -- dissipa rápido, mas não instantâneo
+
     private final ServerLevel level;
     private final ServerPlayer caster;
     private final Vec3 center;
     private final double radius;
-    private final int maxDurationTicks;
+    private int maxDurationTicks;
 
     /**
      * Corpo visual da névoa (ver {@link MistFogEntity}/{@link
@@ -65,6 +68,36 @@ public class MistCloudState {
 
         this.visualEntity = new MistFogEntity(level, center.x, center.y, center.z, radius);
         level.addFreshEntity(this.visualEntity);
+    }
+
+    /** Usado por {@link MistCloudManager#tryAccelerateDissipation} pra achar o estado dono de um {@link MistFogEntity}. */
+    public MistFogEntity getVisualEntity() {
+        return visualEntity;
+    }
+
+    /** Usado por {@link MistCloudManager#tryAccelerateDissipation} pra conferir se quem clicou é o caster. */
+    public ServerPlayer getCaster() {
+        return caster;
+    }
+
+    /**
+     * Encurta o tempo restante da névoa pra {@link #ACCELERATED_REMAINING_TICKS},
+     * SE isso realmente adiantar o fim dela (nunca estende a duração de volta).
+     * Chamado quando o caster clica com o botão direito na névoa (ver
+     * {@link MistFogEntity#interact}) -- ela não some na hora, só passa a se
+     * dissipar rápido a partir daqui, dando tempo do jogador perceber.
+     */
+    public void accelerate() {
+        int acceleratedEnd = ticksElapsed + ACCELERATED_REMAINING_TICKS;
+        if (acceleratedEnd >= maxDurationTicks) {
+            return; // já ia terminar nesse tempo (ou antes) de qualquer jeito
+        }
+        maxDurationTicks = acceleratedEnd;
+
+        level.sendParticles(ParticleTypes.POOF,
+                center.x, center.y + 1.0, center.z, 20, radius * 0.4, 0.5, radius * 0.4, 0.02);
+        level.playSound(null, center.x, center.y, center.z,
+                net.minecraft.sounds.SoundEvents.PLAYER_ATTACK_SWEEP, net.minecraft.sounds.SoundSource.PLAYERS, 0.8f, 1.4f);
     }
 
     /** @return true enquanto a névoa deve continuar ativa; false quando deve ser encerrada. */
