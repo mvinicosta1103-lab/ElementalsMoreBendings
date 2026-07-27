@@ -34,6 +34,10 @@ public final class ModNetworking {
                 CastGasCloudPacket.STREAM_CODEC, CastGasCloudPacket::handle);
         Network.registerPacket(CycleSpecializationPacket.type(), CycleSpecializationPacket.class,
                 CycleSpecializationPacket.STREAM_CODEC, CycleSpecializationPacket::handle);
+        Network.registerPacket(TogglePlasmaBoostPacket.type(), TogglePlasmaBoostPacket.class,
+                TogglePlasmaBoostPacket.STREAM_CODEC, TogglePlasmaBoostPacket::handle);
+        Network.registerPacket(SyncPlasmaBoostPacket.type(), SyncPlasmaBoostPacket.class,
+                SyncPlasmaBoostPacket.STREAM_CODEC, SyncPlasmaBoostPacket::handle);
     }
 
     public static void expectSideOrThrow(Side current, Side expected) {
