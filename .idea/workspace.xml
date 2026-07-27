@@ -11,13 +11,20 @@
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/ElementalsMoreBendingsMod.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/ElementalsMoreBendingsMod.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ClientClass.class.uniqueId1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/PlasmaHandFlameLayer.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_07_2026_21_00_[Changes]/executionHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_07_2026_21_00_[Changes]/executionHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_07_2026_21_00_[Changes]/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_07_2026_21_00_[Changes]/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_07_2026_21_00_[Changes]/outputFiles.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_07_2026_21_00_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_07_2026_21_00__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/client/layers/PlasmaHandFlameLayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/client/layers/PlasmaHandFlameLayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ElementalsMoreBendingsMod.class.uniqueId0" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" beforeDir="false" afterPath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-1.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-1.log.gz" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-10.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-10.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-11.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-11.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-12.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-12.log.gz" afterDir="false" />
@@ -51,6 +58,7 @@
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-38.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-38.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-39.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-39.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-4.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-40.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-40.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-5.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-6.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-6.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-7.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-7.log.gz" afterDir="false" />
@@ -65,7 +73,6 @@
       <change beforePath="$PROJECT_DIR$/run/logs/latest.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/latest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Plasma Claws/DIM-1/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Plasma Claws/DIM-1/data/raids.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Plasma Claws/DIM1/data/raids_end.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Plasma Claws/DIM1/data/raids_end.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/Plasma Claws/advancements/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Plasma Claws/advancements/380df991-f603-344c-a090-369bad2a924a.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Plasma Claws/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Plasma Claws/data/raids.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Plasma Claws/data/random_sequences.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Plasma Claws/data/random_sequences.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Plasma Claws/entities/r.-1.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Plasma Claws/entities/r.-1.-1.mca" afterDir="false" />
@@ -80,8 +87,10 @@
       <change beforePath="$PROJECT_DIR$/run/saves/Plasma Claws/region/r.-1.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Plasma Claws/region/r.-1.0.mca" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Plasma Claws/region/r.0.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Plasma Claws/region/r.0.-1.mca" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Plasma Claws/region/r.0.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Plasma Claws/region/r.0.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/Plasma Claws/session.lock" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Plasma Claws/session.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Plasma Claws/stats/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Plasma Claws/stats/380df991-f603-344c-a090-369bad2a924a.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/usercache.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/usercache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/client/layers/PlasmaHandFlameLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/client/layers/PlasmaHandFlameLayer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -361,22 +370,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
-    </task>
-    <task id="LOCAL-00103" summary="Sorting things out.">
-      <option name="closed" value="true" />
-      <created>1785024622302</created>
-      <option name="number" value="00103" />
-      <option name="presentableId" value="LOCAL-00103" />
-      <option name="project" value="LOCAL" />
-      <updated>1785024622302</updated>
-    </task>
-    <task id="LOCAL-00104" summary="Next phase: Petrification Bending.">
-      <option name="closed" value="true" />
-      <created>1785025257135</created>
-      <option name="number" value="00104" />
-      <option name="presentableId" value="LOCAL-00104" />
-      <option name="project" value="LOCAL" />
-      <updated>1785025257135</updated>
     </task>
     <task id="LOCAL-00105" summary="Next phase: Petrification Bending.">
       <option name="closed" value="true" />
@@ -754,7 +747,23 @@
       <option name="project" value="LOCAL" />
       <updated>1785115449103</updated>
     </task>
-    <option name="localTasksCounter" value="152" />
+    <task id="LOCAL-00152" summary="Next phase: Fix plasma bending.">
+      <option name="closed" value="true" />
+      <created>1785115960611</created>
+      <option name="number" value="00152" />
+      <option name="presentableId" value="LOCAL-00152" />
+      <option name="project" value="LOCAL" />
+      <updated>1785115960611</updated>
+    </task>
+    <task id="LOCAL-00153" summary="Next phase: Fix plasma bending.">
+      <option name="closed" value="true" />
+      <created>1785116045812</created>
+      <option name="number" value="00153" />
+      <option name="presentableId" value="LOCAL-00153" />
+      <option name="project" value="LOCAL" />
+      <updated>1785116045812</updated>
+    </task>
+    <option name="localTasksCounter" value="154" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
