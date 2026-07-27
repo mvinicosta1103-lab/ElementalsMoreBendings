@@ -31,10 +31,7 @@ public class PlasmaHandFlameLayer extends RenderLayer<AbstractClientPlayer, Play
 
         ResourceLocation tex = (player.tickCount / 3) % 2 == 0 ? SOUL_FIRE_0 : SOUL_FIRE_1;
 
-        // energySwirl = mesmo render type usado no Wither/olhos de Spider --
-        // textura full-bright (ignora luz do ambiente) e com scroll animado,
-        // aplicada em cima da forma do próprio braço do modelo.
-        VertexConsumer consumer = buffer.getBuffer(RenderType.energySwirl(tex, 0f, ageInTicks * 0.01f));
+        VertexConsumer consumer = buffer.getBuffer(RenderType.entityTranslucentEmissive(tex));
 
         PlayerModel<AbstractClientPlayer> model = getParentModel();
         model.rightArm.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
