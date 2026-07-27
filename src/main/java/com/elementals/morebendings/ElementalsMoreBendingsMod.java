@@ -97,6 +97,12 @@ public class ElementalsMoreBendingsMod {
         // motivo do listener de renderers acima.
         if (FMLEnvironment.dist == Dist.CLIENT) {
             NeoForge.EVENT_BUS.addListener(ModKeyMappings::onClientTick);
+
+            if (FMLEnvironment.dist == Dist.CLIENT) {
+                modEventBus.addListener(ClientClass::onRegisterRenderers);
+                modEventBus.addListener(ClientClass::onAddLayers); // <-- faltava
+                modEventBus.addListener(ModKeyMappings::register);
+            }
         }
     }
 

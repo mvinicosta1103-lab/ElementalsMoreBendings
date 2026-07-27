@@ -1,20 +1,13 @@
 package com.elementals.morebendings.bending.firesubbendings.plasma;
 
+import com.elementals.morebendings.network.packets.SyncPlasmaBoostPacket;
+import commonnetwork.api.Dispatcher;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-/**
- * Liga/desliga do aprimoramento de dano "Plasma Boost" -- mesmo esquema do
- * conjunto {@code flying} de {@link
- * com.elementals.morebendings.bending.airsubbendings.flying.FlyingAbility}:
- * estado em memória, sem gastar Chi pra manter ativo (só existe enquanto o
- * jogador não desligar manualmente, ver {@code TogglePlasmaBoostPacket}).
- * Não persiste entre logins de propósito -- se o servidor reiniciar ou o
- * jogador desconectar, o boost cai; ele religa com a tecla de novo.
- */
 public final class PlasmaBoostState {
 
     private static final Set<UUID> active = new HashSet<>();
@@ -24,19 +17,24 @@ public final class PlasmaBoostState {
             return false;
         }
         UUID id = player.getUUID();
-        if (active.contains(id)) {
+        boolean nowActive = !active.contains(id);
+        if (nowActive) {
+            active.add(id);
+        } else {
             active.remove(id);
-            return false;
         }
-        active.add(id);
-        return true;
+
+        SyncPlasmaBoostPacket packet = new SyncPlasmaBoostPacket(id, nowActive);
+        for (ServerPlayer online : player.getServer().getPlayerList().getPlayers()) {
+            Dispatcher.sendToClient(packet, online);
+        }
+        return nowActive;
     }
 
     public static boolean isActive(ServerPlayer player) {
         return active.contains(player.getUUID());
     }
 
-    /** Chame no logout/morte se quiser garantir que não fique "preso" ligado. */
     public static void deactivate(ServerPlayer player) {
         active.remove(player.getUUID());
     }

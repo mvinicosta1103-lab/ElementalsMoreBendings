@@ -6,15 +6,10 @@ import com.elementals.morebendings.bending.earthsubbendings.glass.GlassShardEnti
 import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntityRenderer;
 import com.elementals.morebendings.registry.ModEntities;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import com.elementals.morebendings.client.layers.PlasmaHandFlameLayer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.resources.PlayerSkin;
 
-/**
- * Ponto de entrada pra tudo que só pode existir no lado cliente (renderers,
- * models, etc). Só é referenciada a partir de ElementalsMoreBendingsMod
- * quando {@code FMLEnvironment.dist == Dist.CLIENT} — em servidor dedicado
- * essa classe nunca chega a ser carregada, então pode usar
- * EntityRenderersEvent (classe client-only do NeoForge) sem medo de crashar
- * o server.
- */
 public class ClientClass {
 
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
@@ -22,6 +17,15 @@ public class ClientClass {
         event.registerEntityRenderer(ModEntities.BONE_SPIKE.get(), BoneSpikeEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.GLASS_SHARD.get(), GlassShardEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.MIST_FOG.get(), MistFogEntityRenderer::new);
+    }
+
+    public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
+        for (PlayerSkin.Model skin : event.getSkins()) {
+            PlayerRenderer renderer = event.getSkin(skin);
+            if (renderer != null) {
+                renderer.addLayer(new PlasmaHandFlameLayer(renderer));
+            }
+        }
     }
 
     private ClientClass() {

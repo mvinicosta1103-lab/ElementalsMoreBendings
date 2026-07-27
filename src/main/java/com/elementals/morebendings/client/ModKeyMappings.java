@@ -10,6 +10,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import com.elementals.morebendings.network.packets.TogglePlasmaBoostPacket;
 
 /**
  * Keybinds do addon. Só é carregada no lado cliente -- ver
@@ -44,6 +45,13 @@ public final class ModKeyMappings {
             CATEGORY
     );
 
+    public static final KeyMapping TOGGLE_PLASMA_BOOST = new KeyMapping(
+            "key." + Constants.MOD_ID + ".toggle_plasma_boost",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_J,
+            CATEGORY
+    );
+
     /**
      * Troca qual especialização de Gas Cloud/Heavy Fog está ATIVA no
      * momento (Suffocate/Leak/Ignite ou Choke/Veil/Freeze) -- ver
@@ -64,6 +72,7 @@ public final class ModKeyMappings {
         event.register(TOGGLE_FLYING);
         event.register(CAST_GAS_CLOUD);
         event.register(CYCLE_SPECIALIZATION);
+        event.register(TOGGLE_PLASMA_BOOST);
     }
 
     /**
@@ -85,6 +94,10 @@ public final class ModKeyMappings {
         }
         while (CYCLE_SPECIALIZATION.consumeClick()) {
             Dispatcher.sendToServer(new CycleSpecializationPacket());
+
+            while (TOGGLE_PLASMA_BOOST.consumeClick()) {
+                Dispatcher.sendToServer(new TogglePlasmaBoostPacket());
+            }
         }
     }
 
