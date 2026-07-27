@@ -10,12 +10,16 @@ import com.elementals.morebendings.bending.airsubbendings.atmosphere.AtmosphereE
 import com.elementals.morebendings.bending.airsubbendings.gas.GasElement;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistElement;
 import com.elementals.morebendings.bending.firesubbendings.plasma.PlasmaElement;
+import com.elementals.morebendings.bending.watersubbendings.plant.PlantElement;
 import com.elementals.morebendings.registry.ModAbilities;
 
 public class CommonClass {
 
     public static void init() {
         Constants.LOG.info("Inicializando sub-bendings comuns (Plant, Mud, Crystal, Sand, Glass, Petrification, Lava, Atmosphere, Gas, Mist, Plasma) na 1.21.1...");
+
+        // WATER SUBBENDINGS
+        PlantElement.register();
 
         // EARTH SUBBENDINGS
         MudElement.register();
@@ -33,8 +37,8 @@ public class CommonClass {
         // FIRE SUBBENDINGS
         PlasmaElement.register();
 
-        // Flying/Plant ainda usam o sistema antigo (PlayerSubbendingData)
-        // — ainda não convertidos pro mesmo padrão de Element real.
+        // Flying ainda usa o sistema antigo (PlayerSubbendingData) --
+        // ainda não convertida pro mesmo padrão de Element real.
         ModAbilities.registerAbilities();
     }
 }

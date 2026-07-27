@@ -37,6 +37,7 @@ import net.minecraft.server.level.ServerPlayer;
 import com.elementals.morebendings.bending.airsubbendings.gas.GasElement;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistElement;
 import com.elementals.morebendings.bending.firesubbendings.plasma.PlasmaElement;
+import com.elementals.morebendings.bending.watersubbendings.plant.PlantElement;
 
 /**
  * /morebending grant <player> <subbending>
@@ -76,6 +77,7 @@ public class MoreBendingCommand {
         return switch (type) {
             case MUD, CRYSTAL, SAND, PETRIFICATION, LAVA -> "precisa ter Earth e ter masterizado a árvore de Earth inteira";
             case ATMOSPHERE, GAS, MIST -> "precisa ter Air e ter masterizado a árvore de Air inteira";
+            case PLANT -> "precisa ter Water e ter masterizado a árvore de Water inteira";
             case PLASMA -> "precisa ter Fire e ter masterizado a árvore de Fire inteira";
             case BONE -> "precisa ter Earth e já ter estado a até "
                     + (int) BoneElement.BLOOD_PROXIMITY_RANGE + " blocos de um Blood bender em algum momento";
@@ -147,7 +149,7 @@ public class MoreBendingCommand {
                 || type == SubbendingType.GLASS || type == SubbendingType.PETRIFICATION
                 || type == SubbendingType.LAVA || type == SubbendingType.ATMOSPHERE
                 || type == SubbendingType.GAS || type == SubbendingType.MIST
-                || type == SubbendingType.PLASMA) {
+                || type == SubbendingType.PLASMA || type == SubbendingType.PLANT) {
             return runRealElement(ctx.getSource(), target, type, grant);
         }
 
@@ -196,6 +198,7 @@ public class MoreBendingCommand {
             case GAS -> GasElement.get();
             case MIST -> MistElement.get();
             case PLASMA -> PlasmaElement.get();
+            case PLANT -> PlantElement.get();
             default -> throw new IllegalArgumentException("Sub-bending sem Element real: " + type);
         };
         String playerName = target.getName().getString();
@@ -244,6 +247,7 @@ public class MoreBendingCommand {
                 case GAS -> GasElement.canAcquire(bender);
                 case MIST -> MistElement.canAcquire(bender);
                 case PLASMA -> PlasmaElement.canAcquire(bender);
+                case PLANT -> PlantElement.canAcquire(bender);
                 default -> false;
             };
             if (!eligible) {

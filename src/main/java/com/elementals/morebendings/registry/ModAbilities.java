@@ -1,13 +1,12 @@
 package com.elementals.morebendings.registry;
 
-import com.elementals.morebendings.bending.watersubbendings.plant.PlantVineWhipAbility;
-
 public class ModAbilities {
 
     public static void registerAbilities() {
-        // Gas não passa mais por aqui: GasCloudAbility agora é Ability de
-        // verdade, adicionada direto no construtor de GasElement (ver
-        // CommonClass.init(), que chama GasElement.register()).
-        PlantVineWhipAbility.register();
+        // Todas as sub-bendings já convertidas pro sistema de Element real
+        // (Mud, Crystal, Sand, Glass, Petrification, Lava, Atmosphere, Gas,
+        // Mist, Plasma, Plant) adicionam suas abilities direto no construtor
+        // do próprio Element -- ver CommonClass.init(). Nada a fazer aqui
+        // por enquanto; só a sub-bending Flying ainda usa um caminho à parte.
     }
 }

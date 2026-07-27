@@ -23,6 +23,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import com.elementals.morebendings.bending.watersubbendings.plant.PlantVineWallManager;
 
 @Mod(Constants.MOD_ID)
 public class ElementalsMoreBendingsMod {
@@ -113,6 +114,8 @@ public class ElementalsMoreBendingsMod {
         // o Plasma Boost estiver ativo -- roda no servidor, então sem
         // checagem de Dist.CLIENT. Ver PlasmaBoostCombatHandler.
         NeoForge.EVENT_BUS.addListener(PlasmaBoostCombatHandler::onIncomingDamage);
+
+        NeoForge.EVENT_BUS.addListener(PlantVineWallManager::onServerTick);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
