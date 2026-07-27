@@ -38,6 +38,7 @@ import com.elementals.morebendings.bending.airsubbendings.gas.GasElement;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistElement;
 import com.elementals.morebendings.bending.firesubbendings.plasma.PlasmaElement;
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantElement;
+import com.elementals.morebendings.bending.watersubbendings.spirit.SpiritElement;
 
 /**
  * /morebending grant <player> <subbending>
@@ -45,13 +46,13 @@ import com.elementals.morebendings.bending.watersubbendings.plant.PlantElement;
  * /morebending debug <player> <subbending>
  *
  * Requer permissão de operador (nível 2), igual aos comandos vanilla de
- * /gamemode e /xp. <subbending> aceita: gas, plant, mud, crystal, bone, sand,
+ * /gamemode e /xp. <subbending> aceita: gas, plant, spirit, mud, crystal, bone, sand,
  * glass, petrification, lava, atmosphere, mist, plasma (com autocomplete no jogo).
  */
 public class MoreBendingCommand {
 
     private static final SimpleCommandExceptionType UNKNOWN_SUBBENDING = new SimpleCommandExceptionType(
-            Component.literal("Sub-bending desconhecida. Use: Gas, Flying, Plant, Mud, Crystal, Bone, Sand, Glass, Petrification, Lava, Atmosphere, Mist ou Plasma."));
+            Component.literal("Sub-bending desconhecida. Use: Gas, Flying, Plant, Spirit, Mud, Crystal, Bone, Sand, Glass, Petrification, Lava, Atmosphere, Mist ou Plasma."));
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("morebending")
@@ -77,7 +78,7 @@ public class MoreBendingCommand {
         return switch (type) {
             case MUD, CRYSTAL, SAND, PETRIFICATION, LAVA -> "precisa ter Earth e ter masterizado a árvore de Earth inteira";
             case ATMOSPHERE, GAS, MIST -> "precisa ter Air e ter masterizado a árvore de Air inteira";
-            case PLANT -> "precisa ter Water e ter masterizado a árvore de Water inteira";
+            case PLANT, SPIRIT -> "precisa ter Water e ter masterizado a árvore de Water inteira";
             case PLASMA -> "precisa ter Fire e ter masterizado a árvore de Fire inteira";
             case BONE -> "precisa ter Earth e já ter estado a até "
                     + (int) BoneElement.BLOOD_PROXIMITY_RANGE + " blocos de um Blood bender em algum momento";
@@ -149,7 +150,8 @@ public class MoreBendingCommand {
                 || type == SubbendingType.GLASS || type == SubbendingType.PETRIFICATION
                 || type == SubbendingType.LAVA || type == SubbendingType.ATMOSPHERE
                 || type == SubbendingType.GAS || type == SubbendingType.MIST
-                || type == SubbendingType.PLASMA || type == SubbendingType.PLANT) {
+                || type == SubbendingType.PLASMA || type == SubbendingType.PLANT
+                || type == SubbendingType.SPIRIT) {
             return runRealElement(ctx.getSource(), target, type, grant);
         }
 
@@ -199,6 +201,7 @@ public class MoreBendingCommand {
             case MIST -> MistElement.get();
             case PLASMA -> PlasmaElement.get();
             case PLANT -> PlantElement.get();
+            case SPIRIT -> SpiritElement.get();
             default -> throw new IllegalArgumentException("Sub-bending sem Element real: " + type);
         };
         String playerName = target.getName().getString();
@@ -248,6 +251,7 @@ public class MoreBendingCommand {
                 case MIST -> MistElement.canAcquire(bender);
                 case PLASMA -> PlasmaElement.canAcquire(bender);
                 case PLANT -> PlantElement.canAcquire(bender);
+                case SPIRIT -> SpiritElement.canAcquire(bender);
                 default -> false;
             };
             if (!eligible) {
