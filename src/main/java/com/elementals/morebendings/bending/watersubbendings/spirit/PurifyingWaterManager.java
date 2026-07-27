@@ -131,7 +131,7 @@ public final class PurifyingWaterManager {
                 24, 0.3, 0.4, 0.3, 0.03);
         level.sendParticles(ParticleTypes.END_ROD, mob.getX(), mob.getY() + mob.getBbHeight() * 0.5, mob.getZ(),
                 6, 0.2, 0.3, 0.2, 0.01);
-        level.playSound(null, mob.blockPosition(), SoundEvents.SOUL_ESCAPE, SoundSource.NEUTRAL, 1.0f, 1.0f);
+        level.playSound(null, mob.blockPosition(), SoundEvents.SOUL_ESCAPE.value(), SoundSource.NEUTRAL, 1.0f, 1.0f);
         mob.discard();
     }
 
