@@ -9,7 +9,9 @@ import com.elementals.morebendings.bending.earthsubbendings.mud.MudTrapManager;
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandTornadoManager;
 import com.elementals.morebendings.bending.airsubbendings.atmosphere.PressureZoneManager;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistCloudManager;
+import com.elementals.morebendings.bending.firesubbendings.plasma.PlasmaBoostCombatHandler;
 import com.elementals.morebendings.client.ModKeyMappings;
+import com.elementals.morebendings.client.layers.PlasmaFirstPersonFireHandler;
 import com.elementals.morebendings.commands.MoreBendingCommand;
 import com.elementals.morebendings.network.ModNetworking;
 import com.elementals.morebendings.registry.ModAttachments;
@@ -99,7 +101,18 @@ public class ElementalsMoreBendingsMod {
         if (FMLEnvironment.dist == Dist.CLIENT) {
             NeoForge.EVENT_BUS.addListener(ModKeyMappings::onClientTick);
 
+            // Desenha o fogo de plasma nas mãos em PRIMEIRA pessoa -- o
+            // PlasmaHandFlameLayer (registrado lá em cima via onAddLayers)
+            // só cobre terceira pessoa, porque o braço em primeira pessoa é
+            // desenhado por um caminho totalmente separado do jogo. Ver
+            // PlasmaFirstPersonFireHandler.
+            NeoForge.EVENT_BUS.addListener(PlasmaFirstPersonFireHandler::onRenderArm);
         }
+
+        // Bônus de dano + queimada em qualquer golpe corpo a corpo enquanto
+        // o Plasma Boost estiver ativo -- roda no servidor, então sem
+        // checagem de Dist.CLIENT. Ver PlasmaBoostCombatHandler.
+        NeoForge.EVENT_BUS.addListener(PlasmaBoostCombatHandler::onIncomingDamage);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
