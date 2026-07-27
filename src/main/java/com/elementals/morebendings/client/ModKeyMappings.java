@@ -94,10 +94,9 @@ public final class ModKeyMappings {
         }
         while (CYCLE_SPECIALIZATION.consumeClick()) {
             Dispatcher.sendToServer(new CycleSpecializationPacket());
-
-            while (TOGGLE_PLASMA_BOOST.consumeClick()) {
-                Dispatcher.sendToServer(new TogglePlasmaBoostPacket());
-            }
+        }
+        while (TOGGLE_PLASMA_BOOST.consumeClick()) {
+            Dispatcher.sendToServer(new TogglePlasmaBoostPacket());
         }
     }
 

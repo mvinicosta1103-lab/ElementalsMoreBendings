@@ -5,26 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="Next phase: Fix plasma bending.">
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/ClientClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/ClientClass.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/ElementalsMoreBendingsMod.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/ElementalsMoreBendingsMod.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/bending/firesubbendings/plasma/PlasmaBoostState.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/bending/firesubbendings/plasma/PlasmaBoostState.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/client/ModKeyMappings.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/client/ModKeyMappings.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/client/layers/PlasmaHandFlameLayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/client/layers/PlasmaHandFlameLayer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/CastGasCloudPacket.class.uniqueId1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/CycleSpecializationPacket.class.uniqueId2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ElementalsMoreBendingsMod.class.uniqueId3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ModNetworking.class.uniqueId4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ToggleFlyingPacket.class.uniqueId0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/command_history.txt" beforeDir="false" afterPath="$PROJECT_DIR$/run/command_history.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" beforeDir="false" afterPath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-1.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-10.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-10.log.gz" afterDir="false" />
@@ -50,6 +31,8 @@
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-29.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-29.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-3.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-30.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-30.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-31.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-31.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-32.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-32.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-4.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-5.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-07-26-6.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-07-26-6.log.gz" afterDir="false" />
@@ -82,11 +65,8 @@
       <change beforePath="$PROJECT_DIR$/run/saves/Plasma Claws/session.lock" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Plasma Claws/session.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/Plasma Claws/stats/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/Plasma Claws/stats/380df991-f603-344c-a090-369bad2a924a.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/usercache.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/usercache.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/ClientClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/ClientClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/ElementalsMoreBendingsMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/ElementalsMoreBendingsMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/firesubbendings/plasma/PlasmaBoostState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/firesubbendings/plasma/PlasmaBoostState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/client/ModKeyMappings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/client/ModKeyMappings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/client/layers/PlasmaHandFlameLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/client/layers/PlasmaHandFlameLayer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -366,14 +346,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
-    </task>
-    <task id="LOCAL-00093" summary="Sorting things out.">
-      <option name="closed" value="true" />
-      <created>1784994219240</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1784994219240</updated>
     </task>
     <task id="LOCAL-00094" summary="Sorting things out.">
       <option name="closed" value="true" />
@@ -759,7 +731,15 @@
       <option name="project" value="LOCAL" />
       <updated>1785111224448</updated>
     </task>
-    <option name="localTasksCounter" value="142" />
+    <task id="LOCAL-00142" summary="Next phase: Fix plasma bending.">
+      <option name="closed" value="true" />
+      <created>1785112456814</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1785112456814</updated>
+    </task>
+    <option name="localTasksCounter" value="143" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
