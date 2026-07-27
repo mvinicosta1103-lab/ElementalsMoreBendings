@@ -76,7 +76,7 @@ public class PlantVineWhipAbility implements Ability {
         target.hurt(caster.damageSources().playerAttack(caster), DAMAGE);
 
         level.playSound(null, target.getX(), target.getY(), target.getZ(),
-                SoundEvents.SWEET_BERRY_BUSH_HURT, SoundSource.PLAYERS, 0.8f, 0.9f);
+                SoundEvents.PLAYER_HURT_SWEET_BERRY_BUSH, SoundSource.PLAYERS, 0.8f, 0.9f);
         level.sendParticles(ParticleTypes.SWEEP_ATTACK, target.getX(), target.getY() + 1.0, target.getZ(),
                 1, 0.0, 0.0, 0.0, 0.0);
         spawnVineTrail(level, caster.position().add(0, 1.2, 0), target.position().add(0, 1.0, 0));
