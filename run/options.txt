@@ -102,7 +102,7 @@ key_key.chat:key.keyboard.t
 key_key.playerlist:key.keyboard.tab
 key_key.pickItem:key.mouse.middle
 key_key.command:key.keyboard.slash
-key_key.socialInteractions:key.keyboard.p
+key_key.socialInteractions:key.keyboard.right.bracket
 key_key.screenshot:key.keyboard.f2
 key_key.togglePerspective:key.keyboard.f5
 key_key.smoothCamera:key.keyboard.unknown
@@ -111,7 +111,7 @@ key_key.spectatorOutlines:key.keyboard.unknown
 key_key.swapOffhand:key.keyboard.f
 key_key.saveToolbarActivator:key.keyboard.c
 key_key.loadToolbarActivator:key.keyboard.x
-key_key.advancements:key.keyboard.l
+key_key.advancements:key.keyboard.left.bracket
 key_key.hotbar.1:key.keyboard.1
 key_key.hotbar.2:key.keyboard.2
 key_key.hotbar.3:key.keyboard.3
@@ -136,8 +136,10 @@ key_key.elementals.Ability12:key.keyboard.p
 key_key.elementals.guiKey:key.keyboard.minus
 key_key.elementals.cycle:key.keyboard.z
 key_key.elementals.toggle_blue_fire:key.keyboard.n
-key_key.elementalsmorebendings.toggle_flying:key.keyboard.h
+key_key.elementalsmorebendings.toggle_flying:key.keyboard.end
 key_key.elementalsmorebendings.cast_gas_cloud:key.keyboard.period
+key_key.elementalsmorebendings.cycle_specialization:key.keyboard.pause
+key_key.elementalsmorebendings.toggle_plasma_boost:key.keyboard.page.down
 soundCategory_master:1.0
 soundCategory_music:0.0
 soundCategory_record:1.0

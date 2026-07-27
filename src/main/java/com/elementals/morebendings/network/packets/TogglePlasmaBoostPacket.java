@@ -5,11 +5,11 @@ import com.elementals.morebendings.network.ModNetworking;
 import commonnetwork.networking.data.PacketContext;
 import commonnetwork.networking.data.Side;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 
-/** Cliente → servidor: "liga/desliga meu Plasma Boost agora" (tecla em ModKeyMappings). */
 public record TogglePlasmaBoostPacket() {
 
     public static final StreamCodec<FriendlyByteBuf, TogglePlasmaBoostPacket> STREAM_CODEC =
@@ -21,6 +21,10 @@ public record TogglePlasmaBoostPacket() {
 
     public static void handle(PacketContext<TogglePlasmaBoostPacket> ctx) {
         ModNetworking.expectSideOrThrow(ctx.side(), Side.SERVER);
-        PlasmaBoostState.toggle(ctx.sender());
+        ServerPlayer player = ctx.sender();
+        boolean nowActive = PlasmaBoostState.toggle(player);
+        player.displayClientMessage(
+                Component.literal(nowActive ? "§bPlasma Boost ATIVADO" : "§7Plasma Boost desativado"),
+                true);
     }
 }
