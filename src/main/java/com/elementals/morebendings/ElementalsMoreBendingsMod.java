@@ -24,6 +24,8 @@ import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantVineWallManager;
+import com.elementals.morebendings.bending.watersubbendings.spirit.CurseMinionManager;
+import com.elementals.morebendings.bending.watersubbendings.spirit.PurifyingWaterManager;
 
 @Mod(Constants.MOD_ID)
 public class ElementalsMoreBendingsMod {
@@ -116,6 +118,14 @@ public class ElementalsMoreBendingsMod {
         NeoForge.EVENT_BUS.addListener(PlasmaBoostCombatHandler::onIncomingDamage);
 
         NeoForge.EVENT_BUS.addListener(PlantVineWallManager::onServerTick);
+
+        // Expira as zonas de purifyingWater ativas e processa quem estiver
+        // pego nelas -- ver PurifyingWaterManager.
+        NeoForge.EVENT_BUS.addListener(PurifyingWaterManager::onServerTick);
+
+        // Força o retarget contínuo de quem estiver amaldiçoado por
+        // curseMinion -- ver CurseMinionManager.
+        NeoForge.EVENT_BUS.addListener(CurseMinionManager::onServerTick);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

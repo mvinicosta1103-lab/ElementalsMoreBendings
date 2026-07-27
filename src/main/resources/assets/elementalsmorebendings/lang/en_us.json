@@ -6,6 +6,7 @@
   "subbending.elementalsmorebendings.flying": "Flying",
   "subbending.elementalsmorebendings.gas": "Gas Bending",
   "subbending.elementalsmorebendings.plant": "Plant Bending",
+  "subbending.elementalsmorebendings.spirit": "Spirit Bending",
   "subbending.elementalsmorebendings.mud": "Mud Bending",
   "subbending.elementalsmorebendings.crystal": "Crystal Bending",
   "subbending.elementalsmorebendings.bone": "Bone Bending",
@@ -17,6 +18,8 @@
   "ability.elementalsmorebendings.plasma_claws": "Plasma Claws",
   "ability.elementalsmorebendings.gas_suffocate": "Suffocate",
   "ability.elementalsmorebendings.plant_vine_whip": "Vine Whip",
+  "ability.elementalsmorebendings.spirit_purifying_water": "Purifying Water",
+  "ability.elementalsmorebendings.spirit_curse_minion": "Curse Minion",
   "ability.elementalsmorebendings.mud_surge": "Mud Surge",
   "ability.elementalsmorebendings.mud_trap": "Mud Trap",
   "ability.elementalsmorebendings.crystal_shard": "Crystal Shards",
@@ -182,5 +185,15 @@
   "upgrade.elementals.vineWall": "Vine Wall",
   "upgrade.elementals.vineWall.description": "Raises a temporary wall of foliage in front of you, blocking arrows and movement for a short while before it withers away.",
   "upgrade.elementals.vineWall.use": "Use: %d",
-  "upgrade.elementals.vineWall.icon": "vine_wall"
+  "upgrade.elementals.vineWall.icon": "vine_wall",
+
+  "upgrade.elementals.purifyingWater": "Purifying Water",
+  "upgrade.elementals.purifyingWater.description": "Blesses a body of water in front of you for a short while. Skeletons, husks, blazes, and baby zombies caught in it glow and dissolve into spirit dust. Witches, pillagers, vindicators, and baby zombie villagers are cleansed back into ordinary villagers, cracked iron golems are fully repaired, and a wither skeleton is purified into a snow golem.",
+  "upgrade.elementals.purifyingWater.use": "Use: %d",
+  "upgrade.elementals.purifyingWater.icon": "purifying_water",
+
+  "upgrade.elementals.curseMinion": "Curse Minion",
+  "upgrade.elementals.curseMinion.description": "Curses whatever creature you're aiming at. For a short while, it stops attacking you and turns on the nearest other mobs and players instead.",
+  "upgrade.elementals.curseMinion.use": "Use: %d",
+  "upgrade.elementals.curseMinion.icon": "curse_minion"
 }
