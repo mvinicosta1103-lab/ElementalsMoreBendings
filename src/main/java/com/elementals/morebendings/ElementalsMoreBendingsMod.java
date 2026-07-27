@@ -37,6 +37,7 @@ public class ElementalsMoreBendingsMod {
         // servidor dedicado quebra ao tentar carregar essa classe.
         if (FMLEnvironment.dist == Dist.CLIENT) {
             modEventBus.addListener(ClientClass::onRegisterRenderers);
+            modEventBus.addListener(ClientClass::onAddLayers);
 
             // Keybind de "ligar/desligar voo" (Flying) -- registro da tecla
             // em si precisa do mod bus (RegisterKeyMappingsEvent); o listener
