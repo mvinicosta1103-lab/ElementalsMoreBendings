@@ -2,14 +2,18 @@ package com.elementals.morebendings.bending.watersubbendings.plant;
 
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
+import dev.saperate.elementals.entities.earth.EarthBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -19,11 +23,20 @@ import java.util.List;
  * flechas e movimento, igual uma barreira de Earth, só que temporária e
  * feita de folhas em vez de pedra.
  *
- * Instantânea na hora de LEVANTAR (libera currAbility de cara, igual
- * MudSurgeAbility/CrystalShardAbility) -- quem cuida da parte "temporária"
- * (contagem regressiva + reverter os blocos) é {@link PlantVineWallManager},
- * dirigido tick a tick pelo ServerTickEvent registrado em
- * ElementalsMoreBendingsMod (mesmo esquema de MudTrapManager).
+ * A animação de subida é a mesma da {@link dev.saperate.elementals.elements.earth.AbilityEarthWall}
+ * do mod base: cada bloco da parede é um {@link EarthBlockEntity} flutuante
+ * (a mesma entidade que a Earth Wall usa) subindo até sua posição final --
+ * só trocamos o {@code BlockState} carregado por ela pra
+ * {@link Blocks#OAK_LEAVES}, já que o renderer dela desenha qualquer bloco
+ * genericamente. Como as folhas nunca existiram no mundo de verdade (não tem
+ * o que "desenterrar"), cada entidade nasce rente ao chão da própria coluna
+ * e sobe até sua altura -- ao contrário da Earth Wall, que desenterra blocos
+ * reais de um buraco abaixo do jogador.
+ *
+ * Quem cuida da parte "temporária" (contagem regressiva + desmanchar as
+ * entidades) é {@link PlantVineWallManager}, dirigido tick a tick pelo
+ * ServerTickEvent registrado em ElementalsMoreBendingsMod (mesmo esquema de
+ * MudTrapManager).
  */
 public class PlantVineWallAbility implements Ability {
 
@@ -31,6 +44,7 @@ public class PlantVineWallAbility implements Ability {
     private static final int WIDTH = 3;  // colunas (1 pra cada lado do centro + o centro)
     private static final int HEIGHT = 3; // blocos de altura
     private static final int DURATION_TICKS = 20 * 6; // 6s
+    private static final float RISE_SPEED = 0.2f; // mesma velocidade da Earth Wall
 
     @Override
     public void onCall(Bender bender, long heldTimeMs) {
@@ -55,13 +69,45 @@ public class PlantVineWallAbility implements Ability {
             columns.add(center.relative(side, w));
         }
 
-        boolean placedAny = PlantVineWallManager.raise(level, player, columns, HEIGHT, DURATION_TICKS);
+        LinkedList<EarthBlockEntity> entities = new LinkedList<>();
+        for (BlockPos column : columns) {
+            raiseColumn(level, player, column, entities);
+        }
 
-        if (placedAny) {
+        if (!entities.isEmpty()) {
+            PlantVineWallManager.registerWall(player, entities, DURATION_TICKS);
             level.playSound(null, center, SoundEvents.VINE_PLACE, SoundSource.PLAYERS, 1.0f, 0.9f);
         }
 
         bender.setCurrAbility(null);
+    }
+
+    /**
+     * Sobe uma coluna de {@code height} folhas, uma entidade por altura, todas
+     * partindo do nível do chão da coluna e subindo (flutuando, controladas)
+     * até a posição final -- igual {@code AbilityEarthWall#placePillar}, só
+     * que sem desenterrar bloco nenhum de verdade.
+     */
+    private void raiseColumn(ServerLevel level, Player player, BlockPos column, LinkedList<EarthBlockEntity> entities) {
+        for (int h = 0; h < HEIGHT; h++) {
+            BlockPos target = column.above(h);
+            BlockState current = level.getBlockState(target);
+            if (!current.canBeReplaced()) {
+                continue; // essa altura da coluna está bloqueada -- pula só ela, não a coluna inteira
+            }
+
+            EarthBlockEntity entity = new EarthBlockEntity(level, player,
+                    column.getX() + 0.5, column.getY(), column.getZ() + 0.5);
+            entity.setBlockState(Blocks.OAK_LEAVES.defaultBlockState());
+            entity.setTargetPosition(target.getCenter().toVector3f());
+            entity.setMovementSpeed(RISE_SPEED);
+            entity.setCollidable(true);
+            // nunca vira bloco de verdade no mundo -- some com um "poof" quando a parede acabar
+            entity.setDrops(false);
+
+            level.addFreshEntity(entity);
+            entities.add(entity);
+        }
     }
 
     @Override
