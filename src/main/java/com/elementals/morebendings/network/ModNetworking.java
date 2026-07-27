@@ -7,8 +7,16 @@ import com.elementals.morebendings.network.packets.ToggleFlyingPacket;
 import commonnetwork.api.Network;
 import commonnetwork.networking.data.Side;
 import net.minecraft.resources.ResourceLocation;
+import com.elementals.morebendings.network.packets.SyncPlasmaBoostPacket;
+import com.elementals.morebendings.network.packets.TogglePlasmaBoostPacket;
 
 public final class ModNetworking {
+
+    public static final ResourceLocation TOGGLE_PLASMA_BOOST_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "toggle_plasma_boost");
+
+    public static final ResourceLocation SYNC_PLASMA_BOOST_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "sync_plasma_boost");
 
     public static final ResourceLocation TOGGLE_FLYING_ID =
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "toggle_flying");

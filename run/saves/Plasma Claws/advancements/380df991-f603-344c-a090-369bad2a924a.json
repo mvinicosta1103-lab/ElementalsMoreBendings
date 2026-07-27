@@ -1,10 +1,4 @@
 {
-  "elementals:firebending": {
-    "criteria": {
-      "element": "2026-07-26 20:08:40 -0300"
-    },
-    "done": true
-  },
   "minecraft:recipes/decorations/crafting_table": {
     "criteria": {
       "unlock_right_away": "2026-07-26 20:08:26 -0300"
@@ -22,6 +16,12 @@
       "minecraft:sparse_jungle": "2026-07-26 20:08:37 -0300"
     },
     "done": false
+  },
+  "elementals:firebending": {
+    "criteria": {
+      "element": "2026-07-26 20:08:40 -0300"
+    },
+    "done": true
   },
   "DataVersion": 3955
 }

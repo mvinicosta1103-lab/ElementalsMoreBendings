@@ -32,6 +32,5 @@ public class PlasmaHandFlameLayer extends RenderLayer<AbstractClientPlayer, Play
         if (!ClientPlasmaBoostCache.isActive(player.getUUID())) return;
 
         ResourceLocation tex = (player.tickCount / 3) % 2 == 0 ? SOUL_FIRE_0 : SOUL_FIRE_1;
-        // ... resto igual ao esqueleto que já te passei (renderFlameOnArm nos dois braços)
     }
 }
