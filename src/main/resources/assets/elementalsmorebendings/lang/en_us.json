@@ -173,5 +173,14 @@
   "upgrade.elementals.plasmaSuperheat": "Superheat",
   "upgrade.elementals.plasmaSuperheat.description": "Your claws unleash overwhelming heat: deals bonus damage, guarantees a strong, long-lasting burn, and scorches anyone standing near your target.",
 
-  "upgrade.elementals.plasmaBlueFireSynergy.description": "If you've mastered Blue Fire, Plasma Claws deals even more damage and burns with blue flame instead of ordinary fire."
+  "upgrade.elementals.plasmaBlueFireSynergy.description": "If you've mastered Blue Fire, Plasma Claws deals even more damage and burns with blue flame instead of ordinary fire.",
+  "upgrade.elementals.vineWhip": "Vine Whip",
+  "upgrade.elementals.vineWhip.description": "Lashes a vine at whatever you're aiming at. Hooks a living target and yanks them to you with a damaging strike, or if it only catches terrain, yanks you to that spot instead like a grappling hook.",
+  "upgrade.elementals.vineWhip.use": "Use: %d",
+  "upgrade.elementals.vineWhip.icon": "vine_whip",
+
+  "upgrade.elementals.vineWall": "Vine Wall",
+  "upgrade.elementals.vineWall.description": "Raises a temporary wall of foliage in front of you, blocking arrows and movement for a short while before it withers away.",
+  "upgrade.elementals.vineWall.use": "Use: %d",
+  "upgrade.elementals.vineWall.icon": "vine_wall"
 }
