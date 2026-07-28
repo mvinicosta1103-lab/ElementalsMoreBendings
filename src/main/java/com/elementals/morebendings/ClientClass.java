@@ -4,6 +4,7 @@ import com.elementals.morebendings.bending.earthsubbendings.bone.BoneSpikeEntity
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalShardEntityRenderer;
 import com.elementals.morebendings.bending.earthsubbendings.glass.GlassShardEntityRenderer;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntityRenderer;
+import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionBoltEntityRenderer;
 import com.elementals.morebendings.registry.ModEntities;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import com.elementals.morebendings.client.layers.PlasmaHandFlameLayer;
@@ -17,6 +18,7 @@ public class ClientClass {
         event.registerEntityRenderer(ModEntities.BONE_SPIKE.get(), BoneSpikeEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.GLASS_SHARD.get(), GlassShardEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.MIST_FOG.get(), MistFogEntityRenderer::new);
+        event.registerEntityRenderer(ModEntities.COMBUSTION_BOLT.get(), CombustionBoltEntityRenderer::new);
     }
 
     public static void onAddLayers(EntityRenderersEvent.AddLayers event) {

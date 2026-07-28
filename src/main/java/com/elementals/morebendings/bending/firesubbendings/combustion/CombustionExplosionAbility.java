@@ -106,8 +106,9 @@ public class CombustionExplosionAbility implements Ability {
 
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.BLAZE_BURN, SoundSource.PLAYERS, 0.5f, 0.6f);
+        Vec3 eyePos = player.getEyePosition();
         level.sendParticles(ParticleTypes.SMALL_FLAME,
-                player.getEyeX(), player.getEyeY(), player.getEyeZ(), 3, 0.02, 0.02, 0.02, 0.005);
+                eyePos.x, eyePos.y, eyePos.z, 3, 0.02, 0.02, 0.02, 0.005);
 
         bender.setCurrAbility(this); // canalizada -- ver onTick/onLeftClick/onRightClick
     }

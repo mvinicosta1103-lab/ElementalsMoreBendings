@@ -36,6 +36,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import com.elementals.morebendings.bending.airsubbendings.gas.GasElement;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistElement;
+import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionElement;
 import com.elementals.morebendings.bending.firesubbendings.plasma.PlasmaElement;
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantElement;
 import com.elementals.morebendings.bending.watersubbendings.spirit.SpiritElement;
@@ -52,7 +53,7 @@ import com.elementals.morebendings.bending.watersubbendings.spirit.SpiritElement
 public class MoreBendingCommand {
 
     private static final SimpleCommandExceptionType UNKNOWN_SUBBENDING = new SimpleCommandExceptionType(
-            Component.literal("Sub-bending desconhecida. Use: Gas, Flying, Plant, Spirit, Mud, Crystal, Bone, Sand, Glass, Petrification, Lava, Atmosphere, Mist ou Plasma."));
+            Component.literal("Sub-bending desconhecida. Use: Gas, Flying, Plant, Spirit, Mud, Crystal, Bone, Sand, Glass, Petrification, Lava, Atmosphere, Mist, Plasma ou Combustion."));
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("morebending")
@@ -79,7 +80,7 @@ public class MoreBendingCommand {
             case MUD, CRYSTAL, SAND, PETRIFICATION, LAVA -> "precisa ter Earth e ter masterizado a árvore de Earth inteira";
             case ATMOSPHERE, GAS, MIST -> "precisa ter Air e ter masterizado a árvore de Air inteira";
             case PLANT, SPIRIT -> "precisa ter Water e ter masterizado a árvore de Water inteira";
-            case PLASMA -> "precisa ter Fire e ter masterizado a árvore de Fire inteira";
+            case PLASMA, COMBUSTION -> "precisa ter Fire e ter masterizado a árvore de Fire inteira";
             case BONE -> "precisa ter Earth e já ter estado a até "
                     + (int) BoneElement.BLOOD_PROXIMITY_RANGE + " blocos de um Blood bender em algum momento";
             case GLASS -> "precisa ter obtido Sand Bending antes";
@@ -112,10 +113,11 @@ public class MoreBendingCommand {
             case CRYSTAL -> CrystalElement.get();
             case ATMOSPHERE -> AtmosphereElement.get();
             case PLASMA -> PlasmaElement.get();
+            case COMBUSTION -> CombustionElement.get();
             default -> null;
         };
         if (element == null) {
-            source.sendFailure(Component.literal("Debug só implementado pra Gas/Mist/Mud/Crystal/Atmosphere/Plasma por enquanto."));
+            source.sendFailure(Component.literal("Debug só implementado pra Gas/Mist/Mud/Crystal/Atmosphere/Plasma/Combustion por enquanto."));
             return 0;
         }
 
@@ -150,8 +152,8 @@ public class MoreBendingCommand {
                 || type == SubbendingType.GLASS || type == SubbendingType.PETRIFICATION
                 || type == SubbendingType.LAVA || type == SubbendingType.ATMOSPHERE
                 || type == SubbendingType.GAS || type == SubbendingType.MIST
-                || type == SubbendingType.PLASMA || type == SubbendingType.PLANT
-                || type == SubbendingType.SPIRIT) {
+                || type == SubbendingType.PLASMA || type == SubbendingType.COMBUSTION
+                || type == SubbendingType.PLANT || type == SubbendingType.SPIRIT) {
             return runRealElement(ctx.getSource(), target, type, grant);
         }
 
@@ -200,6 +202,7 @@ public class MoreBendingCommand {
             case GAS -> GasElement.get();
             case MIST -> MistElement.get();
             case PLASMA -> PlasmaElement.get();
+            case COMBUSTION -> CombustionElement.get();
             case PLANT -> PlantElement.get();
             case SPIRIT -> SpiritElement.get();
             default -> throw new IllegalArgumentException("Sub-bending sem Element real: " + type);
@@ -235,6 +238,15 @@ public class MoreBendingCommand {
                             "Sua árvore de Plasma Bending foi reparada -- tente comprar os upgrades de novo."));
                     return 1;
                 }
+                if (type == SubbendingType.COMBUSTION) {
+                    CombustionElement.autoUnlockRoot(bender);
+                    syncAndPersist(bender, target);
+                    source.sendSuccess(() -> Component.literal(
+                            "combustionExplosion (nó raiz) sincronizado e persistido pra " + playerName + "."), true);
+                    target.sendSystemMessage(Component.literal(
+                            "Sua árvore de Combustion Bending foi reparada -- tente comprar os upgrades de novo."));
+                    return 1;
+                }
                 source.sendFailure(Component.literal(playerName + " já tinha " + type.getDisplayName() + "."));
                 return 0;
             }
@@ -250,6 +262,7 @@ public class MoreBendingCommand {
                 case GAS -> GasElement.canAcquire(bender);
                 case MIST -> MistElement.canAcquire(bender);
                 case PLASMA -> PlasmaElement.canAcquire(bender);
+                case COMBUSTION -> CombustionElement.canAcquire(bender);
                 case PLANT -> PlantElement.canAcquire(bender);
                 case SPIRIT -> SpiritElement.canAcquire(bender);
                 default -> false;
@@ -274,7 +287,8 @@ public class MoreBendingCommand {
                     }
                 }
 
-                if (type == SubbendingType.PLASMA && bender.hasElement(FireElement.get())) {
+                if ((type == SubbendingType.PLASMA || type == SubbendingType.COMBUSTION)
+                        && bender.hasElement(FireElement.get())) {
                     java.util.List<String> missing = FireMasteryCheck.missingRequirements(bender);
                     if (missing.isEmpty()) {
                         source.sendFailure(Component.literal(
@@ -299,6 +313,9 @@ public class MoreBendingCommand {
             }
             if (type == SubbendingType.PLASMA) {
                 PlasmaElement.autoUnlockRoot(bender);
+            }
+            if (type == SubbendingType.COMBUSTION) {
+                CombustionElement.autoUnlockRoot(bender);
             }
             syncAndPersist(bender, target);
             source.sendSuccess(() -> Component.literal(type.getDisplayName() + " concedida a " + playerName + "."), true);

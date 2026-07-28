@@ -25,7 +25,7 @@ public enum SubbendingType {
     LAVA("Lava", "Lava Bending"),
     ATMOSPHERE("Atmosphere", "Atmosphere Bending"),
     MIST("Mist", "Mist Bending"),
-    PLASMA("Plasma", "Plasma Bending");
+    PLASMA("Plasma", "Plasma Bending"),
     COMBUSTION("Combustion", "Combustion Bending");
 
     private final String id;

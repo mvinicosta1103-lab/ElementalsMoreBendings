@@ -67,8 +67,8 @@ public class CombustionBoltEntity extends AbstractElementalsEntity<Player> {
 
         this.move(MoverType.SELF, this.getDeltaMovement());
 
-        if (!this.level().isClientSide) {
-            this.level().sendParticles(ParticleTypes.SMALL_FLAME,
+        if (this.level() instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(ParticleTypes.SMALL_FLAME,
                     this.getX(), this.getY(), this.getZ(), 2, 0.03, 0.03, 0.03, 0.005);
         }
     }
@@ -131,7 +131,7 @@ public class CombustionBoltEntity extends AbstractElementalsEntity<Player> {
         if (!this.level().isClientSide) {
             return;
         }
-        this.level().playSound((Entity) this, this.getOnPos(), SoundEvents.GENERIC_EXPLODE,
+        this.level().playSound((Entity) this, this.getOnPos(), SoundEvents.GENERIC_EXPLODE.value(),
                 SoundSource.PLAYERS, 0.5f, 1.0f + (this.level().random.nextFloat() - this.level().random.nextFloat()) * 0.2f);
         for (int i = 0; i < 8; i++) {
             this.level().addParticle(ParticleTypes.LARGE_SMOKE,

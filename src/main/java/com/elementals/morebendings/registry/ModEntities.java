@@ -52,6 +52,15 @@ public class ModEntities {
                             .updateInterval(1)
                             .build("glass_shard"));
 
+    public static final Supplier<EntityType<CombustionBoltEntity>> COMBUSTION_BOLT =
+            ENTITY_TYPES.register("combustion_bolt",
+                    () -> EntityType.Builder.<CombustionBoltEntity>of(CombustionBoltEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .sized(0.35f, 0.35f)
+                            .clientTrackingRange(64)
+                            .updateInterval(1)
+                            .build("combustion_bolt"));
+
     /**
      * Entidade puramente visual da névoa de Heavy Fog (ver {@code
      * MistFogEntity}/{@code MistCloudState}) -- não voa, não colide, só
