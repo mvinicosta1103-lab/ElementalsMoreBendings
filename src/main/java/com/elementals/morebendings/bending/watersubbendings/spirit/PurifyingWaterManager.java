@@ -76,15 +76,6 @@ import java.util.UUID;
  * vivos "menores" que se dissolvem E como virando Snow Golem), o que é
  * contraditório; aqui ele SÓ vira Snow Golem, regra mais específica:
  *
- *  - Skeleton, Zombie bebê, Husk, Blaze -> DISSOLVEM: antes de sumir de
- *    verdade, passam por {@link #dissolveEffect} -- explosão crescente
- *    de partículas de alma/luz -- só então são removidos (sem drop).
- *  - Witch, Zombie Villager (bebê ou adulto), Pillager, Vindicator ->
- *    viram Villager normal (preservando idade).
- *  - Wither Skeleton -> vira Snow Golem.
- *  - Iron Golem com vida menor que o máximo -> curado por completo.
- *  - Qualquer outra criatura (ou Iron Golem já com vida cheia) -> a
- *    captura só expira, mob é solto sem efeito nenhum.
  */
 public final class PurifyingWaterManager {
 
