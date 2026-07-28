@@ -16,8 +16,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Bola de combustão teleguiada -- só nasce quando o bender tem o upgrade
- * "combustionGuidance" (ver {@link CombustionExplosionAbility#fire}).
  * Diferente do tiro instantâneo padrão (raycast na hora, sem entidade),
  * esta é um projétil de verdade que sai devagar e pode ser levemente
  * "puxado" na direção do que o dono está olhando durante os primeiros
