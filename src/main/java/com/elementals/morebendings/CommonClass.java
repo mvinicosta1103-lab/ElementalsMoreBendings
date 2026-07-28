@@ -9,6 +9,7 @@ import com.elementals.morebendings.bending.earthsubbendings.sand.SandElement;
 import com.elementals.morebendings.bending.airsubbendings.atmosphere.AtmosphereElement;
 import com.elementals.morebendings.bending.airsubbendings.gas.GasElement;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistElement;
+import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionElement;
 import com.elementals.morebendings.bending.firesubbendings.plasma.PlasmaElement;
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantElement;
 import com.elementals.morebendings.bending.watersubbendings.spirit.SpiritElement;
@@ -38,6 +39,7 @@ public class CommonClass {
 
         // FIRE SUBBENDINGS
         PlasmaElement.register();
+        CombustionElement.register();
 
         // Flying ainda usa o sistema antigo (PlayerSubbendingData) --
         // ainda não convertida pro mesmo padrão de Element real.

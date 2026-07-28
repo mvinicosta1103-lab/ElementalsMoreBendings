@@ -5,6 +5,7 @@ import com.elementals.morebendings.bending.earthsubbendings.bone.BoneSpikeEntity
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalShardEntity;
 import com.elementals.morebendings.bending.earthsubbendings.glass.GlassShardEntity;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntity;
+import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionBoltEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
