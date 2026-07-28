@@ -15,7 +15,10 @@
   "subbending.elementalsmorebendings.lava": "Lava Bending",
   "subbending.elementalsmorebendings.atmosphere": "Atmosphere Bending",
   "subbending.elementalsmorebendings.plasma": "Plasma Bending",
+  "subbending.elementalsmorebendings.combustion": "Combustion Bending",
   "ability.elementalsmorebendings.plasma_claws": "Plasma Claws",
+  "ability.elementalsmorebendings.combustion_explosion": "Combustion Blast",
+  "ability.elementalsmorebendings.combustion_vent": "Heat Vent",
   "ability.elementalsmorebendings.gas_suffocate": "Suffocate",
   "ability.elementalsmorebendings.plant_vine_whip": "Vine Whip",
   "ability.elementalsmorebendings.spirit_purifying_water": "Purifying Water",
@@ -177,6 +180,27 @@
   "upgrade.elementals.plasmaSuperheat.description": "Your claws unleash overwhelming heat: deals bonus damage, guarantees a strong, long-lasting burn, and scorches anyone standing near your target.",
 
   "upgrade.elementals.plasmaBlueFireSynergy.description": "If you've mastered Blue Fire, Plasma Claws deals even more damage and burns with blue flame instead of ordinary fire.",
+
+  "upgrade.elementals.combustionExplosion": "Combustion Blast",
+  "upgrade.elementals.combustionExplosion.description": "Focuses heat to a single point as you aim, then unleashes a concentrated explosion where you're looking. Releasing too early or holding the focus too long risks detonating the blast in your own face instead.",
+
+  "upgrade.elementals.combustionChargeI": "Faster Focus I",
+  "upgrade.elementals.combustionChargeI.description": "Reduces the minimum aim time and cooldown of Combustion Blast.",
+  "upgrade.elementals.combustionChargeII": "Faster Focus II",
+  "upgrade.elementals.combustionChargeII.description": "Reduces the minimum aim time and cooldown of Combustion Blast even further.",
+
+  "upgrade.elementals.combustionPowerI": "Greater Yield I",
+  "upgrade.elementals.combustionPowerI.description": "Increases the damage and blast radius of Combustion Blast.",
+  "upgrade.elementals.combustionPowerII": "Greater Yield II",
+  "upgrade.elementals.combustionPowerII.description": "Increases the damage and blast radius of Combustion Blast even further.",
+
+  "upgrade.elementals.combustionGuidance": "Guidance",
+  "upgrade.elementals.combustionGuidance.description": "Instead of an instant blast, launches a slow-moving bolt of condensed heat that gently corrects its course toward your aim for a short time after being fired.",
+
+  "upgrade.elementals.combustionVent": "Heat Vent",
+  "upgrade.elementals.combustionVent.description": "Releases a short burst of scalding heat around your body, damaging and pushing away anyone nearby while giving yourself a quick burst of mobility away from danger.",
+  "upgrade.elementals.combustionVent.use": "Use: %d",
+
   "upgrade.elementals.vineWhip": "Vine Whip",
   "upgrade.elementals.vineWhip.description": "Lashes a vine at whatever you're aiming at. Hooks a living target and yanks them to you with a damaging strike, or if it only catches terrain, yanks you to that spot instead like a grappling hook.",
   "upgrade.elementals.vineWhip.use": "Use: %d",

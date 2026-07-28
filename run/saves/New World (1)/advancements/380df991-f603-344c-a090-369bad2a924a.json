@@ -33,7 +33,9 @@
   },
   "minecraft:adventure/kill_all_mobs": {
     "criteria": {
-      "minecraft:husk": "2026-07-27 17:46:05 -0300"
+      "minecraft:skeleton": "2026-07-27 23:50:10 -0300",
+      "minecraft:husk": "2026-07-27 17:46:05 -0300",
+      "minecraft:evoker": "2026-07-27 23:39:00 -0300"
     },
     "done": false
   },
@@ -94,6 +96,48 @@
   "minecraft:recipes/transportation/dark_oak_boat": {
     "criteria": {
       "in_water": "2026-07-27 21:58:41 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/food/baked_potato_from_campfire_cooking": {
+    "criteria": {
+      "has_potato": "2026-07-28 00:03:36 -0300"
+    },
+    "done": true
+  },
+  "elementals:earthbending": {
+    "criteria": {
+      "element": "2026-07-27 23:56:53 -0300"
+    },
+    "done": true
+  },
+  "elementals:airbending": {
+    "criteria": {
+      "element": "2026-07-27 23:44:40 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/food/baked_potato_from_smoking": {
+    "criteria": {
+      "has_potato": "2026-07-28 00:03:36 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/food/baked_potato": {
+    "criteria": {
+      "has_potato": "2026-07-28 00:03:36 -0300"
+    },
+    "done": true
+  },
+  "elementals:firebending": {
+    "criteria": {
+      "element": "2026-07-27 23:33:45 -0300"
+    },
+    "done": true
+  },
+  "minecraft:adventure/voluntary_exile": {
+    "criteria": {
+      "voluntary_exile": "2026-07-27 23:43:00 -0300"
     },
     "done": true
   },
