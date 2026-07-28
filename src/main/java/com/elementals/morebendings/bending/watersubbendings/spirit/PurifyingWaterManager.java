@@ -1,9 +1,13 @@
 package com.elementals.morebendings.bending.watersubbendings.spirit;
 
+import dev.saperate.elementals.elements.water.WaterElement;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,6 +22,9 @@ import net.minecraft.world.entity.monster.Witch;
 import net.minecraft.world.entity.monster.WitherSkeleton;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.monster.ZombieVillager;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
@@ -32,36 +39,52 @@ import java.util.UUID;
  * criaturas de uma vez). Dirigido por {@link ServerTickEvent.Post},
  * registrado em {@link com.elementals.morebendings.ElementalsMoreBendingsMod}.
  *
- * Fluxo completo de uma captura:
+ * O QUE CONTA COMO "ÁGUA" (ver {@link #hasNaturalEnvironment}):
  *
- *  1. TRAVAR — assim que pega a vítima, ela é travada no lugar (posição
- *     fixa a cada tick + {@code setNoAi(true)} se for um {@link Mob}) e
- *     ganha Glowing. Ela literalmente "para" -- não anda, não ataca, não
- *     foge -- enquanto durar a captura.
+ *  - A vítima estar em água/bolha, ou sendo molhada por chuva.
+ *  - Um bloco de neve, gelo (todas as variantes -- inclusive Powder Snow
+ *    e os dois caldeirões), kelp, grama/folhagem alta ou baixa, cacto, ou
+ *    FOLHAS DE ÁRVORE em volta dela -- essa é a mesma lista que o mod
+ *    base ({@code WaterElement#isBlockBendable}, com
+ *    {@code canUseDiverseBlocks=true}) usa pras outras habilidades de
+ *    Water considerarem um bloco "bendável" fora d'água de verdade.
+ *  - FLORES (qualquer bloco na tag {@code minecraft:flowers}) -- não
+ *    entram na lista do mod base, então são checadas à parte aqui.
+ *
+ * Se nada disso for encontrado num raio pequeno ao redor da vítima
+ * ({@link #ENV_RADIUS}), a captura tenta um fallback: puxar 1 unidade de
+ * água reservada do CASTER via {@link WaterElement#tryRetrieveWater}
+ * (funciona com Water Pouch cheio OU um vidro de água comum -- mesmo
+ * método usado pelo resto do mod base) e conjurar uma poça temporária
+ * embaixo da vítima com {@link WaterElement#placeWater}. O bloco
+ * original é salvo e restaurado quando a captura acaba (sucesso ou
+ * cancelamento) -- ver {@link Catch#puddlePos}.
+ *
+ * Fluxo completo de uma captura, depois de aceita:
+ *
+ *  1. TRAVAR — a vítima é travada no lugar (posição fixa a cada tick +
+ *     {@code setNoAi(true)} se for um {@link Mob}) e ganha Glowing.
  *  2. SUBIDA D'ÁGUA -- a cada tick, uma coluna de partículas de bolha/água
  *     sobe do chão até o topo da hitbox, ficando mais densa e mais
- *     "brilhante" (mistura de bolha + faísca) conforme o tempo passa --
- *     ver {@link #risingWaterEffect}.
- *  3. RESOLUÇÃO -- se a vítima continuar na água até o fim de {@link
+ *     "brilhante" conforme o tempo passa -- ver {@link #risingWaterEffect}.
+ *  3. RESOLUÇÃO -- se o ambiente continuar válido até o fim de {@link
  *     #CATCH_DELAY_TICKS}, {@link #resolve} decide o que acontece; se
- *     sair da água antes, {@link #cancelCatch} solta ela sem efeito
- *     (restaura {@code noAi}).
+ *     deixar de ser válido antes (alguém quebrou a água/poça, por
+ *     exemplo), {@link #cancelCatch} solta a vítima sem efeito.
  *
  * REGRAS DE RESOLUÇÃO -- ela cita Wither Skeleton nos dois grupos (mortos-
  * vivos "menores" que se dissolvem E como virando Snow Golem), o que é
  * contraditório; aqui ele SÓ vira Snow Golem, regra mais específica:
  *
  *  - Skeleton, Zombie bebê, Husk, Blaze -> DISSOLVEM: antes de sumir de
- *    verdade, passam por {@link #dissolveEffect} -- uma explosão crescente
- *    de partículas de alma/luz em volta do corpo, dando a sensação de que
- *    o mob está se desfazendo -- só então é removido (sem drop/mensagem).
+ *    verdade, passam por {@link #dissolveEffect} -- explosão crescente
+ *    de partículas de alma/luz -- só então são removidos (sem drop).
  *  - Witch, Zombie Villager (bebê ou adulto), Pillager, Vindicator ->
- *    viram Villager normal (preservando idade, via {@link Mob#convertTo}).
+ *    viram Villager normal (preservando idade).
  *  - Wither Skeleton -> vira Snow Golem.
- *  - Iron Golem com vida menor que o máximo -> curado por completo (sem
- *    conversão).
+ *  - Iron Golem com vida menor que o máximo -> curado por completo.
  *  - Qualquer outra criatura (ou Iron Golem já com vida cheia) -> a
- *    captura só expira, mob é solto (noAi restaurado) sem efeito nenhum.
+ *    captura só expira, mob é solto sem efeito nenhum.
  */
 public final class PurifyingWaterManager {
 
@@ -71,21 +94,35 @@ public final class PurifyingWaterManager {
     /** Duração (em ticks) da animação de dissolução final, depois do CATCH_DELAY_TICKS. */
     private static final int DISSOLVE_TICKS = 16; // ~0.8s
 
+    /** Raio (em blocos, horizontal e vertical) checado ao redor da vítima por neve/gelo/folhagem/etc. */
+    private static final int ENV_RADIUS = 2;
+
     private static final Map<UUID, Catch> ACTIVE = new HashMap<>();
 
     private PurifyingWaterManager() {
     }
 
-    /** @return true se a vítima foi capturada agora (false se já estava capturada). */
-    static boolean tryCatch(ServerLevel level, LivingEntity victim) {
+    /** @return true se a vítima foi capturada agora (false se já estava capturada ou não havia água disponível). */
+    static boolean tryCatch(ServerLevel level, ServerPlayer caster, LivingEntity victim) {
         if (ACTIVE.containsKey(victim.getUUID())) {
             return false;
         }
+
         boolean hadAi = !(victim instanceof Mob mob) || !mob.isNoAi();
+        Catch c = new Catch(level, victim, hadAi);
+
+        if (!hasNaturalEnvironment(level, victim)) {
+            // Sem água/neve/folhagem natural por perto -- tenta puxar do caster.
+            if (!WaterElement.tryRetrieveWater(caster)) {
+                return false; // nenhuma fonte disponível -- não captura
+            }
+            conjurePuddle(level, victim.blockPosition(), c);
+        }
+
         if (victim instanceof Mob mob) {
             mob.setNoAi(true);
         }
-        ACTIVE.put(victim.getUUID(), new Catch(level, victim, hadAi));
+        ACTIVE.put(victim.getUUID(), c);
         return true;
     }
 
@@ -100,6 +137,7 @@ public final class PurifyingWaterManager {
             LivingEntity victim = c.victim;
 
             if (!victim.isAlive()) {
+                restorePuddle(c);
                 it.remove();
                 continue;
             }
@@ -107,14 +145,15 @@ public final class PurifyingWaterManager {
             if (c.dissolving) {
                 dissolveStep(c);
                 if (c.dissolveTicks <= 0) {
+                    restorePuddle(c);
                     victim.discard();
                     it.remove();
                 }
                 continue;
             }
 
-            if (!victim.isInWaterOrBubble()) {
-                // Saiu da água antes do tempo -- captura cancelada, sem efeito.
+            if (!isEnvironmentStillValid(c)) {
+                // Ambiente deixou de valer (água/poça sumiu) -- captura cancelada, sem efeito.
                 cancelCatch(c);
                 it.remove();
                 continue;
@@ -140,6 +179,74 @@ public final class PurifyingWaterManager {
         victim.setDeltaMovement(Vec3.ZERO);
         victim.fallDistance = 0;
         victim.hasImpulse = false;
+    }
+
+    /**
+     * @return true se a vítima está em água/chuva/bolha, ou se há neve, gelo,
+     * kelp, grama/folhagem, cacto ou folhas de árvore num raio pequeno ao
+     * redor dela -- mesma lista de blocos "bendáveis" do mod base, mais
+     * flores checadas à parte.
+     */
+    private static boolean hasNaturalEnvironment(ServerLevel level, LivingEntity victim) {
+        if (victim.isInWaterOrBubble() || victim.isInWaterRainOrBubble()) {
+            return true;
+        }
+
+        BlockPos base = victim.blockPosition();
+        int height = Math.max(1, (int) Math.ceil(victim.getBbHeight()));
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+
+        for (int x = -ENV_RADIUS; x <= ENV_RADIUS; x++) {
+            for (int z = -ENV_RADIUS; z <= ENV_RADIUS; z++) {
+                for (int y = -1; y <= height; y++) {
+                    mutable.set(base.getX() + x, base.getY() + y, base.getZ() + z);
+                    if (WaterElement.isBlockBendable(mutable, level, false, true)) {
+                        return true;
+                    }
+                    BlockState state = level.getBlockState(mutable);
+                    if (state.is(BlockTags.FLOWERS)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /** @return true se a captura ainda pode continuar -- ambiente natural OU poça conjurada ainda presente. */
+    private static boolean isEnvironmentStillValid(Catch c) {
+        if (hasNaturalEnvironment(c.level, c.victim)) {
+            return true;
+        }
+        return c.puddlePos != null && c.level.getFluidState(c.puddlePos).is(Fluids.WATER);
+    }
+
+    /**
+     * Conjura uma poça temporária na posição informada usando {@link
+     * WaterElement#placeWater}, salvando o bloco original em {@code c}
+     * pra restaurar depois. No Nether o mod base trata água como "sempre
+     * disponível" sem colocar bloco nenhum (ver {@link
+     * WaterElement#placeWater}), então nesse caso não há nada pra
+     * restaurar.
+     */
+    private static void conjurePuddle(ServerLevel level, BlockPos pos, Catch c) {
+        if (level.dimension().equals(Level.NETHER)) {
+            return;
+        }
+        BlockState saved = level.getBlockState(pos);
+        if (WaterElement.placeWater(pos, level)) {
+            c.puddlePos = pos.immutable();
+            c.savedPuddleState = saved;
+        }
+    }
+
+    /** Restaura o bloco original onde uma poça foi conjurada, se houver uma ativa. */
+    private static void restorePuddle(Catch c) {
+        if (c.puddlePos != null && c.savedPuddleState != null) {
+            c.level.setBlock(c.puddlePos, c.savedPuddleState, 3);
+            c.puddlePos = null;
+            c.savedPuddleState = null;
+        }
     }
 
     /** Coluna de bolhas subindo + brilho crescente ao redor da vítima. */
@@ -183,11 +290,12 @@ public final class PurifyingWaterManager {
         c.dissolveTicks--;
     }
 
-    /** Solta a vítima sem efeito -- restaura noAi. */
+    /** Solta a vítima sem efeito -- restaura noAi e a poça conjurada (se houver). */
     private static void cancelCatch(Catch c) {
         if (c.hadAi && c.victim instanceof Mob mob) {
             mob.setNoAi(false);
         }
+        restorePuddle(c);
     }
 
     /**
@@ -215,16 +323,16 @@ public final class PurifyingWaterManager {
         }
 
         if (mob instanceof WitherSkeleton) {
-            convertTo(level, mob, EntityType.SNOW_GOLEM, false);
+            convertTo(c, EntityType.SNOW_GOLEM, false);
             return false;
         }
         if (mob instanceof Witch || mob instanceof Pillager || mob instanceof Vindicator || mob instanceof ZombieVillager) {
-            convertTo(level, mob, EntityType.VILLAGER, true);
+            convertTo(c, EntityType.VILLAGER, true);
             return false;
         }
         if (mob instanceof Skeleton || mob instanceof Husk || mob instanceof Blaze
                 || (mob instanceof Zombie && mob.isBaby() && !(mob instanceof ZombieVillager))) {
-            // Inicia a dissolução -- o Catch continua ativo (mantém noAi) até discard().
+            // Inicia a dissolução -- o Catch continua ativo (mantém noAi/poça) até discard().
             c.dissolving = true;
             c.dissolveTicks = DISSOLVE_TICKS;
             return true;
@@ -236,9 +344,14 @@ public final class PurifyingWaterManager {
     }
 
     /** Converte preservando idade (bebê) quando o resultado também é um {@link AgeableMob}. */
-    private static void convertTo(ServerLevel level, Mob mob, EntityType<?> target, boolean preserveBaby) {
+    private static void convertTo(Catch c, EntityType<?> target, boolean preserveBaby) {
+        Mob mob = (Mob) c.victim;
+        ServerLevel level = c.level;
+
         boolean wasBaby = preserveBaby && mob.isBaby();
         mob.setNoAi(false); // restaura antes de converter, pro entity novo não nascer travado
+        restorePuddle(c);
+
         @SuppressWarnings("unchecked")
         Mob converted = mob.convertTo((EntityType<? extends Mob>) target, true);
         if (converted == null) {
@@ -259,6 +372,10 @@ public final class PurifyingWaterManager {
         int remainingTicks;
         boolean dissolving = false;
         int dissolveTicks = 0;
+
+        /** Não-nulo se uma poça temporária foi conjurada com água do caster (ver {@link #conjurePuddle}). */
+        BlockPos puddlePos;
+        BlockState savedPuddleState;
 
         Catch(ServerLevel level, LivingEntity victim, boolean hadAi) {
             this.level = level;
