@@ -73,6 +73,10 @@ public class PurifyingWaterAbility implements Ability {
             level.playSound(null, player.blockPosition(), SoundEvents.CONDUIT_ACTIVATE, SoundSource.PLAYERS, 0.8f, 1.2f);
         } else {
             level.playSound(null, player.blockPosition(), SoundEvents.WATER_AMBIENT, SoundSource.PLAYERS, 0.6f, 1.0f);
+            if (player instanceof net.minecraft.server.level.ServerPlayer sp) {
+                sp.displayClientMessage(
+                        net.minecraft.network.chat.Component.literal("Nenhuma criatura na água por perto."), true);
+            }
         }
 
         bender.setCurrAbility(null); // libera a trava -- ver MudSurgeAbility para explicação completa

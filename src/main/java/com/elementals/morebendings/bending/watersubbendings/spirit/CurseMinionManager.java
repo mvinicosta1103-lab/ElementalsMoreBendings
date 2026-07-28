@@ -3,8 +3,11 @@ package com.elementals.morebendings.bending.watersubbendings.spirit;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
@@ -18,21 +21,28 @@ import java.util.UUID;
  * Dono de todas as maldições de {@code curseMinion} ativas no servidor --
  * uma por vítima amaldiçoada (chaveada pelo UUID do {@link Mob}, não do
  * caster, já que vários casters podem amaldiçoar mobs diferentes ao mesmo
- * tempo). Mesmo esquema de {@code MudTrapManager} / {@code
- * PurifyingWaterManager}: dirigido por {@link ServerTickEvent.Post},
- * registrado em {@link com.elementals.morebendings.ElementalsMoreBendingsMod}.
+ * tempo). Dirigido por {@link ServerTickEvent.Post}, registrado em
+ * {@link com.elementals.morebendings.ElementalsMoreBendingsMod}.
  *
- * A cada {@link #RETARGET_INTERVAL_TICKS}, a vítima troca de alvo entre o
- * caster e qualquer outro mob/player vivo dentro de {@link #RETARGET_RADIUS}
- * blocos dela -- é isso que produz o "ataca você E os outros mobs/players
- * por perto" da descrição original, em vez de travar num único alvo pelo
- * resto da duração.
+ * COMPORTAMENTO: o mob amaldiçoado vira efetivamente um aliado do caster
+ * enquanto a maldição durar --
+ *
+ *  - Ao ser amaldiçoado, para imediatamente de atacar o caster (se já
+ *    estava fazendo isso) e passa a caçar outros mobs/players hostis por
+ *    perto, alternando de alvo entre eles periodicamente.
+ *  - O caster NUNCA é um alvo válido -- se a IA vanilla da criatura tentar
+ *    voltar a mirar nele (ex: um Zombie que tem goal própria de perseguir
+ *    o jogador mais perto), o Manager detecta e limpa o alvo em todo tick,
+ *    não só no intervalo de retarget.
+ *  - Se não houver ninguém por perto pra atacar, o alvo simplesmente fica
+ *    null (a criatura fica parada/neutra) até aparecer alguém ou a
+ *    maldição acabar.
  */
 public final class CurseMinionManager {
 
     static final int CURSE_DURATION_TICKS = 200; // 10s
     private static final int RETARGET_INTERVAL_TICKS = 30; // 1.5s
-    private static final double RETARGET_RADIUS = 10.0;
+    private static final double RETARGET_RADIUS = 12.0;
 
     private static final Map<UUID, Curse> ACTIVE = new HashMap<>();
 
@@ -40,9 +50,15 @@ public final class CurseMinionManager {
     }
 
     public static void curse(ServerLevel level, ServerPlayer caster, Mob victim) {
-        Curse curse = new Curse(level, caster.getUUID(), CURSE_DURATION_TICKS);
+        Curse curse = new Curse(level, caster.getUUID());
         ACTIVE.put(victim.getUUID(), curse);
-        victim.setTarget(caster); // primeiro alvo é sempre o caster
+
+        // Para de atacar o caster imediatamente, se já estava.
+        if (victim.getTarget() == caster) {
+            victim.setTarget(null);
+        }
+        // Já tenta escolher um alvo aliado-friendly (outro mob/player) na hora.
+        retarget(curse, victim, caster);
     }
 
     /** Registrado via NeoForge.EVENT_BUS.addListener em ElementalsMoreBendingsMod. */
@@ -61,43 +77,45 @@ public final class CurseMinionManager {
                 continue;
             }
 
+            ServerPlayer caster = curse.level.getServer().getPlayerList().getPlayer(curse.casterId);
+
             curse.remainingTicks--;
             if (curse.remainingTicks <= 0) {
                 it.remove();
-                continue;
+                continue; // maldição acaba -- IA vanilla volta ao normal sozinha
+            }
+
+            // Todo tick: se por acaso o alvo virou o caster de novo (goal vanilla
+            // reagindo a ele estar perto/atacando), limpa na hora.
+            if (caster != null && victim.getTarget() == caster) {
+                victim.setTarget(null);
             }
 
             curse.ticksUntilRetarget--;
-            if (curse.ticksUntilRetarget <= 0) {
+            if (curse.ticksUntilRetarget <= 0 || (victim.getTarget() == null || !victim.getTarget().isAlive())) {
                 curse.ticksUntilRetarget = RETARGET_INTERVAL_TICKS;
-                retarget(curse, victim);
+                retarget(curse, victim, caster);
             }
         }
     }
 
-    private static void retarget(Curse curse, Mob victim) {
-        ServerPlayer caster = curse.level.getServer().getPlayerList().getPlayer(curse.casterId);
-
+    /** Escolhe um novo alvo entre mobs/players próximos, excluindo sempre o caster. */
+    private static void retarget(Curse curse, Mob victim, ServerPlayer caster) {
         AABB area = new AABB(victim.position(), victim.position()).inflate(RETARGET_RADIUS);
         List<LivingEntity> nearby = curse.level.getEntitiesOfClass(LivingEntity.class, area,
-                entity -> entity != victim && entity.isAlive()
-                        && (entity instanceof net.minecraft.world.entity.player.Player || entity instanceof Mob));
+                entity -> entity != victim && entity != caster && entity.isAlive()
+                        && (entity instanceof Player || entity instanceof Mob));
 
-        LivingEntity newTarget;
         if (nearby.isEmpty()) {
-            newTarget = caster; // ninguém por perto -- volta a atacar o caster
-        } else {
-            int index = victim.getRandom().nextInt(nearby.size() + 1);
-            newTarget = index == nearby.size() ? caster : nearby.get(index);
-        }
-
-        if (newTarget == null || !newTarget.isAlive()) {
+            victim.setTarget(null); // ninguém por perto -- fica parado, sem atacar o caster
             return;
         }
 
+        LivingEntity newTarget = nearby.get(victim.getRandom().nextInt(nearby.size()));
         victim.setTarget(newTarget);
         curse.level.sendParticles(ParticleTypes.ANGRY_VILLAGER, victim.getX(), victim.getY() + victim.getBbHeight() * 0.8,
                 victim.getZ(), 4, 0.25, 0.2, 0.25, 0.0);
+        curse.level.playSound(null, victim.blockPosition(), SoundEvents.EVOKER_CAST_SPELL, SoundSource.HOSTILE, 0.4f, 1.6f);
     }
 
     private static Mob findMob(ServerLevel level, UUID id) {
@@ -107,13 +125,12 @@ public final class CurseMinionManager {
     private static final class Curse {
         final ServerLevel level;
         final UUID casterId;
-        int remainingTicks;
+        int remainingTicks = CURSE_DURATION_TICKS;
         int ticksUntilRetarget = RETARGET_INTERVAL_TICKS;
 
-        Curse(ServerLevel level, UUID casterId, int remainingTicks) {
+        Curse(ServerLevel level, UUID casterId) {
             this.level = level;
             this.casterId = casterId;
-            this.remainingTicks = remainingTicks;
         }
     }
 }
