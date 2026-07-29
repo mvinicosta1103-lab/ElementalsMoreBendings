@@ -268,6 +268,16 @@ public class MoreBendingCommand {
                 source.sendFailure(Component.literal(playerName + " já tinha " + type.getDisplayName() + "."));
                 return 0;
             }
+            if (type == SubbendingType.BONE) {
+                // Concessão via comando sobrepõe o evento histórico de "já ter
+                // cruzado com um Blood bender" -- marca a flag como satisfeita
+                // ANTES da checagem de elegibilidade logo abaixo, então
+                // BoneElement.canAcquire nunca falha por causa dele (o
+                // BloodProximityTracker não precisa ter detectado nada de
+                // verdade). Continua exigindo Earth normalmente -- só esse
+                // pré-requisito específico é dispensado pelo comando.
+                target.getData(ModAttachments.SUBBENDINGS).setMetBloodBender(true);
+            }
             boolean eligible = switch (type) {
                 case MUD -> MudElement.canAcquire(bender);
                 case CRYSTAL -> CrystalElement.canAcquire(bender);
