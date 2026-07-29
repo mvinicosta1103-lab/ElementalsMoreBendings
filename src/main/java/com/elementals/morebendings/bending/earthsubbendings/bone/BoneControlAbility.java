@@ -52,9 +52,6 @@ import net.minecraft.world.phys.Vec3;
  * parece um empurrão constante em vez de controle de verdade; é
  * restaurada junto com a IA em {@link #release}.
  *
- * {@link #onTick} usa um controlador PROPORCIONAL, não velocidade fixa:
- * fecha uma fração ({@link #CATCH_UP_FACTOR}) da distância que falta até
- * o ponto mirado a cada tick (capado em {@link #MAX_HOLD_SPEED}), então
  * a vítima gruda rápido na mira e depois fica praticamente parada ali
  * (a correção necessária cai a quase zero perto do alvo) -- em vez de
  * ficar sempre "perseguindo" a mira a uma velocidade fixa, que nunca
