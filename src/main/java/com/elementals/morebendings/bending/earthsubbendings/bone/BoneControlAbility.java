@@ -46,7 +46,19 @@ import net.minecraft.world.phys.Vec3;
  * controle -- restaurada assim que solta (arremessada, cancelada, ou o
  * caster desconecta/a ability é removida). {@link Player}s não têm IA
  * pra desligar; o controle domina sozinho porque sobrescreve a
- * velocidade deles todo tick.
+ * velocidade deles todo tick. A gravidade da vítima também é desligada
+ * ({@code setNoGravity(true)}) enquanto segura -- SEM isso ela fica
+ * caindo e sendo puxada de volta pro ponto mirado todo tick, o que
+ * parece um empurrão constante em vez de controle de verdade; é
+ * restaurada junto com a IA em {@link #release}.
+ *
+ * {@link #onTick} usa um controlador PROPORCIONAL, não velocidade fixa:
+ * fecha uma fração ({@link #CATCH_UP_FACTOR}) da distância que falta até
+ * o ponto mirado a cada tick (capado em {@link #MAX_HOLD_SPEED}), então
+ * a vítima gruda rápido na mira e depois fica praticamente parada ali
+ * (a correção necessária cai a quase zero perto do alvo) -- em vez de
+ * ficar sempre "perseguindo" a mira a uma velocidade fixa, que nunca
+ * gruda de verdade e também parece um empurrão constante.
  */
 public class BoneControlAbility implements Ability {
 
