@@ -16,7 +16,9 @@ import com.elementals.morebendings.bending.firesubbendings.combustion.Combustion
 import com.elementals.morebendings.bending.firesubbendings.plasma.PlasmaElement;
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantElement;
 import com.elementals.morebendings.bending.watersubbendings.spirit.SpiritElement;
+import com.elementals.morebendings.bending.airsubbendings.sound.SoundElement;
 import com.elementals.morebendings.registry.ModAbilities;
+
 
 public class CommonClass {
 

@@ -24,6 +24,8 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import com.elementals.morebendings.bending.airsubbendings.sound.EchoSenseManager;
+import com.elementals.morebendings.bending.airsubbendings.sound.SilenceFieldManager;
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantVineWallManager;
 import com.elementals.morebendings.bending.watersubbendings.spirit.CurseMinionManager;
 import com.elementals.morebendings.bending.watersubbendings.spirit.PurifyingWaterManager;
