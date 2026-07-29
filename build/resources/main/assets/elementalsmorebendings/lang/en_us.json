@@ -47,6 +47,8 @@
   "ability.elementalsmorebendings.lava_pool": "Lava Pool",
   "ability.elementalsmorebendings.pressure_point": "Pressure Point",
   "ability.elementalsmorebendings.atmospheric_dome": "Atmospheric Dome",
+  "ability.elementalsmorebendings.pressure_slam": "Pressure Slam",
+  "ability.elementalsmorebendings.updraft": "Updraft",
 
   "subbending.elementalsmorebendings.glass.icon": "symbol/glass",
   "subbending.elementalsmorebendings.mud.icon": "symbol/mud",
@@ -100,9 +102,53 @@
   "upgrade.elementals.atmospherePressurePoint.description": "Crushes the ground around the point you're standing on. Anyone caught inside is forced to crawl, and starts taking damage if they linger too long.",
   "upgrade.elementals.atmospherePressurePoint.use": "Use: %d",
 
+  "upgrade.elementals.pressureRadiusI": "Wider Field I",
+  "upgrade.elementals.pressureRadiusI.description": "Increases the radius of Pressure Point by 0.75 blocks.",
+  "upgrade.elementals.pressureRadiusII": "Wider Field II",
+  "upgrade.elementals.pressureRadiusII.description": "Increases the radius of Pressure Point by another 0.75 blocks.",
+
+  "upgrade.elementals.pressureDurationI": "Sustained Field I",
+  "upgrade.elementals.pressureDurationI.description": "Increases the duration of Pressure Point by 3 seconds.",
+  "upgrade.elementals.pressureDurationII": "Sustained Field II",
+  "upgrade.elementals.pressureDurationII.description": "Increases the duration of Pressure Point by another 3 seconds.",
+
   "upgrade.elementals.atmosphericDome": "Atmospheric Dome",
   "upgrade.elementals.atmosphericDome.description": "Surrounds you with a dome of compressed air. Deflects projectiles back at their source, pushes away anything nearby, and shatters light obstructions like leaves and webs. Hold crouch to maintain it.",
   "upgrade.elementals.atmosphericDome.use": "Use: %d",
+
+  "upgrade.elementals.domeRadiusI": "Wider Dome I",
+  "upgrade.elementals.domeRadiusI.description": "Increases the radius of Atmospheric Dome by 0.5 blocks.",
+  "upgrade.elementals.domeRadiusII": "Wider Dome II",
+  "upgrade.elementals.domeRadiusII.description": "Increases the radius of Atmospheric Dome by another 0.5 blocks.",
+
+  "upgrade.elementals.domeEfficiencyI": "Efficient Dome I",
+  "upgrade.elementals.domeEfficiencyI.description": "Reduces the chi cost per tick of maintaining Atmospheric Dome, letting you hold it longer.",
+  "upgrade.elementals.domeEfficiencyII": "Efficient Dome II",
+  "upgrade.elementals.domeEfficiencyII.description": "Reduces the chi cost per tick of maintaining Atmospheric Dome even further.",
+
+  "upgrade.elementals.pressureSlam": "Pressure Slam",
+  "upgrade.elementals.pressureSlam.description": "Condenses the air in front of you into a focused strike, slamming a single target with concentrated pressure -- dealing damage, driving them into the ground, and leaving them briefly Weakened.",
+  "upgrade.elementals.pressureSlam.use": "Use: %d",
+
+  "upgrade.elementals.pressureSlamDamageI": "Crushing Force I",
+  "upgrade.elementals.pressureSlamDamageI.description": "Increases the damage of Pressure Slam by 1.5.",
+  "upgrade.elementals.pressureSlamDamageII": "Crushing Force II",
+  "upgrade.elementals.pressureSlamDamageII.description": "Increases the damage of Pressure Slam by another 1.5.",
+
+  "upgrade.elementals.pressureSlamCooldownI": "Rapid Slam I",
+  "upgrade.elementals.pressureSlamCooldownI.description": "Reduces the cooldown of Pressure Slam by 1 second.",
+
+  "upgrade.elementals.updraft": "Updraft",
+  "upgrade.elementals.updraft.description": "Summons a column of low pressure beneath you, launching you upward and granting brief Slow Falling so you can come back down safely.",
+  "upgrade.elementals.updraft.use": "Use: %d",
+
+  "upgrade.elementals.updraftHeightI": "Stronger Updraft I",
+  "upgrade.elementals.updraftHeightI.description": "Increases the upward velocity of Updraft.",
+  "upgrade.elementals.updraftHeightII": "Stronger Updraft II",
+  "upgrade.elementals.updraftHeightII.description": "Increases the upward velocity of Updraft even further.",
+
+  "upgrade.elementals.updraftCooldownI": "Rapid Updraft I",
+  "upgrade.elementals.updraftCooldownI.description": "Reduces the cooldown of Updraft by 1.5 seconds.",
 
   "upgrade.elementals.gasCloud": "Gas Cloud",
   "upgrade.elementals.gasCloud.description": "Release a cloud of gas around you, dazing and slowing every living thing caught inside.",
