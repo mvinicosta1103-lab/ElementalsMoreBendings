@@ -22,27 +22,26 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * "totalZero" — primeira habilidade raiz da árvore de Temperature (ver
- * {@link TemperatureElement}). Instantânea, igual {@code
- * GasCloudAbility}: OBRIGATÓRIO liberar {@code currAbility} no final.
+ * "scorchingWave" — segunda habilidade raiz da árvore de Temperature (ver
+ * {@link TemperatureElement}). Instantânea, igual {@code TotalZeroAbility},
+ * só que o lado oposto: calor extremo em vez de frio absoluto.
  *
- * O jogador solta uma rajada de frio absoluto ao redor de si. Toda
- * criatura viva (exceto o caster) dentro do raio:
- *  - recebe dano de congelamento ({@code damageSources().freeze()});
- *  - fica com Lentidão pesada por alguns segundos;
- *  - tem o fogo apagado;
- *  - é marcada com {@code setTicksFrozen} perto do máximo, pro efeito
- *    visual de "cristais de gelo na tela" que o jogo já usa pra powder
- *    snow, mesmo sem estar de fato dentro de powder snow.
+ * Toda criatura viva (exceto o caster) dentro do raio:
+ *  - recebe dano de fogo ({@code damageSources().onFire()});
+ *  - pega fogo por alguns segundos (igniteForSeconds);
+ *  - tem qualquer congelamento acumulado zerado (ticksFrozen = 0) --
+ *    contrário direto do totalZero.
  *
- * Além disso, blocos de água (fonte) dentro do raio viram gelo -- efeito
- * colateral do frio se espalhando pelo chão.
+ * O próprio caster ganha Resistência a Fogo por um tempo curto (não faz
+ * sentido incendiar coisas ao redor e pegar fogo também), e blocos de
+ * gelo/neve dentro do raio derretem de volta em água/ar.
  */
-public class TotalZeroAbility implements Ability {
+public class ScorchingWaveAbility implements Ability {
 
     private static final double RADIUS = 5.0;
     private static final float DAMAGE = 4.0f;
-    private static final int SLOW_DURATION_TICKS = 70; // 3.5s
+    private static final float IGNITE_SECONDS = 5.0f;
+    private static final int FIRE_RESISTANCE_DURATION_TICKS = 100; // 5s
     private static final int BASE_COOLDOWN_TICKS = 120; // 6s
     private static final float CAST_CHI_COST = 4.0f;
 
@@ -69,48 +68,47 @@ public class TotalZeroAbility implements Ability {
         }
         lastUse.put(caster.getUUID(), now);
 
-        level.sendParticles(ParticleTypes.SNOWFLAKE,
+        level.sendParticles(ParticleTypes.FLAME,
                 caster.getX(), caster.getY() + 1.0, caster.getZ(),
                 40, RADIUS * 0.5, 0.6, RADIUS * 0.5, 0.02);
-        level.sendParticles(ParticleTypes.ITEM_SNOWBALL,
+        level.sendParticles(ParticleTypes.LAVA,
                 caster.getX(), caster.getY() + 0.2, caster.getZ(),
-                20, RADIUS * 0.4, 0.1, RADIUS * 0.4, 0.01);
-        level.playSound(null, caster.blockPosition(), SoundEvents.POWDER_SNOW_BREAK,
-                SoundSource.PLAYERS, 1.0f, 0.7f);
+                10, RADIUS * 0.4, 0.1, RADIUS * 0.4, 0.0);
+        level.playSound(null, caster.blockPosition(), SoundEvents.GENERIC_BURN,
+                SoundSource.PLAYERS, 1.0f, 0.9f);
 
-        DamageSource freeze = level.damageSources().freeze();
+        DamageSource fireDamage = level.damageSources().onFire();
 
         AABB area = caster.getBoundingBox().inflate(RADIUS);
         for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, area,
                 entity -> entity != caster && entity.isAlive())) {
 
-            target.hurt(freeze, DAMAGE);
-            target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, SLOW_DURATION_TICKS, 3));
-            target.setTicksFrozen(Math.max(target.getTicksFrozen(), target.getTicksRequiredToFreeze() - 20));
-
-            if (target.isOnFire()) {
-                target.clearFire();
-            }
-        }
-        if (caster.isOnFire()) {
-            caster.clearFire();
+            target.hurt(fireDamage, DAMAGE);
+            target.igniteForSeconds(IGNITE_SECONDS);
+            target.setTicksFrozen(0);
         }
 
-        freezeNearbyWater(level, caster.blockPosition());
+        caster.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, FIRE_RESISTANCE_DURATION_TICKS, 0));
+
+        meltNearbyIceAndSnow(level, caster.blockPosition());
 
         bender.setCurrAbility(null); // instantânea -- não canaliza
     }
 
-    /** Congela água (fonte) dentro do raio, virando gelo comum. */
-    private void freezeNearbyWater(ServerLevel level, BlockPos center) {
+    /** Derrete gelo/neve dentro do raio de volta em água/ar, oposto do totalZero. */
+    private void meltNearbyIceAndSnow(ServerLevel level, BlockPos center) {
         int r = (int) Math.ceil(RADIUS);
         for (BlockPos pos : BlockPos.betweenClosed(center.offset(-r, -1, -r), center.offset(r, 1, r))) {
             if (pos.distSqr(center) > RADIUS * RADIUS) {
                 continue;
             }
             BlockState state = level.getBlockState(pos);
-            if (state.is(Blocks.WATER) && state.getFluidState().isSource()) {
-                level.setBlockAndUpdate(pos, Blocks.ICE.defaultBlockState());
+            if (state.is(Blocks.ICE) || state.is(Blocks.FROSTED_ICE)) {
+                level.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
+            } else if (state.is(Blocks.SNOW)) {
+                level.removeBlock(pos, false);
+            } else if (state.is(Blocks.SNOW_BLOCK)) {
+                level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
             }
         }
     }

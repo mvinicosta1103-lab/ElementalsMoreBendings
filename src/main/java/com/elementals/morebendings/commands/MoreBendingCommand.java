@@ -37,6 +37,7 @@ import net.minecraft.server.level.ServerPlayer;
 import com.elementals.morebendings.bending.airsubbendings.gas.GasElement;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistElement;
 import com.elementals.morebendings.bending.airsubbendings.sound.SoundElement;
+import com.elementals.morebendings.bending.airsubbendings.temperature.TemperatureElement;
 import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionElement;
 import com.elementals.morebendings.bending.firesubbendings.plasma.PlasmaElement;
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantElement;
@@ -49,12 +50,12 @@ import com.elementals.morebendings.bending.watersubbendings.spirit.SpiritElement
  *
  * Requer permissão de operador (nível 2), igual aos comandos vanilla de
  * /gamemode e /xp. <subbending> aceita: gas, plant, spirit, mud, crystal, bone, sand,
- * glass, petrification, lava, atmosphere, mist, sound, plasma (com autocomplete no jogo).
+ * glass, petrification, lava, atmosphere, mist, sound, temperature, plasma (com autocomplete no jogo).
  */
 public class MoreBendingCommand {
 
     private static final SimpleCommandExceptionType UNKNOWN_SUBBENDING = new SimpleCommandExceptionType(
-            Component.literal("Sub-bending desconhecida. Use: Gas, Flying, Plant, Spirit, Mud, Crystal, Bone, Sand, Glass, Petrification, Lava, Atmosphere, Mist, Sound, Plasma ou Combustion."));
+            Component.literal("Sub-bending desconhecida. Use: Gas, Flying, Plant, Spirit, Mud, Crystal, Bone, Sand, Glass, Petrification, Lava, Atmosphere, Mist, Sound, Temperature, Plasma ou Combustion."));
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("morebending")
@@ -79,7 +80,7 @@ public class MoreBendingCommand {
     private static String eligibilityMessage(SubbendingType type) {
         return switch (type) {
             case MUD, CRYSTAL, SAND, PETRIFICATION, LAVA -> "precisa ter Earth e ter masterizado a árvore de Earth inteira";
-            case ATMOSPHERE, GAS, MIST, SOUND -> "precisa ter Air e ter masterizado a árvore de Air inteira";
+            case ATMOSPHERE, GAS, MIST, SOUND, TEMPERATURE -> "precisa ter Air e ter masterizado a árvore de Air inteira";
             case PLANT, SPIRIT -> "precisa ter Water e ter masterizado a árvore de Water inteira";
             case PLASMA, COMBUSTION -> "precisa ter Fire e ter masterizado a árvore de Fire inteira";
             case BONE -> "precisa ter Earth e já ter estado a até "
@@ -155,7 +156,7 @@ public class MoreBendingCommand {
                 || type == SubbendingType.GAS || type == SubbendingType.MIST
                 || type == SubbendingType.PLASMA || type == SubbendingType.COMBUSTION
                 || type == SubbendingType.PLANT || type == SubbendingType.SPIRIT
-                || type == SubbendingType.SOUND) {
+                || type == SubbendingType.SOUND || type == SubbendingType.TEMPERATURE) {
             return runRealElement(ctx.getSource(), target, type, grant);
         }
 
@@ -208,6 +209,7 @@ public class MoreBendingCommand {
             case PLANT -> PlantElement.get();
             case SPIRIT -> SpiritElement.get();
             case SOUND -> SoundElement.get();
+            case TEMPERATURE -> TemperatureElement.get();
             default -> throw new IllegalArgumentException("Sub-bending sem Element real: " + type);
         };
         String playerName = target.getName().getString();
@@ -269,6 +271,7 @@ public class MoreBendingCommand {
                 case PLANT -> PlantElement.canAcquire(bender);
                 case SPIRIT -> SpiritElement.canAcquire(bender);
                 case SOUND -> SoundElement.canAcquire(bender);
+                case TEMPERATURE -> TemperatureElement.canAcquire(bender);
                 default -> false;
             };
             if (!eligible) {
@@ -276,7 +279,7 @@ public class MoreBendingCommand {
                         + " antes de poder receber " + type.getDisplayName() + "."));
 
                 if ((type == SubbendingType.GAS || type == SubbendingType.ATMOSPHERE || type == SubbendingType.MIST
-                        || type == SubbendingType.SOUND)
+                        || type == SubbendingType.SOUND || type == SubbendingType.TEMPERATURE)
                         && bender.hasElement(AirElement.get())) {
                     java.util.List<String> missing = AirMasteryCheck.missingRequirements(bender);
                     if (missing.isEmpty()) {
