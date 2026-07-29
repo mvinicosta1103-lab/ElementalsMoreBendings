@@ -69,6 +69,14 @@ public class BoneElement extends Element {
      * @return true se o jogador já tem Earth E já foi detectado, em algum
      * momento, a até {@link #BLOOD_PROXIMITY_RANGE} blocos de um Blood
      * bender (ver {@link PlayerSubbendingData#hasMetBloodBender}).
+     *
+     * EXCEÇÃO -- concessão via {@code /morebending grant ... bone}: o
+     * comando marca {@link PlayerSubbendingData#setMetBloodBender} como
+     * {@code true} logo antes de chamar este método (ver {@code
+     * MoreBendingCommand.runRealElement}), então o evento de proximidade
+     * em si não precisa ter acontecido de verdade -- o comando já é a
+     * autorização que o substitui. O requisito de já ter Earth continua
+     * valendo normalmente mesmo nesse caminho.
      */
     public static boolean canAcquire(Bender bender) {
         if (!(bender.player instanceof ServerPlayer serverPlayer)) {
