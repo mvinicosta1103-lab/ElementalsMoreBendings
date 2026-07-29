@@ -2,6 +2,7 @@ package com.elementals.morebendings.bending.airsubbendings.common;
 
 import com.elementals.morebendings.bending.airsubbendings.gas.GasElement;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistElement;
+import com.elementals.morebendings.bending.earthsubbendings.bone.BoneElement;
 import commonnetwork.api.Network;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.data.PlayerData;
@@ -29,8 +30,8 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
  * ou cujo save tenha sido restaurado/migrado sem o nó raiz junto.
  * <p>
  * Esta classe remove essa dependência: a cada login, se o jogador já é
- * Gas ou Mist bender mas o nó raiz correspondente não está marcado como
- * comprado, a gente corrige e sincroniza na hora -- sem precisar de
+ * Gas, Mist ou Bone bender mas o nó raiz correspondente não está marcado
+ * como comprado, a gente corrige e sincroniza na hora -- sem precisar de
  * intervenção manual nenhuma.
  */
 public final class CloudRootHealer {
@@ -52,6 +53,10 @@ public final class CloudRootHealer {
         }
         if (MistElement.isMistBender(bender) && !isRootUnlocked(bender, MistElement.get().root.children[0])) {
             MistElement.autoUnlockRoot(bender);
+            changed = true;
+        }
+        if (BoneElement.isBoneBender(bender) && !isRootUnlocked(bender, BoneElement.get().root.children[0])) {
+            BoneElement.autoUnlockRoot(bender);
             changed = true;
         }
 

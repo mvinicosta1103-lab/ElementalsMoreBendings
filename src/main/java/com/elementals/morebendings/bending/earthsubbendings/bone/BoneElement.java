@@ -25,10 +25,21 @@ import net.minecraft.server.level.ServerPlayer;
  *     PlayerSubbendingData#setMetBloodBender} assim que acontece (e {@link
  *     com.elementals.morebendings.commands.MoreBendingCommand}, que é quem
  *     de fato checa essa regra na hora de conceder via comando).
+ *
+ * Duas habilidades raiz, ambas grátis (preço 0):
+ *  - boneControl: conjura e guia uma farpa de osso telecineticamente antes
+ *    de arremessar. Ver {@link BoneControlAbility}.
+ *  - bonePuppeteer: controle de verdade -- mira uma criatura; se for um
+ *    morto-vivo de verdade, vira um fantoche literal por um tempo; se for
+ *    um player ou outra criatura viva, trava os ossos dela num debuff
+ *    pesado. Ver {@link BonePuppeteerAbility}.
  */
 public class BoneElement extends Element {
 
     public static final String NAME = "Bone";
+
+    public static final String BONE_CONTROL = "boneControl";
+    public static final String BONE_PUPPETEER = "bonePuppeteer";
 
     /** Distância (em blocos) que conta como "perto" de um Blood bender pra
      * fins do pré-requisito de aquisição. Ver {@link BloodProximityTracker}. */
@@ -36,9 +47,11 @@ public class BoneElement extends Element {
 
     public BoneElement() {
         super(NAME, new Upgrade[]{
-                new Upgrade("boneControl", 0) // grátis -- ver BoneControlAbility
+                new Upgrade(BONE_CONTROL, 0),   // grátis -- ver BoneControlAbility
+                new Upgrade(BONE_PUPPETEER, 0)  // grátis -- ver BonePuppeteerAbility
         });
         addAbility(new BoneControlAbility(), 0);
+        addAbility(new BonePuppeteerAbility(), 1);
     }
 
     /** Registra a instância única no mod base. Chame uma vez, no load do mod. */
@@ -73,8 +86,25 @@ public class BoneElement extends Element {
         return bender.hasElement(get());
     }
 
+    /**
+     * Marca os dois nós raiz ("boneControl" e "bonePuppeteer", ambos preço
+     * 0) como já comprados. Chame logo depois de {@code
+     * bender.addElement(BoneElement.get(), true)} no momento da concessão
+     * (ver MoreBendingCommand) -- SEM isso, a skill tree do Bone fica
+     * travada pra sempre, mesmo com o jogador elegível e com o elemento
+     * concedido. Mesmo bug/mesma correção do {@code
+     * GasElement.autoUnlockRoot} -- ver o javadoc completo lá pro motivo.
+     */
+    public static void autoUnlockRoot(Bender bender) {
+        for (Upgrade rootChild : get().root.children) {
+            bender.getData().upgrades.put(rootChild, true);
+        }
+    }
+
     @Override
     public boolean isSkillTreeComplete(Bender bender) {
-        return bender.hasElement(this) && bender.getData().canUseUpgrade("boneControl");
+        return bender.hasElement(this)
+                && bender.getData().canUseUpgrade(BONE_CONTROL)
+                && bender.getData().canUseUpgrade(BONE_PUPPETEER);
     }
 }

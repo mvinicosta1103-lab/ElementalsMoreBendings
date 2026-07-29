@@ -72,7 +72,7 @@ public class ElementalsMoreBendingsMod {
 
         NeoForge.EVENT_BUS.addListener(PressureZoneManager::onServerTick);
 
-        // Corrige sozinho, a cada login, qualquer Gas/Mist bender cujo nó
+        // Corrige sozinho, a cada login, qualquer Gas/Mist/Bone bender cujo nó
         // raiz (gasCloud/mistCloud) não esteja marcado como comprado --
         // sem isso a árvore de upgrades fica travada pra sempre (ver
         // CloudRootHealer). Substitui a necessidade de rodar

@@ -117,10 +117,11 @@ public class MoreBendingCommand {
             case ATMOSPHERE -> AtmosphereElement.get();
             case PLASMA -> PlasmaElement.get();
             case COMBUSTION -> CombustionElement.get();
+            case BONE -> BoneElement.get();
             default -> null;
         };
         if (element == null) {
-            source.sendFailure(Component.literal("Debug só implementado pra Gas/Mist/Mud/Crystal/Atmosphere/Plasma/Combustion por enquanto."));
+            source.sendFailure(Component.literal("Debug só implementado pra Gas/Mist/Mud/Crystal/Atmosphere/Plasma/Combustion/Bone por enquanto."));
             return 0;
         }
 
@@ -255,6 +256,15 @@ public class MoreBendingCommand {
                             "Sua árvore de Combustion Bending foi reparada -- tente comprar os upgrades de novo."));
                     return 1;
                 }
+                if (type == SubbendingType.BONE) {
+                    BoneElement.autoUnlockRoot(bender);
+                    syncAndPersist(bender, target);
+                    source.sendSuccess(() -> Component.literal(
+                            "boneControl (nó raiz) sincronizado e persistido pra " + playerName + "."), true);
+                    target.sendSystemMessage(Component.literal(
+                            "Sua árvore de Bone Bending foi reparada -- tente comprar os upgrades de novo."));
+                    return 1;
+                }
                 source.sendFailure(Component.literal(playerName + " já tinha " + type.getDisplayName() + "."));
                 return 0;
             }
@@ -329,6 +339,9 @@ public class MoreBendingCommand {
             }
             if (type == SubbendingType.COMBUSTION) {
                 CombustionElement.autoUnlockRoot(bender);
+            }
+            if (type == SubbendingType.BONE) {
+                BoneElement.autoUnlockRoot(bender);
             }
             syncAndPersist(bender, target);
             source.sendSuccess(() -> Component.literal(type.getDisplayName() + " concedida a " + playerName + "."), true);
