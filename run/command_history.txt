@@ -1,6 +1,4 @@
 /morebending grant Dev Gas
-/morebending debug Dev Gas
-/morebending grant Dev Gas
 /bending element add Gas Dev
 /morebending grant Dev Gas
 /morebending debug Dev Gas
@@ -48,3 +46,5 @@
 /bending element add Sound Dev
 /morebending grant Dev Temperature
 /bending element add Temperature Dev
+/morebending grant Dev Void
+/bending element add Void Dev

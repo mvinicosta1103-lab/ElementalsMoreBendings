@@ -28,7 +28,8 @@ public enum SubbendingType {
     PLASMA("Plasma", "Plasma Bending"),
     COMBUSTION("Combustion", "Combustion Bending"),
     SOUND("Sound", "Sound Bending"),
-    TEMPERATURE("Temperature", "Temperature Bending");
+    TEMPERATURE("Temperature", "Temperature Bending"),
+    VOID("Void", "Void Bending");
 
     private final String id;
     private final String displayName;
