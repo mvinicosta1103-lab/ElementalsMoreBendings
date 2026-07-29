@@ -2,70 +2,103 @@ package com.elementals.morebendings.bending.earthsubbendings.bone;
 
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
+import dev.saperate.elementals.utils.SapsUtils;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.HitResult;
-import org.joml.Vector3f;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 
 /**
- * "boneControl" -- única habilidade de {@link BoneElement}. Conjura uma
- * {@link BoneSpikeEntity} flutuando à frente do jogador e deixa ele guiar
- * livremente pra cima/baixo e pros lados (seguindo a mira, igual
- * {@code AbilityBloodControl} do mod base faz com a vítima) e pra
- * perto/longe (roda do mouse, também copiado do Blood Control) antes de
- * arremessar.
+ * "boneControl" -- primeira habilidade raiz de {@link BoneElement}.
+ *
+ * REDESENHADA como um "pickup" telecinético de verdade -- mesma ideia de
+ * {@code AbilityBloodControl} do mod base (mover a própria VÍTIMA pelo ar
+ * seguindo a mira do caster, com scroll pra distância), só que puxando
+ * pelo esqueleto em vez de pelo sangue. Por isso funciona em QUALQUER
+ * criatura viva (Mob ou {@link Player}) -- ao contrário de {@code
+ * bonePuppeteer} (ver {@link BonePuppeteerAbility}), que só consegue
+ * controle de movimento de verdade em mortos-vivos.
  *
  * Fluxo:
- *  1. {@link #onCall} -- tecla solta: conjura a farpa e trava a ability
- *     como {@code currAbility} (fica "canalizada", não solta na hora).
- *  2. {@link #onTick} -- todo tick, empurra a farpa em direção ao ponto que
- *     o jogador está mirando, à distância atual (ver {@link #onMiddleClick}
- *     pra mudar a distância). É a mira do jogador (olhar pra cima/baixo,
- *     pros lados) que move a farpa nos 3 eixos -- não precisamos ler
- *     tecla de movimento nenhuma, o mesmo truque que Blood Control usa.
- *  3. {@link #onLeftClick} -- arremessa a farpa na direção mirada, com dano.
- *  4. {@link #onRightClick} -- cancela e desfaz a farpa sem arremessar.
+ *  1. {@link #onCall} -- tecla solta: raycast numa criatura viva ao
+ *     alcance; "agarra" ela a {@link #DEFAULT_DISTANCE} do jogador e
+ *     trava a ability como {@code currAbility} (canalizada, igual
+ *     {@code BoneControlAbility} original fazia com a farpa).
+ *  2. {@link #onTick} -- todo tick, calcula o ponto que o jogador está
+ *     mirando (posição do olho + direção do olhar * distância) e puxa a
+ *     vítima na direção dele -- é a mira do jogador (olhar pra cima/
+ *     baixo, pros lados) que levanta, abaixa e desloca a vítima nos 3
+ *     eixos, sem precisar ler tecla de movimento nenhuma.
+ *  3. {@link #onMiddleClick} -- roda do mouse ajusta a distância (sem
+ *     Shift afasta, com Shift aproxima), igual antes.
+ *  4. {@link #onLeftClick} -- arremessa a vítima na direção mirada.
+ *  5. {@link #onRightClick} -- solta no lugar, sem arremessar.
  *
- * IMPORTANTE (mesma ressalva do Blood Control original): como esta ability
- * não sobrescreve {@code activatesOnPress()}, ela ativa ao SOLTAR a tecla
- * (comportamento padrão do framework -- ver {@code Bender#bend}), não ao
- * apertar. É assim que o Blood Control original também funciona.
+ * Enquanto estiver segurando: se a vítima for um {@link Mob}, a IA
+ * própria fica desligada ({@code setNoAi(true)}) pra não competir com o
+ * controle -- restaurada assim que solta (arremessada, cancelada, ou o
+ * caster desconecta/a ability é removida). {@link Player}s não têm IA
+ * pra desligar; o controle domina sozinho porque sobrescreve a
+ * velocidade deles todo tick.
  */
 public class BoneControlAbility implements Ability {
 
+    private static final double GRAB_RANGE = 10.0;
     private static final float CAST_CHI_COST = 15.0f;
     private static final float TICK_CHI_COST = 0.2f;
 
-    private static final int MIN_DISTANCE = 3;
-    private static final int MAX_DISTANCE = 15;
-    private static final int DEFAULT_DISTANCE = 6;
-    private static final int DISTANCE_STEP = 2;
+    private static final int MIN_DISTANCE = 2;
+    private static final int MAX_DISTANCE = 10;
+    private static final int DEFAULT_DISTANCE = 4;
+    private static final int DISTANCE_STEP = 1;
 
-    private static final float MOVE_SPEED = 0.25f;
-    private static final float LAUNCH_SPEED = 2.2f;
-    private static final int LAUNCH_MAX_LIFETIME_TICKS = 60; // 3s pra acertar algo, senão some
+    private static final double MOVE_SPEED = 0.3;
+    private static final double LAUNCH_SPEED = 1.6;
 
     @Override
     public void onCall(Bender bender, long heldTimeMs) {
         Player player = bender.player;
-        if (!(player instanceof ServerPlayer) || !(player.level() instanceof ServerLevel level)) {
+        if (!(player instanceof ServerPlayer caster) || !(player.level() instanceof ServerLevel level)) {
             bender.setCurrAbility(null);
             return;
         }
+
+        EntityHitResult hit = SapsUtils.raycastEntity(player, GRAB_RANGE,
+                entity -> entity instanceof LivingEntity living && living != player && living.isAlive());
+
+        if (hit == null || !(hit.getEntity() instanceof LivingEntity victim)) {
+            caster.displayClientMessage(Component.literal("Nenhum alvo encontrado."), true);
+            bender.setCurrAbility(null);
+            return;
+        }
+
         if (!bender.reduceChi(CAST_CHI_COST)) {
             bender.setCurrAbility(null);
             return;
         }
 
-        BoneSpikeEntity spike = new BoneSpikeEntity(level, player);
-        level.addFreshEntity(spike);
-        setAbilityData(bender, spike, DEFAULT_DISTANCE);
+        // hadAi só importa pra Mob -- Player não tem IA, então sempre "true"
+        // aqui só serve pra nunca tentar restaurar nada nesse caso.
+        boolean hadAi = !(victim instanceof Mob mob) || !mob.isNoAi();
+        if (victim instanceof Mob mob) {
+            mob.setTarget(null);
+            mob.getNavigation().stop();
+            mob.setNoAi(true);
+        }
+        victim.fallDistance = 0;
 
-        level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                SoundEvents.BONE_BLOCK_BREAK, SoundSource.PLAYERS, 0.6f, 0.7f);
+        setAbilityData(bender, victim, DEFAULT_DISTANCE, hadAi);
+
+        level.sendParticles(ParticleTypes.CRIT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.5,
+                victim.getZ(), 14, 0.3, 0.4, 0.3, 0.1);
+        level.playSound(null, victim.blockPosition(), SoundEvents.BONE_BLOCK_HIT, SoundSource.PLAYERS, 0.7f, 0.7f);
 
         bender.setCurrAbility(this); // canalizada -- ver onTick
     }
@@ -77,68 +110,72 @@ public class BoneControlAbility implements Ability {
             return;
         }
 
-        BoneSpikeEntity spike = getSpike(bender);
-        if (spike == null || spike.isRemoved() || !spike.getIsControlled()) {
-            // A farpa já foi arremessada, destruída, ou o dono desconectou --
-            // nesses casos ela cuida de si mesma sozinha (ver BoneSpikeEntity),
-            // só precisamos soltar a trava da ability.
+        LivingEntity victim = getVictim(bender);
+        if (victim == null || !victim.isAlive()) {
+            // A vítima morreu ou sumiu -- só solta a trava, não há IA pra
+            // restaurar em quem não existe mais.
             bender.setCurrAbility(null);
+            bender.abilityData = null;
             return;
         }
 
         Player player = bender.player;
         int distance = getDistance(bender);
 
-        // player.pick faz o raycast levando em conta blocos no caminho -- se o
-        // jogador mirar numa parede antes da distância configurada, a farpa para
-        // na parede em vez de tentar atravessar ela (mesma ideia do
-        // AbilityBloodControl.onTick do mod base).
-        HitResult hit = player.pick(distance, 1.0f, false);
-        Vector3f goal = hit.getLocation().toVector3f();
-        spike.moveEntityTowardsGoal(goal, MOVE_SPEED);
+        // Mesma ideia 3D que a farpa original usava com player.pick(), só que
+        // agora o alvo é a própria vítima, não um ponto de bloco -- por isso
+        // computamos o ponto mirado manualmente a partir do olhar do jogador
+        // em vez de usar um raycast contra o mundo.
+        Vec3 goal = player.getEyePosition().add(player.getLookAngle().scale(distance));
+        Vec3 toGoal = goal.subtract(victim.getEyePosition());
+        double dist = toGoal.length();
+        Vec3 delta = dist < 1.0E-4 ? Vec3.ZERO : toGoal.scale(Math.min(MOVE_SPEED, dist) / dist);
+
+        victim.setDeltaMovement(delta);
+        victim.hasImpulse = true;
+        victim.fallDistance = 0;
     }
 
-    /** Roda do mouse -- sem Shift afasta a farpa, com Shift aproxima. Mesma
+    /** Roda do mouse -- sem Shift afasta a vítima, com Shift aproxima. Mesma
      * convenção do {@code AbilityBloodControl.onMiddleClick} original. */
     @Override
     public void onMiddleClick(Bender bender, boolean started) {
         if (!started) {
             return;
         }
-        BoneSpikeEntity spike = getSpike(bender);
-        if (spike == null) {
+        LivingEntity victim = getVictim(bender);
+        if (victim == null) {
             return;
         }
         int distance = getDistance(bender);
         int next = bender.player.isShiftKeyDown()
                 ? Math.max(distance - DISTANCE_STEP, MIN_DISTANCE)
                 : Math.min(distance + DISTANCE_STEP, MAX_DISTANCE);
-        setAbilityData(bender, spike, next);
+        setAbilityData(bender, victim, next, getHadAi(bender));
     }
 
-    /** Arremessa a farpa na direção mirada, com dano -- a partir daqui ela vira
-     * um projétil de verdade (ver comentário em BoneSpikeEntity). */
+    /** Arremessa a vítima na direção mirada e solta o controle. */
     @Override
     public void onLeftClick(Bender bender, boolean started) {
         if (!started) {
             return;
         }
-        BoneSpikeEntity spike = getSpike(bender);
-        if (spike == null) {
+        LivingEntity victim = getVictim(bender);
+        if (victim == null) {
             return;
         }
 
         Player player = bender.player;
-        spike.setControlled(false);
-        spike.setDeltaMovement(player, player.getXRot(), player.getYRot(), 0.0f, LAUNCH_SPEED, 1.0f);
-        spike.maxLifeTime = LAUNCH_MAX_LIFETIME_TICKS;
-        spike.lifeTime = 0;
+        victim.setDeltaMovement(player.getLookAngle().scale(LAUNCH_SPEED));
+        victim.hasImpulse = true;
+        victim.hurtMarked = true;
 
+        release(victim, getHadAi(bender));
         bender.setCurrAbility(null);
         bender.abilityData = null;
     }
 
-    /** Cancela sem arremessar -- desfaz a farpa. */
+    /** Cancela sem arremessar -- solta a vítima no lugar. */
     @Override
     public void onRightClick(Bender bender, boolean started) {
         if (!started) {
@@ -149,21 +186,25 @@ public class BoneControlAbility implements Ability {
 
     @Override
     public void onRemove(Bender bender) {
-        BoneSpikeEntity spike = getSpike(bender);
-        // Só descarta se ainda estiver sendo controlada -- se já foi arremessada
-        // (getIsControlled() == false), ela já é um projétil independente e deve
-        // continuar voando mesmo depois da ability soltar a trava.
-        if (spike != null && spike.getIsControlled()) {
-            spike.discard();
+        LivingEntity victim = getVictim(bender);
+        if (victim != null) {
+            release(victim, getHadAi(bender));
         }
         bender.setCurrAbility(null);
         bender.abilityData = null;
     }
 
-    private BoneSpikeEntity getSpike(Bender bender) {
+    /** Devolve a IA original da vítima, se ela tinha uma antes de {@link #onCall}. */
+    private void release(LivingEntity victim, boolean hadAi) {
+        if (hadAi && victim instanceof Mob mob) {
+            mob.setNoAi(false);
+        }
+    }
+
+    private LivingEntity getVictim(Bender bender) {
         Object data = bender.abilityData;
-        if (data instanceof Object[] arr && arr.length >= 1 && arr[0] instanceof BoneSpikeEntity spike) {
-            return spike;
+        if (data instanceof Object[] arr && arr.length >= 1 && arr[0] instanceof LivingEntity victim) {
+            return victim;
         }
         return null;
     }
@@ -176,7 +217,15 @@ public class BoneControlAbility implements Ability {
         return DEFAULT_DISTANCE;
     }
 
-    private void setAbilityData(Bender bender, BoneSpikeEntity spike, int distance) {
-        bender.abilityData = new Object[]{spike, distance};
+    private boolean getHadAi(Bender bender) {
+        Object data = bender.abilityData;
+        if (data instanceof Object[] arr && arr.length >= 3 && arr[2] instanceof Boolean hadAi) {
+            return hadAi;
+        }
+        return true;
+    }
+
+    private void setAbilityData(Bender bender, LivingEntity victim, int distance, boolean hadAi) {
+        bender.abilityData = new Object[]{victim, distance, hadAi};
     }
 }

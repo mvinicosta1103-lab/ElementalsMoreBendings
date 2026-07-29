@@ -27,8 +27,10 @@ import net.minecraft.server.level.ServerPlayer;
  *     de fato checa essa regra na hora de conceder via comando).
  *
  * Duas habilidades raiz, ambas grátis (preço 0):
- *  - boneControl: conjura e guia uma farpa de osso telecineticamente antes
- *    de arremessar. Ver {@link BoneControlAbility}.
+ *  - boneControl: agarra qualquer criatura viva pelo esqueleto e a levanta/
+ *    move telecineticamente pelo ar seguindo a mira, antes de arremessar --
+ *    um "pickup" de verdade, igual {@code AbilityBloodControl} do mod base.
+ *    Ver {@link BoneControlAbility}.
  *  - bonePuppeteer: controle de verdade -- mira uma criatura; se for um
  *    morto-vivo de verdade, vira um fantoche literal por um tempo; se for
  *    um player ou outra criatura viva, trava os ossos dela num debuff

@@ -41,6 +41,7 @@
   "ability.elementalsmorebendings.mud_trap": "Mud Trap",
   "ability.elementalsmorebendings.crystal_shard": "Crystal Shards",
   "ability.elementalsmorebendings.bone_control": "Bone Control",
+  "ability.elementalsmorebendings.bone_puppeteer": "Bone Puppeteer",
   "ability.elementalsmorebendings.sand_tornado": "Sand Tornado",
   "ability.elementalsmorebendings.glass_shards": "Glass Shards",
   "ability.elementalsmorebendings.lava_pool": "Lava Pool",
@@ -74,9 +75,13 @@
   "upgrade.elementals.crystalShard.icon": "crystal_dash",
 
   "upgrade.elementals.boneControl": "Bone Control",
-  "upgrade.elementals.boneControl.description": "Conjures a bone spike you can freely steer up/down, side to side, and closer/further with your aim and scroll wheel, then hurl at will.",
+  "upgrade.elementals.boneControl.description": "Seizes a living creature by its skeleton and lets you freely hoist it up/down, side to side, and closer/further with your aim and scroll wheel, like a telekinetic pickup, then hurl it at will.",
   "upgrade.elementals.boneControl.use": "Use: %d",
-  "upgrade.elementals.boneControl.icon": "earth_spikes",
+  "upgrade.elementals.boneControl.icon": "molten_grip",
+  "upgrade.elementals.bonePuppeteer": "Bone Puppeteer",
+  "upgrade.elementals.bonePuppeteer.description": "Targets a living creature. A true undead (Skeleton, Zombie, Wither Skeleton, and the like) is puppeted outright, forced to walk wherever you're looking with its own AI switched off for a few seconds. Anything else -- players included -- has its bones seized instead, locking it in place with heavy Slowness and Weakness for a moment.",
+  "upgrade.elementals.bonePuppeteer.use": "Use: %d",
+  "upgrade.elementals.bonePuppeteer.icon": "earth_spikes",
 
   "upgrade.elementals.sandTornado": "Sand Tornado",
   "upgrade.elementals.sandTornado.description": "Whips up a spinning column of sand where you're aiming, sucking in nearby sand blocks and dragging, blinding, and battering anyone caught inside. Hold crouch to keep it going.",
