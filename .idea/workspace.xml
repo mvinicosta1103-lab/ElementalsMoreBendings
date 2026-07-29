@@ -5,15 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="Next phase: Make more movements for bendings.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/DiscordantScreamAbility.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/EchoSenseAbility.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/ResonancePulseAbility.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/SilenceFieldAbility.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/SonicShockwaveAbility.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/SonicStepAbility.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/SoundExpansionMod.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/SoundTreeHook.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/EchoSenseManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/SilenceFieldManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/CommonClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/CommonClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/ElementalsMoreBendingsMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/ElementalsMoreBendingsMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/DiscordantScreamAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/DiscordantScreamAbility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/EchoSenseAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/EchoSenseAbility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/ResonancePulseAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/ResonancePulseAbility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/SilenceFieldAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/SilenceFieldAbility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/SonicShockwaveAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/SonicShockwaveAbility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/SonicStepAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/SonicStepAbility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/SoundElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/airsubbendings/sound/SoundElement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/commands/MoreBendingCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/commands/MoreBendingCommand.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,11 +215,11 @@
       <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\java\com\elementals\morebendings\bending\airsubbendings\sound" />
       <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\libs" />
       <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\resources\assets\elementals\textures\gui\symbol" />
       <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\java\com\elementals\morebendings\bending\airsubbendings\mist" />
       <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\resources\assets\elementalsmorebendings\textures\gui\symbol" />
-      <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\resources\assets\gui\png\earth\lava" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.ObsidianWakeAddon [runClient]">
@@ -302,14 +306,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
-    </task>
-    <task id="LOCAL-00138" summary="Next phase: Fix plasma bending.">
-      <option name="closed" value="true" />
-      <created>1785106017843</created>
-      <option name="number" value="00138" />
-      <option name="presentableId" value="LOCAL-00138" />
-      <option name="project" value="LOCAL" />
-      <updated>1785106017843</updated>
     </task>
     <task id="LOCAL-00139" summary="Next phase: Fix plasma bending.">
       <option name="closed" value="true" />
@@ -695,7 +691,15 @@
       <option name="project" value="LOCAL" />
       <updated>1785363777021</updated>
     </task>
-    <option name="localTasksCounter" value="187" />
+    <task id="LOCAL-00187" summary="Next phase: Make more movements for bendings.">
+      <option name="closed" value="true" />
+      <created>1785365732687</created>
+      <option name="number" value="00187" />
+      <option name="presentableId" value="LOCAL-00187" />
+      <option name="project" value="LOCAL" />
+      <updated>1785365732687</updated>
+    </task>
+    <option name="localTasksCounter" value="188" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

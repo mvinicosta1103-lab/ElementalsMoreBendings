@@ -1,76 +1,75 @@
 package com.elementals.morebendings.bending.airsubbendings.sound;
 
-import com.elementals.morebendings.bending.airsubbendings.common.SoundAbility;
-import net.minecraft.core.particles.ParticleTypes;
+import dev.saperate.elementals.data.Bender;
+import dev.saperate.elementals.elements.Ability;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.phys.AABB;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 /**
- * Echo Sense — toggle passivo. A cada pulso periódico (ex.: a cada 4s),
- * revela a posição de entidades vivas próximas — inclusive atrás de paredes
- * — através de partículas visíveis só para o bender, simulando ecolocalização.
- * Não causa dano nem efeitos negativos: é puramente de percepção/utilidade.
+ * "echoSense" — toggle passivo. Enquanto ativo, revela periodicamente a
+ * posição de entidades vivas próximas (mesmo através de paredes) via
+ * partículas visíveis só para o bender -- ver {@link EchoSenseManager},
+ * que dirige o pulso periódico tick a tick (registrado em
+ * ElementalsMoreBendingsMod, mesmo esquema de {@code SilenceFieldManager}).
+ * Não causa dano nem efeitos negativos.
+ *
+ *  - echoSenseRadiusI -> +6.0 de raio
  */
-public class EchoSenseAbility extends SoundAbility {
+public class EchoSenseAbility implements Ability {
 
-    private static final double BASE_RADIUS = 12.0D;
-    private static final int PULSE_INTERVAL_TICKS = 80; // 4s
-    private boolean active = false;
-    private int tickCounter = 0;
+    static final double BASE_RADIUS = 12.0;
+    static final int PULSE_INTERVAL_TICKS = 80; // 4s
 
-    public EchoSenseAbility(ServerPlayer bender) {
-        super(bender, "echoSense");
+    private static final Set<UUID> ACTIVE = new HashSet<>();
+
+    @Override
+    public void onCall(Bender bender, long heldTimeMs) {
+        Player player = bender.player;
+        if (!(player instanceof ServerPlayer caster) || !(player.level() instanceof ServerLevel level)) {
+            bender.setCurrAbility(null);
+            return;
+        }
+
+        UUID id = caster.getUUID();
+        boolean nowActive;
+        if (ACTIVE.contains(id)) {
+            ACTIVE.remove(id);
+            nowActive = false;
+        } else {
+            ACTIVE.add(id);
+            nowActive = true;
+            EchoSenseManager.resetTimer(id);
+        }
+
+        level.playSound(null, caster.blockPosition(),
+                nowActive ? SoundEvents.AMETHYST_BLOCK_CHIME : SoundEvents.AMETHYST_BLOCK_BREAK,
+                SoundSource.PLAYERS, 0.8f, 1.4f);
+
+        bender.setCurrAbility(null); // toggle instantâneo -- o pulso periódico vive no Manager
     }
 
     @Override
-    public long getCooldown() {
-        return 0L;
-    }
-
-    @Override
-    public boolean execute() {
-        active = !active;
-        tickCounter = 0;
-        playSound(active ? "elementals:ability.echo_sense_on" : "elementals:ability.echo_sense_off", 0.8F, 1.4F);
-        return true;
-    }
-
-    public void onTick() {
-        if (!active) {
-            return;
-        }
-        tickCounter++;
-        if (tickCounter < PULSE_INTERVAL_TICKS) {
-            return;
-        }
-        tickCounter = 0;
-
-        ServerPlayer player = getBender();
-        if (player == null || !(player.level() instanceof ServerLevel level)) {
-            return;
-        }
-
-        double radius = hasUpgrade("echoSenseRadiusI") ? BASE_RADIUS + 6.0D : BASE_RADIUS;
-        AABB area = player.getBoundingBox().inflate(radius);
-        List<LivingEntity> nearby = level.getEntitiesOfClass(LivingEntity.class, area, e -> e != player && e.isAlive());
-
-        for (LivingEntity entity : nearby) {
-            level.sendParticles(player, ParticleTypes.NOTE,
-                    true,
-                    entity.getX(), entity.getY() + entity.getBbHeight() + 0.3D, entity.getZ(),
-                    1, 0.0, 0.0, 0.0, 0.0);
+    public void onRemove(Bender bender) {
+        bender.setCurrAbility(null);
+        Player player = bender.player;
+        if (player != null) {
+            deactivate(player.getUUID());
         }
     }
 
-    public boolean isActive() {
-        return active;
+    public static boolean isActive(UUID playerId) {
+        return ACTIVE.contains(playerId);
     }
 
-    public void deactivate() {
-        active = false;
+    public static void deactivate(UUID playerId) {
+        ACTIVE.remove(playerId);
+        EchoSenseManager.clearTimer(playerId);
     }
 }

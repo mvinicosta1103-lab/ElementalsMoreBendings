@@ -134,6 +134,14 @@ public class ElementalsMoreBendingsMod {
         // está olhando, tick a tick, e libera a IA quando a possessão acaba
         // -- ver BonePuppeteerManager.
         NeoForge.EVENT_BUS.addListener(BonePuppeteerManager::onServerTick);
+
+        // Aplica Lentidão em quem entra na zona de silenceField (Sound)
+        // enquanto o toggle estiver ativo -- ver SilenceFieldManager.
+        NeoForge.EVENT_BUS.addListener(SilenceFieldManager::onServerTick);
+
+        // Dispara o pulso periódico de echoSense (Sound), revelando
+        // entidades próximas via partículas -- ver EchoSenseManager.
+        NeoForge.EVENT_BUS.addListener(EchoSenseManager::onServerTick);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

@@ -1,73 +1,75 @@
 package com.elementals.morebendings.bending.airsubbendings.sound;
 
-import com.elementals.morebendings.bending.airsubbendings.common.SoundAbility;
+import dev.saperate.elementals.data.Bender;
+import dev.saperate.elementals.elements.Ability;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.phys.AABB;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 /**
- * Silence Field — habilidade toggle. Enquanto ativa, cria uma zona ao redor
- * do bender que abafa o som (evita que mobs hostis "escutem" passos) e
- * aplica leve Slowness a inimigos que entram na área — pensada como
- * ferramenta furtiva/defensiva, e não ofensiva pura como as outras.
+ * "silenceField" — toggle. Enquanto ativo, abafa o som ao redor do bender
+ * (ver {@link SilenceFieldManager}, que aplica Lentidão em quem entra na
+ * zona a cada tick -- registrado em ElementalsMoreBendingsMod, mesmo
+ * esquema de {@code MistCloudManager}/{@code CurseMinionManager}).
  *
- * Consome um "tick de foco" a cada segundo enquanto ativa; desliga sozinha
- * se o bender ficar sem stamina/chi (ajuste esse hook pro seu sistema de
- * energia, se o mod tiver um).
+ * Como esta é uma instância ÚNICA compartilhada entre todos os jogadores
+ * (mesmo padrão de {@code EchoingVoiceAbility}), o estado "ligado/desligado"
+ * é guardado por UUID aqui, e o {@link SilenceFieldManager} é quem
+ * efetivamente lê esse estado tick a tick.
+ *
+ *  - silenceFieldRadiusI -> +2.0 de raio
  */
-public class SilenceFieldAbility extends SoundAbility {
+public class SilenceFieldAbility implements Ability {
 
-    private static final double BASE_RADIUS = 5.0D;
-    private boolean active = false;
+    static final double BASE_RADIUS = 5.0;
 
-    public SilenceFieldAbility(ServerPlayer bender) {
-        super(bender, "silenceField");
-    }
+    private static final Set<UUID> ACTIVE = new HashSet<>();
 
     @Override
-    public long getCooldown() {
-        return 0L; // toggle não usa cooldown fixo, usa custo por tick
-    }
-
-    @Override
-    public boolean execute() {
-        active = !active;
-        playSound(active ? "elementals:ability.silence_field_on" : "elementals:ability.silence_field_off", 1.0F, 1.0F);
-        return true;
-    }
-
-    /**
-     * Deve ser chamado a cada tick do bender enquanto o toggle estiver ativo
-     * (mesmo hook usado por Lava Surf no addon Obsidian Wake).
-     */
-    public void onTick() {
-        if (!active) {
-            return;
-        }
-        ServerPlayer player = getBender();
-        if (player == null) {
+    public void onCall(Bender bender, long heldTimeMs) {
+        Player player = bender.player;
+        if (!(player instanceof ServerPlayer caster) || !(player.level() instanceof ServerLevel level)) {
+            bender.setCurrAbility(null);
             return;
         }
 
-        double radius = hasUpgrade("silenceFieldRadiusI") ? BASE_RADIUS + 2.0D : BASE_RADIUS;
-        AABB area = player.getBoundingBox().inflate(radius);
-        List<LivingEntity> nearby = player.level().getEntitiesOfClass(LivingEntity.class, area,
-                e -> e != player && e.isAlive());
+        UUID id = caster.getUUID();
+        boolean nowActive;
+        if (ACTIVE.contains(id)) {
+            ACTIVE.remove(id);
+            nowActive = false;
+        } else {
+            ACTIVE.add(id);
+            nowActive = true;
+        }
 
-        for (LivingEntity entity : nearby) {
-            entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0, false, false));
+        level.playSound(null, caster.blockPosition(),
+                nowActive ? SoundEvents.BEACON_ACTIVATE : SoundEvents.BEACON_DEACTIVATE,
+                SoundSource.PLAYERS, 1.0f, 1.4f);
+
+        bender.setCurrAbility(null); // toggle instantâneo -- o efeito contínuo vive no Manager
+    }
+
+    @Override
+    public void onRemove(Bender bender) {
+        bender.setCurrAbility(null);
+        Player player = bender.player;
+        if (player != null) {
+            ACTIVE.remove(player.getUUID());
         }
     }
 
-    public boolean isActive() {
-        return active;
+    public static boolean isActive(UUID playerId) {
+        return ACTIVE.contains(playerId);
     }
 
-    public void deactivate() {
-        active = false;
+    public static void deactivate(UUID playerId) {
+        ACTIVE.remove(playerId);
     }
 }

@@ -36,7 +36,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import com.elementals.morebendings.bending.airsubbendings.gas.GasElement;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistElement;
-import com.elementals.morebendings.bending.airsubbendings.sound.SoundElement;
 import com.elementals.morebendings.bending.airsubbendings.temperature.TemperatureElement;
 import com.elementals.morebendings.bending.airsubbendings.voiding.VoidElement;
 import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionElement;

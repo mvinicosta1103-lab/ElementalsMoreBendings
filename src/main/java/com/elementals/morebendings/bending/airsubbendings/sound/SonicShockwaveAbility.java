@@ -1,71 +1,108 @@
 package com.elementals.morebendings.bending.airsubbendings.sound;
 
-import com.elementals.morebendings.bending.airsubbendings.common.SoundAbility;
+import dev.saperate.elementals.data.Bender;
+import dev.saperate.elementals.elements.Ability;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
- * Sonic Shockwave — libera um pulso de choque sonoro em área ao redor do bender.
- * Empurra e causa dano leve a todas as entidades hostis dentro do raio.
+ * "sonicShockwave" — libera um pulso de choque sonoro em área ao redor do
+ * bender: empurra e causa dano a todas as entidades vivas próximas.
+ * Instantânea, mesmo padrão de {@link EchoingVoiceAbility}/{@link
+ * ResonantPulseAbility} (única instância registrada em {@link
+ * SoundElement}, cooldown/uso guardado num Map por UUID).
  *
- * NOTA: adapte os nomes/assinaturas de SoundAbility, cooldown() e canUse() para
- * bater exatamente com a classe base Ability do seu projeto — a estrutura aqui
- * segue o mesmo padrão usado por ObsidianPillarAbility no addon Obsidian Wake.
+ *  - sonicShockwaveRadiusI    -> +1.5 de raio
+ *  - sonicShockwaveCooldownI  -> -1.5s de cooldown
+ *  - sonicShockwaveDisorientI -> aplica Náusea em quem for atingido
  */
-public class SonicShockwaveAbility extends SoundAbility {
+public class SonicShockwaveAbility implements Ability {
 
-    private static final double BASE_RADIUS = 4.0D;
-    private static final double BASE_DAMAGE = 3.0D;
-    private static final double BASE_KNOCKBACK = 1.2D;
-    private static final long BASE_COOLDOWN_MS = 6000L;
+    private static final double BASE_RADIUS = 4.0;
+    private static final float DAMAGE = 3.0f;
+    private static final double KNOCKBACK_STRENGTH = 1.2;
+    private static final int BASE_COOLDOWN_TICKS = 120; // 6s
+    private static final int MIN_COOLDOWN_TICKS = 90;   // 4.5s
+    private static final float CAST_CHI_COST = 4.0f;
 
-    public SonicShockwaveAbility(ServerPlayer bender) {
-        super(bender, "sonicShockwave");
-    }
-
-    @Override
-    public long getCooldown() {
-        // Reduzido por sonicShockwaveCooldownI, se o bender tiver o upgrade
-        return hasUpgrade("sonicShockwaveCooldownI") ? BASE_COOLDOWN_MS - 1500L : BASE_COOLDOWN_MS;
-    }
+    private static final Map<UUID, Long> lastUse = new HashMap<>();
 
     @Override
-    public boolean execute() {
-        ServerPlayer player = getBender();
-        if (player == null) {
-            return false;
+    public void onCall(Bender bender, long heldTimeMs) {
+        Player player = bender.player;
+        if (!(player instanceof ServerPlayer caster) || !(player.level() instanceof ServerLevel level)) {
+            bender.setCurrAbility(null);
+            return;
         }
 
-        double radius = hasUpgrade("sonicShockwaveRadiusI") ? BASE_RADIUS + 1.5D : BASE_RADIUS;
-        Vec3 center = player.position();
+        long now = level.getGameTime();
+        long last = lastUse.getOrDefault(caster.getUUID(), -100000L);
+        int cooldown = SoundElement.hasUpgrade(caster, SoundElement.SONIC_SHOCKWAVE_COOLDOWN_I)
+                ? MIN_COOLDOWN_TICKS : BASE_COOLDOWN_TICKS;
+        if (now - last < cooldown) {
+            bender.setCurrAbility(null);
+            return;
+        }
 
-        AABB area = new AABB(
-                center.x - radius, center.y - 1.5D, center.z - radius,
-                center.x + radius, center.y + 2.5D, center.z + radius
-        );
+        if (!bender.reduceChi(CAST_CHI_COST)) {
+            bender.setCurrAbility(null);
+            return;
+        }
+        lastUse.put(caster.getUUID(), now);
 
-        List<LivingEntity> targets = player.level().getEntitiesOfClass(LivingEntity.class, area,
-                e -> e != player && e.isAlive());
+        double radius = SoundElement.hasUpgrade(caster, SoundElement.SONIC_SHOCKWAVE_RADIUS_I)
+                ? BASE_RADIUS + 1.5 : BASE_RADIUS;
+        boolean disorient = SoundElement.hasUpgrade(caster, SoundElement.SONIC_SHOCKWAVE_DISORIENT_I);
+
+        Vec3 center = caster.position();
+
+        level.sendParticles(ParticleTypes.SONIC_BOOM, center.x, center.y + 1.0, center.z, 1, 0.0, 0.0, 0.0, 0.0);
+        level.sendParticles(ParticleTypes.CLOUD, center.x, center.y + 0.5, center.z,
+                (int) (20 * (radius / BASE_RADIUS)), radius * 0.4, 0.3, radius * 0.4, 0.02);
+        level.playSound(null, caster.blockPosition(), SoundEvents.WARDEN_SONIC_BOOM, SoundSource.PLAYERS, 1.4f, 0.8f);
+
+        AABB area = caster.getBoundingBox().inflate(radius);
+        List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class, area,
+                entity -> entity != caster && entity.isAlive());
+
+        DamageSource soundDamage = level.damageSources().indirectMagic(caster, caster);
 
         for (LivingEntity target : targets) {
-            Vec3 push = target.position().subtract(center).normalize().scale(BASE_KNOCKBACK);
-            target.setDeltaMovement(target.getDeltaMovement().add(push.x, 0.35D, push.z));
+            Vec3 toTarget = target.position().subtract(center);
+            double distance = toTarget.length();
+            if (distance > radius || distance <= 0.0001) {
+                continue;
+            }
+            Vec3 push = toTarget.normalize().scale(KNOCKBACK_STRENGTH);
+            target.push(push.x, Math.max(0.15, push.y * 0.3 + 0.2), push.z);
             target.hurtMarked = true;
-            target.hurt(damageSource("sonicShockwave"), (float) BASE_DAMAGE);
+            target.hurt(soundDamage, DAMAGE);
 
-            if (hasUpgrade("sonicShockwaveDisorientI")) {
-                target.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0));
+            if (disorient) {
+                target.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 80, 0));
             }
         }
 
-        spawnSoundParticles(center, radius);
-        playSound("elementals:ability.sonic_shockwave", 1.4F, 0.8F);
-        return true;
+        bender.setCurrAbility(null); // instantânea -- não canaliza
+    }
+
+    @Override
+    public void onRemove(Bender bender) {
+        bender.setCurrAbility(null);
     }
 }
