@@ -99,9 +99,21 @@
     },
     "done": true
   },
-  "minecraft:recipes/food/baked_potato_from_campfire_cooking": {
+  "elementals:firebending": {
     "criteria": {
-      "has_potato": "2026-07-28 00:03:36 -0300"
+      "element": "2026-07-27 23:33:45 -0300"
+    },
+    "done": true
+  },
+  "minecraft:adventure/voluntary_exile": {
+    "criteria": {
+      "voluntary_exile": "2026-07-27 23:43:00 -0300"
+    },
+    "done": true
+  },
+  "elementals:airbending": {
+    "criteria": {
+      "element": "2026-07-27 23:44:40 -0300"
     },
     "done": true
   },
@@ -111,9 +123,9 @@
     },
     "done": true
   },
-  "elementals:airbending": {
+  "minecraft:recipes/food/baked_potato_from_campfire_cooking": {
     "criteria": {
-      "element": "2026-07-27 23:44:40 -0300"
+      "has_potato": "2026-07-28 00:03:36 -0300"
     },
     "done": true
   },
@@ -126,18 +138,6 @@
   "minecraft:recipes/food/baked_potato": {
     "criteria": {
       "has_potato": "2026-07-28 00:03:36 -0300"
-    },
-    "done": true
-  },
-  "elementals:firebending": {
-    "criteria": {
-      "element": "2026-07-27 23:33:45 -0300"
-    },
-    "done": true
-  },
-  "minecraft:adventure/voluntary_exile": {
-    "criteria": {
-      "voluntary_exile": "2026-07-27 23:43:00 -0300"
     },
     "done": true
   },

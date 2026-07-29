@@ -23,6 +23,10 @@
   "ability.elementalsmorebendings.plant_vine_whip": "Vine Whip",
   "ability.elementalsmorebendings.spirit_purifying_water": "Purifying Water",
   "ability.elementalsmorebendings.spirit_curse_minion": "Curse Minion",
+  "ability.elementalsmorebendings.sound_echoing_voice": "Echoing Voice",
+  "ability.elementalsmorebendings.sound_resonant_pulse": "Resonant Pulse",
+  "upgrade.elementals.echoingVoice.description": "Unleash an amplified shout in a cone in front of you. Anyone caught in it takes sound damage, gets knocked back, is stunned for a couple seconds, and has any fire on them extinguished.",
+  "upgrade.elementals.resonantPulse.description": "Release a sphere of echoing sound around you that passes straight through walls. Every living creature caught in it glows for several seconds, revealing its position even behind blocks.",
   "ability.elementalsmorebendings.mud_surge": "Mud Surge",
   "ability.elementalsmorebendings.mud_trap": "Mud Trap",
   "ability.elementalsmorebendings.crystal_shard": "Crystal Shards",
@@ -118,6 +122,7 @@
   "upgrade.elementals.gasIgnite.description": "Ignites your Gas Cloud, setting fire to everyone caught inside it. You are never burned by your own gas.",
 
   "subbending.elementalsmorebendings.mist": "Mist Bending",
+  "subbending.elementalsmorebendings.sound": "Sound Bending",
 
   "upgrade.elementals.mistCloud": "Heavy Fog",
   "upgrade.elementals.mistCloud.use": "Use: %d",

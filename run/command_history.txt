@@ -1,4 +1,3 @@
-/morebending grant Dev Gas
 /morebending grant Dev Mist
 /bending level add 1000 Dev
 /morebending grant Dev Gas
@@ -48,3 +47,4 @@
 /morebending grant Dev Petrification
 /morebending grant Dev Bone
 /morebending grant Dev Sand
+/bending element add Sound Dev
