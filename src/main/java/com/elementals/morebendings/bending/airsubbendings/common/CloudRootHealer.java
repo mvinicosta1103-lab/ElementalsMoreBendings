@@ -1,5 +1,6 @@
 package com.elementals.morebendings.bending.airsubbendings.common;
 
+import com.elementals.morebendings.bending.airsubbendings.atmosphere.AtmosphereElement;
 import com.elementals.morebendings.bending.airsubbendings.gas.GasElement;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistElement;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BoneElement;
@@ -7,6 +8,7 @@ import commonnetwork.api.Network;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.data.PlayerData;
 import dev.saperate.elementals.data.StateDataSaverAndLoader;
+import dev.saperate.elementals.elements.Element;
 import dev.saperate.elementals.elements.Upgrade;
 import dev.saperate.elementals.network.packets.common.SyncUpgradeListPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,9 +32,11 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
  * ou cujo save tenha sido restaurado/migrado sem o nó raiz junto.
  * <p>
  * Esta classe remove essa dependência: a cada login, se o jogador já é
- * Gas, Mist ou Bone bender mas o nó raiz correspondente não está marcado
- * como comprado, a gente corrige e sincroniza na hora -- sem precisar de
- * intervenção manual nenhuma.
+ * Atmosphere, Gas, Mist ou Bone bender mas o(s) nó(s) raiz correspondente(s)
+ * não estão marcados como comprados, a gente corrige e sincroniza na hora
+ * -- sem precisar de intervenção manual nenhuma. Atmosphere é o único caso
+ * com 4 nós raiz em vez de 1 (ver {@link AtmosphereElement#autoUnlockRoots}),
+ * por isso usa {@link #allRootsUnlocked} em vez de {@link #isRootUnlocked}.
  */
 public final class CloudRootHealer {
 
@@ -47,6 +51,10 @@ public final class CloudRootHealer {
         Bender bender = Bender.getBender(player);
         boolean changed = false;
 
+        if (AtmosphereElement.isAtmosphereBender(bender) && !allRootsUnlocked(bender, AtmosphereElement.get())) {
+            AtmosphereElement.autoUnlockRoots(bender);
+            changed = true;
+        }
         if (GasElement.isGasBender(bender) && !isRootUnlocked(bender, GasElement.get().root.children[0])) {
             GasElement.autoUnlockRoot(bender);
             changed = true;
@@ -69,5 +77,18 @@ public final class CloudRootHealer {
     private static boolean isRootUnlocked(Bender bender, Upgrade rootChild) {
         PlayerData data = bender.getData();
         return data.upgrades.getOrDefault(rootChild, false);
+    }
+
+    /** Igual {@link #isRootUnlocked}, só que exige TODOS os filhos diretos da raiz --
+     * usado só por Atmosphere, que tem 4 nós raiz com filhos em vez de 1 (ver
+     * {@link AtmosphereElement#autoUnlockRoots}). */
+    private static boolean allRootsUnlocked(Bender bender, Element element) {
+        PlayerData data = bender.getData();
+        for (Upgrade child : element.root.children) {
+            if (!data.upgrades.getOrDefault(child, false)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

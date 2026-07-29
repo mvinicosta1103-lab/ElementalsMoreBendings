@@ -220,6 +220,15 @@ public class MoreBendingCommand {
 
         if (grant) {
             if (bender.hasElement(element)) {
+                if (type == SubbendingType.ATMOSPHERE) {
+                    AtmosphereElement.autoUnlockRoots(bender);
+                    syncAndPersist(bender, target);
+                    source.sendSuccess(() -> Component.literal(
+                            "Nós raiz de Atmosphere sincronizados e persistidos pra " + playerName + "."), true);
+                    target.sendSystemMessage(Component.literal(
+                            "Sua árvore de Atmosphere Bending foi reparada -- tente comprar os upgrades de novo."));
+                    return 1;
+                }
                 if (type == SubbendingType.GAS) {
                     GasElement.autoUnlockRoot(bender);
                     syncAndPersist(bender, target);
@@ -338,6 +347,9 @@ public class MoreBendingCommand {
                 return 0;
             }
             bender.addElement(element, true);
+            if (type == SubbendingType.ATMOSPHERE) {
+                AtmosphereElement.autoUnlockRoots(bender);
+            }
             if (type == SubbendingType.GAS) {
                 GasElement.autoUnlockRoot(bender);
             }

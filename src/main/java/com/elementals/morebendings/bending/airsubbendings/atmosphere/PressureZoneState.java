@@ -26,9 +26,7 @@ import java.util.UUID;
  */
 public class PressureZoneState {
 
-    private static final double RADIUS = 4.0;
     private static final double HEIGHT = 3.0;
-    private static final int MAX_DURATION_TICKS = 20 * 10; // 10s
 
     /** Depois de quantos ticks dentro da zona o alvo começa a levar dano. */
     private static final int CRUSH_THRESHOLD_TICKS = 20 * 3; // 3s
@@ -41,16 +39,20 @@ public class PressureZoneState {
     private final ServerLevel level;
     private final ServerPlayer caster;
     private final Vec3 center;
+    private final double radius;
+    private final int maxDurationTicks;
 
     /** Quantos ticks seguidos cada alvo já passou dentro da zona. */
     private final Map<UUID, Integer> timeInZone = new HashMap<>();
 
     private int ticksElapsed = 0;
 
-    public PressureZoneState(ServerLevel level, ServerPlayer caster) {
+    public PressureZoneState(ServerLevel level, ServerPlayer caster, double radius, int maxDurationTicks) {
         this.level = level;
         this.caster = caster;
         this.center = caster.position();
+        this.radius = radius;
+        this.maxDurationTicks = maxDurationTicks;
     }
 
     public void begin() {
@@ -64,10 +66,10 @@ public class PressureZoneState {
         if (!caster.isAlive() || caster.isRemoved()) {
             return false;
         }
-        if (caster.position().distanceToSqr(center) > RADIUS * RADIUS) {
+        if (caster.position().distanceToSqr(center) > radius * radius) {
             return false; // caster saiu do próprio raio -- zona colapsa
         }
-        if (ticksElapsed > MAX_DURATION_TICKS) {
+        if (ticksElapsed > maxDurationTicks) {
             return false;
         }
 
@@ -78,8 +80,8 @@ public class PressureZoneState {
 
     private void crushTargetsInside() {
         AABB area = new AABB(
-                center.x - RADIUS, center.y - 0.5, center.z - RADIUS,
-                center.x + RADIUS, center.y + HEIGHT, center.z + RADIUS);
+                center.x - radius, center.y - 0.5, center.z - radius,
+                center.x + radius, center.y + HEIGHT, center.z + radius);
 
         for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, area, LivingEntity::isAlive)) {
             if (target == caster) {
@@ -102,7 +104,7 @@ public class PressureZoneState {
         }
         for (int i = 0; i < 3; i++) {
             double angle = level.random.nextDouble() * Math.PI * 2;
-            double dist = level.random.nextDouble() * RADIUS;
+            double dist = level.random.nextDouble() * radius;
             double px = center.x + Math.cos(angle) * dist;
             double pz = center.z + Math.sin(angle) * dist;
             level.sendParticles(ParticleTypes.CRIT, px, center.y + 0.1, pz, 1, 0, 0.01, 0, 0);

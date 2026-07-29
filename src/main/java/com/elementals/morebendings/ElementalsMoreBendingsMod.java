@@ -98,6 +98,8 @@ public class ElementalsMoreBendingsMod {
 
         // Estamina/partículas do voo da sub-bending Flying -- ver FlyingAbility.
         NeoForge.EVENT_BUS.addListener(FlyingAbility::onServerTick);
+        // Limpa o UUID de quem desconecta voando -- ver FlyingAbility#onPlayerLoggedOut.
+        NeoForge.EVENT_BUS.addListener(FlyingAbility::onPlayerLoggedOut);
 
         // Lê a tecla de ligar/desligar voo e manda o ToggleFlyingPacket pro
         // servidor -- ver ModKeyMappings. Só existe no cliente pelo mesmo

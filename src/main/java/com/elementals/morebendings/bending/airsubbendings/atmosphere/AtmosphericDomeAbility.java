@@ -28,12 +28,20 @@ import net.minecraft.world.phys.Vec3;
  *   direção -- o projétil "quica" de volta.
  * - Empurra toda entidade (exceto o caster) radialmente pra fora do raio.
  * - Quebra blocos leves (folhas, grama, teia, etc.) dentro do raio.
+ * <p>
+ * Raio e custo de chi/tick escalam com os upgrades de nível (recalculados
+ * todo tick, é barato -- só leituras de HashMap, igual {@code
+ * GasCloudAbility#getRadius}):
+ *  - domeRadiusI / II      → +0.5 bloco de raio cada
+ *  - domeEfficiencyI / II  → -0.05 de custo de chi/tick cada (mais tempo
+ *    canalizando com a mesma reserva de chi)
  */
 public class AtmosphericDomeAbility implements Ability {
 
-    private static final double RADIUS = 2.5;
+    private static final double BASE_RADIUS = 2.5;
+    private static final float BASE_TICK_CHI_COST = 0.25f;
+    private static final float MIN_TICK_CHI_COST = 0.1f;
     private static final float CAST_CHI_COST = 6.0f;
-    private static final float TICK_CHI_COST = 0.25f;
     private static final double PUSH_STRENGTH = 0.5;
 
     @Override
@@ -58,18 +66,19 @@ public class AtmosphericDomeAbility implements Ability {
             onRemove(bender);
             return;
         }
-        if (!bender.reduceChi(TICK_CHI_COST)) {
+        if (!(player instanceof ServerPlayer caster) || !(player.level() instanceof ServerLevel level)) {
+            return;
+        }
+        if (!bender.reduceChi(getTickChiCost(caster))) {
             onRemove(bender);
             return;
         }
-        if (!(player.level() instanceof ServerLevel level)) {
-            return;
-        }
 
-        reflectProjectiles(level, player);
-        pushEntitiesAway(level, player);
-        breakLightBlocks(level, player);
-        spawnShellParticles(level, player);
+        double radius = getRadius(caster);
+        reflectProjectiles(level, player, radius);
+        pushEntitiesAway(level, player, radius);
+        breakLightBlocks(level, player, radius);
+        spawnShellParticles(level, player, radius);
     }
 
     @Override
@@ -77,10 +86,24 @@ public class AtmosphericDomeAbility implements Ability {
         bender.setCurrAbility(null);
     }
 
-    private void reflectProjectiles(ServerLevel level, Player player) {
+    public static double getRadius(ServerPlayer player) {
+        double radius = BASE_RADIUS;
+        if (AtmosphereElement.hasUpgrade(player, AtmosphereElement.DOME_RADIUS_I)) radius += 0.5;
+        if (AtmosphereElement.hasUpgrade(player, AtmosphereElement.DOME_RADIUS_II)) radius += 0.5;
+        return radius;
+    }
+
+    public static float getTickChiCost(ServerPlayer player) {
+        float cost = BASE_TICK_CHI_COST;
+        if (AtmosphereElement.hasUpgrade(player, AtmosphereElement.DOME_EFFICIENCY_I)) cost -= 0.05f;
+        if (AtmosphereElement.hasUpgrade(player, AtmosphereElement.DOME_EFFICIENCY_II)) cost -= 0.05f;
+        return Math.max(cost, MIN_TICK_CHI_COST);
+    }
+
+    private void reflectProjectiles(ServerLevel level, Player player, double radius) {
         Vec3 center = player.position();
         for (Projectile projectile : level.getEntitiesOfClass(Projectile.class,
-                player.getBoundingBox().inflate(RADIUS), Projectile::isAlive)) {
+                player.getBoundingBox().inflate(radius), Projectile::isAlive)) {
 
             double speed = projectile.getDeltaMovement().length();
             if (speed < 0.05) {
@@ -92,9 +115,9 @@ public class AtmosphericDomeAbility implements Ability {
         }
     }
 
-    private void pushEntitiesAway(ServerLevel level, Player player) {
+    private void pushEntitiesAway(ServerLevel level, Player player, double radius) {
         Vec3 center = player.position();
-        for (Entity entity : level.getEntities(player, player.getBoundingBox().inflate(RADIUS),
+        for (Entity entity : level.getEntities(player, player.getBoundingBox().inflate(radius),
                 e -> e != player && e instanceof LivingEntity)) {
 
             Vec3 away = entity.position().subtract(center);
@@ -108,11 +131,11 @@ public class AtmosphericDomeAbility implements Ability {
         }
     }
 
-    private void breakLightBlocks(ServerLevel level, Player player) {
-        int r = (int) Math.ceil(RADIUS);
+    private void breakLightBlocks(ServerLevel level, Player player, double radius) {
+        int r = (int) Math.ceil(radius);
         BlockPos center = player.blockPosition();
         for (BlockPos pos : BlockPos.betweenClosed(center.offset(-r, -1, -r), center.offset(r, r, r))) {
-            if (pos.distSqr(center) > RADIUS * RADIUS) {
+            if (pos.distSqr(center) > radius * radius) {
                 continue;
             }
             BlockState state = level.getBlockState(pos);
@@ -132,7 +155,7 @@ public class AtmosphericDomeAbility implements Ability {
                 || state.is(Blocks.FERN);
     }
 
-    private void spawnShellParticles(ServerLevel level, Player player) {
+    private void spawnShellParticles(ServerLevel level, Player player, double radius) {
         if (level.getGameTime() % 2 != 0) {
             return;
         }
@@ -140,9 +163,9 @@ public class AtmosphericDomeAbility implements Ability {
         for (int i = 0; i < 4; i++) {
             double theta = level.random.nextDouble() * Math.PI * 2;
             double phi = Math.acos(2 * level.random.nextDouble() - 1);
-            double x = center.x + RADIUS * Math.sin(phi) * Math.cos(theta);
-            double y = center.y + RADIUS * Math.cos(phi);
-            double z = center.z + RADIUS * Math.sin(phi) * Math.sin(theta);
+            double x = center.x + radius * Math.sin(phi) * Math.cos(theta);
+            double y = center.y + radius * Math.cos(phi);
+            double z = center.z + radius * Math.sin(phi) * Math.sin(theta);
             level.sendParticles(ParticleTypes.CLOUD, x, y, z, 1, 0, 0, 0, 0);
         }
     }

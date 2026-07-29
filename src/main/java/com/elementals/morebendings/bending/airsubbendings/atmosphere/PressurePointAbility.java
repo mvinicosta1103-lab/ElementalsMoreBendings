@@ -20,9 +20,15 @@ import net.minecraft.world.entity.player.Player;
  * Manager+State dirigido por ServerTickEvent.Post, não uma Entity no
  * mundo — assim a zona continua existindo/contando o tempo mesmo que o
  * onTick da Ability pare de rodar por qualquer motivo.
+ *
+ * Raio e duração escalam com os upgrades de nível:
+ *  - pressureRadiusI / II    → +0.75 bloco de raio cada
+ *  - pressureDurationI / II  → +60 ticks (3s) de duração cada
  */
 public class PressurePointAbility implements Ability {
 
+    private static final double BASE_RADIUS = 4.0;
+    private static final int BASE_DURATION_TICKS = 20 * 10; // 10s
     private static final float CAST_CHI_COST = 10.0f;
 
     @Override
@@ -43,7 +49,7 @@ public class PressurePointAbility implements Ability {
             return;
         }
 
-        PressureZoneManager.startZone(level, caster);
+        PressureZoneManager.startZone(level, caster, getRadius(caster), getDurationTicks(caster));
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1.0f, 0.6f);
 
@@ -53,5 +59,19 @@ public class PressurePointAbility implements Ability {
     @Override
     public void onRemove(Bender bender) {
         bender.setCurrAbility(null);
+    }
+
+    public static double getRadius(ServerPlayer player) {
+        double radius = BASE_RADIUS;
+        if (AtmosphereElement.hasUpgrade(player, AtmosphereElement.PRESSURE_RADIUS_I)) radius += 0.75;
+        if (AtmosphereElement.hasUpgrade(player, AtmosphereElement.PRESSURE_RADIUS_II)) radius += 0.75;
+        return radius;
+    }
+
+    public static int getDurationTicks(ServerPlayer player) {
+        int duration = BASE_DURATION_TICKS;
+        if (AtmosphereElement.hasUpgrade(player, AtmosphereElement.PRESSURE_DURATION_I)) duration += 60;
+        if (AtmosphereElement.hasUpgrade(player, AtmosphereElement.PRESSURE_DURATION_II)) duration += 60;
+        return duration;
     }
 }

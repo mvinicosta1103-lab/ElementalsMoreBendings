@@ -15,7 +15,10 @@ import java.util.UUID;
  * {@code SandTornadoManager} deste addon: roda de forma independente do
  * sistema de onTick do mod base, dirigido pelo listener registrado em
  * {@link com.elementals.morebendings.ElementalsMoreBendingsMod} no
- * NeoForge.EVENT_BUS ({@link ServerTickEvent.Post}).
+ * NeoForge.EVENT_BUS ({@link ServerTickEvent.Post}). Raio e duração são
+ * calculados pela {@link PressurePointAbility} a partir dos upgrades do
+ * caster e passados pra {@link #startZone}, igual {@code MistCloudManager}
+ * já faz pro Heavy Fog.
  */
 public final class PressureZoneManager {
 
@@ -28,8 +31,8 @@ public final class PressureZoneManager {
         return ACTIVE.containsKey(caster.getUUID());
     }
 
-    public static void startZone(ServerLevel level, ServerPlayer caster) {
-        PressureZoneState state = new PressureZoneState(level, caster);
+    public static void startZone(ServerLevel level, ServerPlayer caster, double radius, int durationTicks) {
+        PressureZoneState state = new PressureZoneState(level, caster, radius, durationTicks);
         state.begin();
         ACTIVE.put(caster.getUUID(), state);
     }

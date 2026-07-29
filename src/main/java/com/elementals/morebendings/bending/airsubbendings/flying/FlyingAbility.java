@@ -6,6 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.level.GameType;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
@@ -64,6 +65,19 @@ public class FlyingAbility {
         }
         startFlying(player);
         return true;
+    }
+
+    /**
+     * Registrado via NeoForge.EVENT_BUS em ElementalsMoreBendingsMod (ver
+     * {@code PlayerEvent.PlayerLoggedOutEvent}). SEM isso, quem desconecta
+     * enquanto está voando fica com o UUID preso em {@code flying} pra
+     * sempre -- o vanilla já reseta {@code abilities.flying} pro jogador
+     * novo que loga, mas {@link #toggle} continua achando que ele "ainda
+     * está voando" e só desliga um estado que já estava desligado, então
+     * o primeiro toggle depois de reconectar não faz nada visível.
+     */
+    public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
+        flying.remove(event.getEntity().getUUID());
     }
 
     private static void startFlying(ServerPlayer player) {
