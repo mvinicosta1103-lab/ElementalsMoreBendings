@@ -1,5 +1,6 @@
 package com.elementals.morebendings;
 
+import com.elementals.morebendings.bending.earthsubbendings.bone.BoneElement;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalElement;
 import com.elementals.morebendings.bending.earthsubbendings.glass.GlassElement;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaElement;
@@ -21,7 +22,7 @@ import com.elementals.morebendings.registry.ModAbilities;
 public class CommonClass {
 
     public static void init() {
-        Constants.LOG.info("Inicializando sub-bendings comuns (Plant, Spirit, Mud, Crystal, Sand, Glass, Petrification, Lava, Atmosphere, Gas, Mist, Sound, Temperature, Void, Plasma) na 1.21.1...");
+        Constants.LOG.info("Inicializando sub-bendings comuns (Plant, Spirit, Mud, Crystal, Sand, Glass, Petrification, Lava, Bone, Atmosphere, Gas, Mist, Sound, Temperature, Void, Plasma) na 1.21.1...");
 
         // WATER SUBBENDINGS
         PlantElement.register();
@@ -34,6 +35,7 @@ public class CommonClass {
         GlassElement.register();
         PetrificationElement.register();
         LavaElement.register();
+        BoneElement.register();
 
         // AIR SUBBENDINGS
         AtmosphereElement.register();
