@@ -13,8 +13,9 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * "sandTornado" — única habilidade (raiz) da árvore de Sand (ver
- * {@link SandElement}).
+ * "sandTornado" — primeira habilidade raiz da árvore de Sand (ver
+ * {@link SandElement}; as outras três são {@code sandBlast}, {@code
+ * sandQuicksand} e {@code sandWave}).
  *
  * Conjura uma coluna giratória de areia no ponto mirado no chão: suga os
  * blocos de {@code SAND}/{@code RED_SAND} próximos (ver {@link

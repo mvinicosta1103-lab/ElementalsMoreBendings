@@ -11,6 +11,7 @@ import com.elementals.morebendings.bending.earthsubbendings.lava.MagmaSpikeManag
 import com.elementals.morebendings.bending.earthsubbendings.lava.VolcanicEruptionManager;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudSpikeManager;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudTrapManager;
+import com.elementals.morebendings.bending.earthsubbendings.sand.SandQuicksandManager;
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandTornadoManager;
 import com.elementals.morebendings.bending.airsubbendings.atmosphere.PressureZoneManager;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistCloudManager;
@@ -80,6 +81,12 @@ public class ElementalsMoreBendingsMod {
         // Dirige os tornados de sandTornado ativos (giro/sucção/dano) --
         // ver SandTornadoManager. Mesmo esquema do MudTrapManager.
         NeoForge.EVENT_BUS.addListener(SandTornadoManager::onServerTick);
+
+        // Desmancha as crateras de sandQuicksand ativas depois do tempo --
+        // não depende do caster ficar agachado/por perto, ver
+        // SandQuicksandManager (mesmo esquema de tick independente do
+        // MudTrapManager/SandTornadoManager acima).
+        NeoForge.EVENT_BUS.addListener(SandQuicksandManager::onServerTick);
 
         NeoForge.EVENT_BUS.addListener(PressureZoneManager::onServerTick);
 

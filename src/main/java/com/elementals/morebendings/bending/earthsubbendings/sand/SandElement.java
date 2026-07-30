@@ -22,10 +22,22 @@ public class SandElement extends Element {
     public static final String NAME = "Sand";
 
     public SandElement() {
+        // Exatamente 4 filhos diretos na raiz -- é o máximo que
+        // UpgradeTreeScreen#render() desenha (root.children[0..3], mesmo
+        // limite documentado em MudElement/LavaElement). Com sandTornado
+        // + sandBlast + sandQuicksand + sandWave, Sand chega no limite:
+        // qualquer habilidade futura precisa entrar como `children`
+        // aninhado dentro de um desses 4, não como um 5º Upgrade solto aqui.
         super(NAME, new Upgrade[]{
-                new Upgrade("sandTornado", 0) // grátis -- ver SandTornadoAbility
+                new Upgrade("sandTornado", 0),   // grátis -- ver SandTornadoAbility
+                new Upgrade("sandBlast", 0),     // grátis -- ver SandBlastAbility
+                new Upgrade("sandQuicksand", 0), // grátis -- ver SandQuicksandAbility
+                new Upgrade("sandWave", 0)       // grátis -- ver SandWaveAbility
         });
         addAbility(new SandTornadoAbility(), 0);
+        addAbility(new SandBlastAbility(), 1);
+        addAbility(new SandQuicksandAbility(), 2);
+        addAbility(new SandWaveAbility(), 3);
     }
 
     /** Registra a instância única no mod base. Chame uma vez, no load do mod. */
@@ -54,6 +66,10 @@ public class SandElement extends Element {
 
     @Override
     public boolean isSkillTreeComplete(Bender bender) {
-        return bender.hasElement(this) && bender.getData().canUseUpgrade("sandTornado");
+        return bender.hasElement(this)
+                && bender.getData().canUseUpgrade("sandTornado")
+                && bender.getData().canUseUpgrade("sandBlast")
+                && bender.getData().canUseUpgrade("sandQuicksand")
+                && bender.getData().canUseUpgrade("sandWave");
     }
 }
