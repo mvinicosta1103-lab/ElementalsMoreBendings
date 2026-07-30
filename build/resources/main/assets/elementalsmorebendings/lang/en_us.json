@@ -90,6 +90,8 @@
   "upgrade.elementals.voidStep.description": "Step through the void, blinking forward in the direction you're looking, stopping just short of any solid obstacle.",
   "ability.elementalsmorebendings.mud_surge": "Mud Surge",
   "ability.elementalsmorebendings.mud_trap": "Mud Trap",
+  "ability.elementalsmorebendings.mud_ball": "Mud Ball",
+  "ability.elementalsmorebendings.mud_spikes": "Mud Spikes",
   "ability.elementalsmorebendings.crystal_shard": "Crystal Shards",
   "ability.elementalsmorebendings.bone_control": "Bone Control",
   "ability.elementalsmorebendings.bone_puppeteer": "Bone Puppeteer",
@@ -121,6 +123,16 @@
   "upgrade.elementals.mudTrap.use": "Use: %d",
   "upgrade.elementals.mudSurge.icon": "mud_slide",
   "upgrade.elementals.mudTrap.icon": "mud_wall",
+
+  "upgrade.elementals.mudBall": "Mud Ball",
+  "upgrade.elementals.mudBall.description": "Hurls a ball of mud that bursts on impact, coating everyone caught nearby in Slowness and Mining Fatigue.",
+  "upgrade.elementals.mudBall.use": "Use: %d",
+  "upgrade.elementals.mudBall.icon": "mud_ball",
+
+  "upgrade.elementals.mudSpikes": "Mud Spikes",
+  "upgrade.elementals.mudSpikes.description": "Erupts a cluster of jagged mud spikes from the ground where you're aiming, damaging and launching anyone caught in the burst upward.",
+  "upgrade.elementals.mudSpikes.use": "Use: %d",
+  "upgrade.elementals.mudSpikes.icon": "mud_spikes",
 
   "upgrade.elementals.crystalShard": "Crystal Shards",
   "upgrade.elementals.crystalShard.description": "Fires a spike of crystal in the direction you're looking, dealing damage to whatever it hits.",

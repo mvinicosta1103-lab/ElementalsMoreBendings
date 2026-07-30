@@ -5,6 +5,7 @@ import dev.saperate.elementals.data.ElementalConfig;
 import dev.saperate.elementals.entities.common.AbstractElementalsEntity;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -80,10 +81,13 @@ public class MudBallEntity extends AbstractElementalsEntity<Player> {
 
     /** Espalha partículas de lama no ponto de impacto, tanto batendo no chão quanto numa entidade. */
     private void splat() {
-        if (this.level().isClientSide) {
+        // sendParticles(BlockParticleOption, x, y, z, count, dx, dy, dz, speed) só existe
+        // em ServerLevel (broadcast pros clientes que estão rastreando) -- Level (o tipo
+        // genérico que this.level() retorna) só tem addParticle, cliente-only.
+        if (!(this.level() instanceof ServerLevel serverLevel)) {
             return;
         }
-        this.level().sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.MUD.defaultBlockState()),
+        serverLevel.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.MUD.defaultBlockState()),
                 this.getX(), this.getY(), this.getZ(), 10, 0.25, 0.2, 0.25, 0.05);
     }
 
