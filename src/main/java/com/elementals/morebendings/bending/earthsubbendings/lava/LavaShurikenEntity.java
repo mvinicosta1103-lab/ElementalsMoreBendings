@@ -47,10 +47,20 @@ import org.joml.Vector3f;
  *  2. SECA ÁGUA EM OBSIDIANA: toda vez que a farpa está dentro/tocando um
  *     bloco de água (fonte ou corrente), a água vira {@link
  *     Blocks#OBSIDIAN} na hora -- o oposto exato da própria mecânica de
- *     lava+água do jogo (que gera obsidiana quando LAVA encontra água; wiki
- *     mesma ideia, só que aqui é a farpa "roubando" a água pra virar pedra
- *     na hora, em vez de precisar de um bloco de lava parado do lado).
+ *     lava+água do jogo.
  *  3. Imune a fogo (óbvio, é lava) e emite luz fraca.
+ *
+ * CORREÇÕES (ver conversa de debug):
+ *  - {@link #onHitEntity} e {@link #onTouchEntity} agora checam
+ *    {@code owner == null} antes de chamar {@code damageSources().playerAttack(owner)}.
+ *    Sem essa checagem, se o dono desconectar (ou, no client, se o owner
+ *    ainda não tiver sido resolvido via rede no primeiro tick pós-spawn)
+ *    o vanilla lança NullPointerException dentro de playerAttack(null) e
+ *    derruba o client -- esse é o crash reportado ao usar a habilidade.
+ *  - {@link #dryNearbyWater} agora só roda a cada 5 ticks em vez de todo
+ *    tick, pra evitar dezenas de setBlock (+ recalculo de luz) por tick
+ *    perto de água, que pode gerar lag severo ou disparar o watchdog do
+ *    servidor integrado.
  */
 public class LavaShurikenEntity extends AbstractElementalsEntity<Player> {
 
@@ -62,6 +72,8 @@ public class LavaShurikenEntity extends AbstractElementalsEntity<Player> {
     private static final float TOUCH_DAMAGE_FRACTION = 0.35f;
     /** Raio (em blocos) checado ao redor da farpa toda vez que ela está dentro de água. */
     private static final int DRY_RADIUS = 1;
+    /** A cada quantos ticks a checagem de água roda (throttle de performance). */
+    private static final int DRY_CHECK_INTERVAL = 5;
 
     public LavaShurikenEntity(EntityType<LavaShurikenEntity> type, Level level) {
         super(type, level, Player.class);
@@ -92,7 +104,9 @@ public class LavaShurikenEntity extends AbstractElementalsEntity<Player> {
     public void tick() {
         super.tick();
 
-        dryNearbyWater();
+        if (this.tickCount % DRY_CHECK_INTERVAL == 0) {
+            dryNearbyWater();
+        }
 
         Player owner = this.getOwner();
         if (owner == null || this.isRemoved()) {
@@ -122,12 +136,9 @@ public class LavaShurikenEntity extends AbstractElementalsEntity<Player> {
     }
 
     /**
-     * Converte água num raio pequeno ao redor pra obsidiana, na hora, se a
-     * farpa estiver dentro (ou tocando) um bloco de água -- pedido
-     * explícito do addon: "se passar em água ela seca e vira obsidiana".
-     * Simplificado pra checar {@code Blocks.WATER} diretamente (mesma
-     * simplicidade que {@code LavaPoolAbility.MOLTENABLE} usa pra decidir
-     * o que "derrete") -- não tenta lidar com blocos waterlogged.
+     * Converte água num raio pequeno ao redor pra obsidiana, se a farpa
+     * estiver dentro (ou tocando) um bloco de água. Agora chamada só a
+     * cada {@link #DRY_CHECK_INTERVAL} ticks (ver javadoc da classe).
      */
     private void dryNearbyWater() {
         if (this.level().isClientSide) {
@@ -173,6 +184,13 @@ public class LavaShurikenEntity extends AbstractElementalsEntity<Player> {
     public void onHitEntity(Entity entity) {
         // Impacto direto (farpa arremessada, sem controle) -- dano cheio + discard, igual o Water Blade.
         Player owner = this.getOwner();
+        if (owner == null) {
+            // Dono sumiu (desconectou / ainda não resolvido) -- não dá pra
+            // atribuir o dano a ninguém, então só descarta a entidade em
+            // vez de estourar NPE em playerAttack(null).
+            this.discard();
+            return;
+        }
         entity.hurt(this.damageSources().playerAttack(owner), this.getDamage() * ElementalConfig.get().BENDING_DAMAGE_MULTIPLIER);
         entity.igniteForSeconds(3);
         entity.addDeltaMovement(this.getDeltaMovement().scale(0.8));
@@ -187,6 +205,9 @@ public class LavaShurikenEntity extends AbstractElementalsEntity<Player> {
             return;
         }
         Player owner = this.getOwner();
+        if (owner == null) {
+            return;
+        }
         entity.hurt(this.damageSources().playerAttack(owner),
                 this.getDamage() * TOUCH_DAMAGE_FRACTION * ElementalConfig.get().BENDING_DAMAGE_MULTIPLIER);
     }
