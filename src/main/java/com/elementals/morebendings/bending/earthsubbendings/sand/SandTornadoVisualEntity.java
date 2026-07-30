@@ -15,7 +15,7 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Entidade puramente visual do funil giratório de {@code sandTornado} (ver
- * {@link SandTornadoState}/{@link SandTornadoAbility}) -- mesmo padrão de
+ * {@link SandTornadoState}/{@code SandTornadoAbility}) -- mesmo padrão de
  * {@code MudSpikeVisualEntity}/{@code MagmaSpikeVisualEntity}: sem física,
  * sem gravidade, sem colisão, só existência + um {@code seed} sincronizado
  * pra o {@link SandTornadoVisualEntityRenderer} desenhar exatamente o

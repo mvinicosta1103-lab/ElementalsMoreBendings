@@ -9,6 +9,7 @@ import com.elementals.morebendings.bending.earthsubbendings.lava.MagmaSpikeVisua
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudBallEntity;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudSpikeVisualEntity;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudSurgeChunkEntity;
+import com.elementals.morebendings.bending.earthsubbendings.sand.SandTornadoVisualEntity;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntity;
 import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionBoltEntity;
 import net.minecraft.core.registries.Registries;
@@ -117,6 +118,25 @@ public class ModEntities {
                             .clientTrackingRange(64)
                             .updateInterval(20)
                             .build("magma_spike_visual"));
+
+    /**
+     * Funil giratório puramente visual de "sandTornado" (ver
+     * {@link SandTornadoVisualEntity}/{@code SandTornadoState}) -- mesmo
+     * esquema de {@link #MAGMA_SPIKE_VISUAL}/{@link #MUD_SPIKE_VISUAL}: sem
+     * física, sem colisão, {@code updateInterval} alto porque a entidade não
+     * se move de verdade (só existe parada na base, contando com um
+     * {@code seed} sincronizado -- quem gira é o renderer no cliente, não a
+     * posição da entidade). Hitbox nominal pequena; a área de culling real é
+     * bem maior, definida em {@code SandTornadoVisualEntity#getBoundingBoxForCulling}.
+     */
+    public static final Supplier<EntityType<SandTornadoVisualEntity>> SAND_TORNADO_VISUAL =
+            ENTITY_TYPES.register("sand_tornado_visual",
+                    () -> EntityType.Builder.<SandTornadoVisualEntity>of(SandTornadoVisualEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .sized(0.5f, 0.5f)
+                            .clientTrackingRange(64)
+                            .updateInterval(20)
+                            .build("sand_tornado_visual"));
 
     /**
      * Projétil de "mudBall" (ver {@link MudBallEntity}) -- hitbox pequena
