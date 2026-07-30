@@ -8,6 +8,7 @@ import com.elementals.morebendings.bending.earthsubbendings.lava.LavaShurikenEnt
 import com.elementals.morebendings.bending.earthsubbendings.lava.MagmaSpikeVisualEntity;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudBallEntity;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudSpikeVisualEntity;
+import com.elementals.morebendings.bending.earthsubbendings.mud.MudSurgeChunkEntity;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntity;
 import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionBoltEntity;
 import net.minecraft.core.registries.Registries;
@@ -145,6 +146,22 @@ public class ModEntities {
                             .clientTrackingRange(64)
                             .updateInterval(20)
                             .build("mud_spike_visual"));
+
+    /**
+     * Pedaço de lama endurecida de "mudSurge" (ver {@link MudSurgeChunkEntity}
+     * / {@code MudSurgeAbility}) -- vários spawnados lado a lado por cast,
+     * formando a frente da onda. Sem gravidade e {@code updateInterval} baixo
+     * (se move rápido, rente ao chão, e precisa continuar sincronizado
+     * enquanto atravessa vários alvos na fileira).
+     */
+    public static final Supplier<EntityType<MudSurgeChunkEntity>> MUD_SURGE_CHUNK =
+            ENTITY_TYPES.register("mud_surge_chunk",
+                    () -> EntityType.Builder.<MudSurgeChunkEntity>of(MudSurgeChunkEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .sized(0.4f, 0.35f)
+                            .clientTrackingRange(64)
+                            .updateInterval(1)
+                            .build("mud_surge_chunk"));
 
     private ModEntities() {
     }

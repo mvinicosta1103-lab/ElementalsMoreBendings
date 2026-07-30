@@ -7,6 +7,7 @@ import com.elementals.morebendings.bending.earthsubbendings.lava.LavaShurikenEnt
 import com.elementals.morebendings.bending.earthsubbendings.lava.MagmaSpikeVisualEntityRenderer;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudBallEntityRenderer;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudSpikeVisualEntityRenderer;
+import com.elementals.morebendings.bending.earthsubbendings.mud.MudSurgeChunkEntityRenderer;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntityRenderer;
 import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionBoltEntityRenderer;
 import com.elementals.morebendings.registry.ModEntities;
@@ -27,6 +28,7 @@ public class ClientClass {
         event.registerEntityRenderer(ModEntities.MAGMA_SPIKE_VISUAL.get(), MagmaSpikeVisualEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.MUD_BALL.get(), MudBallEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.MUD_SPIKE_VISUAL.get(), MudSpikeVisualEntityRenderer::new);
+        event.registerEntityRenderer(ModEntities.MUD_SURGE_CHUNK.get(), MudSurgeChunkEntityRenderer::new);
     }
 
     public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
