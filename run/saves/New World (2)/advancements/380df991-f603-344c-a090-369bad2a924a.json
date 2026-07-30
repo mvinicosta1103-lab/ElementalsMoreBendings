@@ -1,0 +1,39 @@
+{
+  "minecraft:recipes/misc/magenta_dye_from_lilac": {
+    "criteria": {
+      "has_lilac": "2026-07-30 19:11:15 -0300"
+    },
+    "done": true
+  },
+  "minecraft:story/lava_bucket": {
+    "criteria": {
+      "lava_bucket": "2026-07-30 19:04:40 -0300"
+    },
+    "done": true
+  },
+  "elementals:earthbending": {
+    "criteria": {
+      "element": "2026-07-30 19:03:33 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/crafting_table": {
+    "criteria": {
+      "unlock_right_away": "2026-07-30 19:03:05 -0300"
+    },
+    "done": true
+  },
+  "elementals:root": {
+    "criteria": {
+      "trigger": "2026-07-30 19:03:05 -0300"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:birch_forest": "2026-07-30 19:03:20 -0300"
+    },
+    "done": false
+  },
+  "DataVersion": 3955
+}
