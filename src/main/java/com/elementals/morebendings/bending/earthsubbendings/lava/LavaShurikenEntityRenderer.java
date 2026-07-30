@@ -16,29 +16,29 @@ import org.joml.Matrix4f;
 /**
  * Renderer do {@link LavaShurikenEntity}.
  *
- * === REDESENHO (pedido: "igual ao Water Blade, uma Shuriken que fica
- * girando com partes pontiagudas") ===
- * A versão anterior desenhava um único "espeto" fino apontado na direção
- * do voo (mesmo esquema de CrystalShardEntityRenderer/GlassShardEntityRenderer
- * neste addon). Troquei por uma farpa composta: um núcleo cúbico no centro
- * + {@link #SPIKES} espigões finos radiando em várias direções (não só
- * num plano -- alternam entre "pra cima" e "pra baixo" a cada 45° de yaw,
- * pra dar volume 3D de estilha, como na referência
- * assets/elementalssubbending/textures/entity/lava_shuriken.png do addon
- * ElementalsSubbending anexado).
+ * === REDESENHO #2 (pedido: "shuriken de verdade, lâminas horizontais num
+ * eixo só, não espigões espalhados de qualquer jeito") ===
+ * A versão anterior (bola de espigões com pitch variado, apontando em
+ * várias direções tipo estilhaço 3D) ficou parecendo uma bola de espinhos
+ * aleatória, não uma shuriken -- reportado com screenshot pelo usuário.
  *
- * Copiei o truque de giro contínuo de
- * {@code dev.saperate.elementals.client.entities.water.WaterBladeEntityRenderer}
- * (o Water Blade do mod base): em vez de derivar a rotação do yaw/pitch da
- * entidade (que só atualiza por tick e trava quando ela está parada sob
- * controle), gira em cima de {@code System.currentTimeMillis()}, então a
- * farpa fica girando sem parar mesmo enquanto está "presa" na mão do
- * jogador esperando o arremesso -- igual o Water Blade original.
+ * Troquei o layout inteiro: agora TODAS as lâminas têm pitch = 0, ou seja,
+ * vivem no mesmo plano horizontal (plano XZ) e só variam em yaw --
+ * exatamente como uma estrela ninja de verdade, que é um disco fino com
+ * pontas, não uma esfera de espinhos. O giro continua em torno do eixo Y
+ * ({@code Axis.YP}), que é o eixo certo pra isso: como as lâminas estão
+ * todas no plano horizontal, girar em Y faz elas girarem "de plano" (igual
+ * um shuriken/frisbee de verdade), em vez de girar uma bola em torno de um
+ * eixo arbitrário.
  *
- * Continua sem model/.json próprio: cada espigão e o núcleo são só
- * chamadas de {@link RenderUtils#drawCube} com uma sprite do atlas de
- * blocos (block/magma_block, igual antes), só que agora várias por
- * entidade em vez de uma.
+ * Cada lâmina também ficou achatada (fina em Y, larga em X) em vez de ter
+ * seção quadrada, pra realmente ler como "lâmina" e não "espigão" quando
+ * vista de perto -- e ainda tem 2 segmentos (base larga escura perto do
+ * núcleo, ponta fina clara na extremidade) pro degradê vinho->laranja.
+ *
+ * Continua sem model/.json próprio: só chamadas de
+ * {@link RenderUtils#drawCube} com a sprite do atlas de blocos
+ * (block/magma_block).
  */
 public class LavaShurikenEntityRenderer extends EntityRenderer<LavaShurikenEntity> {
 
@@ -47,21 +47,38 @@ public class LavaShurikenEntityRenderer extends EntityRenderer<LavaShurikenEntit
 
     // Tint do núcleo: mais escuro/avermelhado, pra parecer a "casca" da farpa.
     private static final float CORE_R = 0.45f, CORE_G = 0.12f, CORE_B = 0.05f, CORE_A = 1.0f;
-    // Tint dos espigões: laranja quente, mais claro que o núcleo (a "ponta" incandescente).
-    private static final float SPIKE_R = 1.0f, SPIKE_G = 0.55f, SPIKE_B = 0.15f, SPIKE_A = 1.0f;
+    // Tint das pontas: laranja quente, mais claro que o núcleo (a parte incandescente).
+    private static final float BLADE_R = 1.0f, BLADE_G = 0.55f, BLADE_B = 0.15f, BLADE_A = 1.0f;
 
-    private static final float CORE_SIZE = 0.20f;
-    private static final float SPIKE_LENGTH = 0.42f;
-    private static final float SPIKE_THICKNESS = 0.085f;
-    private static final float SPIKE_INNER_RADIUS = 0.08f;
+    // Núcleo achatado (disco fino), não mais um cubo "redondo".
+    private static final float CORE_WIDTH = 0.22f;
+    private static final float CORE_HEIGHT = 0.09f;
 
-    /** Graus de giro por milissegundo -- mesma ideia do {@code rot * 20.0f} do Water Blade (mas em ms, não em ticks). */
-    private static final float SPIN_DEGREES_PER_MS = 0.35f;
+    // Lâminas: largura (eixo X, "grossura" vista de cima) x altura (eixo Y, achatada) x comprimento (eixo Z, radial).
+    private static final float BLADE_LENGTH = 0.62f;
+    private static final float BLADE_WIDTH = 0.16f;
+    private static final float BLADE_HEIGHT = 0.075f;
+    private static final float BLADE_INNER_RADIUS = 0.06f;
 
-    /** yaw/pitch (graus) de cada espigão -- alterna pitch pra formar uma "bola de estilhaços" em vez de um leque plano. */
-    private static final float[][] SPIKES = {
-            {0f, 0f}, {45f, 35f}, {90f, 0f}, {135f, -35f},
-            {180f, 0f}, {225f, 35f}, {270f, 0f}, {315f, -35f},
+    /** Fração do comprimento que é a base (larga, escura) -- o resto é a ponta (fina, clara). */
+    private static final float BASE_SEGMENT_FRACTION = 0.5f;
+    /** Quanto a ponta afina em relação à base (dá o formato triangular/pontudo de lâmina). */
+    private static final float TIP_WIDTH_FACTOR = 0.45f;
+
+    /** Graus de giro por milissegundo -- giro rápido de shuriken girando no ar. */
+    private static final float SPIN_DEGREES_PER_MS = 1.1f;
+
+    /**
+     * yaw (graus) e multiplicador de comprimento de cada lâmina -- SEM pitch,
+     * todas no mesmo plano horizontal. 8 pontas alternando longa/curta (igual
+     * shuriken de 4 ou 8 pontas clássica), espaçadas uniformemente a cada 45°
+     * -- aqui a simetria é intencional (é uma shuriken de verdade, não um
+     * estilhaço caótico), a leitura de "shuriken" vem do formato plano e
+     * achatado das lâminas, não de aleatoriedade.
+     */
+    private static final float[][] BLADES = {
+            {  0f, 1.00f}, { 45f, 0.62f}, { 90f, 1.00f}, {135f, 0.62f},
+            {180f, 1.00f}, {225f, 0.62f}, {270f, 1.00f}, {315f, 0.62f},
     };
 
     private static long firstTime = -1L;
@@ -79,6 +96,9 @@ public class LavaShurikenEntityRenderer extends EntityRenderer<LavaShurikenEntit
         float spinDegrees = (System.currentTimeMillis() - firstTime) * SPIN_DEGREES_PER_MS;
 
         poseStack.pushPose();
+        // Eixo único de giro: Y. Como toda a geometria abaixo vive no plano
+        // horizontal (pitch = 0), isso gira a shuriken "de plano", igual uma
+        // shuriken real arremessada.
         poseStack.mulPose(Axis.YP.rotationDegrees(spinDegrees));
 
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
@@ -88,25 +108,42 @@ public class LavaShurikenEntityRenderer extends EntityRenderer<LavaShurikenEntit
 
         VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.translucentMovingBlock());
 
-        // Núcleo: cubo pequeno centralizado na origem (translate -0.5 então scale, igual o
-        // "espeto" original -- ver javadoc da classe).
+        // Núcleo: disco fino centralizado na origem.
         Matrix4f coreRot = new Matrix4f()
-                .scale(CORE_SIZE, CORE_SIZE, CORE_SIZE)
+                .scale(CORE_WIDTH, CORE_HEIGHT, CORE_WIDTH)
                 .translate(0.0f, 0.0f, -0.5f);
         RenderUtils.drawCube(vertexConsumer, poseStack, packedLight, CORE_R, CORE_G, CORE_B, CORE_A, TEXTURE,
                 1.0f, coreRot, false, true, true);
 
-        // Espigões: cada um parte de SPIKE_INNER_RADIUS (perto do núcleo) e se estende
-        // SPIKE_LENGTH blocos pra fora, apontando na direção definida por SPIKES.
-        float tz = SPIKE_INNER_RADIUS / SPIKE_LENGTH;
-        for (float[] spike : SPIKES) {
-            Matrix4f spikeRot = new Matrix4f()
-                    .rotateY((float) Math.toRadians(spike[0]))
-                    .rotateX((float) Math.toRadians(spike[1]))
-                    .scale(SPIKE_THICKNESS, SPIKE_THICKNESS, SPIKE_LENGTH)
-                    .translate(0.0f, 0.0f, tz);
-            RenderUtils.drawCube(vertexConsumer, poseStack, packedLight, SPIKE_R, SPIKE_G, SPIKE_B, SPIKE_A, TEXTURE,
-                    1.0f, spikeRot, false, true, true);
+        // Lâminas: todas no plano horizontal (só yaw, pitch sempre 0), cada uma com
+        // base larga+escura perto do núcleo e ponta fina+clara na extremidade.
+        for (float[] blade : BLADES) {
+            float yaw = blade[0];
+            float length = BLADE_LENGTH * blade[1];
+
+            float baseLength = length * BASE_SEGMENT_FRACTION;
+            float tipLength = length - baseLength;
+            float tipWidth = BLADE_WIDTH * TIP_WIDTH_FACTOR;
+
+            // Base: de BLADE_INNER_RADIUS até BLADE_INNER_RADIUS + baseLength.
+            float baseCenter = BLADE_INNER_RADIUS + baseLength / 2.0f;
+            float tzBase = baseCenter / baseLength;
+            Matrix4f baseRot = new Matrix4f()
+                    .rotateY((float) Math.toRadians(yaw))
+                    .scale(BLADE_WIDTH, BLADE_HEIGHT, baseLength)
+                    .translate(0.0f, 0.0f, tzBase);
+            RenderUtils.drawCube(vertexConsumer, poseStack, packedLight, CORE_R, CORE_G, CORE_B, CORE_A, TEXTURE,
+                    1.0f, baseRot, false, true, true);
+
+            // Ponta: continua de onde a base parou, mais fina e mais clara -- dá o bico da lâmina.
+            float tipCenter = BLADE_INNER_RADIUS + baseLength + tipLength / 2.0f;
+            float tzTip = tipCenter / tipLength;
+            Matrix4f tipRot = new Matrix4f()
+                    .rotateY((float) Math.toRadians(yaw))
+                    .scale(tipWidth, BLADE_HEIGHT, tipLength)
+                    .translate(0.0f, 0.0f, tzTip);
+            RenderUtils.drawCube(vertexConsumer, poseStack, packedLight, BLADE_R, BLADE_G, BLADE_B, BLADE_A, TEXTURE,
+                    1.0f, tipRot, false, true, true);
         }
 
         RenderSystem.disableBlend();
