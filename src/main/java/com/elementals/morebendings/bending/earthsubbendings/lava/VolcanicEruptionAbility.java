@@ -184,6 +184,9 @@ public class VolcanicEruptionAbility implements Ability {
                         ground.getX() + 0.5, ground.getY() + 1.0, ground.getZ() + 0.5, 5, 0.2, 0.2, 0.2, 0.0);
                 original.put(ground.immutable(), existing);
                 level.setBlock(ground, Blocks.MAGMA_BLOCK.defaultBlockState(), 3);
+                // Mesmo espinho 3D de verdade que MagmaSpikeAbility usa agora (ver
+                // MagmaSpikeVisualEntity) -- reaproveitado aqui pro anel da erupção.
+                MagmaSpikeVisualEntity.spawn(level, ground, SPIKE_RETRACT_AFTER_TICKS);
                 placed.add(ground.immutable());
             }
         }

@@ -48,6 +48,7 @@ public class LavaElement extends Element {
     public static final String LAVA_SURF = "lavaSurf";
     public static final String VOLCANIC_ERUPTION = "volcanicEruption";
     public static final String LAVA_ARMOR = "lavaArmor";
+    public static final String OBSIDIAN_CRUST = "obsidianCrust";
 
     public LavaElement() {
         // Exatamente 4 filhos diretos na raiz -- é o máximo que
@@ -64,7 +65,8 @@ public class LavaElement extends Element {
                         new Upgrade(LAVA_SURF, 0)
                 }, 0),
                 new Upgrade(MAGMA_SPIKE, new Upgrade[]{
-                        new Upgrade(VOLCANIC_ERUPTION, 0)
+                        new Upgrade(VOLCANIC_ERUPTION, 0),
+                        new Upgrade(OBSIDIAN_CRUST, 0)
                 }, 0),
                 new Upgrade(LAVA_SHURIKEN, 0)
         });
@@ -76,6 +78,7 @@ public class LavaElement extends Element {
         addAbility(new LavaSurfAbility(), 4);
         addAbility(new VolcanicEruptionAbility(), 5);
         addAbility(new LavaArmorAbility(), 6);
+        addAbility(new ObsidianCrustAbility(), 7);
 
         // Sem isso, Element#getKeybindSlotForUpgrade() sobe a árvore, não
         // acha nada em upgradeKeybinds e cai pro índice do RAMO da raiz
@@ -93,6 +96,7 @@ public class LavaElement extends Element {
         registerUpgradeKeybind(LAVA_SURF, 4);
         registerUpgradeKeybind(VOLCANIC_ERUPTION, 5);
         registerUpgradeKeybind(LAVA_ARMOR, 6);
+        registerUpgradeKeybind(OBSIDIAN_CRUST, 7);
     }
 
     /** Registra a instância única no mod base. Chame uma vez, no load do mod. */
@@ -128,6 +132,7 @@ public class LavaElement extends Element {
                 && bender.getData().canUseUpgrade(LAVA_SHURIKEN)
                 && bender.getData().canUseUpgrade(LAVA_SURF)
                 && bender.getData().canUseUpgrade(VOLCANIC_ERUPTION)
-                && bender.getData().canUseUpgrade(LAVA_ARMOR);
+                && bender.getData().canUseUpgrade(LAVA_ARMOR)
+                && bender.getData().canUseUpgrade(OBSIDIAN_CRUST);
     }
 }

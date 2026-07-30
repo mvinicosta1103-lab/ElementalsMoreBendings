@@ -37,6 +37,14 @@ import java.util.Map;
  * {@link MagmaSpikeManager}, mesmo esquema (manager + registro no
  * NeoForge.EVENT_BUS) que {@link LavaPoolManager} já usa, só que
  * revertendo pro estado ANTERIOR em vez de esfriar pra basalto.
+ *
+ * === MODELO 3D DE VERDADE (antes era só troca de textura) ===
+ * Cada posição erguida agora também spawna um {@link MagmaSpikeVisualEntity}
+ * em cima do bloco -- um espeto pontudo de verdade (com animação de
+ * crescer/encolher), não mais só o piso virando magma_block. O bloco em si
+ * continua sendo trocado (mantém a luz/textura/colisão do chão), o
+ * espinho visual é só "decoração" por cima, sincronizado pra sumir
+ * exatamente quando {@link MagmaSpikeManager} reverte o bloco.
  */
 public class MagmaSpikeAbility implements Ability {
 
@@ -108,6 +116,10 @@ public class MagmaSpikeAbility implements Ability {
                         ground.getX() + 0.5, ground.getY() + 1.0, ground.getZ() + 0.5, 6, 0.2, 0.2, 0.2, 0.0);
                 original.put(ground.immutable(), existing);
                 level.setBlock(ground, Blocks.MAGMA_BLOCK.defaultBlockState(), 3);
+                // Espinho de verdade (modelo 3D, ver MagmaSpikeVisualEntity) brotando em
+                // cima do bloco, não só a troca de textura -- sincronizado pra sumir
+                // exatamente quando o bloco reverte (mesmo RETRACT_AFTER_TICKS).
+                MagmaSpikeVisualEntity.spawn(level, ground, RETRACT_AFTER_TICKS);
                 placed.add(ground.immutable());
             }
         }

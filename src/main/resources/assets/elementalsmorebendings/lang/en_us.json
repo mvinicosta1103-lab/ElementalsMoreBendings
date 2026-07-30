@@ -175,6 +175,10 @@
   "upgrade.elementals.lavaArmor.description": "Coats yourself in a hardened shell of lava while holding crouch, granting fire immunity and resistance, and igniting anyone who lands a melee hit on you.",
   "upgrade.elementals.lavaArmor.use": "Use: %d",
 
+  "upgrade.elementals.obsidianCrust": "Obsidian Crust",
+  "upgrade.elementals.obsidianCrust.description": "Instantly cools all lava within a short radius of you into solid obsidian, letting you cross lava fields or shut down enemy lava attacks. Permanent -- doesn't revert like Lava Pool or Magma Spike.",
+  "upgrade.elementals.obsidianCrust.use": "Use: %d",
+
   "upgrade.elementals.atmospherePressurePoint": "Pressure Point",
   "upgrade.elementals.atmospherePressurePoint.description": "Crushes the ground around the point you're standing on. Anyone caught inside is forced to crawl, and starts taking damage if they linger too long.",
   "upgrade.elementals.atmospherePressurePoint.use": "Use: %d",

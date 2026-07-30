@@ -5,6 +5,7 @@ import com.elementals.morebendings.bending.earthsubbendings.bone.BoneSpikeEntity
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalShardEntity;
 import com.elementals.morebendings.bending.earthsubbendings.glass.GlassShardEntity;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaShurikenEntity;
+import com.elementals.morebendings.bending.earthsubbendings.lava.MagmaSpikeVisualEntity;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntity;
 import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionBoltEntity;
 import net.minecraft.core.registries.Registries;
@@ -96,6 +97,23 @@ public class ModEntities {
                             .clientTrackingRange(64)
                             .updateInterval(20)
                             .build("mist_fog"));
+
+    /**
+     * Espinho de magma puramente visual (ver {@link MagmaSpikeVisualEntity}) --
+     * um por bloco erguido em {@code magmaSpike}/{@code volcanicEruption}.
+     * Mesmo esquema de {@link #MIST_FOG}: sem física, sem colisão,
+     * {@code updateInterval} alto porque não se move (só nasce parada e
+     * conta os próprios ticks pra sumir -- não precisa reconciliar posição
+     * com o cliente com frequência).
+     */
+    public static final Supplier<EntityType<MagmaSpikeVisualEntity>> MAGMA_SPIKE_VISUAL =
+            ENTITY_TYPES.register("magma_spike_visual",
+                    () -> EntityType.Builder.<MagmaSpikeVisualEntity>of(MagmaSpikeVisualEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .sized(0.5f, 0.5f)
+                            .clientTrackingRange(64)
+                            .updateInterval(20)
+                            .build("magma_spike_visual"));
 
     private ModEntities() {
     }
