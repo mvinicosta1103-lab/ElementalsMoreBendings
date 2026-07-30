@@ -6,6 +6,7 @@ import com.elementals.morebendings.bending.airsubbendings.gas.GasLeakManager;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BloodProximityTracker;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BonePuppeteerManager;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaPoolManager;
+import com.elementals.morebendings.bending.earthsubbendings.lava.MagmaSpikeManager;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudTrapManager;
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandTornadoManager;
 import com.elementals.morebendings.bending.airsubbendings.atmosphere.PressureZoneManager;
@@ -89,6 +90,10 @@ public class ElementalsMoreBendingsMod {
 
         // Esfria as poças de lavaPool ativas depois do tempo -- ver LavaPoolManager.
         NeoForge.EVENT_BUS.addListener(LavaPoolManager::onServerTick);
+
+        // Desmancha os grupos de espinhos de magmaSpike ativos depois do
+        // tempo, devolvendo o terreno original -- ver MagmaSpikeManager.
+        NeoForge.EVENT_BUS.addListener(MagmaSpikeManager::onServerTick);
 
         // Aplica Náusea + Envenenamento em quem estiver dentro de uma nuvem
         // residual de gasLeak, exceto o próprio caster -- ver GasLeakManager.

@@ -4,6 +4,7 @@ import com.elementals.morebendings.Constants;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BoneSpikeEntity;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalShardEntity;
 import com.elementals.morebendings.bending.earthsubbendings.glass.GlassShardEntity;
+import com.elementals.morebendings.bending.earthsubbendings.lava.LavaShurikenEntity;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntity;
 import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionBoltEntity;
 import net.minecraft.core.registries.Registries;
@@ -60,6 +61,24 @@ public class ModEntities {
                             .clientTrackingRange(64)
                             .updateInterval(1)
                             .build("combustion_bolt"));
+
+    /**
+     * A farpa controlável de "lavaShuriken" (ver {@link LavaShurikenEntity}
+     * / {@code LavaShurikenAbility}). Hitbox um pouco maior que os
+     * estilhaços simples (crystal/glass/bone) porque ela costuma ficar
+     * "flutuando" perto de entidades por vários segundos sob controle, em
+     * vez de ser um tiro instantâneo -- {@code updateInterval(1)} continua
+     * baixo pra manter a posição sincronizada suave enquanto o jogador guia
+     * ela pelo ar.
+     */
+    public static final Supplier<EntityType<LavaShurikenEntity>> LAVA_SHURIKEN =
+            ENTITY_TYPES.register("lava_shuriken",
+                    () -> EntityType.Builder.<LavaShurikenEntity>of(LavaShurikenEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .sized(0.3f, 0.3f)
+                            .clientTrackingRange(64)
+                            .updateInterval(1)
+                            .build("lava_shuriken"));
 
     /**
      * Entidade puramente visual da névoa de Heavy Fog (ver {@code

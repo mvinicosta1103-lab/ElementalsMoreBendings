@@ -149,6 +149,16 @@
   "upgrade.elementals.lavaPool.use": "Use: %d",
   "upgrade.elementals.lavaPool.icon": "molten_grip",
 
+  "upgrade.elementals.lavaJet": "Lava Jet",
+  "upgrade.elementals.lavaJet.description": "Fires a jet of molten lava in a straight line, dealing damage, setting whatever it hits on fire, and knocking it back.",
+  "upgrade.elementals.lavaJet.use": "Use: %d",
+  "upgrade.elementals.lavaJet.icon": "fire_blue",
+
+  "upgrade.elementals.magmaSpike": "Magma Spike",
+  "upgrade.elementals.magmaSpike.description": "Erupts a cluster of magma spikes from the ground where you're aiming, damaging and launching anyone caught in the blast before the spikes sink back down.",
+  "upgrade.elementals.magmaSpike.use": "Use: %d",
+  "upgrade.elementals.magmaSpike.icon": "earth_spikes",
+
   "upgrade.elementals.atmospherePressurePoint": "Pressure Point",
   "upgrade.elementals.atmospherePressurePoint.description": "Crushes the ground around the point you're standing on. Anyone caught inside is forced to crawl, and starts taking damage if they linger too long.",
   "upgrade.elementals.atmospherePressurePoint.use": "Use: %d",
