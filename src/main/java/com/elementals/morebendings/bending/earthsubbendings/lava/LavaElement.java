@@ -76,6 +76,23 @@ public class LavaElement extends Element {
         addAbility(new LavaSurfAbility(), 4);
         addAbility(new VolcanicEruptionAbility(), 5);
         addAbility(new LavaArmorAbility(), 6);
+
+        // Sem isso, Element#getKeybindSlotForUpgrade() sobe a árvore, não
+        // acha nada em upgradeKeybinds e cai pro índice do RAMO da raiz
+        // (0-3) em vez do índice real da ability (0-6). Como lavaArmor e
+        // lavaSurf/volcanicEruption estão aninhados como filhos dentro de
+        // outro ramo (ver construtor acima), isso fazia duas habilidades
+        // diferentes mostrarem a mesma tecla na tooltip (ex: lavaPool e
+        // lavaArmor os dois exibindo "R"). Registrando explicitamente
+        // cada upgrade -> índice real da ability, exatamente como
+        // WaterElement/FireElement/etc. fazem para cada uma das suas.
+        registerUpgradeKeybind(LAVA_POOL, 0);
+        registerUpgradeKeybind(LAVA_JET, 1);
+        registerUpgradeKeybind(MAGMA_SPIKE, 2);
+        registerUpgradeKeybind(LAVA_SHURIKEN, 3);
+        registerUpgradeKeybind(LAVA_SURF, 4);
+        registerUpgradeKeybind(VOLCANIC_ERUPTION, 5);
+        registerUpgradeKeybind(LAVA_ARMOR, 6);
     }
 
     /** Registra a instância única no mod base. Chame uma vez, no load do mod. */

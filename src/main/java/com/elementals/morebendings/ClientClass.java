@@ -3,6 +3,7 @@ package com.elementals.morebendings;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BoneSpikeEntityRenderer;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalShardEntityRenderer;
 import com.elementals.morebendings.bending.earthsubbendings.glass.GlassShardEntityRenderer;
+import com.elementals.morebendings.bending.earthsubbendings.lava.LavaShurikenEntityRenderer;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntityRenderer;
 import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionBoltEntityRenderer;
 import com.elementals.morebendings.registry.ModEntities;
@@ -19,6 +20,7 @@ public class ClientClass {
         event.registerEntityRenderer(ModEntities.GLASS_SHARD.get(), GlassShardEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.MIST_FOG.get(), MistFogEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.COMBUSTION_BOLT.get(), CombustionBoltEntityRenderer::new);
+        event.registerEntityRenderer(ModEntities.LAVA_SHURIKEN.get(), LavaShurikenEntityRenderer::new);
     }
 
     public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
