@@ -1,55 +1,43 @@
 package com.elementals.morebendings.bending.earthsubbendings.lava;
 
-import com.mojang.logging.LogUtils;
 import dev.saperate.elementals.data.Bender;
-import dev.saperate.elementals.elements.Ability;
 import dev.saperate.elementals.elements.Element;
 import dev.saperate.elementals.elements.Upgrade;
 import dev.saperate.elementals.elements.earth.EarthElement;
-import org.slf4j.Logger;
 
 /**
  * Lava Bending — sub-bending de Earth, registrada como um {@link Element}
  * de verdade no mod base.
  *
- * === PATCH DE DIAGNÓSTICO (temporário) ===
- * O padrão observado é: lavaPool, lavaJet e magmaSpike (índices 0-2)
- * aparecem e funcionam normalmente na skill tree; a partir de lavaShuriken
- * (índice 3) nada mais aparece -- nem lavaShuriken, nem lavaSurf,
- * volcanicEruption ou lavaArmor (índices 4-6).
+ * === CAUSA RAIZ DO BUG (achada via decompilação da lib base) ===
+ * dev.saperate.elementals.client.gui.UpgradeTreeScreen#render() desenha
+ * a árvore de skills chamando, na raiz, EXATAMENTE:
+ *   root.children[0] -> drawTree         (ramo "baixo")
+ *   root.children[1] -> drawMirroredTree (ramo "esquerda")
+ *   root.children[2] -> drawMirroredTree (ramo "direita")
+ *   root.children[3] -> drawTree         (ramo "cima")
+ * Não existe loop -- são 4 chamadas fixas, gated por
+ * `if (len >= 1/2/3)` e `if (len == 4)`. Qualquer índice a partir do 4
+ * simplesmente nunca é lido nem desenhado (nenhuma exceção é lançada;
+ * addAbility() também não lança nada, então o patch de diagnóstico
+ * anterior nunca pegaria nada de errado ali).
  *
- * Isso é o comportamento clássico de uma exceção lançada no meio do
- * construtor: se addAbility(new LavaShurikenAbility(), 3) lançar
- * qualquer Throwable, tudo que vem DEPOIS dele no construtor nunca
- * executa -- os índices 4, 5 e 6 nunca são registrados. Isso bate
- * exatamente com o que foi reportado.
+ * TODOS os elementos originais (Water, Fire, Earth, Air, Blood, Metal,
+ * Lightning) seguem a mesma convenção: o array passado pro construtor
+ * de Element tem SEMPRE 4 Upgrades diretos. As demais habilidades entram
+ * como `children` aninhados dentro desses 4 ramos -- aí sim o desenho é
+ * recursivo e sem limite (drawTree/drawMirroredTree percorrem
+ * `parent.children` em loop livre).
  *
- * O que eu NÃO sei, porque addAbility() vive dentro do jar compilado da
- * lib base (dev.saperate.elementals.elements.Element) e eu não tenho
- * acesso ao código-fonte dela, é qual é a condição exata que ela valida
- * e por que ela rejeita especificamente essa ability/upgrade. Pode ser,
- * por exemplo:
- *   - Um limite interno de abilities "bindáveis" por elemento (o README
- *     do addon original menciona só 4 keybinds -- bind1 a bind4 -- por
- *     elemento; se addAbility() valida isso e o índice 3 já estoura
- *     algum limite de slots diretos, é aí).
- *   - Alguma checagem de recurso (ícone, entrada de lang) atrelada ao
- *     upgrade "lavaShuriken" que falta.
- *   - Um problema de ordem de carregamento (ModEntities.LAVA_SHURIKEN
- *     ainda não registrado quando addAbility tenta resolver algo
- *     relacionado à entidade).
+ * O LavaElement original passava 7 Upgrades soltos direto na raiz, por
+ * isso só lavaPool/lavaJet/magmaSpike (índices 0-2) apareciam e
+ * lavaShuriken/lavaSurf/volcanicEruption/lavaArmor (índices 3-6) eram
+ * ignorados silenciosamente pelo renderer.
  *
- * Em vez de adivinhar, este construtor agora envolve CADA addAbility()
- * num try/catch que loga a exception completa (com stes de índice/nome)
- * antes de decidir se continua ou não. Rode o jogo com esse patch, abra
- * o latest.log e procure por "[LavaElement]" -- a mensagem vai dizer
- * exatamente qual ability falhou e o stacktrace real da causa. Depois
- * disso dá pra reverter esse try/catch e aplicar a correção definitiva
- * (que depende do que aparecer no log).
+ * Correção: reagrupar em 4 ramos diretos, aninhando o resto como filhos
+ * de cada ramo (igual ao padrão do jogo base).
  */
 public class LavaElement extends Element {
-
-    private static final Logger LOGGER = LogUtils.getLogger();
 
     public static final String NAME = "Lava";
 
@@ -62,44 +50,32 @@ public class LavaElement extends Element {
     public static final String LAVA_ARMOR = "lavaArmor";
 
     public LavaElement() {
+        // Exatamente 4 filhos diretos na raiz -- é o máximo que
+        // UpgradeTreeScreen#render() desenha (root.children[0..3]).
+        // As outras 3 habilidades vão como `children` aninhados dentro
+        // de um desses 4 ramos, o que as empurra mais pra fora na
+        // mesma direção -- exatamente como Water/Fire/Earth/etc. fazem
+        // com suas dezenas de upgrades.
         super(NAME, new Upgrade[]{
-                new Upgrade(LAVA_POOL, 0),
-                new Upgrade(LAVA_JET, 0),
-                new Upgrade(MAGMA_SPIKE, 0),
-                new Upgrade(LAVA_SHURIKEN, 0),
-                new Upgrade(LAVA_SURF, 0),
-                new Upgrade(VOLCANIC_ERUPTION, 0),
-                new Upgrade(LAVA_ARMOR, 0)
+                new Upgrade(LAVA_POOL, new Upgrade[]{
+                        new Upgrade(LAVA_ARMOR, 0)
+                }, 0),
+                new Upgrade(LAVA_JET, new Upgrade[]{
+                        new Upgrade(LAVA_SURF, 0)
+                }, 0),
+                new Upgrade(MAGMA_SPIKE, new Upgrade[]{
+                        new Upgrade(VOLCANIC_ERUPTION, 0)
+                }, 0),
+                new Upgrade(LAVA_SHURIKEN, 0)
         });
 
-        safeAddAbility(LAVA_POOL, new LavaPoolAbility(), 0);
-        safeAddAbility(LAVA_JET, new LavaJetAbility(), 1);
-        safeAddAbility(MAGMA_SPIKE, new MagmaSpikeAbility(), 2);
-        safeAddAbility(LAVA_SHURIKEN, new LavaShurikenAbility(), 3);
-        safeAddAbility(LAVA_SURF, new LavaSurfAbility(), 4);
-        safeAddAbility(VOLCANIC_ERUPTION, new VolcanicEruptionAbility(), 5);
-        safeAddAbility(LAVA_ARMOR, new LavaArmorAbility(), 6);
-    }
-
-    /**
-     * Wrapper de diagnóstico em volta de addAbility(). Loga qualquer
-     * exceção com o nome da ability e o índice, e RE-LANÇA em seguida --
-     * ou seja, o comportamento de crash continua o mesmo de antes (pra
-     * não mascarar o bug), só que agora com uma mensagem clara no log
-     * dizendo qual ability e qual foi a causa raiz.
-     *
-     * Depois de identificar a causa pelo log, troque essa chamada de
-     * volta para addAbility(ability, index) direto, já com a correção
-     * aplicada.
-     */
-    private void safeAddAbility(String upgradeName, Ability ability, int index) {
-        try {
-            addAbility(ability, index);
-            LOGGER.info("[LavaElement] OK registrando '{}' no índice {}", upgradeName, index);
-        } catch (Throwable t) {
-            LOGGER.error("[LavaElement] FALHOU ao registrar '{}' no índice {} -- causa raiz abaixo:", upgradeName, index, t);
-            throw t; // não engole o erro -- mantém o crash original, só que agora com log claro
-        }
+        addAbility(new LavaPoolAbility(), 0);
+        addAbility(new LavaJetAbility(), 1);
+        addAbility(new MagmaSpikeAbility(), 2);
+        addAbility(new LavaShurikenAbility(), 3);
+        addAbility(new LavaSurfAbility(), 4);
+        addAbility(new VolcanicEruptionAbility(), 5);
+        addAbility(new LavaArmorAbility(), 6);
     }
 
     /** Registra a instância única no mod base. Chame uma vez, no load do mod. */
