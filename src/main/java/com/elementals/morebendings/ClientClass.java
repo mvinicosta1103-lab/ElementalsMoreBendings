@@ -5,6 +5,8 @@ import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalShard
 import com.elementals.morebendings.bending.earthsubbendings.glass.GlassShardEntityRenderer;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaShurikenEntityRenderer;
 import com.elementals.morebendings.bending.earthsubbendings.lava.MagmaSpikeVisualEntityRenderer;
+import com.elementals.morebendings.bending.earthsubbendings.mud.MudBallEntityRenderer;
+import com.elementals.morebendings.bending.earthsubbendings.mud.MudSpikeVisualEntityRenderer;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntityRenderer;
 import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionBoltEntityRenderer;
 import com.elementals.morebendings.registry.ModEntities;
@@ -23,6 +25,8 @@ public class ClientClass {
         event.registerEntityRenderer(ModEntities.COMBUSTION_BOLT.get(), CombustionBoltEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.LAVA_SHURIKEN.get(), LavaShurikenEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.MAGMA_SPIKE_VISUAL.get(), MagmaSpikeVisualEntityRenderer::new);
+        event.registerEntityRenderer(ModEntities.MUD_BALL.get(), MudBallEntityRenderer::new);
+        event.registerEntityRenderer(ModEntities.MUD_SPIKE_VISUAL.get(), MudSpikeVisualEntityRenderer::new);
     }
 
     public static void onAddLayers(EntityRenderersEvent.AddLayers event) {

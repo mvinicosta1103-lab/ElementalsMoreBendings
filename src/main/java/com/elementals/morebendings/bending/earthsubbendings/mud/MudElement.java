@@ -22,12 +22,22 @@ public class MudElement extends Element {
     public static final String NAME = "Mud";
 
     public MudElement() {
+        // Exatamente 4 filhos diretos na raiz -- é o máximo que
+        // UpgradeTreeScreen#render() desenha (root.children[0..3], ver o
+        // comentário detalhado em LavaElement sobre essa limitação do mod
+        // base). Com mudBall e mudSpikes, Mud chega no limite: qualquer
+        // habilidade futura precisa entrar como `children` aninhado dentro
+        // de um desses 4, não como um 5º Upgrade solto aqui.
         super(NAME, new Upgrade[]{
-                new Upgrade("mudSurge", 0), // grátis
-                new Upgrade("mudTrap", 0)   // grátis -- ver MudTrapAbility
+                new Upgrade("mudSurge", 0),  // grátis
+                new Upgrade("mudTrap", 0),   // grátis -- ver MudTrapAbility
+                new Upgrade("mudBall", 0),   // grátis -- ver MudBallAbility
+                new Upgrade("mudSpikes", 0)  // grátis -- ver MudSpikesAbility
         });
         addAbility(new MudSurgeAbility(), 0);
         addAbility(new MudTrapAbility(), 1);
+        addAbility(new MudBallAbility(), 2);
+        addAbility(new MudSpikesAbility(), 3);
     }
 
     /** Registra a instância única no mod base. Chame uma vez, no load do mod. */
@@ -58,6 +68,8 @@ public class MudElement extends Element {
     public boolean isSkillTreeComplete(Bender bender) {
         return bender.hasElement(this)
                 && bender.getData().canUseUpgrade("mudSurge")
-                && bender.getData().canUseUpgrade("mudTrap");
+                && bender.getData().canUseUpgrade("mudTrap")
+                && bender.getData().canUseUpgrade("mudBall")
+                && bender.getData().canUseUpgrade("mudSpikes");
     }
 }

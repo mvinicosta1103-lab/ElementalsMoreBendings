@@ -6,6 +6,8 @@ import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalShard
 import com.elementals.morebendings.bending.earthsubbendings.glass.GlassShardEntity;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaShurikenEntity;
 import com.elementals.morebendings.bending.earthsubbendings.lava.MagmaSpikeVisualEntity;
+import com.elementals.morebendings.bending.earthsubbendings.mud.MudBallEntity;
+import com.elementals.morebendings.bending.earthsubbendings.mud.MudSpikeVisualEntity;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntity;
 import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionBoltEntity;
 import net.minecraft.core.registries.Registries;
@@ -114,6 +116,35 @@ public class ModEntities {
                             .clientTrackingRange(64)
                             .updateInterval(20)
                             .build("magma_spike_visual"));
+
+    /**
+     * Projétil de "mudBall" (ver {@link MudBallEntity}) -- hitbox pequena
+     * igual aos outros estilhaços simples (crystal/glass/bone), já que é
+     * um tiro de contato/impacto, não algo que fica flutuando por aí.
+     */
+    public static final Supplier<EntityType<MudBallEntity>> MUD_BALL =
+            ENTITY_TYPES.register("mud_ball",
+                    () -> EntityType.Builder.<MudBallEntity>of(MudBallEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .sized(0.3f, 0.3f)
+                            .clientTrackingRange(64)
+                            .updateInterval(1)
+                            .build("mud_ball"));
+
+    /**
+     * Entidade puramente visual de UM cluster de farpas de "mudSpikes" (ver
+     * {@link MudSpikeVisualEntity}) -- mesmo esquema de {@link
+     * #MAGMA_SPIKE_VISUAL}: sem física, sem colisão, {@code updateInterval}
+     * alto porque não se move.
+     */
+    public static final Supplier<EntityType<MudSpikeVisualEntity>> MUD_SPIKE_VISUAL =
+            ENTITY_TYPES.register("mud_spike_visual",
+                    () -> EntityType.Builder.<MudSpikeVisualEntity>of(MudSpikeVisualEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .sized(0.5f, 0.5f)
+                            .clientTrackingRange(64)
+                            .updateInterval(20)
+                            .build("mud_spike_visual"));
 
     private ModEntities() {
     }
