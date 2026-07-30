@@ -39,7 +39,7 @@ import java.util.UUID;
  * fonte de lava de verdade, então NÃO tem manager de reversão.
  * <p>
  * Reaproveita a mesma trinca de efeitos (LARGE_SMOKE + LAVA_EXTINGUISH)
- * que {@link LavaShurikenEntity#dryNearbyWater} já usa pra "água virando
+ * que {} já usa pra "água virando
  * obsidiana perto da farpa" -- aqui é lava virando obsidiana perto do
  * jogador, mesma linguagem visual/sonora por consistência.
  * <p>
