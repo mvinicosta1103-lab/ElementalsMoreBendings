@@ -18,7 +18,7 @@ import dev.saperate.elementals.elements.earth.EarthElement;
  * concedida a quem já tem Earth E já masterizou a árvore de Earth inteira
  * (ver {@link #canAcquire}).
  *
- * Quatro habilidades raiz, todas grátis (preço 0), mesmo esquema de Mud/
+ * Sete habilidades raiz, todas grátis (preço 0), mesmo esquema de Mud/
  * Petrification/Bone (mais de um nó raiz sem custo):
  *  - lavaPool: controle de área -- derrete o chão numa poça de lava de
  *    verdade que esfria sozinha. Ver {@link LavaPoolAbility}.
@@ -29,6 +29,15 @@ import dev.saperate.elementals.elements.earth.EarthElement;
  *  - lavaShuriken: farpa controlável (segura no ar, mira, solta) --
  *    mesmo esquema de controle do Water Blade original. Ver
  *    {@link LavaShurikenAbility} / {@link LavaShurikenEntity}.
+ *  - lavaSurf: mobilidade -- surfa numa onda de lava (Velocidade +
+ *    Resistência a Fogo + sem dano de queda) enquanto segura Shift. Ver
+ *    {@link LavaSurfAbility}.
+ *  - volcanicEruption: a "ultimate" -- versão bem maior de magmaSpike, com
+ *    cooldown próprio, núcleo de lava de verdade + anel de espinhos. Ver
+ *    {@link VolcanicEruptionAbility}.
+ *  - lavaArmor: defensiva -- Resistência a Fogo + Resistência, incendeia
+ *    quem acerta o bender corpo a corpo, enquanto segura Shift. Ver
+ *    {@link LavaArmorAbility}.
  */
 public class LavaElement extends Element {
 
@@ -38,18 +47,27 @@ public class LavaElement extends Element {
     public static final String LAVA_JET = "lavaJet";
     public static final String MAGMA_SPIKE = "magmaSpike";
     public static final String LAVA_SHURIKEN = "lavaShuriken";
+    public static final String LAVA_SURF = "lavaSurf";
+    public static final String VOLCANIC_ERUPTION = "volcanicEruption";
+    public static final String LAVA_ARMOR = "lavaArmor";
 
     public LavaElement() {
         super(NAME, new Upgrade[]{
-                new Upgrade(LAVA_POOL, 0),     // grátis -- ver LavaPoolAbility
-                new Upgrade(LAVA_JET, 0),      // grátis -- ver LavaJetAbility
-                new Upgrade(MAGMA_SPIKE, 0),   // grátis -- ver MagmaSpikeAbility
-                new Upgrade(LAVA_SHURIKEN, 0)  // grátis -- ver LavaShurikenAbility
+                new Upgrade(LAVA_POOL, 0),         // grátis -- ver LavaPoolAbility
+                new Upgrade(LAVA_JET, 0),          // grátis -- ver LavaJetAbility
+                new Upgrade(MAGMA_SPIKE, 0),       // grátis -- ver MagmaSpikeAbility
+                new Upgrade(LAVA_SHURIKEN, 0),     // grátis -- ver LavaShurikenAbility
+                new Upgrade(LAVA_SURF, 0),         // grátis -- ver LavaSurfAbility
+                new Upgrade(VOLCANIC_ERUPTION, 0), // grátis -- ver VolcanicEruptionAbility
+                new Upgrade(LAVA_ARMOR, 0)         // grátis -- ver LavaArmorAbility
         });
         addAbility(new LavaPoolAbility(), 0);
         addAbility(new LavaJetAbility(), 1);
         addAbility(new MagmaSpikeAbility(), 2);
         addAbility(new LavaShurikenAbility(), 3);
+        addAbility(new LavaSurfAbility(), 4);
+        addAbility(new VolcanicEruptionAbility(), 5);
+        addAbility(new LavaArmorAbility(), 6);
     }
 
     /** Registra a instância única no mod base. Chame uma vez, no load do mod. */
@@ -82,6 +100,9 @@ public class LavaElement extends Element {
                 && bender.getData().canUseUpgrade(LAVA_POOL)
                 && bender.getData().canUseUpgrade(LAVA_JET)
                 && bender.getData().canUseUpgrade(MAGMA_SPIKE)
-                && bender.getData().canUseUpgrade(LAVA_SHURIKEN);
+                && bender.getData().canUseUpgrade(LAVA_SHURIKEN)
+                && bender.getData().canUseUpgrade(LAVA_SURF)
+                && bender.getData().canUseUpgrade(VOLCANIC_ERUPTION)
+                && bender.getData().canUseUpgrade(LAVA_ARMOR);
     }
 }

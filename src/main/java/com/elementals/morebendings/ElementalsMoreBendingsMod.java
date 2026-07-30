@@ -5,8 +5,10 @@ import com.elementals.morebendings.bending.airsubbendings.flying.FlyingAbility;
 import com.elementals.morebendings.bending.airsubbendings.gas.GasLeakManager;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BloodProximityTracker;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BonePuppeteerManager;
+import com.elementals.morebendings.bending.earthsubbendings.lava.LavaArmorCombatHandler;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaPoolManager;
 import com.elementals.morebendings.bending.earthsubbendings.lava.MagmaSpikeManager;
+import com.elementals.morebendings.bending.earthsubbendings.lava.VolcanicEruptionManager;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudTrapManager;
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandTornadoManager;
 import com.elementals.morebendings.bending.airsubbendings.atmosphere.PressureZoneManager;
@@ -94,6 +96,15 @@ public class ElementalsMoreBendingsMod {
         // Desmancha os grupos de espinhos de magmaSpike ativos depois do
         // tempo, devolvendo o terreno original -- ver MagmaSpikeManager.
         NeoForge.EVENT_BUS.addListener(MagmaSpikeManager::onServerTick);
+
+        // Dirige as crateras de volcanicEruption ativas (núcleo de lava +
+        // anel de espinhos, cada um com seu próprio tempo de reversão) --
+        // ver VolcanicEruptionManager.
+        NeoForge.EVENT_BUS.addListener(VolcanicEruptionManager::onServerTick);
+
+        // Incendeia quem acerta um golpe corpo a corpo direto em quem
+        // estiver com lavaArmor ativa -- ver LavaArmorCombatHandler.
+        NeoForge.EVENT_BUS.addListener(LavaArmorCombatHandler::onIncomingDamage);
 
         // Aplica Náusea + Envenenamento em quem estiver dentro de uma nuvem
         // residual de gasLeak, exceto o próprio caster -- ver GasLeakManager.

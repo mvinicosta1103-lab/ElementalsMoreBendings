@@ -163,6 +163,18 @@
   "upgrade.elementals.lavaShuriken.description": "Summons a shard of molten lava that hovers and follows your aim. Left-click to hurl it forward, dealing heavy damage and turning any water it passes through into obsidian.",
   "upgrade.elementals.lavaShuriken.use": "Use: %d",
 
+  "upgrade.elementals.lavaSurf": "Lava Surf",
+  "upgrade.elementals.lavaSurf.description": "Ride a wave of molten lava while holding crouch, gaining speed and fire immunity and taking no fall damage when you dismount.",
+  "upgrade.elementals.lavaSurf.use": "Use: %d",
+
+  "upgrade.elementals.volcanicEruption": "Volcanic Eruption",
+  "upgrade.elementals.volcanicEruption.description": "Erupts a small volcano where you're aiming: a real lava core surrounded by a wide ring of magma spikes, dealing heavy damage and launching everyone caught in the blast.",
+  "upgrade.elementals.volcanicEruption.use": "Use: %d",
+
+  "upgrade.elementals.lavaArmor": "Lava Armor",
+  "upgrade.elementals.lavaArmor.description": "Coats yourself in a hardened shell of lava while holding crouch, granting fire immunity and resistance, and igniting anyone who lands a melee hit on you.",
+  "upgrade.elementals.lavaArmor.use": "Use: %d",
+
   "upgrade.elementals.atmospherePressurePoint": "Pressure Point",
   "upgrade.elementals.atmospherePressurePoint.description": "Crushes the ground around the point you're standing on. Anyone caught inside is forced to crawl, and starts taking damage if they linger too long.",
   "upgrade.elementals.atmospherePressurePoint.use": "Use: %d",
