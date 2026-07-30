@@ -13,6 +13,8 @@
   },
   "minecraft:adventure/adventuring_time": {
     "criteria": {
+      "minecraft:old_growth_birch_forest": "2026-07-30 20:41:34 -0300",
+      "minecraft:river": "2026-07-30 20:41:32 -0300",
       "minecraft:birch_forest": "2026-07-30 19:03:20 -0300"
     },
     "done": false

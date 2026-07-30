@@ -96,6 +96,9 @@
   "ability.elementalsmorebendings.bone_control": "Bone Control",
   "ability.elementalsmorebendings.bone_puppeteer": "Bone Puppeteer",
   "ability.elementalsmorebendings.sand_tornado": "Sand Tornado",
+  "ability.elementalsmorebendings.sand_blast": "Sand Blast",
+  "ability.elementalsmorebendings.sand_quicksand": "Quicksand Pit",
+  "ability.elementalsmorebendings.sand_wave": "Sand Wave",
   "ability.elementalsmorebendings.glass_shards": "Glass Shards",
   "ability.elementalsmorebendings.lava_pool": "Lava Pool",
   "ability.elementalsmorebendings.pressure_point": "Pressure Point",
@@ -151,6 +154,21 @@
   "upgrade.elementals.sandTornado": "Sand Tornado",
   "upgrade.elementals.sandTornado.description": "Whips up a spinning column of sand where you're aiming, sucking in nearby sand blocks and dragging, blinding, and battering anyone caught inside. Hold crouch to keep it going.",
   "upgrade.elementals.sandTornado.use": "Use: %d",
+
+  "upgrade.elementals.sandBlast": "Sand Blast",
+  "upgrade.elementals.sandBlast.description": "Flings a stinging jet of sand at whoever you're aiming at, dealing damage and blinding them with grit in the eyes.",
+  "upgrade.elementals.sandBlast.use": "Use: %d",
+  "upgrade.elementals.sandBlast.icon": "earth_shrapnel",
+
+  "upgrade.elementals.sandQuicksand": "Quicksand Pit",
+  "upgrade.elementals.sandQuicksand.description": "Turns a patch of sandy ground where you're aiming into real quicksand for a while. Anyone who steps in it sinks partway and struggles against heavy Slowness and Weakness until it settles back down.",
+  "upgrade.elementals.sandQuicksand.use": "Use: %d",
+  "upgrade.elementals.sandQuicksand.icon": "quicksand",
+
+  "upgrade.elementals.sandWave": "Sand Wave",
+  "upgrade.elementals.sandWave.description": "Surf a wave of loose sand out from under your feet, launching you forward with a burst of Speed and Slow Falling. Only works while standing on sand, red sand, or gravel.",
+  "upgrade.elementals.sandWave.use": "Use: %d",
+  "upgrade.elementals.sandWave.icon": "water_surf",
 
   "upgrade.elementals.glassShards": "Glass Shards",
   "upgrade.elementals.glassShards.description": "Fires a shard of glass in the direction you're looking, dealing damage to whatever it hits.",
