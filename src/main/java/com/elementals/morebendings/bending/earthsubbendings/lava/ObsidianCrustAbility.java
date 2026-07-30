@@ -4,15 +4,14 @@ import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.FluidState;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,16 +74,27 @@ public class ObsidianCrustAbility implements Ability {
             return;
         }
 
-        if (!bender.reduceChi(CHI_COST)) {
+        // Escaneia ANTES de cobrar chi/cooldown -- se não tem lava por perto
+        // (raio é em volta do PRÓPRIO jogador, não é mira), não faz sentido
+        // gastar recurso e ainda ficar em silêncio total, senão parece que a
+        // habilidade "não funciona" quando na verdade só não achou alvo.
+        List<BlockPos> targets = findNearbyLava(level, caster.blockPosition());
+        if (targets.isEmpty()) {
+            caster.displayClientMessage(Component.literal("Nenhuma lava por perto para resfriar."), true);
             bender.setCurrAbility(null);
             return;
         }
 
-        int converted = coolNearbyLava(level, caster.blockPosition());
-        if (converted > 0) {
-            level.playSound(null, caster.blockPosition(), SoundEvents.LAVA_EXTINGUISH, SoundSource.PLAYERS, 1.0f, 0.9f);
-            lastUse.put(caster.getUUID(), now);
+        if (!bender.reduceChi(CHI_COST)) {
+            caster.displayClientMessage(Component.literal("Chi insuficiente."), true);
+            bender.setCurrAbility(null);
+            return;
         }
+
+        int converted = coolLava(level, targets);
+        level.playSound(null, caster.blockPosition(), SoundEvents.LAVA_EXTINGUISH, SoundSource.PLAYERS, 1.0f, 0.9f);
+        caster.displayClientMessage(Component.literal("Obsidian Crust: " + converted + " bloco(s) resfriado(s)."), true);
+        lastUse.put(caster.getUUID(), now);
 
         // Instantânea -- não trava a habilidade, igual lavaPool/magmaSpike.
         bender.setCurrAbility(null);
@@ -96,13 +106,15 @@ public class ObsidianCrustAbility implements Ability {
     }
 
     /**
-     * Varre uma esfera de {@link #RADIUS} blocos centrada no jogador e converte
-     * todo bloco de {@link Blocks#LAVA} (fonte ou corrente) pra {@link
-     * Blocks#OBSIDIAN}. Retorna quantos blocos foram convertidos.
+     * Varre uma esfera de {@link #RADIUS} blocos centrada no jogador e retorna
+     * as posições de todo bloco de {@link Blocks#LAVA} (fonte ou corrente)
+     * encontrado, sem modificar nada -- separado de {@link #coolLava} pra dar
+     * pra checar "achou alvo?" ANTES de cobrar chi/cooldown (ver {@link
+     * #onCall}).
      */
-    private int coolNearbyLava(ServerLevel level, BlockPos center) {
+    private List<BlockPos> findNearbyLava(ServerLevel level, BlockPos center) {
         int radiusBlocks = (int) Math.ceil(RADIUS);
-        List<BlockPos> toConvert = new ArrayList<>();
+        List<BlockPos> found = new ArrayList<>();
 
         outer:
         for (int dx = -radiusBlocks; dx <= radiusBlocks; dx++) {
@@ -118,20 +130,24 @@ public class ObsidianCrustAbility implements Ability {
                         continue;
                     }
 
-                    toConvert.add(pos.immutable());
-                    if (toConvert.size() >= MAX_CONVERSIONS) {
+                    found.add(pos.immutable());
+                    if (found.size() >= MAX_CONVERSIONS) {
                         break outer;
                     }
                 }
             }
         }
 
-        for (BlockPos pos : toConvert) {
+        return found;
+    }
+
+    /** Converte as posições já encontradas por {@link #findNearbyLava} pra {@link Blocks#OBSIDIAN}. */
+    private int coolLava(ServerLevel level, List<BlockPos> targets) {
+        for (BlockPos pos : targets) {
             level.setBlock(pos, Blocks.OBSIDIAN.defaultBlockState(), 3);
             level.sendParticles(ParticleTypes.LARGE_SMOKE,
                     pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 3, 0.2, 0.2, 0.2, 0.0);
         }
-
-        return toConvert.size();
+        return targets.size();
     }
 }
