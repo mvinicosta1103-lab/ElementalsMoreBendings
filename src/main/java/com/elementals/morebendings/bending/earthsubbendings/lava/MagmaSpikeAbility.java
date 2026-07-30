@@ -72,7 +72,7 @@ public class MagmaSpikeAbility implements Ability {
         if (!spikes.isEmpty()) {
             damageAndLaunch(level, player, center);
             MagmaSpikeManager.registerSpikes(level, spikes, original);
-            level.playSound(null, center, SoundEvents.GENERIC_EXPLODE, SoundSource.PLAYERS, 0.7f, 1.3f);
+            level.playSound(null, center, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 0.7f, 1.3f);
         }
 
         bender.setCurrAbility(null); // libera a trava pra poder usar de novo

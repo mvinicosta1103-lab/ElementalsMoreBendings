@@ -61,7 +61,7 @@ public class LavaJetAbility implements Ability {
 
         for (LivingEntity entity : hit) {
             entity.hurt(level.damageSources().lava(), DAMAGE);
-            entity.setSecondsOnFire(FIRE_SECONDS);
+            entity.igniteForSeconds(FIRE_SECONDS);
             entity.push(look.x * KNOCKBACK, 0.1, look.z * KNOCKBACK);
         }
 

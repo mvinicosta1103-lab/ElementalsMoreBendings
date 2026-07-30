@@ -159,6 +159,10 @@
   "upgrade.elementals.magmaSpike.use": "Use: %d",
   "upgrade.elementals.magmaSpike.icon": "earth_spikes",
 
+  "upgrade.elementals.lavaShuriken": "Lava Shuriken",
+  "upgrade.elementals.lavaShuriken.description": "Summons a shard of molten lava that hovers and follows your aim. Left-click to hurl it forward, dealing heavy damage and turning any water it passes through into obsidian.",
+  "upgrade.elementals.lavaShuriken.use": "Use: %d",
+
   "upgrade.elementals.atmospherePressurePoint": "Pressure Point",
   "upgrade.elementals.atmospherePressurePoint.description": "Crushes the ground around the point you're standing on. Anyone caught inside is forced to crawl, and starts taking damage if they linger too long.",
   "upgrade.elementals.atmospherePressurePoint.use": "Use: %d",

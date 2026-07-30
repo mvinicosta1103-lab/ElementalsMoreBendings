@@ -9,6 +9,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -142,8 +143,10 @@ public class LavaShurikenEntity extends AbstractElementalsEntity<Player> {
                     BlockPos pos = center.offset(dx, dy, dz);
                     if (this.level().getBlockState(pos).is(Blocks.WATER)) {
                         this.level().setBlock(pos, Blocks.OBSIDIAN.defaultBlockState(), 3);
-                        this.level().sendParticles(ParticleTypes.LARGE_SMOKE,
-                                pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 4, 0.2, 0.2, 0.2, 0.0);
+                        if (this.level() instanceof ServerLevel serverLevel) {
+                            serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE,
+                                    pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 4, 0.2, 0.2, 0.2, 0.0);
+                        }
                         converted = true;
                     }
                 }
@@ -171,7 +174,7 @@ public class LavaShurikenEntity extends AbstractElementalsEntity<Player> {
         // Impacto direto (farpa arremessada, sem controle) -- dano cheio + discard, igual o Water Blade.
         Player owner = this.getOwner();
         entity.hurt(this.damageSources().playerAttack(owner), this.getDamage() * ElementalConfig.get().BENDING_DAMAGE_MULTIPLIER);
-        entity.setSecondsOnFire(3);
+        entity.igniteForSeconds(3);
         entity.addDeltaMovement(this.getDeltaMovement().scale(0.8));
         entity.hurtMarked = true;
         this.discard();
