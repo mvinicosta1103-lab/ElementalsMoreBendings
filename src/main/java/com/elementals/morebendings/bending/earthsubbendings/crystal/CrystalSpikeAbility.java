@@ -40,23 +40,6 @@ import java.util.Map;
  * ver {@link CrystalSpikeManager}, registrado no NeoForge.EVENT_BUS em
  * {@code ElementalsMoreBendingsMod}.
  *
- * === FIX (a ability "não funcionava") ===
- * Duas causas, as duas nesse método:
- *  1. {@code raiseSpikes} só olhava o bloco EXATAMENTE na superfície da
- *     coluna (heightmap). Em qualquer terreno normal (grama/terra por
- *     cima de pedra, que é a maior parte do overworld) isso não batia com
- *     {@link #CRYSTALLIZABLE} e a lista de espinhos ficava vazia -- ou
- *     seja, testando em pé na grama (o caso mais comum) a ability
- *     simplesmente não fazia nada.
- *  2. O Chi era descontado ANTES de verificar se havia algo pra
- *     cristalizar, então mesmo nesse caso de falha o jogador perdia Chi
- *     sem nenhum feedback -- reforçando a sensação de "travada"/quebrada.
- * Correção: {@link #findCandidates} agora procura até {@link #SEARCH_DEPTH}
- * blocos abaixo da superfície de cada coluna (pega a pedra escondida sob
- * a camada de grama/terra) e o Chi só é descontado depois de confirmar que
- * existe pelo menos um ponto cristalizável -- com uma mensagem clara pro
- * jogador quando não há pedra nenhuma por perto.
- *
  * === MODELO 3D DE VERDADE (antes era só troca de textura) ===
  * Cada posição erguida agora também spawna um {@link CrystalSpikeVisualEntity}
  * em cima do bloco -- uma farpa de ametista de verdade (com animação de
@@ -65,13 +48,24 @@ import java.util.Map;
  * visual é só "decoração" por cima, sincronizada pra sumir exatamente
  * quando {@link CrystalSpikeManager} reverte o bloco. Mesmo esquema que
  * {@code MagmaSpikeAbility} já usa pra {@code magmaSpike}.
+ *
+ * === FIX (espinhos só apareciam em pedra exposta) ===
+ * {@link #CRYSTALLIZABLE} originalmente só tinha pedra/variantes. Em
+ * qualquer terreno com grama/terra/areia por cima (a maior parte do
+ * overworld), {@link #findCrystallizableGround} tinha que descer vários
+ * blocos até achar pedra escondida -- e tanto o bloco cristalizado quanto
+ * a farpa visual em cima dele nasciam ENTERRADOS sob a camada de terra
+ * intacta, invisíveis pro jogador. Só em pedra exposta (onde a superfície
+ * já era o próprio bloco cristalizável, depth 0) o efeito aparecia -- daí
+ * a impressão de "só funciona em rocha". Ver o comentário em {@link
+ * #CRYSTALLIZABLE} pra correção.
  */
 public class CrystalSpikeAbility implements Ability {
 
     private static final double RANGE = 8.0;
     /** Raio da área de espinhos (blocos ao redor do centro do impacto). */
     private static final int RADIUS = 2;
-    /** Quantos blocos abaixo da superfície de cada coluna procurar por pedra escondida sob grama/terra. */
+    /** Fallback: quantos blocos abaixo da superfície procurar caso o bloco do topo não seja cristalizável (ex: neve, água rasa). */
     private static final int SEARCH_DEPTH = 4;
     private static final float CHI_COST = 25.0f;
     private static final float DAMAGE = 4.0f;
@@ -82,11 +76,32 @@ public class CrystalSpikeAbility implements Ability {
     /** Quanto tempo (em ticks de servidor) os espinhos ficam de pé antes de desmanchar. 20 ticks = 1s. */
     static final int RETRACT_AFTER_TICKS = 60; // 3s
 
-    /** Chão "rochoso" que pode ser cristalizado -- pedra e variantes, não terra/areia. */
+    /**
+     * === FIX (espinhos só apareciam em pedra exposta) ===
+     * Antes esse set só tinha pedra/variantes. Em qualquer terreno com
+     * grama/terra/areia por cima (a maior parte do overworld), {@link
+     * #findCrystallizableGround} tinha que descer vários blocos até achar
+     * pedra escondida -- e o bloco cristalizado (e a farpa visual em cima
+     * dele, ver {@link CrystalSpikeVisualEntity}) ficava ENTERRADO sob a
+     * camada de terra intacta, invisível pro jogador. Só em pedra exposta
+     * (onde a superfície já era o próprio bloco cristalizável, depth 0) o
+     * efeito aparecia -- daí a impressão de "só funciona em rocha".
+     * Ampliando o set pra cobrir os chãos comuns do overworld (terra,
+     * grama, areia, cascalho, além da pedra), a superfície em si já bate
+     * na maioria dos casos (depth 0), então a farpa nasce exatamente onde
+     * o jogador está pisando, em qualquer bioma -- igual {@code
+     * MagmaSpikeAbility} já faz aceitando qualquer bloco sólido.
+     */
     private static final java.util.Set<Block> CRYSTALLIZABLE = java.util.Set.of(
+            // Pedra e variantes.
             Blocks.STONE, Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE, Blocks.DEEPSLATE,
             Blocks.COBBLED_DEEPSLATE, Blocks.TUFF, Blocks.CALCITE,
-            Blocks.ANDESITE, Blocks.DIORITE, Blocks.GRANITE, Blocks.BLACKSTONE
+            Blocks.ANDESITE, Blocks.DIORITE, Blocks.GRANITE, Blocks.BLACKSTONE,
+            // Terra e variantes.
+            Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.COARSE_DIRT, Blocks.PODZOL,
+            Blocks.ROOTED_DIRT, Blocks.MYCELIUM, Blocks.MUD,
+            // Areia e cascalho.
+            Blocks.SAND, Blocks.RED_SAND, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.GRAVEL
     );
 
     @Override

@@ -31,7 +31,9 @@ import java.util.List;
  *
  * Quem cuida da parte "temporária" (contagem regressiva + estilhaçar as
  * entidades) é {@link CrystalWallManager}, dirigido tick a tick pelo
- * ServerTickEvent registrado em ElementalsMoreBendingsMod.
+ * ServerTickEvent registrado em ElementalsMoreBendingsMod. Sem limite de
+ * paredes simultâneas -- cada cast sobe a sua própria, independente das
+ * que já estão de pé (ver {@link CrystalWallManager}).
  */
 public class CrystalWallAbility implements Ability {
 
@@ -46,11 +48,6 @@ public class CrystalWallAbility implements Ability {
     public void onCall(Bender bender, long heldTimeMs) {
         Player player = bender.player;
         if (!(player.level() instanceof ServerLevel level)) {
-            bender.setCurrAbility(null);
-            return;
-        }
-
-        if (CrystalWallManager.hasActiveWall(player)) {
             bender.setCurrAbility(null);
             return;
         }

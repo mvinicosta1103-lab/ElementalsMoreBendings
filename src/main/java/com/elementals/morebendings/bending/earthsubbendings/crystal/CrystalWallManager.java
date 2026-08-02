@@ -10,33 +10,32 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Map;
-import java.util.UUID;
+import java.util.List;
 
 /**
- * Dono de todas as paredes de crystalWall ativas -- uma por caster, mesmo
- * esquema exato de {@link com.elementals.morebendings.bending.watersubbendings.plant.PlantVineWallManager}.
- * Cada entrada guarda as entidades {@link EarthBlockEntity} flutuantes que
- * formam a parede (ver {@link CrystalWallAbility}) e uma contagem
- * regressiva de ticks; quando ela zera, a parede se estilhaça sozinha.
+ * Dono de todas as paredes de crystalWall ativas. Diferente de {@link
+ * com.elementals.morebendings.bending.watersubbendings.plant.PlantVineWallManager}
+ * (que trava em UMA por caster), aqui não existe limite de paredes
+ * simultâneas -- cada cast simplesmente adiciona uma entrada nova à lista,
+ * sem overwrite e sem gate em {@link CrystalWallAbility#onCall}. Cada
+ * entrada guarda as entidades {@link EarthBlockEntity} flutuantes que
+ * formam aquela parede específica e sua própria contagem regressiva de
+ * ticks; quando ela zera, só AQUELA parede se estilhaça -- as outras
+ * continuam de pé.
  */
 public final class CrystalWallManager {
 
-    private static final Map<UUID, WallState> ACTIVE = new HashMap<>();
+    private static final List<WallState> ACTIVE = new ArrayList<>();
 
     private CrystalWallManager() {
     }
 
-    public static boolean hasActiveWall(Player caster) {
-        return ACTIVE.containsKey(caster.getUUID());
-    }
-
-    /** Chamado pela ability depois de subir as entidades que formam a parede. */
+    /** Chamado pela ability depois de subir as entidades que formam a parede. Não faz overwrite -- só acumula. */
     public static void registerWall(Player caster, LinkedList<EarthBlockEntity> entities, int durationTicks) {
-        ACTIVE.put(caster.getUUID(), new WallState(entities, durationTicks));
+        ACTIVE.add(new WallState(entities, durationTicks));
     }
 
     /** Registrado via NeoForge.EVENT_BUS.addListener em ElementalsMoreBendingsMod. */
@@ -44,9 +43,9 @@ public final class CrystalWallManager {
         if (ACTIVE.isEmpty()) {
             return;
         }
-        Iterator<Map.Entry<UUID, WallState>> it = ACTIVE.entrySet().iterator();
+        Iterator<WallState> it = ACTIVE.iterator();
         while (it.hasNext()) {
-            WallState state = it.next().getValue();
+            WallState state = it.next();
             if (!state.tick()) {
                 state.shatter();
                 it.remove();
