@@ -56,6 +56,15 @@ import java.util.Map;
  * a camada de grama/terra) e o Chi só é descontado depois de confirmar que
  * existe pelo menos um ponto cristalizável -- com uma mensagem clara pro
  * jogador quando não há pedra nenhuma por perto.
+ *
+ * === MODELO 3D DE VERDADE (antes era só troca de textura) ===
+ * Cada posição erguida agora também spawna um {@link CrystalSpikeVisualEntity}
+ * em cima do bloco -- uma farpa de ametista de verdade (com animação de
+ * crescer/encolher), não mais só o piso virando amethyst_block. O bloco em si
+ * continua sendo trocado (mantém a luz/textura/colisão do chão), a farpa
+ * visual é só "decoração" por cima, sincronizada pra sumir exatamente
+ * quando {@link CrystalSpikeManager} reverte o bloco. Mesmo esquema que
+ * {@code MagmaSpikeAbility} já usa pra {@code magmaSpike}.
  */
 public class CrystalSpikeAbility implements Ability {
 
@@ -181,6 +190,11 @@ public class CrystalSpikeAbility implements Ability {
                     ground.getX() + 0.5, ground.getY() + 1.0, ground.getZ() + 0.5, 8, 0.2, 0.2, 0.2, 0.0);
             original.put(ground.immutable(), existing);
             level.setBlock(ground, Blocks.AMETHYST_BLOCK.defaultBlockState(), 3);
+            // Farpa de verdade (modelo 3D, ver CrystalSpikeVisualEntity) brotando em
+            // cima do bloco, não só a troca de textura -- sincronizada pra sumir
+            // exatamente quando o bloco reverte (mesmo RETRACT_AFTER_TICKS que
+            // CrystalSpikeManager já usa).
+            CrystalSpikeVisualEntity.spawn(level, ground, RETRACT_AFTER_TICKS);
         }
     }
 

@@ -3,6 +3,7 @@ package com.elementals.morebendings.registry;
 import com.elementals.morebendings.Constants;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BoneSpikeEntity;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalShardEntity;
+import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalSpikeVisualEntity;
 import com.elementals.morebendings.bending.earthsubbendings.glass.GlassShardEntity;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaShurikenEntity;
 import com.elementals.morebendings.bending.earthsubbendings.lava.MagmaSpikeVisualEntity;
@@ -118,6 +119,23 @@ public class ModEntities {
                             .clientTrackingRange(64)
                             .updateInterval(20)
                             .build("magma_spike_visual"));
+
+    /**
+     * Espinho de cristal puramente visual (ver {@link CrystalSpikeVisualEntity}) --
+     * um por bloco erguido em {@code crystalSpike}. Mesmo esquema de
+     * {@link #MAGMA_SPIKE_VISUAL}: sem física, sem colisão,
+     * {@code updateInterval} alto porque não se move (só nasce parada e
+     * conta os próprios ticks pra sumir -- não precisa reconciliar posição
+     * com o cliente com frequência).
+     */
+    public static final Supplier<EntityType<CrystalSpikeVisualEntity>> CRYSTAL_SPIKE_VISUAL =
+            ENTITY_TYPES.register("crystal_spike_visual",
+                    () -> EntityType.Builder.<CrystalSpikeVisualEntity>of(CrystalSpikeVisualEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .sized(0.5f, 0.5f)
+                            .clientTrackingRange(64)
+                            .updateInterval(20)
+                            .build("crystal_spike_visual"));
 
     /**
      * Funil giratório puramente visual de "sandTornado" (ver
