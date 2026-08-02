@@ -20,6 +20,9 @@ import com.elementals.morebendings.bending.airsubbendings.atmosphere.PressureZon
 import com.elementals.morebendings.bending.airsubbendings.mist.MistCloudManager;
 import com.elementals.morebendings.bending.firesubbendings.plasma.PlasmaBoostCombatHandler;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalArmorManager;
+import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalArmorSetManager;
+import com.elementals.morebendings.registry.ModArmorMaterials;
+import com.elementals.morebendings.registry.ModItems;
 import com.elementals.morebendings.client.ModKeyMappings;
 import com.elementals.morebendings.client.layers.PlasmaFirstPersonFireHandler;
 import com.elementals.morebendings.commands.MoreBendingCommand;
@@ -48,6 +51,9 @@ public class ElementalsMoreBendingsMod {
         // Registries que precisam do mod bus (DeferredRegister).
         ModAttachments.ATTACHMENT_TYPES.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
+
+        ModArmorMaterials.ARMOR_MATERIALS.register(modEventBus);
+        ModItems.ITEMS.register(modEventBus);
 
         // ClientClass usa classes client-only (EntityRenderersEvent) — só registra
         // o listener se a gente realmente estiver rodando no cliente, senão o
@@ -190,6 +196,10 @@ public class ElementalsMoreBendingsMod {
         NeoForge.EVENT_BUS.addListener(CrystalPrisonManager::onServerTick);
 
         NeoForge.EVENT_BUS.addListener(CrystalArmorManager::onServerTick);
+
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent event) -> {
+            if (event.getEntity() instanceof ServerPlayer sp) CrystalArmorSetManager.restoreOnLogout(sp);
+        });
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

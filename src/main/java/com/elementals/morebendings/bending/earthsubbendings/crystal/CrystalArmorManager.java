@@ -35,7 +35,7 @@ public final class CrystalArmorManager {
             Bender bender = Bender.getBender(player);
             if (bender == null || !CrystalElement.isCrystalBender(bender)) {
                 CrystalArmorAbility.deactivate(id);
-                CrystalArmorAbility.broadcastSync(player, false);
+                CrystalArmorSetManager.unequip(player);
                 continue;
             }
 
@@ -43,7 +43,7 @@ public final class CrystalArmorManager {
                 CrystalArmorAbility.deactivate(id);
                 player.removeEffect(MobEffects.DAMAGE_RESISTANCE);
                 player.removeEffect(ElementalsStatusEffects.SEISMIC_SENSE.get());
-                CrystalArmorAbility.broadcastSync(player, false);
+                CrystalArmorSetManager.unequip(player);
                 continue;
             }
 

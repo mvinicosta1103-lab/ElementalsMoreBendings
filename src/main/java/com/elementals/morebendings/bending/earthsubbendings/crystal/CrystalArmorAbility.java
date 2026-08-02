@@ -61,12 +61,14 @@ public class CrystalArmorAbility implements Ability {
         }
 
         playToggleFeedback(level, player, nowActive);
-        if (!nowActive) {
+        if (nowActive) {
+            CrystalArmorSetManager.equip(caster);
+        } else {
+            CrystalArmorSetManager.unequip(caster);
             removeEffects(player);
         }
-        broadcastSync(caster, nowActive);
 
-        bender.setCurrAbility(null); // toggle instantâneo -- o resto vive no Manager
+        bender.setCurrAbility(null);
     }
 
     @Override
@@ -75,8 +77,8 @@ public class CrystalArmorAbility implements Ability {
         Player player = bender.player;
         if (player instanceof ServerPlayer caster) {
             deactivate(caster.getUUID());
+            CrystalArmorSetManager.unequip(caster);
             removeEffects(player);
-            broadcastSync(caster, false);
         }
     }
 
