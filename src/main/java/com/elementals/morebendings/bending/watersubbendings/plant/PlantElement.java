@@ -17,6 +17,14 @@ import dev.saperate.elementals.elements.water.WaterElement;
  *    (grappling hook) se acertar só um bloco. Ver {@link PlantVineWhipAbility}.
  *  - vineWall: levanta uma parede temporária de folhagem na frente do
  *    caster. Ver {@link PlantVineWallAbility} / {@link PlantVineWallManager}.
+ *  - thornVolley: saraivada de espinhos envenenados na direção da mira.
+ *    Ver {@link PlantThornVolleyAbility}.
+ *  - vineGrasp: agarra uma criatura viva (inclusive jogadores) com vinhas e
+ *    dá controle telecinético dela ao caster -- puxar/controlar/mover
+ *    (padrão), levantar (olhando pra cima) ou esmagar (agachado). Ver
+ *    {@link PlantVineGraspAbility}.
+ *  - rootSnare: raízes em área que imobilizam todo mundo por perto. Ver
+ *    {@link PlantRootSnareAbility}.
  *
  * Antes disso, Plant vivia só no sistema antigo paralelo
  * ({@code PlayerSubbendingData} / {@code SubbendingType.PLANT}), sem
@@ -32,11 +40,15 @@ public class PlantElement extends Element {
         super(NAME, new Upgrade[]{
                 new Upgrade("vineWhip", 0),
                 new Upgrade("vineWall", 0),
-                new Upgrade("thornVolley", 0)
+                new Upgrade("thornVolley", 0),
+                new Upgrade("vineGrasp", 0),
+                new Upgrade("rootSnare", 0)
         });
         addAbility(new PlantVineWhipAbility(), 0);
         addAbility(new PlantVineWallAbility(), 1);
         addAbility(new PlantThornVolleyAbility(), 2);
+        addAbility(new PlantVineGraspAbility(), 3);
+        addAbility(new PlantRootSnareAbility(), 4);
     }
 
     /** Registra a instância única no mod base. Chame uma vez, no load do mod. */
@@ -69,6 +81,8 @@ public class PlantElement extends Element {
         return bender.hasElement(this)
                 && bender.getData().canUseUpgrade("vineWhip")
                 && bender.getData().canUseUpgrade("vineWall")
-                && bender.getData().canUseUpgrade("thornVolley");
+                && bender.getData().canUseUpgrade("thornVolley")
+                && bender.getData().canUseUpgrade("vineGrasp")
+                && bender.getData().canUseUpgrade("rootSnare");
     }
 }

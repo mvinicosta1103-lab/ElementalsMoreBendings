@@ -14,6 +14,7 @@ import com.elementals.morebendings.bending.earthsubbendings.sand.SandTornadoVisu
 import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntity;
 import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionBoltEntity;
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantThornVolleyEntity;
+import com.elementals.morebendings.bending.watersubbendings.plant.PlantVineGraspVisualEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -210,6 +211,24 @@ public class ModEntities {
                             .clientTrackingRange(64)
                             .updateInterval(1)
                             .build("plant_thorn"));
+
+    /**
+     * Modelo visual do cipó de "vineGrasp" (ver {@link PlantVineGraspVisualEntity}
+     * / {@code PlantVineGraspAbility}) -- mesmo esquema de {@link #MAGMA_SPIKE_VISUAL}:
+     * sem física, sem colisão. Diferente deles, esta SE MOVE de verdade (a
+     * ability reposiciona ela todo tick pra seguir a mão do caster e a
+     * vítima), então {@code updateInterval} fica baixo (igual os projéteis
+     * de verdade acima) em vez de alto, senão o cliente veria a vinha "atrasada"
+     * em relação aos dois pontos que ela deveria estar ligando.
+     */
+    public static final Supplier<EntityType<PlantVineGraspVisualEntity>> PLANT_VINE_GRASP =
+            ENTITY_TYPES.register("plant_vine_grasp",
+                    () -> EntityType.Builder.<PlantVineGraspVisualEntity>of(PlantVineGraspVisualEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .sized(0.15f, 0.15f)
+                            .clientTrackingRange(64)
+                            .updateInterval(1)
+                            .build("plant_vine_grasp"));
 
     private ModEntities() {
     }
