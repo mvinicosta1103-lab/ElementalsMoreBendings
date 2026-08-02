@@ -274,6 +274,27 @@ public class MoreBendingCommand {
                             "Sua árvore de Bone Bending foi reparada -- tente comprar os upgrades de novo."));
                     return 1;
                 }
+                if (type == SubbendingType.PLANT) {
+                    // Não precisa de autoUnlockRoot (os 4 ramos raiz de Plant já
+                    // têm preço 0 e são compráveis direto pela UI). O problema
+                    // aqui é outro: StateDataSaverAndLoader#load() restaura
+                    // boundAbilities[3]/[4] (as teclas físicas de vineGrasp e
+                    // rootSnare) a partir do NBT salvo (bind4/bind5) -- se esse
+                    // save foi gravado antes de vineGrasp/rootSnare terem tecla
+                    // própria, esses campos ficaram gravados como -1, e
+                    // Element#getBindableAbility(-1) devolve null pra sempre,
+                    // travando as duas teclas em branco mesmo com o upgrade já
+                    // comprado. bindDefaultAbilities() reconstrói o array em
+                    // memória do zero (limpa o -1 velho) e syncAndPersist grava
+                    // o resultado correto de volta no save.
+                    bender.bindDefaultAbilities();
+                    syncAndPersist(bender, target);
+                    source.sendSuccess(() -> Component.literal(
+                            "Teclas de Plant Bending re-vinculadas e persistidas pra " + playerName + "."), true);
+                    target.sendSystemMessage(Component.literal(
+                            "Suas teclas de Plant Bending foram reparadas -- vineGrasp e rootSnare já devem responder."));
+                    return 1;
+                }
                 source.sendFailure(Component.literal(playerName + " já tinha " + type.getDisplayName() + "."));
                 return 0;
             }
