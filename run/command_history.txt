@@ -1,4 +1,3 @@
-/morebending grant Dev Gas
 /bending element add Gas Dev
 /morebending grant Dev Gas
 /morebending grant Dev Mist
@@ -48,3 +47,4 @@
 /morebending grant Dev Lava
 /morebending grant Dev Mud
 /morebending grant Dev Sand
+/morebending grant Dev Crystal

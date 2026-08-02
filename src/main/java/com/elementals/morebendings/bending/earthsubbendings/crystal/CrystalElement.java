@@ -10,6 +10,15 @@ import dev.saperate.elementals.elements.earth.EarthElement;
  * com.elementals.morebendings.bending.earthsubbendings.mud.MudElement}:
  * Element de verdade, registrada no mod base, gated atrás da masterização
  * de Earth.
+ *
+ * Exatamente 4 filhos diretos na raiz -- mesmo teto de {@code MudElement}
+ * (ver o comentário detalhado lá sobre a limitação do
+ * {@code UpgradeTreeScreen#render()} do mod base, que só desenha
+ * {@code root.children[0..3]}). Com crystalShard, crystalSpike,
+ * crystalWall e crystalPrison, Crystal chega no limite: qualquer
+ * habilidade futura (dash/step, armor, mastery -- já tem ícone pronto em
+ * resources/) precisa entrar como {@code children} aninhado dentro de um
+ * desses 4, não como um 5º Upgrade solto aqui.
  */
 public class CrystalElement extends Element {
 
@@ -17,9 +26,15 @@ public class CrystalElement extends Element {
 
     public CrystalElement() {
         super(NAME, new Upgrade[]{
-                new Upgrade("crystalShard", 0)
+                new Upgrade("crystalShard", 0),   // grátis -- ver CrystalShardAbility
+                new Upgrade("crystalSpike", 0),   // grátis -- ver CrystalSpikeAbility
+                new Upgrade("crystalWall", 0),    // grátis -- ver CrystalWallAbility
+                new Upgrade("crystalPrison", 0)   // grátis -- ver CrystalPrisonAbility
         });
         addAbility(new CrystalShardAbility(), 0);
+        addAbility(new CrystalSpikeAbility(), 1);
+        addAbility(new CrystalWallAbility(), 2);
+        addAbility(new CrystalPrisonAbility(), 3);
     }
 
     public static void register() {
@@ -43,6 +58,10 @@ public class CrystalElement extends Element {
 
     @Override
     public boolean isSkillTreeComplete(Bender bender) {
-        return bender.hasElement(this) && bender.getData().canUseUpgrade("crystalShard");
+        return bender.hasElement(this)
+                && bender.getData().canUseUpgrade("crystalShard")
+                && bender.getData().canUseUpgrade("crystalSpike")
+                && bender.getData().canUseUpgrade("crystalWall")
+                && bender.getData().canUseUpgrade("crystalPrison");
     }
 }

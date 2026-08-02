@@ -5,6 +5,9 @@ import com.elementals.morebendings.bending.airsubbendings.flying.FlyingAbility;
 import com.elementals.morebendings.bending.airsubbendings.gas.GasLeakManager;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BloodProximityTracker;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BonePuppeteerManager;
+import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalPrisonManager;
+import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalSpikeManager;
+import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalWallManager;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaArmorCombatHandler;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaPoolManager;
 import com.elementals.morebendings.bending.earthsubbendings.lava.MagmaSpikeManager;
@@ -172,6 +175,18 @@ public class ElementalsMoreBendingsMod {
         // Dispara o pulso periódico de echoSense (Sound), revelando
         // entidades próximas via partículas -- ver EchoSenseManager.
         NeoForge.EVENT_BUS.addListener(EchoSenseManager::onServerTick);
+
+        // Desmancha os clusters de espinhos de crystalSpike ativos depois do
+        // tempo, devolvendo o terreno original -- ver CrystalSpikeManager.
+        NeoForge.EVENT_BUS.addListener(CrystalSpikeManager::onServerTick);
+
+        // Estilhaça as paredes de crystalWall ativas depois do tempo -- ver
+        // CrystalWallManager. Mesmo esquema do PlantVineWallManager.
+        NeoForge.EVENT_BUS.addListener(CrystalWallManager::onServerTick);
+
+        // Estilhaça as gaiolas de crystalPrison ativas depois do tempo,
+        // devolvendo o terreno original -- ver CrystalPrisonManager.
+        NeoForge.EVENT_BUS.addListener(CrystalPrisonManager::onServerTick);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

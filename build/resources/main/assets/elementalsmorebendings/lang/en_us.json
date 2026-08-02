@@ -93,6 +93,9 @@
   "ability.elementalsmorebendings.mud_ball": "Mud Ball",
   "ability.elementalsmorebendings.mud_spikes": "Mud Spikes",
   "ability.elementalsmorebendings.crystal_shard": "Crystal Shards",
+  "ability.elementalsmorebendings.crystal_spike": "Crystal Spikes",
+  "ability.elementalsmorebendings.crystal_wall": "Crystal Wall",
+  "ability.elementalsmorebendings.crystal_prison": "Crystal Prison",
   "ability.elementalsmorebendings.bone_control": "Bone Control",
   "ability.elementalsmorebendings.bone_puppeteer": "Bone Puppeteer",
   "ability.elementalsmorebendings.sand_tornado": "Sand Tornado",
@@ -141,6 +144,21 @@
   "upgrade.elementals.crystalShard.description": "Fires a spike of crystal in the direction you're looking, dealing damage to whatever it hits.",
   "upgrade.elementals.crystalShard.use": "Use: %d",
   "upgrade.elementals.crystalShard.icon": "crystal_dash",
+
+  "upgrade.elementals.crystalSpike": "Crystal Spikes",
+  "upgrade.elementals.crystalSpike.description": "Erupts a cluster of jagged amethyst spikes from the ground where you're aiming, damaging and launching anyone caught in the burst upward.",
+  "upgrade.elementals.crystalSpike.use": "Use: %d",
+  "upgrade.elementals.crystalSpike.icon": "crystal_spike",
+
+  "upgrade.elementals.crystalWall": "Crystal Wall",
+  "upgrade.elementals.crystalWall.description": "Raises a temporary wall of crystal in front of you, blocking arrows and movement for a short while before it shatters away.",
+  "upgrade.elementals.crystalWall.use": "Use: %d",
+  "upgrade.elementals.crystalWall.icon": "crystal_wall",
+
+  "upgrade.elementals.crystalPrison": "Crystal Prison",
+  "upgrade.elementals.crystalPrison.description": "Strikes your target and encases them in a cage of solid crystal, stunning them in place for several seconds before it shatters.",
+  "upgrade.elementals.crystalPrison.use": "Use: %d",
+  "upgrade.elementals.crystalPrison.icon": "crystal_prison",
 
   "upgrade.elementals.boneControl": "Bone Control",
   "upgrade.elementals.boneControl.description": "Seizes a living creature by its skeleton and lets you freely hoist it up/down, side to side, and closer/further with your aim and scroll wheel, like a telekinetic pickup, then hurl it at will.",
