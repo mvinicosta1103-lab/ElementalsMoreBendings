@@ -193,7 +193,7 @@ public class PlantVineGraspAbility implements Ability {
         Vec3 current = victim.getDeltaMovement();
         victim.setDeltaMovement(current.x * 0.5, -CRUSH_PULL_SPEED, current.z * 0.5);
         victim.hasImpulse = true;
-        victim.addEffect(new MobEffectInstance(MoreBendingsEffects.CRUSHED.get(),
+        victim.addEffect(new MobEffectInstance(MoreBendingsEffects.CRUSHED,
                 CRUSH_EFFECT_DURATION_TICKS, CRUSH_EFFECT_AMPLIFIER));
     }
 

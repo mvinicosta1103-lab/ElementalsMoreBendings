@@ -37,18 +37,39 @@ public class PlantElement extends Element {
     public static final String NAME = "Plant";
 
     public PlantElement() {
+        // Exatamente 4 filhos diretos na raiz -- é o máximo que
+        // UpgradeTreeScreen#render() desenha (root.children[0..3], só
+        // desenhado quando len==4 exatamente; ver comentário detalhado em
+        // LavaElement). Com 5 Upgrades soltos, vineGrasp (índice 3) e
+        // rootSnare (índice 4) nunca eram lidos nem desenhados pela tela,
+        // mesmo comprados/concedidos por comando -- por isso sumiam da
+        // árvore. Fix: rootSnare entra como `children` aninhado dentro do
+        // ramo vineGrasp, igual ao padrão que Lava/Mud/Crystal já usam.
         super(NAME, new Upgrade[]{
                 new Upgrade("vineWhip", 0),
                 new Upgrade("vineWall", 0),
                 new Upgrade("thornVolley", 0),
-                new Upgrade("vineGrasp", 0),
-                new Upgrade("rootSnare", 0)
+                new Upgrade("vineGrasp", new Upgrade[]{
+                        new Upgrade("rootSnare", 0)
+                }, 0)
         });
         addAbility(new PlantVineWhipAbility(), 0);
         addAbility(new PlantVineWallAbility(), 1);
         addAbility(new PlantThornVolleyAbility(), 2);
         addAbility(new PlantVineGraspAbility(), 3);
         addAbility(new PlantRootSnareAbility(), 4);
+
+        // Sem isso, Element#getKeybindSlotForUpgrade() sobe a árvore, não
+        // acha rootSnare em upgradeKeybinds e cai pro índice do RAMO da
+        // raiz (vineGrasp, 3) em vez do índice real da ability (4) --
+        // rootSnare mostraria a mesma tecla de vineGrasp na tooltip.
+        // Registrando cada upgrade -> índice real da ability, igual
+        // LavaElement faz para lavaArmor/lavaSurf/etc.
+        registerUpgradeKeybind("vineWhip", 0);
+        registerUpgradeKeybind("vineWall", 1);
+        registerUpgradeKeybind("thornVolley", 2);
+        registerUpgradeKeybind("vineGrasp", 3);
+        registerUpgradeKeybind("rootSnare", 4);
     }
 
     /** Registra a instância única no mod base. Chame uma vez, no load do mod. */

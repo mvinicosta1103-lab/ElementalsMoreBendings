@@ -425,6 +425,21 @@
   "upgrade.elementals.vineWall.use": "Use: %d",
   "upgrade.elementals.vineWall.icon": "vine_wall",
 
+  "upgrade.elementals.thornVolley": "Thorn Volley",
+  "upgrade.elementals.thornVolley.description": "Fires a spray of poisoned thorns in the direction you're aiming. Each thorn that connects deals damage and leaves a short-lived Poison behind.",
+  "upgrade.elementals.thornVolley.use": "Use: %d",
+  "upgrade.elementals.thornVolley.icon": "thorn_volley",
+
+  "upgrade.elementals.vineGrasp": "Vine Grasp",
+  "upgrade.elementals.vineGrasp.description": "Binds a living target in vines and lets you puppet it while you hold the key: drag it toward wherever you're looking, look sharply upward to hoist it into the air, or crouch to slam it down and crush it. Left-click to hurl it away, right-click to simply let go.",
+  "upgrade.elementals.vineGrasp.use": "Hold: %d",
+  "upgrade.elementals.vineGrasp.icon": "vine_grasp",
+
+  "upgrade.elementals.rootSnare": "Root Snare",
+  "upgrade.elementals.rootSnare.description": "Roots erupt from the ground around you, entangling every living creature nearby and pinning them almost in place for a few seconds.",
+  "upgrade.elementals.rootSnare.use": "Use: %d",
+  "upgrade.elementals.rootSnare.icon": "root_snare",
+
   "upgrade.elementals.purifyingWater": "Purifying Water",
   "upgrade.elementals.purifyingWater.description": "Blesses a body of water in front of you for a short while. Skeletons, husks, blazes, and baby zombies caught in it glow and dissolve into spirit dust. Witches, pillagers, vindicators, and baby zombie villagers are cleansed back into ordinary villagers, cracked iron golems are fully repaired, and a wither skeleton is purified into a snow golem.",
   "upgrade.elementals.purifyingWater.use": "Use: %d",
