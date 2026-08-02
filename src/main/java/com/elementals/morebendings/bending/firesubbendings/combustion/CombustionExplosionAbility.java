@@ -129,7 +129,7 @@ public class CombustionExplosionAbility implements Ability {
         level.sendParticles(ParticleTypes.SMALL_FLAME,
                 eyePos.x, eyePos.y, eyePos.z, 3, 0.02, 0.02, 0.02, 0.005);
         caster.displayClientMessage(
-                Component.literal("Mirando... espere o som confirmar antes de clicar."), true);
+                Component.literal("Aiming... wait for the sound to confirm before clicking."), true);
 
         bender.setCurrAbility(this); // canalizada -- ver onTick/onLeftClick/onRightClick
     }
@@ -153,7 +153,7 @@ public class CombustionExplosionAbility implements Ability {
         // Segurou a concentração tempo demais -- estoura sozinha, sem aviso.
         if (elapsed >= MAX_CHARGE_TICKS) {
             caster.displayClientMessage(
-                    Component.literal("Você segurou o foco por tempo demais e ele estourou!"), true);
+                    Component.literal("You held the focus too long and it exploded!"), true);
             CombustionExplosionUtils.selfBackfire(level, caster,
                     OVERLOAD_BACKFIRE_DAMAGE, OVERLOAD_BACKFIRE_RADIUS,
                     OVERLOAD_BLINDNESS_TICKS, OVERLOAD_CONFUSION_TICKS);
@@ -212,7 +212,7 @@ public class CombustionExplosionAbility implements Ability {
             // Soltou cedo demais -- a mira não travou, o golpe volta pro
             // próprio bender em vez de sair na direção pretendida.
             caster.displayClientMessage(
-                    Component.literal("Você clicou cedo demais -- a mira não travou! Espere o som antes de soltar."),
+                    Component.literal("You clicked too soon -- the crosshairs didn't lock! Wait for the sound before releasing."),
                     true);
             CombustionExplosionUtils.selfBackfire(level, caster,
                     PREMATURE_BACKFIRE_DAMAGE, PREMATURE_BACKFIRE_RADIUS,

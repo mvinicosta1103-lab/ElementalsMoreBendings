@@ -25,7 +25,6 @@ import net.minecraft.world.phys.Vec3;
  * e, um instante depois, a explosão no ponto de impacto.
  *
  * Sempre nasce um projétil de verdade (nunca mais um raycast instantâneo
- * puro, ver {@link CombustionExplosionAbility#fire}); o que muda com o
  * upgrade {@code combustionGuidance} é só o campo {@link #guided}: sem
  * ele o bolt vai reto na direção do disparo, com ele pode "puxar"
  * levemente a rota na direção do que o dono está olhando durante os
