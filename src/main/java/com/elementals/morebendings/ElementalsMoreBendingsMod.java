@@ -30,6 +30,7 @@ import com.elementals.morebendings.network.ModNetworking;
 import com.elementals.morebendings.registry.ModAttachments;
 import com.elementals.morebendings.registry.ModEntities;
 import net.neoforged.api.distmarker.Dist;
+import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -41,6 +42,7 @@ import com.elementals.morebendings.bending.airsubbendings.sound.SilenceFieldMana
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantVineWallManager;
 import com.elementals.morebendings.bending.watersubbendings.spirit.CurseMinionManager;
 import com.elementals.morebendings.bending.watersubbendings.spirit.PurifyingWaterManager;
+
 
 @Mod(Constants.MOD_ID)
 public class ElementalsMoreBendingsMod {
@@ -199,6 +201,10 @@ public class ElementalsMoreBendingsMod {
 
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent event) -> {
             if (event.getEntity() instanceof ServerPlayer sp) CrystalArmorSetManager.restoreOnLogout(sp);
+        });
+
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerRespawnEvent event) -> {
+            if (event.getEntity() instanceof ServerPlayer sp) CrystalArmorSetManager.reapplyAfterRespawn(sp);
         });
     }
 

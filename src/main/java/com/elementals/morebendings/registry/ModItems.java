@@ -14,20 +14,20 @@ public class ModItems {
             DeferredRegister.create(BuiltInRegistries.ITEM, Constants.MOD_ID);
 
     public static final Supplier<ArmorItem> CRYSTAL_HELMET = ITEMS.register("crystal_helmet",
-            () -> new ArmorItem(ModArmorMaterials.CRYSTAL.get(), ArmorItem.Type.HELMET,
-                    new Item.Properties()));
+            () -> new ArmorItem(ModArmorMaterials.CRYSTAL, ArmorItem.Type.HELMET,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(15))));
 
     public static final Supplier<ArmorItem> CRYSTAL_CHESTPLATE = ITEMS.register("crystal_chestplate",
-            () -> new ArmorItem(ModArmorMaterials.CRYSTAL.get(), ArmorItem.Type.CHESTPLATE,
-                    new Item.Properties()));
+            () -> new ArmorItem(ModArmorMaterials.CRYSTAL, ArmorItem.Type.CHESTPLATE,
+                    new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(15))));
 
     public static final Supplier<ArmorItem> CRYSTAL_LEGGINGS = ITEMS.register("crystal_leggings",
-            () -> new ArmorItem(ModArmorMaterials.CRYSTAL.get(), ArmorItem.Type.LEGGINGS,
-                    new Item.Properties()));
+            () -> new ArmorItem(ModArmorMaterials.CRYSTAL, ArmorItem.Type.LEGGINGS,
+                    new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(15))));
 
     public static final Supplier<ArmorItem> CRYSTAL_BOOTS = ITEMS.register("crystal_boots",
-            () -> new ArmorItem(ModArmorMaterials.CRYSTAL.get(), ArmorItem.Type.BOOTS,
-                    new Item.Properties()));
+            () -> new ArmorItem(ModArmorMaterials.CRYSTAL, ArmorItem.Type.BOOTS,
+                    new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(15))));
 
     private ModItems() {
     }
