@@ -1,6 +1,4 @@
 /morebending grant Dev Mist
-/bending element add Mist Dev
-/morebending grant Dev Mist
 /bending element add Plasma Dev
 /morebending grant Dev Plasma
 /bending level add 1000000 Dev
@@ -48,3 +46,5 @@
 /morebending grant Dev Crystal
 /bending element add Crystal
 /bending level add 100000 Dev
+/bending level add 10000 Dev
+/morebending grant Dev Crystal

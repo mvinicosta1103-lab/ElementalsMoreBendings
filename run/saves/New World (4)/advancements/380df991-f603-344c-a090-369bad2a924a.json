@@ -1,0 +1,45 @@
+{
+  "minecraft:recipes/building_blocks/spruce_planks": {
+    "criteria": {
+      "has_logs": "2026-08-02 00:29:02 -0300"
+    },
+    "done": true
+  },
+  "elementals:earthbending": {
+    "criteria": {
+      "element": "2026-08-02 00:27:42 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/charcoal": {
+    "criteria": {
+      "has_log": "2026-08-02 00:29:02 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/crafting_table": {
+    "criteria": {
+      "unlock_right_away": "2026-08-02 00:27:05 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/spruce_wood": {
+    "criteria": {
+      "has_log": "2026-08-02 00:29:02 -0300"
+    },
+    "done": true
+  },
+  "elementals:root": {
+    "criteria": {
+      "trigger": "2026-08-02 00:27:05 -0300"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:snowy_taiga": "2026-08-02 00:27:06 -0300"
+    },
+    "done": false
+  },
+  "DataVersion": 3955
+}

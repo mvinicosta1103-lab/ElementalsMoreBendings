@@ -19,6 +19,7 @@ import com.elementals.morebendings.bending.earthsubbendings.sand.SandTornadoMana
 import com.elementals.morebendings.bending.airsubbendings.atmosphere.PressureZoneManager;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistCloudManager;
 import com.elementals.morebendings.bending.firesubbendings.plasma.PlasmaBoostCombatHandler;
+import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalArmorManager;
 import com.elementals.morebendings.client.ModKeyMappings;
 import com.elementals.morebendings.client.layers.PlasmaFirstPersonFireHandler;
 import com.elementals.morebendings.commands.MoreBendingCommand;
@@ -187,6 +188,8 @@ public class ElementalsMoreBendingsMod {
         // Estilhaça as gaiolas de crystalPrison ativas depois do tempo,
         // devolvendo o terreno original -- ver CrystalPrisonManager.
         NeoForge.EVENT_BUS.addListener(CrystalPrisonManager::onServerTick);
+
+        NeoForge.EVENT_BUS.addListener(CrystalArmorManager::onServerTick);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
