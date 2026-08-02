@@ -16,10 +16,14 @@ import net.minecraft.world.entity.player.Player;
  * cada estilhaço é uma {@link CrystalShardEntity} de verdade: sai voando,
  * tem hitbox própria, e pode simplesmente errar o alvo — mais parecido
  * com uma saraivada de flechas de cristal do que um laser.
+ *
+ * Com {@code crystalMastery} comprado (ver {@link CrystalElement#hasMastery}),
+ * a barragem sai maior -- {@link #MASTERY_BONUS_SHARDS} estilhaços extras.
  */
 public class CrystalShardAbility implements Ability {
 
     private static final int SHARD_COUNT = 6;
+    private static final int MASTERY_BONUS_SHARDS = 3;
     private static final float SPEED = 2.2f;
     /** Espalhamento em graus — quanto maior, mais "aberta" fica a barragem. */
     private static final float DIVERGENCE = 4.0f;
@@ -31,7 +35,8 @@ public class CrystalShardAbility implements Ability {
             return;
         }
 
-        for (int i = 0; i < SHARD_COUNT; i++) {
+        int shardCount = SHARD_COUNT + (CrystalElement.hasMastery(bender) ? MASTERY_BONUS_SHARDS : 0);
+        for (int i = 0; i < shardCount; i++) {
             CrystalShardEntity shard = new CrystalShardEntity(level, player);
             // setDeltaMovement(shooter, pitch, yaw, roll, speed, divergence) já vem
             // pronto no AbstractElementalsEntity do mod base — calcula a direção a

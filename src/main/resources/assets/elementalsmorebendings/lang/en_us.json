@@ -96,6 +96,8 @@
   "ability.elementalsmorebendings.crystal_spike": "Crystal Spikes",
   "ability.elementalsmorebendings.crystal_wall": "Crystal Wall",
   "ability.elementalsmorebendings.crystal_prison": "Crystal Prison",
+  "ability.elementalsmorebendings.crystal_step": "Crystal Step",
+  "ability.elementalsmorebendings.crystal_armor": "Crystal Armor",
   "ability.elementalsmorebendings.bone_control": "Bone Control",
   "ability.elementalsmorebendings.bone_puppeteer": "Bone Puppeteer",
   "ability.elementalsmorebendings.sand_tornado": "Sand Tornado",
@@ -159,6 +161,21 @@
   "upgrade.elementals.crystalPrison.description": "Strikes your target and encases them in a cage of solid crystal, stunning them in place for several seconds before it shatters.",
   "upgrade.elementals.crystalPrison.use": "Use: %d",
   "upgrade.elementals.crystalPrison.icon": "crystal_prison",
+
+  "upgrade.elementals.crystalStep": "Crystal Step",
+  "upgrade.elementals.crystalStep.description": "Shatter into crystal shards and reform a short distance ahead, in the direction you're looking. Won't trigger if the destination isn't clear.",
+  "upgrade.elementals.crystalStep.use": "Use: %d",
+  "upgrade.elementals.crystalStep.icon": "crystal_step",
+
+  "upgrade.elementals.crystalArmor": "Crystal Armor",
+  "upgrade.elementals.crystalArmor.description": "Coat yourself in a shell of hardened crystal plates while holding crouch, granting resistance to incoming damage.",
+  "upgrade.elementals.crystalArmor.use": "Use: %d",
+  "upgrade.elementals.crystalArmor.icon": "crystal_armor",
+
+  "upgrade.elementals.crystalMastery": "Crystal Mastery",
+  "upgrade.elementals.crystalMastery.description": "Passive. Once bought, permanently strengthens your Crystal Shards (more shards per volley) and Crystal Spikes (larger, more damaging eruption).",
+  "upgrade.elementals.crystalMastery.use": "Use: %d",
+  "upgrade.elementals.crystalMastery.icon": "crystal_mastery",
 
   "upgrade.elementals.boneControl": "Bone Control",
   "upgrade.elementals.boneControl.description": "Seizes a living creature by its skeleton and lets you freely hoist it up/down, side to side, and closer/further with your aim and scroll wheel, like a telekinetic pickup, then hurl it at will.",
