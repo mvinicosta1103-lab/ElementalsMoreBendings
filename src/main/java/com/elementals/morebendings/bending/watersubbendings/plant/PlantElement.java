@@ -30,11 +30,13 @@ public class PlantElement extends Element {
 
     public PlantElement() {
         super(NAME, new Upgrade[]{
-                new Upgrade("vineWhip", 0), // grátis
-                new Upgrade("vineWall", 0)  // grátis -- ver PlantVineWallAbility
+                new Upgrade("vineWhip", 0),
+                new Upgrade("vineWall", 0),
+                new Upgrade("thornVolley", 0)
         });
         addAbility(new PlantVineWhipAbility(), 0);
         addAbility(new PlantVineWallAbility(), 1);
+        addAbility(new PlantThornVolleyAbility(), 2);
     }
 
     /** Registra a instância única no mod base. Chame uma vez, no load do mod. */
@@ -66,6 +68,7 @@ public class PlantElement extends Element {
     public boolean isSkillTreeComplete(Bender bender) {
         return bender.hasElement(this)
                 && bender.getData().canUseUpgrade("vineWhip")
-                && bender.getData().canUseUpgrade("vineWall");
+                && bender.getData().canUseUpgrade("vineWall")
+                && bender.getData().canUseUpgrade("thornVolley");
     }
 }

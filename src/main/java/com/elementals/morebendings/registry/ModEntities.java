@@ -13,6 +13,7 @@ import com.elementals.morebendings.bending.earthsubbendings.mud.MudSurgeChunkEnt
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandTornadoVisualEntity;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntity;
 import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionBoltEntity;
+import com.elementals.morebendings.bending.watersubbendings.plant.PlantThornVolleyEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -200,6 +201,15 @@ public class ModEntities {
                             .clientTrackingRange(64)
                             .updateInterval(1)
                             .build("mud_surge_chunk"));
+
+    public static final Supplier<EntityType<PlantThornVolleyEntity>> PLANT_THORN =
+            ENTITY_TYPES.register("plant_thorn",
+                    () -> EntityType.Builder.<PlantThornVolleyEntity>of(PlantThornVolleyEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .sized(0.25f, 0.25f)
+                            .clientTrackingRange(64)
+                            .updateInterval(1)
+                            .build("plant_thorn"));
 
     private ModEntities() {
     }

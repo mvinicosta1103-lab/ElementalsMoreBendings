@@ -11,6 +11,7 @@ import com.elementals.morebendings.bending.earthsubbendings.mud.MudSpikeVisualEn
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudSurgeChunkEntityRenderer;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntityRenderer;
 import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionBoltEntityRenderer;
+import com.elementals.morebendings.bending.watersubbendings.plant.PlantThornVolleyEntityRenderer;
 import com.elementals.morebendings.registry.ModEntities;
 import com.elementals.morebendings.client.layers.CrystalArmorRenderLayer;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
@@ -32,6 +33,7 @@ public class ClientClass {
         event.registerEntityRenderer(ModEntities.MUD_BALL.get(), MudBallEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.MUD_SPIKE_VISUAL.get(), MudSpikeVisualEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.MUD_SURGE_CHUNK.get(), MudSurgeChunkEntityRenderer::new);
+        event.registerEntityRenderer(ModEntities.PLANT_THORN.get(), PlantThornVolleyEntityRenderer::new);
     }
 
     public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
