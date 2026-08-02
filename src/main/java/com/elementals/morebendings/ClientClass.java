@@ -12,6 +12,7 @@ import com.elementals.morebendings.bending.earthsubbendings.mud.MudSurgeChunkEnt
 import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntityRenderer;
 import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionBoltEntityRenderer;
 import com.elementals.morebendings.registry.ModEntities;
+import com.elementals.morebendings.client.layers.CrystalArmorRenderLayer;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import com.elementals.morebendings.client.layers.PlasmaHandFlameLayer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
@@ -38,6 +39,7 @@ public class ClientClass {
             PlayerRenderer renderer = event.getSkin(skin);
             if (renderer != null) {
                 renderer.addLayer(new PlasmaHandFlameLayer(renderer));
+                renderer.addLayer(new CrystalArmorRenderLayer(renderer));
             }
         }
     }

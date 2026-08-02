@@ -27,6 +27,9 @@ public final class ModNetworking {
     public static final ResourceLocation CYCLE_SPECIALIZATION_ID =
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cycle_specialization");
 
+    public static final ResourceLocation SYNC_CRYSTAL_ARMOR_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "sync_crystal_armor");
+
     public static void register() {
         Network.registerPacket(ToggleFlyingPacket.type(), ToggleFlyingPacket.class,
                 ToggleFlyingPacket.STREAM_CODEC, ToggleFlyingPacket::handle);
@@ -38,6 +41,8 @@ public final class ModNetworking {
                 TogglePlasmaBoostPacket.STREAM_CODEC, TogglePlasmaBoostPacket::handle);
         Network.registerPacket(SyncPlasmaBoostPacket.type(), SyncPlasmaBoostPacket.class,
                 SyncPlasmaBoostPacket.STREAM_CODEC, SyncPlasmaBoostPacket::handle);
+        Network.registerPacket(SyncCrystalArmorPacket.type(), SyncCrystalArmorPacket.class,
+                SyncCrystalArmorPacket.STREAM_CODEC, SyncCrystalArmorPacket::handle);
     }
 
     public static void expectSideOrThrow(Side current, Side expected) {

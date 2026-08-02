@@ -13,17 +13,14 @@ import java.util.UUID;
 /**
  * Dirige o {@code crystalArmor} ativo -- tick a tick, drena chi e reaplica
  * Resistência + Seismic Sense em todo bender com o toggle ligado. Desliga
- * sozinho quem ficar sem chi ou perder o elemento Crystal. Registrado via
- * NeoForge.EVENT_BUS.addListener em
- * {@link com.elementals.morebendings.ElementalsMoreBendingsMod}, mesmo
- * esquema de {@code EchoSenseManager}/{@code SilenceFieldManager}.
+ * sozinho (e avisa os outros clientes via broadcastSync) quem ficar sem
+ * chi ou perder o elemento Crystal.
  */
 public final class CrystalArmorManager {
 
     private CrystalArmorManager() {
     }
 
-    /** Registrado via NeoForge.EVENT_BUS.addListener em ElementalsMoreBendingsMod. */
     public static void onServerTick(ServerTickEvent.Post event) {
         MinecraftServer server = event.getServer();
         if (server == null) {
@@ -38,6 +35,7 @@ public final class CrystalArmorManager {
             Bender bender = Bender.getBender(player);
             if (bender == null || !CrystalElement.isCrystalBender(bender)) {
                 CrystalArmorAbility.deactivate(id);
+                CrystalArmorAbility.broadcastSync(player, false);
                 continue;
             }
 
@@ -45,6 +43,7 @@ public final class CrystalArmorManager {
                 CrystalArmorAbility.deactivate(id);
                 player.removeEffect(MobEffects.DAMAGE_RESISTANCE);
                 player.removeEffect(ElementalsStatusEffects.SEISMIC_SENSE.get());
+                CrystalArmorAbility.broadcastSync(player, false);
                 continue;
             }
 
