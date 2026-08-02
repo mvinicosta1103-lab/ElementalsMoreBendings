@@ -39,7 +39,7 @@ public class CombustionVentAbility implements Ability {
     private static final float CAST_CHI_COST = 8.0f;
     private static final int COOLDOWN_TICKS = 60; // 3s
 
-    /** Cooldown por jogador, só em memória -- mesmo esquema de PlasmaCooldown/CombustionCooldown. */
+    /** Cooldown por jogador, só em memória -- mesmo esquema de PlasmaCooldown. Único cooldown que sobrou em Combustion, já que o Blast não tem mais nenhum. */
     private static final Map<UUID, Long> lastUse = new HashMap<>();
 
     @Override

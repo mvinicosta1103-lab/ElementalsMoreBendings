@@ -28,10 +28,14 @@ import net.minecraft.server.level.ServerPlayer;
  *  │                                            mira e o cooldown)
  *  ├─ combustionPowerI ─ combustionPowerII     (aumenta dano/raio da
  *  │                                            explosão)
- *  └─ combustionGuidance                        (capstone -- troca o tiro
- *                                                instantâneo por um
- *                                                projétil guiado/teleguiado,
- *                                                estilo P'Li / Combustion Man)
+ *  └─ combustionGuidance                        (capstone -- o tiro JÁ É
+ *                                                sempre um projétil
+ *                                                invisível, estilo P'Li /
+ *                                                Combustion Man; este
+ *                                                upgrade só liga o homing
+ *                                                dele, deixando o bolt
+ *                                                corrigir levemente a rota
+ *                                                em voo)
  * combustionVent (grátis, habilidade secundária MENOR -- folha, sem
  *                 filhos, sem risco, não precisa de unlock manual)
  */

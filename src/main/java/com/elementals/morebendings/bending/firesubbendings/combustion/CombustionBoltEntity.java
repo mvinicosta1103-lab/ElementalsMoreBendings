@@ -16,14 +16,22 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Diferente do tiro instantâneo padrão (raycast na hora, sem entidade),
- * esta é um projétil de verdade que sai devagar e pode ser levemente
- * "puxado" na direção do que o dono está olhando durante os primeiros
- * {@link #HOMING_TICKS} ticks de voo -- não é uma virada instantânea (não
- * teleporta, não gruda no alvo), é um ajuste de rota gradual a cada tick,
- * igual a como P'Li/Combustion Man conseguem corrigir a mira em cima de um
- * alvo que se move enquanto o tiro ainda está no ar. Depois da janela de
- * homing, o bolt trava a rota e vai reto até acertar algo ou expirar.
+ * Igual ao tiro de P'Li/Combustion Man: o projétil em si é INVISÍVEL --
+ * sem modelo renderizado (ver {@link CombustionBoltEntityRenderer}) e sem
+ * rastro de partículas durante o voo. A única coisa que o alvo vê é o
+ * brilho no "terceiro olho" do bender no instante do disparo e, um
+ * instante depois, a explosão no ponto de impacto -- não dá pra ver o
+ * tiro chegando.
+ *
+ * Sempre nasce um projétil de verdade (nunca mais um raycast instantâneo
+ * puro, ver {@link CombustionExplosionAbility#fire}); o que muda com o
+ * upgrade {@code combustionGuidance} é só o campo {@link #guided}: sem
+ * ele o bolt vai reto na direção do disparo, com ele pode "puxar"
+ * levemente a rota na direção do que o dono está olhando durante os
+ * primeiros {@link #HOMING_TICKS} ticks de voo -- não é uma virada
+ * instantânea (não teleporta, não gruda no alvo), é um ajuste de rota
+ * gradual a cada tick. Depois da janela de homing, o bolt trava a rota e
+ * vai reto até acertar algo ou expirar.
  *
  * Detona (ver {@link CombustionExplosionUtils#explode}) tanto em bloco
  * quanto em entidade -- diferente de CrystalShardEntity/BoneSpikeEntity
@@ -39,6 +47,9 @@ public class CombustionBoltEntity extends AbstractElementalsEntity<Player> {
     /** Definidos pela ability logo após a construção -- ver CombustionExplosionAbility#fire. */
     public float damage = 8.0f;
     public double explosionRadius = 2.5;
+
+    /** Só true com o upgrade combustionGuidance -- ver CombustionExplosionAbility#fire. */
+    public boolean guided = false;
 
     private int flightTicks = 0;
 
@@ -59,16 +70,17 @@ public class CombustionBoltEntity extends AbstractElementalsEntity<Player> {
         super.tick();
         flightTicks++;
 
-        if (!this.level().isClientSide && flightTicks <= HOMING_TICKS) {
+        if (!this.level().isClientSide && guided && flightTicks <= HOMING_TICKS) {
             steerTowardsAim();
         }
 
         this.move(MoverType.SELF, this.getDeltaMovement());
 
-        if (this.level() instanceof ServerLevel serverLevel) {
-            serverLevel.sendParticles(ParticleTypes.SMALL_FLAME,
-                    this.getX(), this.getY(), this.getZ(), 2, 0.03, 0.03, 0.03, 0.005);
-        }
+        // De propósito, SEM partículas durante o voo -- o tiro precisa ser
+        // invisível em pleno ar, igual P'Li/Combustion Man. Só o clarão do
+        // disparo (ver CombustionExplosionAbility#fire) e a explosão de
+        // impacto (ver CombustionExplosionUtils#explode /
+        // #onClientRemoval abaixo) são visíveis.
     }
 
     /** Ajuste gradual de rota na direção do que o dono está mirando agora. */

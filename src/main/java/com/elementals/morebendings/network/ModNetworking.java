@@ -2,6 +2,7 @@ package com.elementals.morebendings.network;
 
 import com.elementals.morebendings.Constants;
 import com.elementals.morebendings.network.packets.CastGasCloudPacket;
+import com.elementals.morebendings.network.packets.CastCombustionBlastPacket;
 import com.elementals.morebendings.network.packets.CycleSpecializationPacket;
 import com.elementals.morebendings.network.packets.ToggleFlyingPacket;
 import com.elementals.morebendings.network.packets.SyncCrystalArmorPacket;
@@ -25,6 +26,9 @@ public final class ModNetworking {
     public static final ResourceLocation CAST_GAS_CLOUD_ID =
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cast_gas_cloud");
 
+    public static final ResourceLocation CAST_COMBUSTION_BLAST_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cast_combustion_blast");
+
     public static final ResourceLocation CYCLE_SPECIALIZATION_ID =
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cycle_specialization");
 
@@ -36,6 +40,8 @@ public final class ModNetworking {
                 ToggleFlyingPacket.STREAM_CODEC, ToggleFlyingPacket::handle);
         Network.registerPacket(CastGasCloudPacket.type(), CastGasCloudPacket.class,
                 CastGasCloudPacket.STREAM_CODEC, CastGasCloudPacket::handle);
+        Network.registerPacket(CastCombustionBlastPacket.type(), CastCombustionBlastPacket.class,
+                CastCombustionBlastPacket.STREAM_CODEC, CastCombustionBlastPacket::handle);
         Network.registerPacket(CycleSpecializationPacket.type(), CycleSpecializationPacket.class,
                 CycleSpecializationPacket.STREAM_CODEC, CycleSpecializationPacket::handle);
         Network.registerPacket(TogglePlasmaBoostPacket.type(), TogglePlasmaBoostPacket.class,

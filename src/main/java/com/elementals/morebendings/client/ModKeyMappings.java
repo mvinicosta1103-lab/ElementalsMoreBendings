@@ -2,6 +2,7 @@ package com.elementals.morebendings.client;
 
 import com.elementals.morebendings.Constants;
 import com.elementals.morebendings.network.packets.CastGasCloudPacket;
+import com.elementals.morebendings.network.packets.CastCombustionBlastPacket;
 import com.elementals.morebendings.network.packets.CycleSpecializationPacket;
 import com.elementals.morebendings.network.packets.ToggleFlyingPacket;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -53,6 +54,24 @@ public final class ModKeyMappings {
     );
 
     /**
+     * Começa a focar o Combustion Blast direto, sem precisar trocar pro
+     * elemento Fire/Combustion nem usar o slot numérico de habilidade
+     * padrão do mod base (ver {@code CombustionExplosionAbility}).
+     * Funciona em qualquer elemento ativo, desde que o jogador já seja um
+     * Combustion bender com o nó raiz comprado -- o servidor
+     * (CastCombustionBlastPacket) confirma isso antes de iniciar o foco.
+     * Diferente do Gas Cloud, essa tecla só INICIA a canalização; soltar
+     * (clique esquerdo) ou cancelar (clique direito) continua sendo feito
+     * com o mouse, igual qualquer outra ability canalizada.
+     */
+    public static final KeyMapping CAST_COMBUSTION_BLAST = new KeyMapping(
+            "key." + Constants.MOD_ID + ".cast_combustion_blast",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_B,
+            CATEGORY
+    );
+
+    /**
      * Troca qual especialização de Gas Cloud/Heavy Fog está ATIVA no
      * momento (Suffocate/Leak/Ignite ou Choke/Veil/Freeze) -- ver
      * {@code SpecializationCycle}. Comprar as três não é mais exclusivo;
@@ -73,6 +92,7 @@ public final class ModKeyMappings {
         event.register(CAST_GAS_CLOUD);
         event.register(CYCLE_SPECIALIZATION);
         event.register(TOGGLE_PLASMA_BOOST);
+        event.register(CAST_COMBUSTION_BLAST);
     }
 
     /**
@@ -97,6 +117,9 @@ public final class ModKeyMappings {
         }
         while (TOGGLE_PLASMA_BOOST.consumeClick()) {
             Dispatcher.sendToServer(new TogglePlasmaBoostPacket());
+        }
+        while (CAST_COMBUSTION_BLAST.consumeClick()) {
+            Dispatcher.sendToServer(new CastCombustionBlastPacket());
         }
     }
 

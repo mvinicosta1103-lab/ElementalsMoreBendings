@@ -16,6 +16,12 @@ import net.minecraft.world.phys.Vec3;
  * "combustionExplosion" — habilidade raiz de {@link CombustionElement}, a
  * explosão principal.
  *
+ * SEM cooldown -- o único freio contra spam é o custo de chi (foco +
+ * manutenção por tick + disparo). Segurar o foco tempo demais ou soltar
+ * cedo demais continua arriscado (autodano), então ainda não dá pra
+ * simplesmente martelar a tecla sem cuidado, mas não existe mais um
+ * temporizador fixo entre um tiro e outro.
+ *
  * Fluxo (canaliza, igual {@code BoneControlAbility} -- não sobrescreve
  * {@link #activatesOnPress()}, então dispara ao SOLTAR a tecla de cast,
  * o que inicia o foco):
@@ -33,12 +39,17 @@ import net.minecraft.world.phys.Vec3;
  *  4. {@link #onRightClick} -- cancela sem soltar (sem punição, só perde
  *     o chi já gasto canalizando).
  *
- * Sem o upgrade "combustionGuidance", a explosão é (quase) instantânea:
- * um raycast na hora da soltura decide o ponto de impacto, sem chance de
- * desviar no meio do caminho. Com Guidance, em vez disso nasce um
- * {@link CombustionBoltEntity} -- um projétil lento que pode ser guiado
- * pela mira nos primeiros instantes de voo (homing), igual P'Li/Combustion
- * Man perseguindo um alvo em movimento.
+ * Igual a P'Li: SEMPRE nasce um {@link CombustionBoltEntity} de verdade ao
+ * soltar -- e esse bolt é invisível em pleno voo (sem modelo, sem rastro
+ * de partículas; ver {@link CombustionBoltEntityRenderer}), então quem
+ * está do outro lado só vê o clarão do disparo e a explosão no impacto,
+ * nunca o tiro chegando. O upgrade "combustionGuidance" não muda mais
+ * ISSO -- ele só liga o campo {@link CombustionBoltEntity#guided}, que
+ * permite ao bolt "puxar" levemente a rota na direção do que o dono está
+ * olhando durante os primeiros instantes de voo (homing), igual
+ * P'Li/Combustion Man perseguindo um alvo em movimento. Sem Guidance, o
+ * bolt ainda é o mesmo tiro invisível, só que reto -- fixo na direção do
+ * disparo, sem corrigir rota no ar.
  */
 public class CombustionExplosionAbility implements Ability {
 
@@ -53,12 +64,7 @@ public class CombustionExplosionAbility implements Ability {
     /** Fixo -- segurar demais é sempre arriscado, upgrade nenhum resolve isso. */
     private static final int MAX_CHARGE_TICKS = 100; // 5s
 
-    private static final int BASE_COOLDOWN_TICKS = 140; // 7s
-    private static final int COOLDOWN_REDUCTION_PER_LEVEL = 20;
-    private static final int MIN_COOLDOWN_TICKS = 80; // 4s
-
     private static final double BASE_RANGE = 28.0;
-    private static final double SELF_PROXIMITY_PAD = 1.5;
 
     private static final float BASE_DAMAGE = 8.0f;
     private static final float POWER_I_DAMAGE_BONUS = 3.0f;
@@ -80,7 +86,11 @@ public class CombustionExplosionAbility implements Ability {
     private static final int OVERLOAD_BLINDNESS_TICKS = 60; // 3s
     private static final int OVERLOAD_CONFUSION_TICKS = 100; // 5s
 
-    private static final float BOLT_SPEED = 1.0f;
+    // Antes era 1.0 (tunado pra um bolt visível e lento). Agora que TODO
+    // tiro é esse bolt -- e ele é invisível -- precisa ser rápido o
+    // suficiente pra parecer quase instantâneo, igual P'Li, sem virar
+    // hitscan de verdade (ainda dá pra desviar se você reagir rápido).
+    private static final float BOLT_SPEED = 2.6f;
 
     @Override
     public void onCall(Bender bender, long heldTimeMs) {
@@ -91,11 +101,6 @@ public class CombustionExplosionAbility implements Ability {
         }
 
         long now = level.getGameTime();
-        int cooldown = getCooldownTicks(caster);
-        if (now - CombustionCooldown.getLastUse(caster) < cooldown) {
-            bender.setCurrAbility(null);
-            return;
-        }
 
         if (!bender.reduceChi(INITIATE_CHI_COST)) {
             bender.setCurrAbility(null);
@@ -134,7 +139,6 @@ public class CombustionExplosionAbility implements Ability {
             CombustionExplosionUtils.selfBackfire(level, caster,
                     OVERLOAD_BACKFIRE_DAMAGE, OVERLOAD_BACKFIRE_RADIUS,
                     OVERLOAD_BLINDNESS_TICKS, OVERLOAD_CONFUSION_TICKS);
-            CombustionCooldown.setLastUse(caster, level.getGameTime());
             endChannel(bender);
             return;
         }
@@ -180,7 +184,6 @@ public class CombustionExplosionAbility implements Ability {
             CombustionExplosionUtils.selfBackfire(level, caster,
                     PREMATURE_BACKFIRE_DAMAGE, PREMATURE_BACKFIRE_RADIUS,
                     PREMATURE_BLINDNESS_TICKS, PREMATURE_CONFUSION_TICKS);
-            CombustionCooldown.setLastUse(caster, level.getGameTime());
             endChannel(bender);
             return;
         }
@@ -192,7 +195,6 @@ public class CombustionExplosionAbility implements Ability {
             return;
         }
 
-        CombustionCooldown.setLastUse(caster, level.getGameTime());
         fire(caster, level);
         endChannel(bender);
     }
@@ -216,29 +218,30 @@ public class CombustionExplosionAbility implements Ability {
         endChannel(bender); // interrupção externa (troca de elemento, logout, etc.) -- sem punição
     }
 
+    /**
+     * Igual a P'Li: sempre nasce um bolt invisível de verdade, nunca mais
+     * um raycast instantâneo puro. Guidance só liga o homing do bolt
+     * (ver {@link CombustionBoltEntity#guided}) -- o resto (invisibilidade,
+     * dano, raio) é idêntico com ou sem o upgrade.
+     */
     private void fire(ServerPlayer caster, ServerLevel level) {
         float damage = getDamage(caster);
         double radius = getRadius(caster);
         boolean guided = CombustionElement.hasUpgrade(caster, CombustionElement.COMBUSTION_GUIDANCE);
 
-        if (guided) {
-            CombustionBoltEntity bolt = new CombustionBoltEntity(level, caster);
-            bolt.damage = damage;
-            bolt.explosionRadius = radius;
-            bolt.setDeltaMovement(caster, caster.getXRot(), caster.getYRot(), 0.0f, BOLT_SPEED, 0.5f);
-            level.addFreshEntity(bolt);
+        CombustionBoltEntity bolt = new CombustionBoltEntity(level, caster);
+        bolt.damage = damage;
+        bolt.explosionRadius = radius;
+        bolt.guided = guided;
+        bolt.setDeltaMovement(caster, caster.getXRot(), caster.getYRot(), 0.0f, BOLT_SPEED, 0.5f);
+        level.addFreshEntity(bolt);
 
-            level.playSound(null, caster.getX(), caster.getY(), caster.getZ(),
-                    SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS, 1.0f, 0.7f);
-        } else {
-            HitResult hit = SapsUtils.raycastFull(caster, BASE_RANGE, false);
-            Vec3 point = hit.getLocation();
-
-            level.playSound(null, caster.getX(), caster.getY(), caster.getZ(),
-                    SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS, 1.0f, 1.3f);
-
-            CombustionExplosionUtils.explode(level, point, caster, damage, radius, SELF_PROXIMITY_PAD);
-        }
+        // Som audível no disparo (o alvo pode ouvir o "whoosh", só não
+        // consegue ver o tiro chegando) -- mesmo princípio de P'Li/
+        // Combustion Man: o aviso é sonoro/pela postura do bender, nunca
+        // visual.
+        level.playSound(null, caster.getX(), caster.getY(), caster.getZ(),
+                SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS, 1.0f, 0.7f);
     }
 
     private void endChannel(Bender bender) {
@@ -255,13 +258,6 @@ public class CombustionExplosionAbility implements Ability {
         if (CombustionElement.hasUpgrade(player, CombustionElement.COMBUSTION_CHARGE_I)) ticks -= CHARGE_REDUCTION_PER_LEVEL;
         if (CombustionElement.hasUpgrade(player, CombustionElement.COMBUSTION_CHARGE_II)) ticks -= CHARGE_REDUCTION_PER_LEVEL;
         return Math.max(ticks, MIN_CHARGE_FLOOR);
-    }
-
-    public static int getCooldownTicks(ServerPlayer player) {
-        int cooldown = BASE_COOLDOWN_TICKS;
-        if (CombustionElement.hasUpgrade(player, CombustionElement.COMBUSTION_CHARGE_I)) cooldown -= COOLDOWN_REDUCTION_PER_LEVEL;
-        if (CombustionElement.hasUpgrade(player, CombustionElement.COMBUSTION_CHARGE_II)) cooldown -= COOLDOWN_REDUCTION_PER_LEVEL;
-        return Math.max(cooldown, MIN_COOLDOWN_TICKS);
     }
 
     public static float getDamage(ServerPlayer player) {

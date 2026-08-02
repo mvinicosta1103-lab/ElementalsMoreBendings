@@ -2,6 +2,7 @@
   "key.categories.elementalsmorebendings": "Elementals: More Bendings",
   "key.elementalsmorebendings.toggle_flying": "Toggle Flying",
   "key.elementalsmorebendings.cast_gas_cloud": "Cast Gas Cloud",
+  "key.elementalsmorebendings.cast_combustion_blast": "Cast Combustion Blast",
 
   "subbending.elementalsmorebendings.flying": "Flying",
   "subbending.elementalsmorebendings.gas": "Gas Bending",
@@ -396,12 +397,12 @@
   "upgrade.elementals.plasmaBlueFireSynergy.description": "If you've mastered Blue Fire, Plasma Claws deals even more damage and burns with blue flame instead of ordinary fire.",
 
   "upgrade.elementals.combustionExplosion": "Combustion Blast",
-  "upgrade.elementals.combustionExplosion.description": "Focuses heat to a single point as you aim, then unleashes a concentrated explosion where you're looking. Releasing too early or holding the focus too long risks detonating the blast in your own face instead.",
+  "upgrade.elementals.combustionExplosion.description": "Hold cast to focus heat into a single point as you aim. Left-click to release an invisible bolt of condensed heat toward where you're looking, detonating on impact -- the shot itself can't be seen coming, only heard. Right-click to cancel the focus safely. Releasing too early or holding the focus too long risks detonating the blast in your own face instead.",
 
   "upgrade.elementals.combustionChargeI": "Faster Focus I",
-  "upgrade.elementals.combustionChargeI.description": "Reduces the minimum aim time and cooldown of Combustion Blast.",
+  "upgrade.elementals.combustionChargeI.description": "Reduces the minimum aim time of Combustion Blast.",
   "upgrade.elementals.combustionChargeII": "Faster Focus II",
-  "upgrade.elementals.combustionChargeII.description": "Reduces the minimum aim time and cooldown of Combustion Blast even further.",
+  "upgrade.elementals.combustionChargeII.description": "Reduces the minimum aim time of Combustion Blast even further.",
 
   "upgrade.elementals.combustionPowerI": "Greater Yield I",
   "upgrade.elementals.combustionPowerI.description": "Increases the damage and blast radius of Combustion Blast.",
@@ -409,7 +410,7 @@
   "upgrade.elementals.combustionPowerII.description": "Increases the damage and blast radius of Combustion Blast even further.",
 
   "upgrade.elementals.combustionGuidance": "Guidance",
-  "upgrade.elementals.combustionGuidance.description": "Instead of an instant blast, launches a slow-moving bolt of condensed heat that gently corrects its course toward your aim for a short time after being fired.",
+  "upgrade.elementals.combustionGuidance.description": "Your Combustion Blast gently corrects its course toward your aim for a short time after being fired, letting the invisible bolt track a moving target instead of flying in a straight line.",
 
   "upgrade.elementals.combustionVent": "Heat Vent",
   "upgrade.elementals.combustionVent.description": "Releases a short burst of scalding heat around your body, damaging and pushing away anyone nearby while giving yourself a quick burst of mobility away from danger.",

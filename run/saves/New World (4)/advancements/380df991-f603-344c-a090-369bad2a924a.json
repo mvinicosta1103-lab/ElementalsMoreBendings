@@ -65,5 +65,11 @@
     },
     "done": true
   },
+  "elementals:firebending": {
+    "criteria": {
+      "element": "2026-08-02 15:13:04 -0300"
+    },
+    "done": true
+  },
   "DataVersion": 3955
 }
