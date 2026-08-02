@@ -4,6 +4,7 @@ import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
 import dev.saperate.elementals.utils.SapsUtils;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -11,6 +12,10 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * "combustionExplosion" — habilidade raiz de {@link CombustionElement}, a
@@ -92,6 +97,14 @@ public class CombustionExplosionAbility implements Ability {
     // hitscan de verdade (ainda dá pra desviar se você reagir rápido).
     private static final float BOLT_SPEED = 2.6f;
 
+    /**
+     * Por jogador (esta instância de Ability é ÚNICA, compartilhada por
+     * todo mundo que usa Combustion -- ver {@code CombustionElement}), se
+     * o som de "pode soltar com segurança" já tocou nesta canalização.
+     * Limpo em {@link #endChannel} pra não vazar entre canalizações.
+     */
+    private static final Map<UUID, Boolean> readyCuePlayed = new HashMap<>();
+
     @Override
     public void onCall(Bender bender, long heldTimeMs) {
         Player player = bender.player;
@@ -108,12 +121,15 @@ public class CombustionExplosionAbility implements Ability {
         }
 
         bender.abilityData = now; // guarda o tick de início do foco
+        readyCuePlayed.put(caster.getUUID(), false); // reseta o aviso sonoro de "pode soltar" desta canalização
 
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.BLAZE_BURN, SoundSource.PLAYERS, 0.5f, 0.6f);
         Vec3 eyePos = player.getEyePosition();
         level.sendParticles(ParticleTypes.SMALL_FLAME,
                 eyePos.x, eyePos.y, eyePos.z, 3, 0.02, 0.02, 0.02, 0.005);
+        caster.displayClientMessage(
+                Component.literal("Mirando... espere o som confirmar antes de clicar."), true);
 
         bender.setCurrAbility(this); // canalizada -- ver onTick/onLeftClick/onRightClick
     }
@@ -136,6 +152,8 @@ public class CombustionExplosionAbility implements Ability {
 
         // Segurou a concentração tempo demais -- estoura sozinha, sem aviso.
         if (elapsed >= MAX_CHARGE_TICKS) {
+            caster.displayClientMessage(
+                    Component.literal("Você segurou o foco por tempo demais e ele estourou!"), true);
             CombustionExplosionUtils.selfBackfire(level, caster,
                     OVERLOAD_BACKFIRE_DAMAGE, OVERLOAD_BACKFIRE_RADIUS,
                     OVERLOAD_BLINDNESS_TICKS, OVERLOAD_CONFUSION_TICKS);
@@ -157,6 +175,18 @@ public class CombustionExplosionAbility implements Ability {
             HitResult aim = SapsUtils.raycastFull(player, BASE_RANGE, false);
             Vec3 point = aim.getLocation();
             level.sendParticles(ParticleTypes.SMALL_FLAME, point.x, point.y, point.z, 1, 0.0, 0.0, 0.0, 0.0);
+        }
+
+        // Assim que cruza o tempo mínimo de mira, toca um som distinto UMA
+        // vez -- é o sinal claro de "agora pode clicar sem risco de
+        // soltura precoce". Sem isso, o jogador não tem como saber quando
+        // a janela abriu e acaba testando o clique cedo demais, tomando
+        // backfire sem entender o motivo.
+        int minCharge = getMinChargeTicks(caster);
+        if (elapsed >= minCharge && !Boolean.TRUE.equals(readyCuePlayed.get(caster.getUUID()))) {
+            readyCuePlayed.put(caster.getUUID(), true);
+            level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                    SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 0.4f, 2.0f);
         }
     }
 
@@ -181,6 +211,9 @@ public class CombustionExplosionAbility implements Ability {
         if (elapsed < minCharge) {
             // Soltou cedo demais -- a mira não travou, o golpe volta pro
             // próprio bender em vez de sair na direção pretendida.
+            caster.displayClientMessage(
+                    Component.literal("Você clicou cedo demais -- a mira não travou! Espere o som antes de soltar."),
+                    true);
             CombustionExplosionUtils.selfBackfire(level, caster,
                     PREMATURE_BACKFIRE_DAMAGE, PREMATURE_BACKFIRE_RADIUS,
                     PREMATURE_BLINDNESS_TICKS, PREMATURE_CONFUSION_TICKS);
@@ -247,6 +280,7 @@ public class CombustionExplosionAbility implements Ability {
     private void endChannel(Bender bender) {
         bender.setCurrAbility(null);
         bender.abilityData = null;
+        readyCuePlayed.remove(bender.player.getUUID());
     }
 
     private Long getStart(Bender bender) {

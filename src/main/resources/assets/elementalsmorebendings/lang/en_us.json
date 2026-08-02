@@ -20,6 +20,8 @@
   "ability.elementalsmorebendings.plasma_claws": "Plasma Claws",
   "ability.elementalsmorebendings.combustion_explosion": "Combustion Blast",
   "ability.elementalsmorebendings.combustion_vent": "Heat Vent",
+  "ability.elementalsmorebendings.combustion_sight": "Heat Sight",
+  "ability.elementalsmorebendings.combustion_lance": "Molten Lance",
   "ability.elementalsmorebendings.gas_suffocate": "Suffocate",
   "ability.elementalsmorebendings.plant_vine_whip": "Vine Whip",
   "ability.elementalsmorebendings.spirit_purifying_water": "Purifying Water",
@@ -398,7 +400,7 @@
 
   "upgrade.elementals.combustionExplosion": "Combustion Blast",
   "upgrade.elementals.combustionExplosion.description": "Hold cast to focus heat into a single point as you aim. Left-click to release an invisible bolt of condensed heat toward where you're looking, detonating on impact -- the shot itself can't be seen coming, only heard. Right-click to cancel the focus safely. Releasing too early or holding the focus too long risks detonating the blast in your own face instead.",
-
+  "upgrade.elementals.combustionExplosion.use": "Use: %d",
   "upgrade.elementals.combustionChargeI": "Faster Focus I",
   "upgrade.elementals.combustionChargeI.description": "Reduces the minimum aim time of Combustion Blast.",
   "upgrade.elementals.combustionChargeII": "Faster Focus II",
@@ -418,10 +420,10 @@
 
   "upgrade.elementals.combustionSight": "Heat Sight",
   "upgrade.elementals.combustionSight.description": "Hold to channel your third eye's heat sense: grants yourself Night Vision and marks every living creature within range with a heat-signature glow, even through walls.",
-
+  "upgrade.elementals.combustionSight.use": "Use: %d",
   "upgrade.elementals.combustionLance": "Molten Lance",
   "upgrade.elementals.combustionLance.description": "Hold to channel a visible, continuous beam of condensed heat at whatever you're aiming at, dealing steady burn damage. Safer than Combustion Blast -- no focus required, no self-damage risk -- but far lower damage per second.",
-
+  "upgrade.elementals.combustionLance.use": "Use: %d",
   "upgrade.elementals.vineWhip": "Vine Whip",
   "upgrade.elementals.vineWhip.description": "Lashes a vine at whatever you're aiming at. Hooks a living target and yanks them to you with a damaging strike, or if it only catches terrain, yanks you to that spot instead like a grappling hook.",
   "upgrade.elementals.vineWhip.use": "Use: %d",

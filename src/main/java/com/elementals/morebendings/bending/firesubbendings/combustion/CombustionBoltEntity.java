@@ -16,12 +16,13 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Igual ao tiro de P'Li/Combustion Man: o projétil em si é INVISÍVEL --
- * sem modelo renderizado (ver {@link CombustionBoltEntityRenderer}) e sem
- * rastro de partículas durante o voo. A única coisa que o alvo vê é o
- * brilho no "terceiro olho" do bender no instante do disparo e, um
- * instante depois, a explosão no ponto de impacto -- não dá pra ver o
- * tiro chegando.
+ * Igual ao tiro de P'Li/Combustion Man: o projétil em si não tem modelo
+ * renderizado (ver {@link CombustionBoltEntityRenderer}) e não deixa um
+ * rastro óbvio de fogo/fumaça durante o voo -- só um leve rastro de ar
+ * deslocado (ver {@link #spawnAirTrail}), sutil o bastante pra não
+ * entregar de cara que é uma explosão vindo. A única coisa clara que o
+ * alvo vê é o brilho no "terceiro olho" do bender no instante do disparo
+ * e, um instante depois, a explosão no ponto de impacto.
  *
  * Sempre nasce um projétil de verdade (nunca mais um raycast instantâneo
  * puro, ver {@link CombustionExplosionAbility#fire}); o que muda com o
@@ -76,11 +77,23 @@ public class CombustionBoltEntity extends AbstractElementalsEntity<Player> {
 
         this.move(MoverType.SELF, this.getDeltaMovement());
 
-        // De propósito, SEM partículas durante o voo -- o tiro precisa ser
-        // invisível em pleno ar, igual P'Li/Combustion Man. Só o clarão do
-        // disparo (ver CombustionExplosionAbility#fire) e a explosão de
-        // impacto (ver CombustionExplosionUtils#explode /
-        // #onClientRemoval abaixo) são visíveis.
+        // Não é mais 100% invisível em voo: em vez de um rastro de fogo/fumaça
+        // óbvio (o que entregaria que é Combustion de cara), deixa só uma
+        // leve perturbação no ar -- poucas partículas de Cloud, sem
+        // velocidade própria, soltando devagar. Dá pra notar de perto se
+        // estiver prestando atenção, mas não é um rastro chamativo tipo
+        // bala de canhão. Só client-side, senão duplica (servidor não
+        // desenha partícula).
+        if (this.level().isClientSide) {
+            spawnAirTrail();
+        }
+    }
+
+    /** Rastro sutil de "ar deslocado" -- ver comentário em {@link #tick()}. */
+    private void spawnAirTrail() {
+        this.level().addParticle(ParticleTypes.CLOUD,
+                this.getX(), this.getY(), this.getZ(),
+                0.0, 0.0, 0.0);
     }
 
     /** Ajuste gradual de rota na direção do que o dono está mirando agora. */
