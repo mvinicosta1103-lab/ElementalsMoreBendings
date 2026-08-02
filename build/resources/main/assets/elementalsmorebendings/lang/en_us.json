@@ -433,5 +433,10 @@
   "upgrade.elementals.curseMinion": "Curse Minion",
   "upgrade.elementals.curseMinion.description": "Curses whatever creature you're aiming at. For a short while, it stops attacking you and turns on the nearest other mobs and players instead.",
   "upgrade.elementals.curseMinion.use": "Use: %d",
-  "upgrade.elementals.curseMinion.icon": "curse_minion"
+  "upgrade.elementals.curseMinion.icon": "curse_minion",
+
+  "item.elementalsmorebendings.crystal_helmet": "Crystal Helmet",
+  "item.elementalsmorebendings.crystal_chestplate": "Crystal Chestplate",
+  "item.elementalsmorebendings.crystal_leggings": "Crystal Leggings",
+  "item.elementalsmorebendings.crystal_boots": "Crystal Boots"
 }

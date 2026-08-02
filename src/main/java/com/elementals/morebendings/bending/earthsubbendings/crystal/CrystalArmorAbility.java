@@ -1,7 +1,5 @@
 package com.elementals.morebendings.bending.earthsubbendings.crystal;
 
-import com.elementals.morebendings.network.packets.SyncCrystalArmorPacket;
-import commonnetwork.api.Dispatcher;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -20,14 +18,12 @@ import java.util.UUID;
 
 /**
  * "crystalArmor" — toggle passivo (mesmo esquema de {@code EchoSenseAbility}).
- * Aperta uma vez pra vestir a couraça de cristal, que fica ativa
- * indefinidamente -- sem precisar segurar Shift -- até apertar de novo, o
- * chi acabar (ver {@link CrystalArmorManager}) ou perder Crystal.
+ * Aperta uma vez pra vestir a couraça de cristal (item de armadura real,
+ * ver {@link CrystalArmorSetManager}), que fica ativa indefinidamente --
+ * sem precisar segurar Shift -- até apertar de novo, o chi acabar (ver
+ * {@link CrystalArmorManager}) ou perder Crystal.
  *
- * Enquanto ativa: Resistência + Seismic Sense. O modelo visual é
- * responsabilidade de {@code CrystalArmorRenderLayer} no cliente -- este
- * toggle só manda {@link SyncCrystalArmorPacket} pra todo mundo saber quem
- * está com a armadura ligada.
+ * Enquanto ativa: Resistência + Seismic Sense.
  */
 public class CrystalArmorAbility implements Ability {
 
@@ -88,13 +84,6 @@ public class CrystalArmorAbility implements Ability {
 
     public static void deactivate(UUID playerId) {
         ACTIVE.remove(playerId);
-    }
-
-    static void broadcastSync(ServerPlayer player, boolean active) {
-        SyncCrystalArmorPacket packet = new SyncCrystalArmorPacket(player.getUUID(), active);
-        for (ServerPlayer online : player.getServer().getPlayerList().getPlayers()) {
-            Dispatcher.sendToClient(packet, online);
-        }
     }
 
     private static void removeEffects(Player player) {

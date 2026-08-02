@@ -11,10 +11,10 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import java.util.UUID;
 
 /**
- * Dirige o {@code crystalArmor} ativo -- tick a tick, drena chi e reaplica
- * Resistência + Seismic Sense em todo bender com o toggle ligado. Desliga
- * sozinho (e avisa os outros clientes via broadcastSync) quem ficar sem
- * chi ou perder o elemento Crystal.
+ * Dirige o {@code crystalArmor} ativo -- tick a tick, drena chi, garante que
+ * os 4 slots de armadura continuam com a peça de cristal (ver
+ * {@link CrystalArmorSetManager#enforceEquipped}) e reaplica Resistência +
+ * Seismic Sense. Desliga sozinho quem ficar sem chi ou perder Crystal.
  */
 public final class CrystalArmorManager {
 
@@ -46,6 +46,8 @@ public final class CrystalArmorManager {
                 CrystalArmorSetManager.unequip(player);
                 continue;
             }
+
+            CrystalArmorSetManager.enforceEquipped(player);
 
             player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,
                     CrystalArmorAbility.EFFECT_REFRESH_TICKS, CrystalArmorAbility.RESISTANCE_AMPLIFIER,

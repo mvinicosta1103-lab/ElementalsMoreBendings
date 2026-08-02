@@ -19,10 +19,10 @@ import java.util.Map;
  * Material "crystal" pra armadura dada por crystalArmor.
  *
  * IMPORTANTE: essa assinatura é específica da 1.21.1 -- a partir da 1.21.2
- * a Mojang reescreveu ArmorMaterial inteiro (virou net.minecraft.world.item
- * .equipment.ArmorMaterial, baseado em EquipmentModel, sem Layer). Se um dia
- * atualizarem o mod pra 1.21.2+, este arquivo precisa ser reescrito do zero,
- * não só ajustado.
+ * a Mojang reescreveu ArmorMaterial inteiro (vira net.minecraft.world.item
+ * .equipment.ArmorMaterial, baseado em EquipmentModel, sem Layer). Se um
+ * dia atualizarem o mod pra 1.21.2+, este arquivo precisa ser reescrito do
+ * zero, não só ajustado.
  */
 public class ModArmorMaterials {
 
@@ -42,9 +42,9 @@ public class ModArmorMaterials {
 
         return new ArmorMaterial(
                 defense,
-                10,                                    // enchantmentValue
-                SoundEvents.ARMOR_EQUIP_DIAMOND,        // equipSound -- já é Holder<SoundEvent> nesta versão
-                () -> Ingredient.of(Items.AMETHYST_SHARD), // repairIngredient
+                10,                                          // enchantmentValue
+                SoundEvents.ARMOR_EQUIP_DIAMOND,              // equipSound (já é Holder<SoundEvent> nesta versão)
+                () -> Ingredient.of(Items.AMETHYST_SHARD),    // repairIngredient
                 layers,
                 2.0f,  // toughness
                 0.0f   // knockbackResistance

@@ -6,6 +6,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.Unbreakable;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -20,11 +21,13 @@ import java.util.UUID;
  * está vestindo o set de crystalArmor, e devolve ela intacta ao desligar.
  *
  * O set de cristal recebe Curse of Binding + Unbreakable na hora de vestir
- * -- isso trava a remoção manual pelo inventário (só sai morrendo, quebrando
- * -- impossível, já que é Unbreakable -- ou em criativo). unequip() via
- * código do servidor (chamado pelo toggle da Ability/pelo Manager) continua
- * funcionando normalmente, a maldição só bloqueia interação de GUI do
- * jogador.
+ * (trava remoção manual pelo inventário em modo Sobrevivência). Mas Curse
+ * of Binding NÃO bloqueia nada em modo Criativo -- é assim por design do
+ * próprio Minecraft (Slot#mayPickup libera se playerIn.isCreative()) -- por
+ * isso {@link #enforceEquipped} existe: chamado todo tick pelo
+ * CrystalArmorManager enquanto a Ability está ativa, ele repõe qualquer
+ * peça que tenha saído dos slots por QUALQUER motivo (criativo, comando,
+ * outro mod), tornando a remoção impossível na prática, não só na teoria.
  */
 public final class CrystalArmorSetManager {
 
@@ -60,7 +63,7 @@ public final class CrystalArmorSetManager {
         player.setItemSlot(EquipmentSlot.FEET, lockedPiece(player, ModItems.CRYSTAL_BOOTS.get()));
     }
 
-    private static ItemStack lockedPiece(ServerPlayer player, net.minecraft.world.item.Item item) {
+    private static ItemStack lockedPiece(ServerPlayer player, Item item) {
         ItemStack stack = new ItemStack(item);
         Holder<Enchantment> bindingCurse = player.level().registryAccess()
                 .lookupOrThrow(Registries.ENCHANTMENT)
@@ -91,17 +94,37 @@ public final class CrystalArmorSetManager {
     }
 
     /**
-     * Chamado no respawn -- a morte zera os slots de armadura (o set de
-     * cristal cai no chão junto com o resto do inventário, Curse of Binding
-     * não impede isso). Se a Ability ainda estava marcada como ativa
-     * (crystalArmor não é desligado pela morte), reveste um set novo por
-     * cima dos slots vazios sem mexer no que já está em STASHED -- a
-     * armadura real do jogador continua guardada em memória de antes de
-     * morrer, intacta.
+     * Chamado no respawn -- a morte zera os slots de armadura. Se a Ability
+     * ainda estava marcada como ativa, reveste um set novo sobre os slots
+     * vazios sem mexer em STASHED -- a armadura real do jogador continua
+     * guardada em memória de antes de morrer, intacta.
      */
     public static void reapplyAfterRespawn(ServerPlayer player) {
         if (isWearingCrystalSet(player.getUUID())) {
             applyCrystalSet(player);
+        }
+    }
+
+    /**
+     * Chamado TODO TICK pelo CrystalArmorManager enquanto a Ability está
+     * ativa -- garante que os 4 slots ainda têm a peça de cristal certa,
+     * repondo qualquer uma que tenha saído (ver javadoc da classe).
+     */
+    public static void enforceEquipped(ServerPlayer player) {
+        if (!isWearingCrystalSet(player.getUUID())) {
+            return;
+        }
+        if (!player.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.CRYSTAL_HELMET.get())) {
+            player.setItemSlot(EquipmentSlot.HEAD, lockedPiece(player, ModItems.CRYSTAL_HELMET.get()));
+        }
+        if (!player.getItemBySlot(EquipmentSlot.CHEST).is(ModItems.CRYSTAL_CHESTPLATE.get())) {
+            player.setItemSlot(EquipmentSlot.CHEST, lockedPiece(player, ModItems.CRYSTAL_CHESTPLATE.get()));
+        }
+        if (!player.getItemBySlot(EquipmentSlot.LEGS).is(ModItems.CRYSTAL_LEGGINGS.get())) {
+            player.setItemSlot(EquipmentSlot.LEGS, lockedPiece(player, ModItems.CRYSTAL_LEGGINGS.get()));
+        }
+        if (!player.getItemBySlot(EquipmentSlot.FEET).is(ModItems.CRYSTAL_BOOTS.get())) {
+            player.setItemSlot(EquipmentSlot.FEET, lockedPiece(player, ModItems.CRYSTAL_BOOTS.get()));
         }
     }
 }
