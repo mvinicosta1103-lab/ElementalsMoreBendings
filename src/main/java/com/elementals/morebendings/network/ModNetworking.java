@@ -4,6 +4,7 @@ import com.elementals.morebendings.Constants;
 import com.elementals.morebendings.network.packets.CastGasCloudPacket;
 import com.elementals.morebendings.network.packets.CycleSpecializationPacket;
 import com.elementals.morebendings.network.packets.ToggleFlyingPacket;
+import com.elementals.morebendings.network.packets.SyncCrystalArmorPacket;
 import commonnetwork.api.Network;
 import commonnetwork.networking.data.Side;
 import net.minecraft.resources.ResourceLocation;

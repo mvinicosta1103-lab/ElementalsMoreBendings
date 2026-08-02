@@ -1,40 +1,41 @@
 package com.elementals.morebendings.bending.earthsubbendings.crystal;
 
+import com.elementals.morebendings.network.packets.SyncCrystalArmorPacket;
+import commonnetwork.api.Dispatcher;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
 /**
- * "crystalArmor" — habilidade nova, filha de {@code crystalWall} (ver
- * {@link CrystalElement}, que já reservava o ícone {@code crystal_armor_icon.png}
- * pra ela). Defensiva: o bender se cobre de uma casca de placas de cristal
- * rente ao corpo.
+ * "crystalArmor" — toggle passivo (mesmo esquema de {@code EchoSenseAbility}).
+ * Aperta uma vez pra vestir a couraça de cristal, que fica ativa
+ * indefinidamente -- sem precisar segurar Shift -- até apertar de novo, o
+ * chi acabar (ver {@link CrystalArmorManager}) ou perder Crystal.
  *
- * Mesmo esquema de canalização por Shift de {@code LavaArmorAbility} /
- * {@code StaticLegsAbility}: {@link #activatesOnPress()} ativa na hora, e
- * como o mod base não expõe um hook de "tecla solta", {@code
- * isShiftKeyDown()} em {@link #onTick} é o gatilho de cancelamento.
- *
- * Enquanto ativa: Resistência (a couraça de cristal absorve parte de
- * qualquer impacto sofrido).
+ * Enquanto ativa: Resistência + Seismic Sense. O modelo visual é
+ * responsabilidade de {@code CrystalArmorRenderLayer} no cliente -- este
+ * toggle só manda {@link SyncCrystalArmorPacket} pra todo mundo saber quem
+ * está com a armadura ligada.
  */
 public class CrystalArmorAbility implements Ability {
 
-    private static final float CAST_CHI_COST = 15.0f;
-    private static final float TICK_CHI_COST = 0.3f;
+    static final float TICK_CHI_COST = 0.3f;
+    static final int EFFECT_REFRESH_TICKS = 20; // 1s, reaplicado a cada tick ativo pelo Manager
+    static final int RESISTANCE_AMPLIFIER = 0; // Resistência I (-20% de dano)
 
-    private static final int EFFECT_REFRESH_TICKS = 20; // 1s, reaplicado a cada tick ativo
-    private static final int RESISTANCE_AMPLIFIER = 0; // Resistência I (-20% de dano)
+    private static final Set<UUID> ACTIVE = new HashSet<>();
 
     @Override
     public boolean activatesOnPress() {
@@ -49,60 +50,63 @@ public class CrystalArmorAbility implements Ability {
             return;
         }
 
-        if (!player.isShiftKeyDown()) {
-            // Mesmo motivo do StaticLegsAbility/LavaArmorAbility: sem isso a
-            // armadura nasceria e morreria no mesmo tick, gastando chi sem
-            // o jogador perceber.
-            caster.displayClientMessage(
-                    Component.literal("Segure Shift para manter a armadura de cristal."), true);
-            bender.setCurrAbility(null);
-            return;
+        UUID id = caster.getUUID();
+        boolean nowActive;
+        if (ACTIVE.contains(id)) {
+            ACTIVE.remove(id);
+            nowActive = false;
+        } else {
+            ACTIVE.add(id);
+            nowActive = true;
         }
 
-        if (!bender.reduceChi(CAST_CHI_COST)) {
-            bender.setCurrAbility(null);
-            return;
+        playToggleFeedback(level, player, nowActive);
+        if (!nowActive) {
+            removeEffects(player);
         }
+        broadcastSync(caster, nowActive);
 
-        applyEffects(player);
-        playCastFeedback(level, player);
-
-        bender.setCurrAbility(this); // canalizada -- solta ao soltar Shift, ver onTick
-    }
-
-    @Override
-    public void onTick(Bender bender) {
-        Player player = bender.player;
-        if (!(player instanceof ServerPlayer) || !player.isShiftKeyDown()) {
-            onRemove(bender);
-            return;
-        }
-        if (!bender.reduceChi(TICK_CHI_COST)) {
-            onRemove(bender);
-            return;
-        }
-
-        applyEffects(player);
+        bender.setCurrAbility(null); // toggle instantâneo -- o resto vive no Manager
     }
 
     @Override
     public void onRemove(Bender bender) {
-        Player player = bender.player;
-        // Remove o efeito na hora em vez de deixar a curta duração de
-        // "refresh" expirar sozinha -- fica mais responsivo ao soltar Shift.
-        player.removeEffect(MobEffects.DAMAGE_RESISTANCE);
         bender.setCurrAbility(null);
+        Player player = bender.player;
+        if (player instanceof ServerPlayer caster) {
+            deactivate(caster.getUUID());
+            removeEffects(player);
+            broadcastSync(caster, false);
+        }
     }
 
-    private void applyEffects(Player player) {
-        player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,
-                EFFECT_REFRESH_TICKS, RESISTANCE_AMPLIFIER, false, false, true));
+    public static boolean isActive(UUID playerId) {
+        return ACTIVE.contains(playerId);
     }
 
-    private void playCastFeedback(ServerLevel level, Player player) {
+    public static void deactivate(UUID playerId) {
+        ACTIVE.remove(playerId);
+    }
+
+    static void broadcastSync(ServerPlayer player, boolean active) {
+        SyncCrystalArmorPacket packet = new SyncCrystalArmorPacket(player.getUUID(), active);
+        for (ServerPlayer online : player.getServer().getPlayerList().getPlayers()) {
+            Dispatcher.sendToClient(packet, online);
+        }
+    }
+
+    private static void removeEffects(Player player) {
+        player.removeEffect(MobEffects.DAMAGE_RESISTANCE);
+        player.removeEffect(dev.saperate.elementals.effects.ElementalsStatusEffects.SEISMIC_SENSE.get());
+    }
+
+    private void playToggleFeedback(ServerLevel level, Player player, boolean nowActive) {
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                SoundEvents.AMETHYST_BLOCK_PLACE, SoundSource.PLAYERS, 0.8f, 0.7f);
-        level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.AMETHYST_BLOCK.defaultBlockState()),
-                player.getX(), player.getY() + 0.9, player.getZ(), 16, 0.3, 0.5, 0.3, 0.0);
+                nowActive ? SoundEvents.AMETHYST_BLOCK_PLACE : SoundEvents.AMETHYST_BLOCK_BREAK,
+                SoundSource.PLAYERS, 0.8f, nowActive ? 0.7f : 1.1f);
+        if (nowActive) {
+            level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.AMETHYST_BLOCK.defaultBlockState()),
+                    player.getX(), player.getY() + 0.9, player.getZ(), 16, 0.3, 0.5, 0.3, 0.0);
+        }
     }
 }
