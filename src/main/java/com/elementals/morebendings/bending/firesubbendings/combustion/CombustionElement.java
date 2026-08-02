@@ -38,6 +38,10 @@ import net.minecraft.server.level.ServerPlayer;
  *                                                em voo)
  * combustionVent (grátis, habilidade secundária MENOR -- folha, sem
  *                 filhos, sem risco, não precisa de unlock manual)
+ * combustionSight (grátis, folha, sem filhos -- visão térmica/utilidade,
+ *                 mesmo esquema de combustionVent)
+ * combustionLance (grátis, folha, sem filhos -- feixe contínuo de dano
+ *                 baixo, mesmo esquema de combustionVent)
  */
 public class CombustionElement extends Element {
 
@@ -51,6 +55,8 @@ public class CombustionElement extends Element {
     public static final String COMBUSTION_POWER_II = "combustionPowerII";
     public static final String COMBUSTION_GUIDANCE = "combustionGuidance";
     public static final String COMBUSTION_VENT = "combustionVent";
+    public static final String COMBUSTION_SIGHT = "combustionSight";
+    public static final String COMBUSTION_LANCE = "combustionLance";
 
     public CombustionElement() {
         super(NAME, new Upgrade[]{
@@ -63,10 +69,14 @@ public class CombustionElement extends Element {
                         }, 1),
                         new Upgrade(COMBUSTION_GUIDANCE, 2)
                 }, 0),
-                new Upgrade(COMBUSTION_VENT, 0)
+                new Upgrade(COMBUSTION_VENT, 0),
+                new Upgrade(COMBUSTION_SIGHT, 0),
+                new Upgrade(COMBUSTION_LANCE, 0)
         });
         addAbility(new CombustionExplosionAbility(), 0);
         addAbility(new CombustionVentAbility(), 1);
+        addAbility(new CombustionSightAbility(), 2);
+        addAbility(new CombustionLanceAbility(), 3);
     }
 
     /** Registra a instância única no mod base. Chame uma vez, no load do mod. */
@@ -111,8 +121,9 @@ public class CombustionElement extends Element {
      * no momento da concessão (ver MoreBendingCommand) -- mesmo motivo do
      * {@code PlasmaElement#autoUnlockRoot}: como esse nó TEM filhos
      * (charge/power/guidance), sem esse desbloqueio manual eles ficam
-     * inacessíveis mesmo com level de sobra. "combustionVent" não precisa
-     * disso porque é uma folha (sem filhos) -- mesmo caso de mudSurge/mudTrap.
+     * inacessíveis mesmo com level de sobra. "combustionVent",
+     * "combustionSight" e "combustionLance" não precisam disso porque são
+     * folhas (sem filhos) -- mesmo caso de mudSurge/mudTrap.
      */
     public static void autoUnlockRoot(Bender bender) {
         Upgrade explosionNode = get().root.children[0]; // combustionExplosion
@@ -121,9 +132,10 @@ public class CombustionElement extends Element {
 
     /**
      * "Masterizado" = crescimento todo comprado (charge + power no máximo)
-     * E o capstone de guidance levado, além das duas habilidades raiz
-     * terem sido "compradas" (preço 0, mas ainda passam pelo fluxo normal
-     * de clique quando adquiridas organicamente em jogo).
+     * E o capstone de guidance levado, além de todas as habilidades raiz
+     * (explosion, vent, sight, lance) terem sido "compradas" (preço 0, mas
+     * ainda passam pelo fluxo normal de clique quando adquiridas
+     * organicamente em jogo).
      */
     @Override
     public boolean isSkillTreeComplete(Bender bender) {
@@ -132,6 +144,8 @@ public class CombustionElement extends Element {
         }
         return bender.getData().canUseUpgrade(COMBUSTION_EXPLOSION)
                 && bender.getData().canUseUpgrade(COMBUSTION_VENT)
+                && bender.getData().canUseUpgrade(COMBUSTION_SIGHT)
+                && bender.getData().canUseUpgrade(COMBUSTION_LANCE)
                 && bender.getData().canUseUpgrade(COMBUSTION_CHARGE_II)
                 && bender.getData().canUseUpgrade(COMBUSTION_POWER_II)
                 && bender.getData().canUseUpgrade(COMBUSTION_GUIDANCE);

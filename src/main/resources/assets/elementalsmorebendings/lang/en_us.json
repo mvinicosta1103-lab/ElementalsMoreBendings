@@ -416,6 +416,12 @@
   "upgrade.elementals.combustionVent.description": "Releases a short burst of scalding heat around your body, damaging and pushing away anyone nearby while giving yourself a quick burst of mobility away from danger.",
   "upgrade.elementals.combustionVent.use": "Use: %d",
 
+  "upgrade.elementals.combustionSight": "Heat Sight",
+  "upgrade.elementals.combustionSight.description": "Hold to channel your third eye's heat sense: grants yourself Night Vision and marks every living creature within range with a heat-signature glow, even through walls.",
+
+  "upgrade.elementals.combustionLance": "Molten Lance",
+  "upgrade.elementals.combustionLance.description": "Hold to channel a visible, continuous beam of condensed heat at whatever you're aiming at, dealing steady burn damage. Safer than Combustion Blast -- no focus required, no self-damage risk -- but far lower damage per second.",
+
   "upgrade.elementals.vineWhip": "Vine Whip",
   "upgrade.elementals.vineWhip.description": "Lashes a vine at whatever you're aiming at. Hooks a living target and yanks them to you with a damaging strike, or if it only catches terrain, yanks you to that spot instead like a grappling hook.",
   "upgrade.elementals.vineWhip.use": "Use: %d",
