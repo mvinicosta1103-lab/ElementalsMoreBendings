@@ -284,10 +284,42 @@ public class MoreBendingCommand {
                     // própria, esses campos ficaram gravados como -1, e
                     // Element#getBindableAbility(-1) devolve null pra sempre,
                     // travando as duas teclas em branco mesmo com o upgrade já
-                    // comprado. bindDefaultAbilities() reconstrói o array em
-                    // memória do zero (limpa o -1 velho) e syncAndPersist grava
-                    // o resultado correto de volta no save.
-                    bender.bindDefaultAbilities();
+                    // comprado.
+                    //
+                    // A primeira versão desse reparo chamava
+                    // bender.bindDefaultAbilities() direto -- só que esse
+                    // método (decompilado do jar base) sempre reconstrói as
+                    // teclas do elemento que estiver em
+                    // plrData.activeElementIndex NAQUELE MOMENTO, não
+                    // necessariamente Plant. Se o jogador rodasse o comando
+                    // com outro elemento ativo (ou activeElementIndex por
+                    // qualquer razão não apontasse pro Plant), o "reparo"
+                    // mexia nas teclas do elemento errado e Plant continuava
+                    // com vineGrasp/rootSnare travados -- por isso o comando
+                    // reportava sucesso sem consertar nada de verdade.
+                    //
+                    // Fix: usa setElement(int,boolean) -- que já existe na
+                    // API base, já chama bindDefaultAbilities() internamente
+                    // pro elemento que vira ativo, e já sincroniza o cliente
+                    // -- pra forçar o bender pra Plant, reparar de verdade, e
+                    // só então devolver pro elemento que estava ativo antes
+                    // (repetindo o mesmo processo pra ele, então ele também
+                    // sai com teclas frescas em vez de ficar potencialmente
+                    // bagunçado por termos trocado o ativo no meio do
+                    // caminho).
+                    int plantIndex = bender.plrData.elements.indexOf(PlantElement.get());
+                    if (plantIndex < 0) {
+                        source.sendFailure(Component.literal(playerName
+                                + " tem Plant marcado como adquirido mas o Element não está na lista"
+                                + " do bender -- estado inconsistente demais pra esse comando reparar sozinho."));
+                        return 0;
+                    }
+
+                    int originalIndex = bender.plrData.activeElementIndex;
+                    bender.setElement(plantIndex, true);
+                    if (originalIndex != plantIndex) {
+                        bender.setElement(originalIndex, true);
+                    }
                     syncAndPersist(bender, target);
                     source.sendSuccess(() -> Component.literal(
                             "Teclas de Plant Bending re-vinculadas e persistidas pra " + playerName + "."), true);
