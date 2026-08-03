@@ -230,6 +230,28 @@ public class ModEntities {
                             .updateInterval(1)
                             .build("plant_vine_grasp"));
 
+    /**
+     * Mesmíssima classe de {@link #PLANT_VINE_GRASP} (o "caixote esticável"
+     * de {@link PlantVineGraspVisualEntity}) registrada como um segundo
+     * {@link EntityType} próprio -- reaproveitando o renderer inteiro sem
+     * precisar de nenhum arquivo novo -- só que usada pelo {@code
+     * PlantRootSnareAbility} pro efeito de raízes brotando do chão e
+     * prendendo o alvo (várias instâncias por vítima, cada uma se
+     * auto-animando via o modo "self-managed" da própria entidade, ver
+     * {@link PlantVineGraspVisualEntity#spawnRootSnareVine}). Precisa de um
+     * EntityType separado (em vez de reusar PLANT_VINE_GRASP direto) só
+     * pra não ficar registrando o mesmo id duas vezes -- IDs de EntityType
+     * têm que ser únicos mesmo quando a classe Java por trás é idêntica.
+     */
+    public static final Supplier<EntityType<PlantVineGraspVisualEntity>> PLANT_ROOT_SNARE_VINE =
+            ENTITY_TYPES.register("plant_root_snare_vine",
+                    () -> EntityType.Builder.<PlantVineGraspVisualEntity>of(PlantVineGraspVisualEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .sized(0.15f, 0.15f)
+                            .clientTrackingRange(64)
+                            .updateInterval(1)
+                            .build("plant_root_snare_vine"));
+
     private ModEntities() {
     }
 }
