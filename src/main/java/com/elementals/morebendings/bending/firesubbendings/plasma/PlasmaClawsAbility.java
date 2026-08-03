@@ -1,5 +1,7 @@
 package com.elementals.morebendings.bending.firesubbendings.plasma;
 
+import com.elementals.morebendings.network.packets.PlayPlasmaClawsFxPacket;
+import commonnetwork.api.Dispatcher;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.data.PlayerData;
 import dev.saperate.elementals.elements.Ability;
@@ -139,6 +141,7 @@ public class PlasmaClawsAbility implements Ability {
         }
 
         spawnHandParticles(level, caster, embedded);
+        broadcastClawsFireFx(caster);
 
         bender.setCurrAbility(null); // instantânea -- não canaliza
     }
@@ -236,6 +239,18 @@ public class PlasmaClawsAbility implements Ability {
         for (Vec3 hand : new Vec3[]{leftHand, rightHand}) {
             level.sendParticles(embedded ? ParticleTypes.END_ROD : ParticleTypes.ELECTRIC_SPARK,
                     hand.x, hand.y, hand.z, 4, 0.08, 0.08, 0.08, 0.01);
+        }
+    }
+
+    /** Avisa todo mundo (mesmo esquema de {@link PlasmaBoostState#toggle}) que
+     * a garra desse jogador acabou de ativar, pra tocar o "flash" de fogo nas
+     * mãos ({@link com.elementals.morebendings.client.layers.PlasmaFireRenderer})
+     * em terceira E primeira pessoa -- ver
+     * {@link com.elementals.morebendings.client.layers.ClientPlasmaClawsFxCache}. */
+    private void broadcastClawsFireFx(ServerPlayer caster) {
+        PlayPlasmaClawsFxPacket packet = new PlayPlasmaClawsFxPacket(caster.getUUID());
+        for (ServerPlayer online : caster.getServer().getPlayerList().getPlayers()) {
+            Dispatcher.sendToClient(packet, online);
         }
     }
 

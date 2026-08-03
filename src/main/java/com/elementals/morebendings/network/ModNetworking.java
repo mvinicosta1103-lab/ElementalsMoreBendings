@@ -11,6 +11,7 @@ import commonnetwork.networking.data.Side;
 import net.minecraft.resources.ResourceLocation;
 import com.elementals.morebendings.network.packets.SyncPlasmaBoostPacket;
 import com.elementals.morebendings.network.packets.TogglePlasmaBoostPacket;
+import com.elementals.morebendings.network.packets.PlayPlasmaClawsFxPacket;
 
 public final class ModNetworking {
 
@@ -19,6 +20,9 @@ public final class ModNetworking {
 
     public static final ResourceLocation SYNC_PLASMA_BOOST_ID =
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "sync_plasma_boost");
+
+    public static final ResourceLocation PLAY_PLASMA_CLAWS_FX_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "play_plasma_claws_fx");
 
     public static final ResourceLocation TOGGLE_FLYING_ID =
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "toggle_flying");
@@ -50,6 +54,8 @@ public final class ModNetworking {
                 SyncPlasmaBoostPacket.STREAM_CODEC, SyncPlasmaBoostPacket::handle);
         Network.registerPacket(SyncCrystalArmorPacket.type(), SyncCrystalArmorPacket.class,
                 SyncCrystalArmorPacket.STREAM_CODEC, SyncCrystalArmorPacket::handle);
+        Network.registerPacket(PlayPlasmaClawsFxPacket.type(), PlayPlasmaClawsFxPacket.class,
+                PlayPlasmaClawsFxPacket.STREAM_CODEC, PlayPlasmaClawsFxPacket::handle);
     }
 
     public static void expectSideOrThrow(Side current, Side expected) {

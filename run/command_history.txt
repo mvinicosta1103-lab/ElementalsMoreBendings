@@ -1,5 +1,3 @@
-/bending element add Water Dev
-/bending level add 1000000 Dev
 /morebending grant Dev Plant
 /morebending grant Dev Spirit
 /bending element add Fire Dev
@@ -48,3 +46,5 @@
 /morebending grant Dev Combustion
 /bending element add Combustion Dev
 /time set day
+/morebending grant Dev Plasma
+/bending element add Plasma Dev

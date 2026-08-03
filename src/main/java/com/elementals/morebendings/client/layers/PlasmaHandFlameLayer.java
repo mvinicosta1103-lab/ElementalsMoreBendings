@@ -19,7 +19,9 @@ public class PlasmaHandFlameLayer extends RenderLayer<AbstractClientPlayer, Play
                        AbstractClientPlayer player, float limbSwing, float limbSwingAmount,
                        float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
 
-        if (!ClientPlasmaBoostCache.isActive(player.getUUID())) return;
+        boolean boosted = ClientPlasmaBoostCache.isActive(player.getUUID());
+        boolean clawsFlash = ClientPlasmaClawsFxCache.isActive(player.getUUID());
+        if (!boosted && !clawsFlash) return;
 
         PlasmaFireRenderer.renderBothHands(poseStack, buffer, getParentModel());
     }

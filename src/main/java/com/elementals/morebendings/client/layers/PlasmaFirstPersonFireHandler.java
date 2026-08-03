@@ -22,7 +22,9 @@ public final class PlasmaFirstPersonFireHandler {
 
     public static void onRenderArm(RenderArmEvent event) {
         AbstractClientPlayer player = event.getPlayer();
-        if (!ClientPlasmaBoostCache.isActive(player.getUUID())) return;
+        boolean boosted = ClientPlasmaBoostCache.isActive(player.getUUID());
+        boolean clawsFlash = ClientPlasmaClawsFxCache.isActive(player.getUUID());
+        if (!boosted && !clawsFlash) return;
 
         HumanoidModel<?> model = getPlayerModel(player);
         if (model == null) return;
