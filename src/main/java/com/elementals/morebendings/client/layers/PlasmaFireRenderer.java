@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.HumanoidArm;
@@ -35,8 +36,23 @@ public final class PlasmaFireRenderer {
     // Fogo sempre "brilha" independente da luz do ambiente.
     private static final int FULL_BRIGHT = 15728880; // LightTexture.FULL_BRIGHT
 
-    // Escala do fogo em relação a um bloco inteiro (1.0 = tamanho normal de bloco).
-    private static final float FIRE_SCALE = 0.55F;
+    // Escala LARGURA/PROFUNDIDADE (X/Z) -- fina, do tamanho de um
+    // antebraço, não de um bloco inteiro. Um pouco maior que a largura real
+    // do braço (~0.19-0.25 dependendo do modelo Steve/Alex) de propósito,
+    // pra "vestir" o braço e sobressair BEM de leve, não engolir ele.
+    private static final float FIRE_WIDTH_SCALE = 0.26F;
+
+    // Escala ALTURA (Y) -- mais alta que larga, pra virar uma "coluna" de
+    // fogo em volta do braço em vez de um blob quase cúbico. Reduzida em
+    // relação à versão anterior (era 1.05) pra não passar tanto do
+    // cotovelo.
+    private static final float FIRE_HEIGHT_SCALE = 0.40F;
+
+    // Quanto descer a partir do OMBRO (pivô do braço) até o ponto onde o
+    // "punho de fogo" deve ficar centrado -- em unidades de bloco (1.0 =
+    // comprimento total do braço no modelo). ~0.62 cai perto do
+    // pulso/antebraço.
+    private static final float DROP_FROM_SHOULDER = 0.62F;
 
     // Graus de matiz (hue) percorridos por milissegundo -- controla a
     // velocidade do ciclo de cores do arco-íris.
@@ -50,24 +66,47 @@ public final class PlasmaFireRenderer {
     public static void renderHand(PoseStack poseStack, MultiBufferSource buffer, HumanoidModel<?> model, HumanoidArm arm) {
         poseStack.pushPose();
 
-        // Move o poseStack pra posição/rotação exata da mão (mesmo truque
-        // que o próprio jogo usa pra posicionar itens segurados).
-        model.translateToHand(arm, poseStack);
+        // Ancora DIRETO no bone do braço (pivô no ombro, já rotacionado
+        // pra pose atual: balanço andando, mirando, etc.) -- NÃO no espaço
+        // de "item segurado" que o translateToHand usa. Esse espaço de
+        // item projeta o objeto pra FORA da mão, na convenção usada pra
+        // itens/blocos empunhados, o que deixava o fogo flutuando torto
+        // "na frente do peito" em vez de grudado no braço.
+        //
+        // Usa os campos PÚBLICOS rightArm/leftArm em vez de getArm(...)
+        // (esse é protected em HumanoidModel -- não dá pra chamar de fora
+        // de uma subclasse/do mesmo pacote).
+        ModelPart armPart = (arm == HumanoidArm.LEFT) ? model.leftArm : model.rightArm;
+        armPart.translateAndRotate(poseStack);
 
-        // Reorienta o espaço "de item segurado" (que aponta pra baixo) de
-        // volta pro espaço "de bloco" (Y pra cima).
-        poseStack.mulPose(Axis.XP.rotationDegrees(-90.0F));
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+        // No espaço cru do bone (convenção antiga do formato de modelo do
+        // Minecraft), +Y local é "descendo o braço" (ombro -> mão) -- é
+        // por isso que braços/pernas são desenhados nesse sentido a
+        // partir do pivô. (Antes eu tinha usado NEGATIVO aqui, achando
+        // que seria o contrário -- por isso o fogo subiu na direção
+        // errada e foi parar acima da cabeça.)
+        poseStack.translate(0, DROP_FROM_SHOULDER, 0);
 
-        boolean isLeft = arm == HumanoidArm.LEFT;
-        // Puxado mais perto do punho (em vez de na ponta dos dedos, como um
-        // item) pra "abraçar" a mão em vez de flutuar do lado dela.
-        poseStack.translate((isLeft ? -1 : 1) / 16.0F, 0.05F, -0.35F);
+        // Agora inverte esse eixo Y (rotação de 180° em X) ANTES de
+        // desenhar o bloco: sem isso, o "topo" do modelo de fogo (que
+        // deveria apontar pra cima, saindo da mão em direção ao cotovelo)
+        // ficaria apontando pra baixo, enfiado no chão. Com essa rotação,
+        // o +Y do bloco passa a apontar de volta na direção do ombro --
+        // ou seja, "pra cima" de verdade, saindo da mão.
+        poseStack.mulPose(Axis.XP.rotationDegrees(180.0F));
 
-        // Centraliza e reduz o bloco de fogo (que ocupa um bloco inteiro por
-        // padrão) pra caber envolvendo a mão.
-        poseStack.scale(FIRE_SCALE, FIRE_SCALE, FIRE_SCALE);
-        poseStack.translate(-0.5, -0.5, -0.5);
+        // Escala NÃO uniforme: fino em X/Z (largura/profundidade do
+        // antebraço), alto em Y (comprimento do "manguito" de fogo). O
+        // scale uniforme antigo criava um cubo grosso; esse aqui estica o
+        // mesmo modelo de bloco numa coluna fina e vertical.
+        poseStack.scale(FIRE_WIDTH_SCALE, FIRE_HEIGHT_SCALE, FIRE_WIDTH_SCALE);
+
+        // Centraliza só X/Z. Y fica em 0 (SEM subtrair 0.5) de propósito:
+        // isso deixa a base do bloco de fogo (y=0, o "núcleo" da chama)
+        // exatamente no ponto-âncora (a mão), esticando pra cima a partir
+        // dali -- em vez de centralizar o bloco inteiro em volta da mão
+        // (que deixava metade da chama enterrada "dentro" da mão/braço).
+        poseStack.translate(-0.5, 0, -0.5);
 
         MultiBufferSource tinted = tinted(buffer, currentRainbowColor());
 
