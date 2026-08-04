@@ -140,6 +140,7 @@ key_key.elementalsmorebendings.toggle_flying:key.keyboard.end
 key_key.elementalsmorebendings.cast_gas_cloud:key.keyboard.period
 key_key.elementalsmorebendings.cycle_specialization:key.keyboard.pause
 key_key.elementalsmorebendings.toggle_plasma_boost:key.keyboard.page.down
+key_key.elementalsmorebendings.cast_combustion_blast:key.keyboard.b
 soundCategory_master:1.0
 soundCategory_music:0.0
 soundCategory_record:1.0
