@@ -23,6 +23,7 @@ import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalArmor
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalArmorSetManager;
 import com.elementals.morebendings.registry.ModArmorMaterials;
 import com.elementals.morebendings.registry.ModItems;
+import com.elementals.morebendings.effects.MoreBendingsEffects;
 import com.elementals.morebendings.client.ModKeyMappings;
 import com.elementals.morebendings.client.layers.PlasmaFirstPersonFireHandler;
 import com.elementals.morebendings.commands.MoreBendingCommand;
@@ -56,6 +57,7 @@ public class ElementalsMoreBendingsMod {
 
         ModArmorMaterials.ARMOR_MATERIALS.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
+        MoreBendingsEffects.register(modEventBus);
 
         // ClientClass usa classes client-only (EntityRenderersEvent) — só registra
         // o listener se a gente realmente estiver rodando no cliente, senão o

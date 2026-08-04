@@ -12,7 +12,7 @@ public final class MoreBendingsEffects {
             DeferredRegister.create(Registries.MOB_EFFECT, "elementalsmorebendings");
 
     public static final DeferredHolder<MobEffect, CrushedStatusEffect> CRUSHED =
-            EFFECTS.register("Crushed", CrushedStatusEffect::new);
+            EFFECTS.register("crushed", CrushedStatusEffect::new);
 
     private MoreBendingsEffects() {}
 
