@@ -3,7 +3,7 @@ package com.elementals.morebendings.bending.earthsubbendings.lava;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import com.elementals.morebendings.client.render.CustomCubeRenderUtils;
+import dev.saperate.elementals.client.entities.utils.RenderUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -35,7 +35,7 @@ import org.joml.Matrix4f;
  * núcleo, ponta fina clara na extremidade) pro degradê vinho->laranja.
  *
  * Continua sem model/.json próprio: só chamadas de
- * {@link CustomCubeRenderUtils#drawCube} com a textura própria do mod
+ * {@link RenderUtils#drawCube} com a textura própria do mod
  * (elementalsmorebendings:textures/models/magma/magma_texture.png).
  */
 public class LavaShurikenEntityRenderer extends EntityRenderer<LavaShurikenEntity> {
@@ -106,7 +106,7 @@ public class LavaShurikenEntityRenderer extends EntityRenderer<LavaShurikenEntit
         Matrix4f coreRot = new Matrix4f()
                 .scale(CORE_WIDTH, CORE_HEIGHT, CORE_WIDTH)
                 .translate(0.0f, 0.0f, -0.5f);
-        CustomCubeRenderUtils.drawCube(vertexConsumer, poseStack, packedLight, CORE_R, CORE_G, CORE_B, CORE_A,
+        RenderUtils.drawCube(vertexConsumer, poseStack, packedLight, CORE_R, CORE_G, CORE_B, CORE_A, TEXTURE,
                 1.0f, coreRot, false, true, true);
 
         // Lâminas: todas no plano horizontal (só yaw, pitch sempre 0), cada uma com
@@ -126,7 +126,7 @@ public class LavaShurikenEntityRenderer extends EntityRenderer<LavaShurikenEntit
                     .rotateY((float) Math.toRadians(yaw))
                     .scale(BLADE_WIDTH, BLADE_HEIGHT, baseLength)
                     .translate(0.0f, 0.0f, tzBase);
-            CustomCubeRenderUtils.drawCube(vertexConsumer, poseStack, packedLight, CORE_R, CORE_G, CORE_B, CORE_A,
+            RenderUtils.drawCube(vertexConsumer, poseStack, packedLight, CORE_R, CORE_G, CORE_B, CORE_A, TEXTURE,
                     1.0f, baseRot, false, true, true);
 
             // Ponta: continua de onde a base parou, mais fina e mais clara -- dá o bico da lâmina.
@@ -136,7 +136,7 @@ public class LavaShurikenEntityRenderer extends EntityRenderer<LavaShurikenEntit
                     .rotateY((float) Math.toRadians(yaw))
                     .scale(tipWidth, BLADE_HEIGHT, tipLength)
                     .translate(0.0f, 0.0f, tzTip);
-            CustomCubeRenderUtils.drawCube(vertexConsumer, poseStack, packedLight, BLADE_R, BLADE_G, BLADE_B, BLADE_A,
+            RenderUtils.drawCube(vertexConsumer, poseStack, packedLight, BLADE_R, BLADE_G, BLADE_B, BLADE_A, TEXTURE,
                     1.0f, tipRot, false, true, true);
         }
 

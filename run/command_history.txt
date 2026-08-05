@@ -1,4 +1,3 @@
-/morebending grant Dev Plant
 /morebending grant Dev Spirit
 /bending element add Fire Dev
 /morebending grant Dev Combustion
@@ -48,3 +47,4 @@
 /time set day
 /morebending grant Dev Plasma
 /bending element add Plasma Dev
+/morebending grant Dev Lava

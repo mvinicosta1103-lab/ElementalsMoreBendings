@@ -3,7 +3,7 @@ package com.elementals.morebendings.bending.earthsubbendings.lava;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import com.elementals.morebendings.client.render.CustomCubeRenderUtils;
+import dev.saperate.elementals.client.entities.utils.RenderUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -105,7 +105,7 @@ public class MagmaSpikeVisualEntityRenderer extends EntityRenderer<MagmaSpikeVis
         Matrix4f rot = new Matrix4f()
                 .scale(segWidth, segHeight, segWidth)
                 .translate(0.0f, ty, 0.0f);
-        CustomCubeRenderUtils.drawCube(vertexConsumer, poseStack, packedLight, r, g, b, a,
+        RenderUtils.drawCube(vertexConsumer, poseStack, packedLight, r, g, b, a, TEXTURE,
                 1.0f, rot, false, true, true);
     }
 
