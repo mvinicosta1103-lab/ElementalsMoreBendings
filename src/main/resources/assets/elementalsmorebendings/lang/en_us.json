@@ -109,6 +109,7 @@
   "ability.elementalsmorebendings.sand_wave": "Sand Wave",
   "ability.elementalsmorebendings.glass_shards": "Glass Shards",
   "ability.elementalsmorebendings.lava_pool": "Lava Pool",
+  "ability.elementalsmorebendings.lava_flow": "Lava Flow",
   "ability.elementalsmorebendings.pressure_point": "Pressure Point",
   "ability.elementalsmorebendings.atmospheric_dome": "Atmospheric Dome",
   "ability.elementalsmorebendings.pressure_slam": "Pressure Slam",
@@ -235,6 +236,10 @@
   "upgrade.elementals.lavaSurf": "Lava Surf",
   "upgrade.elementals.lavaSurf.description": "Ride a wave of molten lava while holding crouch, gaining speed and fire immunity and taking no fall damage when you dismount.",
   "upgrade.elementals.lavaSurf.use": "Use: %d",
+
+  "upgrade.elementals.lavaFlow": "Lava Flow",
+  "upgrade.elementals.lavaFlow.description": "Unleashes a real river of molten lava from your feet in the direction you're looking, spreading wider row by row the further it flows, before cooling into basalt.",
+  "upgrade.elementals.lavaFlow.use": "Use: %d",
 
   "upgrade.elementals.volcanicEruption": "Volcanic Eruption",
   "upgrade.elementals.volcanicEruption.description": "Erupts a small volcano where you're aiming: a real lava core surrounded by a wide ring of magma spikes, dealing heavy damage and launching everyone caught in the blast.",
