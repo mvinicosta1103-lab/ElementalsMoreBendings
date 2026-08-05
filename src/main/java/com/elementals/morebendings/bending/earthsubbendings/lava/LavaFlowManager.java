@@ -1,8 +1,11 @@
 package com.elementals.morebendings.bending.earthsubbendings.lava;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -38,10 +41,13 @@ public final class LavaFlowManager {
      * Registra um novo fluxo. {@code origin} é a coluna onde o jogador
      * estava (a fileira 0 nasce 1 bloco à frente dela, na direção {@code
      * dir}); {@code dir} é o vetor horizontal normalizado (y = 0) da
-     * direção que o jogador olhava no momento do cast.
+     * direção que o jogador olhava no momento do cast. {@code caster} só é
+     * usado pra avisar o jogador no chat se o fluxo terminar de crescer
+     * sem achar NENHUM bloco derretível (terreno não reconhecido) -- sem
+     * isso a ability falha calada e parece "quebrada".
      */
-    public static void startFlow(ServerLevel level, BlockPos origin, Vec3 dir) {
-        ACTIVE.add(new FlowEntry(level, origin, dir));
+    public static void startFlow(ServerLevel level, BlockPos origin, Vec3 dir, Player caster) {
+        ACTIVE.add(new FlowEntry(level, origin, dir, caster));
     }
 
     /** Registrado via NeoForge.EVENT_BUS.addListener em ElementalsMoreBendingsMod. */
@@ -64,6 +70,7 @@ public final class LavaFlowManager {
         final ServerLevel level;
         final BlockPos origin;
         final Vec3 dir;
+        final Player caster;
         /** Perpendicular a `dir` no plano horizontal -- usada pra alargar a faixa dos dois lados. */
         final Vec3 perp;
         final Set<BlockPos> placed = new HashSet<>();
@@ -72,11 +79,13 @@ public final class LavaFlowManager {
         int ticksUntilNextStep = LavaFlowAbility.STEP_INTERVAL_TICKS;
         boolean growing = true;
         int coolTicksLeft = LavaFlowAbility.COOL_AFTER_TICKS;
+        boolean warnedEmpty = false;
 
-        FlowEntry(ServerLevel level, BlockPos origin, Vec3 dir) {
+        FlowEntry(ServerLevel level, BlockPos origin, Vec3 dir, Player caster) {
             this.level = level;
             this.origin = origin;
             this.dir = dir;
+            this.caster = caster;
             this.perp = new Vec3(-dir.z, 0, dir.x);
         }
 
@@ -89,6 +98,7 @@ public final class LavaFlowManager {
                     ticksUntilNextStep = LavaFlowAbility.STEP_INTERVAL_TICKS;
                     if (nextStep >= LavaFlowAbility.MAX_STEPS) {
                         growing = false;
+                        warnIfNothingPlaced();
                     }
                 }
             } else {
@@ -163,6 +173,20 @@ public final class LavaFlowManager {
                 }
             }
             coolTicksLeft = 0;
+        }
+
+        /**
+         * Se o fluxo terminou de crescer e NENHUM bloco foi colocado em
+         * nenhuma fileira, o terreno inteiro na frente do jogador não é
+         * reconhecido como derretível -- avisa em vez de falhar calado.
+         */
+        private void warnIfNothingPlaced() {
+            if (!warnedEmpty && placed.isEmpty() && caster != null) {
+                warnedEmpty = true;
+                caster.sendSystemMessage(Component.literal(
+                                "Lava Flow não achou nenhum bloco de terreno reconhecido na sua frente (chão não é terra/pedra/areia/etc).")
+                        .withStyle(ChatFormatting.RED));
+            }
         }
     }
 }

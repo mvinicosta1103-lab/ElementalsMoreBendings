@@ -18,7 +18,7 @@ graphicsMode:1
 guiScale:0
 maxFps:120
 mipmapLevels:4
-narrator:0
+narrator:2
 particles:0
 reducedDebugInfo:false
 renderClouds:"true"

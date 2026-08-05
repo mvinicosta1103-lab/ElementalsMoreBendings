@@ -2,7 +2,9 @@ package com.elementals.morebendings.bending.earthsubbendings.lava;
 
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -48,13 +50,41 @@ public class LavaFlowAbility implements Ability {
     /** A cada quantas fileiras de distância a faixa ganha +1 de raio de largura. */
     static final int STEPS_PER_WIDEN = 4;
 
-    /** Blocos de terreno "naturais" que a lava pode substituir -- mesma lista de {@code LavaPoolAbility}. */
+    /**
+     * Blocos "de terreno" que a lava pode substituir -- bem mais amplo que
+     * a lista original de LavaPoolAbility. Cobre terra/pedra crua, TODAS
+     * as variantes lisas/talhadas/tijolos de pedra e deepslate, arenito,
+     * terracota (comuns em chão de vila/estrutura), blackstone e tuff.
+     * Sem isso, qualquer área "trabalhada" (praças, caminhos de vila,
+     * badlands) simplesmente não tinha nenhum bloco reconhecido e o fluxo
+     * inteiro saía vazio, em silêncio.
+     */
     static final Set<Block> MOLTENABLE = Set.of(
+            // terra crua
             Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.COARSE_DIRT, Blocks.ROOTED_DIRT,
             Blocks.DIRT_PATH, Blocks.PODZOL, Blocks.MYCELIUM, Blocks.MUD,
             Blocks.SAND, Blocks.RED_SAND, Blocks.GRAVEL, Blocks.CLAY,
-            Blocks.STONE, Blocks.COBBLESTONE, Blocks.ANDESITE, Blocks.DIORITE, Blocks.GRANITE,
-            Blocks.DEEPSLATE, Blocks.COBBLED_DEEPSLATE
+            // pedra crua e talhada
+            Blocks.STONE, Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE,
+            Blocks.ANDESITE, Blocks.DIORITE, Blocks.GRANITE,
+            Blocks.POLISHED_ANDESITE, Blocks.POLISHED_DIORITE, Blocks.POLISHED_GRANITE,
+            Blocks.SMOOTH_STONE, Blocks.STONE_BRICKS, Blocks.MOSSY_STONE_BRICKS,
+            Blocks.CRACKED_STONE_BRICKS, Blocks.CHISELED_STONE_BRICKS,
+            Blocks.TUFF, Blocks.POLISHED_TUFF, Blocks.TUFF_BRICKS, Blocks.CALCITE,
+            // deepslate
+            Blocks.DEEPSLATE, Blocks.COBBLED_DEEPSLATE, Blocks.POLISHED_DEEPSLATE,
+            Blocks.DEEPSLATE_BRICKS, Blocks.DEEPSLATE_TILES, Blocks.CHISELED_DEEPSLATE,
+            Blocks.CRACKED_DEEPSLATE_BRICKS, Blocks.CRACKED_DEEPSLATE_TILES,
+            // arenito
+            Blocks.SANDSTONE, Blocks.SMOOTH_SANDSTONE, Blocks.CHISELED_SANDSTONE, Blocks.CUT_SANDSTONE,
+            Blocks.RED_SANDSTONE, Blocks.SMOOTH_RED_SANDSTONE, Blocks.CHISELED_RED_SANDSTONE, Blocks.CUT_RED_SANDSTONE,
+            // badlands / terracota
+            Blocks.TERRACOTTA,
+            Blocks.WHITE_TERRACOTTA, Blocks.ORANGE_TERRACOTTA, Blocks.YELLOW_TERRACOTTA,
+            Blocks.RED_TERRACOTTA, Blocks.BROWN_TERRACOTTA, Blocks.LIGHT_GRAY_TERRACOTTA, Blocks.GRAY_TERRACOTTA,
+            // blackstone / basalt
+            Blocks.BLACKSTONE, Blocks.POLISHED_BLACKSTONE, Blocks.POLISHED_BLACKSTONE_BRICKS,
+            Blocks.BASALT, Blocks.SMOOTH_BASALT
     );
 
     /**
@@ -78,6 +108,10 @@ public class LavaFlowAbility implements Ability {
             return;
         }
         if (!bender.reduceChi(CHI_COST)) {
+            // Falha silenciosa original -- agora avisa o jogador em vez de
+            // simplesmente não fazer nada (parecia "quebrado" sem isso).
+            player.sendSystemMessage(Component.literal("Chi insuficiente para usar Lava Flow.")
+                    .withStyle(ChatFormatting.RED));
             bender.setCurrAbility(null);
             return;
         }
@@ -86,6 +120,8 @@ public class LavaFlowAbility implements Ability {
         Vec3 flatDir = new Vec3(look.x, 0, look.z);
         if (flatDir.lengthSqr() < 1.0E-4) {
             // Olhando quase reto pra cima/baixo -- sem direção horizontal definida, cancela.
+            player.sendSystemMessage(Component.literal("Olhe mais pra frente (não reto pra cima/baixo) para usar Lava Flow.")
+                    .withStyle(ChatFormatting.RED));
             bender.setCurrAbility(null);
             return;
         }
@@ -93,7 +129,7 @@ public class LavaFlowAbility implements Ability {
 
         BlockPos origin = BlockPos.containing(player.position());
 
-        LavaFlowManager.startFlow(level, origin, flatDir);
+        LavaFlowManager.startFlow(level, origin, flatDir, player);
 
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.LAVA_AMBIENT, SoundSource.PLAYERS, 1.0f, 0.7f);
