@@ -9,6 +9,7 @@ import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalPriso
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalSpikeManager;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalWallManager;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaArmorCombatHandler;
+import com.elementals.morebendings.bending.earthsubbendings.lava.LavaFlowManager;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaPoolManager;
 import com.elementals.morebendings.bending.earthsubbendings.lava.MagmaSpikeManager;
 import com.elementals.morebendings.bending.earthsubbendings.lava.VolcanicEruptionManager;
@@ -118,6 +119,10 @@ public class ElementalsMoreBendingsMod {
 
         // Esfria as poças de lavaPool ativas depois do tempo -- ver LavaPoolManager.
         NeoForge.EVENT_BUS.addListener(LavaPoolManager::onServerTick);
+
+        // Cresce as faixas de lavaFlow ativas fileira por fileira e depois
+        // esfria cada uma de uma vez -- ver LavaFlowManager.
+        NeoForge.EVENT_BUS.addListener(LavaFlowManager::onServerTick);
 
         // Desmancha os grupos de espinhos de magmaSpike ativos depois do
         // tempo, devolvendo o terreno original -- ver MagmaSpikeManager.
