@@ -49,7 +49,7 @@ public final class ModKeyMappings {
     public static final KeyMapping TOGGLE_PLASMA_BOOST = new KeyMapping(
             "key." + Constants.MOD_ID + ".toggle_plasma_boost",
             InputConstants.Type.KEYSYM,
-            InputConstants.KEY_J,
+            InputConstants.KEY_O,
             CATEGORY
     );
 
