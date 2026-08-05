@@ -1,11 +1,9 @@
 package com.elementals.morebendings.bending.earthsubbendings.lava;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import dev.saperate.elementals.client.entities.utils.RenderUtils;
-import net.minecraft.client.renderer.GameRenderer;
+import com.elementals.morebendings.client.render.CustomCubeRenderUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -37,18 +35,19 @@ import org.joml.Matrix4f;
  * núcleo, ponta fina clara na extremidade) pro degradê vinho->laranja.
  *
  * Continua sem model/.json próprio: só chamadas de
- * {@link RenderUtils#drawCube} com a sprite do atlas de blocos
- * (block/magma_block).
+ * {@link CustomCubeRenderUtils#drawCube} com a textura própria do mod
+ * (elementalsmorebendings:textures/models/magma/magma_texture.png).
  */
 public class LavaShurikenEntityRenderer extends EntityRenderer<LavaShurikenEntity> {
 
+    /** Textura própria do mod (não mais a sprite vanilla block/magma_block do atlas de blocos). */
     private static final ResourceLocation TEXTURE =
-            ResourceLocation.fromNamespaceAndPath("minecraft", "block/magma_block");
+            ResourceLocation.fromNamespaceAndPath("elementalsmorebendings", "textures/models/magma/magma_texture.png");
 
-    // Tint do núcleo: mais escuro/avermelhado, pra parecer a "casca" da farpa.
-    private static final float CORE_R = 0.45f, CORE_G = 0.12f, CORE_B = 0.05f, CORE_A = 1.0f;
-    // Tint das pontas: laranja quente, mais claro que o núcleo (a parte incandescente).
-    private static final float BLADE_R = 1.0f, BLADE_G = 0.55f, BLADE_B = 0.15f, BLADE_A = 1.0f;
+    // Tints leves (perto do branco) só pra diferenciar núcleo/ponta -- a cor
+    // de lava em si já vem da textura, não precisa mais ser pintada aqui.
+    private static final float CORE_R = 0.78f, CORE_G = 0.62f, CORE_B = 0.55f, CORE_A = 1.0f;
+    private static final float BLADE_R = 1.0f, BLADE_G = 0.92f, BLADE_B = 0.82f, BLADE_A = 1.0f;
 
     // Núcleo achatado (disco fino), não mais um cubo "redondo".
     private static final float CORE_WIDTH = 0.22f;
@@ -101,18 +100,13 @@ public class LavaShurikenEntityRenderer extends EntityRenderer<LavaShurikenEntit
         // shuriken real arremessada.
         poseStack.mulPose(Axis.YP.rotationDegrees(spinDegrees));
 
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        RenderSystem.enableDepthTest();
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-
-        VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.translucentMovingBlock());
+        VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
 
         // Núcleo: disco fino centralizado na origem.
         Matrix4f coreRot = new Matrix4f()
                 .scale(CORE_WIDTH, CORE_HEIGHT, CORE_WIDTH)
                 .translate(0.0f, 0.0f, -0.5f);
-        RenderUtils.drawCube(vertexConsumer, poseStack, packedLight, CORE_R, CORE_G, CORE_B, CORE_A, TEXTURE,
+        CustomCubeRenderUtils.drawCube(vertexConsumer, poseStack, packedLight, CORE_R, CORE_G, CORE_B, CORE_A,
                 1.0f, coreRot, false, true, true);
 
         // Lâminas: todas no plano horizontal (só yaw, pitch sempre 0), cada uma com
@@ -132,7 +126,7 @@ public class LavaShurikenEntityRenderer extends EntityRenderer<LavaShurikenEntit
                     .rotateY((float) Math.toRadians(yaw))
                     .scale(BLADE_WIDTH, BLADE_HEIGHT, baseLength)
                     .translate(0.0f, 0.0f, tzBase);
-            RenderUtils.drawCube(vertexConsumer, poseStack, packedLight, CORE_R, CORE_G, CORE_B, CORE_A, TEXTURE,
+            CustomCubeRenderUtils.drawCube(vertexConsumer, poseStack, packedLight, CORE_R, CORE_G, CORE_B, CORE_A,
                     1.0f, baseRot, false, true, true);
 
             // Ponta: continua de onde a base parou, mais fina e mais clara -- dá o bico da lâmina.
@@ -142,16 +136,15 @@ public class LavaShurikenEntityRenderer extends EntityRenderer<LavaShurikenEntit
                     .rotateY((float) Math.toRadians(yaw))
                     .scale(tipWidth, BLADE_HEIGHT, tipLength)
                     .translate(0.0f, 0.0f, tzTip);
-            RenderUtils.drawCube(vertexConsumer, poseStack, packedLight, BLADE_R, BLADE_G, BLADE_B, BLADE_A, TEXTURE,
+            CustomCubeRenderUtils.drawCube(vertexConsumer, poseStack, packedLight, BLADE_R, BLADE_G, BLADE_B, BLADE_A,
                     1.0f, tipRot, false, true, true);
         }
 
-        RenderSystem.disableBlend();
         poseStack.popPose();
     }
 
     @Override
     public ResourceLocation getTextureLocation(LavaShurikenEntity entity) {
-        return ResourceLocation.fromNamespaceAndPath("minecraft", "textures/atlas/blocks.png");
+        return TEXTURE;
     }
 }

@@ -1,11 +1,9 @@
 package com.elementals.morebendings.bending.earthsubbendings.lava;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import dev.saperate.elementals.client.entities.utils.RenderUtils;
-import net.minecraft.client.renderer.GameRenderer;
+import com.elementals.morebendings.client.render.CustomCubeRenderUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -32,15 +30,16 @@ import org.joml.Matrix4f;
  */
 public class MagmaSpikeVisualEntityRenderer extends EntityRenderer<MagmaSpikeVisualEntity> {
 
+    /** Textura própria do mod (não mais a sprite vanilla block/magma_block do atlas de blocos). */
     private static final ResourceLocation TEXTURE =
-            ResourceLocation.fromNamespaceAndPath("minecraft", "block/magma_block");
+            ResourceLocation.fromNamespaceAndPath("elementalsmorebendings", "textures/models/magma/magma_texture.png");
 
-    // Base: vinho/marrom escuro, quase casca de lava fria.
-    private static final float BASE_R = 0.42f, BASE_G = 0.10f, BASE_B = 0.05f, BASE_A = 1.0f;
-    // Meio: vermelho-alaranjado.
-    private static final float MID_R = 0.85f, MID_G = 0.30f, MID_B = 0.08f, MID_A = 1.0f;
-    // Ponta: laranja quente incandescente.
-    private static final float TIP_R = 1.0f, TIP_G = 0.62f, TIP_B = 0.18f, TIP_A = 1.0f;
+    // Tints leves só pra manter a leitura de "base fria -> ponta incandescente";
+    // a textura em si (magma_texture.png) já carrega a cor/rachadura de lava,
+    // então os multiplicadores ficam perto do branco em vez de recolorir tudo.
+    private static final float BASE_R = 0.75f, BASE_G = 0.55f, BASE_B = 0.50f, BASE_A = 1.0f;
+    private static final float MID_R = 0.92f, MID_G = 0.75f, MID_B = 0.65f, MID_A = 1.0f;
+    private static final float TIP_R = 1.0f, TIP_G = 0.95f, TIP_B = 0.85f, TIP_A = 1.0f;
 
     /** Altura total do espinho (blocos) na variação "média" -- o seed varia isso em +-35%. */
     private static final float BASE_HEIGHT = 1.05f;
@@ -79,12 +78,7 @@ public class MagmaSpikeVisualEntityRenderer extends EntityRenderer<MagmaSpikeVis
         float height = BASE_HEIGHT * heightMult * scale;
         float width = BASE_WIDTH * widthMult;
 
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        RenderSystem.enableDepthTest();
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-
-        VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.translucentMovingBlock());
+        VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
 
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(leanYaw));
@@ -97,7 +91,6 @@ public class MagmaSpikeVisualEntityRenderer extends EntityRenderer<MagmaSpikeVis
         drawSegment(vertexConsumer, poseStack, packedLight, height * 0.75f, height * 0.25f, width * 0.32f, TIP_R, TIP_G, TIP_B, TIP_A);
 
         poseStack.popPose();
-        RenderSystem.disableBlend();
     }
 
     /** Um segmento cúbico do espinho: começa em {@code yStart} (relativo ao chão) e sobe {@code segHeight}. */
@@ -112,12 +105,12 @@ public class MagmaSpikeVisualEntityRenderer extends EntityRenderer<MagmaSpikeVis
         Matrix4f rot = new Matrix4f()
                 .scale(segWidth, segHeight, segWidth)
                 .translate(0.0f, ty, 0.0f);
-        RenderUtils.drawCube(vertexConsumer, poseStack, packedLight, r, g, b, a, TEXTURE,
+        CustomCubeRenderUtils.drawCube(vertexConsumer, poseStack, packedLight, r, g, b, a,
                 1.0f, rot, false, true, true);
     }
 
     @Override
     public ResourceLocation getTextureLocation(MagmaSpikeVisualEntity entity) {
-        return ResourceLocation.fromNamespaceAndPath("minecraft", "textures/atlas/blocks.png");
+        return TEXTURE;
     }
 }
