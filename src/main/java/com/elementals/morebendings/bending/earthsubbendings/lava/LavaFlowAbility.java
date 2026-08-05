@@ -34,14 +34,19 @@ import java.util.Set;
  */
 public class LavaFlowAbility implements Ability {
 
-    private static final float CHI_COST = 30.0f;
+    private static final float CHI_COST = 45.0f;
 
-    /** Quantas fileiras a faixa cresce até parar de se espalhar. */
-    static final int MAX_STEPS = 14;
-    /** A cada quantos ticks de servidor uma nova fileira nasce (3 ticks ~= 6.6 fileiras/s). */
-    static final int STEP_INTERVAL_TICKS = 3;
+    /** Quantas fileiras a faixa cresce até parar de se espalhar -- fluxo grande, cobre uma área grande. */
+    static final int MAX_STEPS = 40;
+    /** A cada quantos ticks de servidor uma nova fileira nasce (2 ticks = 10 fileiras/s). */
+    static final int STEP_INTERVAL_TICKS = 2;
     /** Depois de totalmente crescida, quanto tempo (ticks) até toda a faixa esfriar de uma vez pra basalto. */
-    static final int COOL_AFTER_TICKS = 160; // 8s
+    static final int COOL_AFTER_TICKS = 300; // 15s -- fluxo grande fica mais tempo antes de esfriar
+
+    /** Quantas fileiras de largura no máximo (radius 6 = 13 blocos de largura). */
+    static final int MAX_RADIUS = 6;
+    /** A cada quantas fileiras de distância a faixa ganha +1 de raio de largura. */
+    static final int STEPS_PER_WIDEN = 4;
 
     /** Blocos de terreno "naturais" que a lava pode substituir -- mesma lista de {@code LavaPoolAbility}. */
     static final Set<Block> MOLTENABLE = Set.of(
@@ -50,6 +55,19 @@ public class LavaFlowAbility implements Ability {
             Blocks.SAND, Blocks.RED_SAND, Blocks.GRAVEL, Blocks.CLAY,
             Blocks.STONE, Blocks.COBBLESTONE, Blocks.ANDESITE, Blocks.DIORITE, Blocks.GRANITE,
             Blocks.DEEPSLATE, Blocks.COBBLED_DEEPSLATE
+    );
+
+    /**
+     * Cobertura de neve/gelo que costuma ficar POR CIMA do terreno de
+     * verdade (biomas de neve/tundra/montanha) -- sem isso, o heightmap
+     * acha a neve como "topo" e para ali, já que neve não está em
+     * {@link #MOLTENABLE}, e o fluxo não derrete nada. Esses blocos
+     * evaporam/derretem (viram ar) enquanto o fluxo desce procurando o
+     * primeiro bloco de terreno de verdade por baixo.
+     */
+    static final Set<Block> MELTABLE_OVERLAY = Set.of(
+            Blocks.SNOW, Blocks.SNOW_BLOCK, Blocks.POWDER_SNOW,
+            Blocks.ICE, Blocks.PACKED_ICE, Blocks.BLUE_ICE, Blocks.FROSTED_ICE
     );
 
     @Override

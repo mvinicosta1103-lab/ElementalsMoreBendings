@@ -238,7 +238,7 @@
   "upgrade.elementals.lavaSurf.use": "Use: %d",
 
   "upgrade.elementals.lavaFlow": "Lava Flow",
-  "upgrade.elementals.lavaFlow.description": "Unleashes a real river of molten lava from your feet in the direction you're looking, spreading wider row by row the further it flows, before cooling into basalt.",
+  "upgrade.elementals.lavaFlow.description": "Unleashes a massive river of molten lava from your feet, surging forward and widening as it flows across a large area, melting through snow and ice to reach the ground beneath, before cooling into basalt.",
   "upgrade.elementals.lavaFlow.use": "Use: %d",
 
   "upgrade.elementals.volcanicEruption": "Volcanic Eruption",

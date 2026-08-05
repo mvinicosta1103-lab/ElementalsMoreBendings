@@ -3,6 +3,7 @@ package com.elementals.morebendings.bending.earthsubbendings.lava;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -107,27 +108,49 @@ public final class LavaFlowManager {
             double distance = step + 1;
             Vec3 center = origin.getCenter().add(dir.scale(distance));
 
-            // Fileira 0-2 sai 1 bloco de largura, 3-5 vira 3, 6-8 vira 5, 9+ trava em 5 (radius 2).
-            int radius = Math.min(step / 3, 2);
+            int radius = Math.min(step / LavaFlowAbility.STEPS_PER_WIDEN, LavaFlowAbility.MAX_RADIUS);
 
             for (int offset = -radius; offset <= radius; offset++) {
                 Vec3 point = center.add(perp.scale(offset));
                 BlockPos column = BlockPos.containing(point.x, point.y, point.z);
-                BlockPos ground = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, column).below();
+                BlockPos ground = findMoltenableGround(column);
 
-                if (!placed.add(ground)) {
-                    continue; // já colocada por uma fileira anterior (arredondamento colidiu)
-                }
-
-                BlockState state = level.getBlockState(ground);
-                if (!LavaFlowAbility.MOLTENABLE.contains(state.getBlock())) {
-                    continue;
+                if (ground == null || !placed.add(ground)) {
+                    continue; // nada derretível aqui, ou já colocada por uma fileira anterior
                 }
 
                 level.setBlock(ground, Blocks.LAVA.defaultBlockState(), 3);
                 level.sendParticles(ParticleTypes.LAVA,
                         ground.getX() + 0.5, ground.getY() + 1.0, ground.getZ() + 0.5, 6, 0.15, 0.1, 0.15, 0.0);
             }
+        }
+
+        /**
+         * Desce a partir do topo real da coluna (heightmap), "derretendo"
+         * (removendo) qualquer neve/gelo no caminho, até achar o primeiro
+         * bloco de terreno que a lava pode substituir. Sem isso, uma
+         * coluna coberta de neve nunca acha nada em {@link
+         * LavaFlowAbility#MOLTENABLE} e a fileira inteira fica com buracos
+         * -- exatamente o bug em biomas nevados.
+         */
+        private BlockPos findMoltenableGround(BlockPos column) {
+            BlockPos pos = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, column);
+            // No máximo 4 blocos de profundidade procurando terreno de verdade sob a cobertura de neve/gelo.
+            for (int i = 0; i < 4; i++) {
+                pos = pos.below();
+                BlockState state = level.getBlockState(pos);
+                Block block = state.getBlock();
+
+                if (LavaFlowAbility.MELTABLE_OVERLAY.contains(block)) {
+                    level.removeBlock(pos, false);
+                    continue;
+                }
+                if (LavaFlowAbility.MOLTENABLE.contains(block)) {
+                    return pos;
+                }
+                return null; // achou algo sólido que não é terreno derretível -- para aqui
+            }
+            return null;
         }
 
         /** Vira basalto -- só quem ainda for lava (o jogador pode ter mudado o bloco nesse meio tempo). */
