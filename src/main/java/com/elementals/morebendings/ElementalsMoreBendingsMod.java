@@ -5,6 +5,7 @@ import com.elementals.morebendings.bending.common.AbilityBindingHealer;
 import com.elementals.morebendings.bending.airsubbendings.flying.FlyingAbility;
 import com.elementals.morebendings.bending.airsubbendings.gas.GasLeakManager;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BloodProximityTracker;
+import com.elementals.morebendings.situations.SituationsSystem;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BonePuppeteerManager;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalPrisonManager;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalSpikeManager;
@@ -125,6 +126,13 @@ public class ElementalsMoreBendingsMod {
         // suficiente de um Blood bender pra desbloquear o pré-requisito de
         // Bone Bending -- ver BloodProximityTracker.
         NeoForge.EVENT_BUS.addListener(BloodProximityTracker::onServerTick);
+
+        // "Situations System" -- deixa qualquer jogador aprender uma
+        // sub-bending sem scroll, so estando no ambiente certo (caverna
+        // cheia de lava, floresta, deserto, etc) por tempo suficiente pra
+        // uma chance passiva acertar -- ver SituationsRegistry pra cada
+        // situacao e SituationsSystem pro loop em si.
+        NeoForge.EVENT_BUS.addListener(SituationsSystem::onServerTick);
 
         // Esfria as poças de lavaPool ativas depois do tempo -- ver LavaPoolManager.
         NeoForge.EVENT_BUS.addListener(LavaPoolManager::onServerTick);
