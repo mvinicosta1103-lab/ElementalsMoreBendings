@@ -93,7 +93,7 @@ public class ObsidianCrustAbility implements Ability {
 
         int converted = coolLava(level, targets);
         level.playSound(null, caster.blockPosition(), SoundEvents.LAVA_EXTINGUISH, SoundSource.PLAYERS, 1.0f, 0.9f);
-        caster.displayClientMessage(Component.literal("Obsidian Crust: " + converted + " bloco(s) resfriado(s)."), true);
+        caster.displayClientMessage(Component.literal("Obsidian Crust: " + converted + " chilled block."), true);
         lastUse.put(caster.getUUID(), now);
 
         // Instantânea -- não trava a habilidade, igual lavaPool/magmaSpike.

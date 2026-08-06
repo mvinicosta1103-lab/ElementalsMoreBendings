@@ -1,5 +1,3 @@
-/morebending grant Dev Spirit
-/bending element add Fire Dev
 /morebending grant Dev Combustion
 /bending element add Combustion Dev
 /bending element add Plasma Dev
@@ -48,3 +46,5 @@
 /morebending grant Dev Plasma
 /bending element add Plasma Dev
 /morebending grant Dev Lava
+/bending element add Lava
+/bending level add 10000 Dev

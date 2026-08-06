@@ -1,6 +1,7 @@
 package com.elementals.morebendings;
 
 import com.elementals.morebendings.bending.airsubbendings.common.CloudRootHealer;
+import com.elementals.morebendings.bending.common.AbilityBindingHealer;
 import com.elementals.morebendings.bending.airsubbendings.flying.FlyingAbility;
 import com.elementals.morebendings.bending.airsubbendings.gas.GasLeakManager;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BloodProximityTracker;
@@ -111,6 +112,12 @@ public class ElementalsMoreBendingsMod {
         // CloudRootHealer). Substitui a necessidade de rodar
         // "/morebending grant <player> gas" manualmente como reparo.
         NeoForge.EVENT_BUS.addListener(CloudRootHealer::onPlayerLoggedIn);
+
+        // Recalcula os 12 slots de tecla (boundAbilities) de cada jogador a
+        // cada login -- corrige habilidades novas (ex: lavaFlow) que ficam
+        // travadas em null pra quem já tinha o elemento desbloqueado antes
+        // delas existirem. Ver AbilityBindingHealer para a causa raiz.
+        NeoForge.EVENT_BUS.addListener(AbilityBindingHealer::onPlayerLoggedIn);
 
         // Verifica em background se algum Earth bender chegou perto o
         // suficiente de um Blood bender pra desbloquear o pré-requisito de
