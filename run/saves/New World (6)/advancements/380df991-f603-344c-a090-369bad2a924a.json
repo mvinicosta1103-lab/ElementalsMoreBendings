@@ -96,6 +96,12 @@
     },
     "done": true
   },
+  "elementals:metalbending": {
+    "criteria": {
+      "element": "2026-08-06 19:23:45 -0300"
+    },
+    "done": true
+  },
   "minecraft:recipes/combat/iron_sword": {
     "criteria": {
       "has_iron_ingot": "2026-08-06 19:24:37 -0300"
@@ -129,18 +135,6 @@
   "minecraft:recipes/decorations/iron_bars": {
     "criteria": {
       "has_iron_ingot": "2026-08-06 19:24:37 -0300"
-    },
-    "done": true
-  },
-  "minecraft:story/obtain_armor": {
-    "criteria": {
-      "iron_chestplate": "2026-08-06 19:24:39 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/misc/iron_nugget_from_smelting": {
-    "criteria": {
-      "has_iron_chestplate": "2026-08-06 19:24:39 -0300"
     },
     "done": true
   },
@@ -198,21 +192,9 @@
     },
     "done": true
   },
-  "minecraft:recipes/misc/iron_ingot_from_iron_block": {
-    "criteria": {
-      "has_iron_block": "2026-08-06 19:24:38 -0300"
-    },
-    "done": true
-  },
   "minecraft:story/smelt_iron": {
     "criteria": {
       "iron": "2026-08-06 19:24:37 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/decorations/chest": {
-    "criteria": {
-      "has_lots_of_items": "2026-08-06 19:27:28 -0300"
     },
     "done": true
   },
@@ -227,18 +209,6 @@
       "has_iron_ingot": "2026-08-06 19:24:37 -0300"
     },
     "done": true
-  },
-  "minecraft:adventure/root": {
-    "criteria": {
-      "killed_something": "2026-08-06 19:27:25 -0300"
-    },
-    "done": true
-  },
-  "minecraft:adventure/kill_all_mobs": {
-    "criteria": {
-      "minecraft:zombified_piglin": "2026-08-06 19:27:25 -0300"
-    },
-    "done": false
   },
   "minecraft:recipes/decorations/chain": {
     "criteria": {
@@ -264,33 +234,9 @@
     },
     "done": true
   },
-  "minecraft:recipes/misc/iron_nugget_from_blasting": {
-    "criteria": {
-      "has_iron_chestplate": "2026-08-06 19:24:39 -0300"
-    },
-    "done": true
-  },
-  "minecraft:adventure/kill_a_mob": {
-    "criteria": {
-      "minecraft:zombified_piglin": "2026-08-06 19:27:25 -0300"
-    },
-    "done": true
-  },
   "minecraft:recipes/decorations/smithing_table": {
     "criteria": {
       "has_iron_ingot": "2026-08-06 19:24:37 -0300"
-    },
-    "done": true
-  },
-  "elementals:metalbending": {
-    "criteria": {
-      "element": "2026-08-06 19:23:45 -0300"
-    },
-    "done": true
-  },
-  "minecraft:recipes/decorations/anvil": {
-    "criteria": {
-      "has_iron_block": "2026-08-06 19:24:38 -0300"
     },
     "done": true
   },
@@ -303,6 +249,60 @@
   "minecraft:recipes/redstone/heavy_weighted_pressure_plate": {
     "criteria": {
       "has_iron_ingot": "2026-08-06 19:24:37 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/iron_ingot_from_iron_block": {
+    "criteria": {
+      "has_iron_block": "2026-08-06 19:24:38 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/anvil": {
+    "criteria": {
+      "has_iron_block": "2026-08-06 19:24:38 -0300"
+    },
+    "done": true
+  },
+  "minecraft:story/obtain_armor": {
+    "criteria": {
+      "iron_chestplate": "2026-08-06 19:24:39 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/iron_nugget_from_smelting": {
+    "criteria": {
+      "has_iron_chestplate": "2026-08-06 19:24:39 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/iron_nugget_from_blasting": {
+    "criteria": {
+      "has_iron_chestplate": "2026-08-06 19:24:39 -0300"
+    },
+    "done": true
+  },
+  "minecraft:adventure/root": {
+    "criteria": {
+      "killed_something": "2026-08-06 19:27:25 -0300"
+    },
+    "done": true
+  },
+  "minecraft:adventure/kill_all_mobs": {
+    "criteria": {
+      "minecraft:zombified_piglin": "2026-08-06 19:27:25 -0300"
+    },
+    "done": false
+  },
+  "minecraft:adventure/kill_a_mob": {
+    "criteria": {
+      "minecraft:zombified_piglin": "2026-08-06 19:27:25 -0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/chest": {
+    "criteria": {
+      "has_lots_of_items": "2026-08-06 19:27:28 -0300"
     },
     "done": true
   },
