@@ -27,7 +27,6 @@ public final class SituationChecks {
      * Conta quantas posições num raio esférico (em blocos) ao redor do
      * jogador batem com o predicado dado. Barato o bastante pros raios
      * pequenos/médios usados aqui (6-8 blocos), rodando só 1x a cada
-     * {@link SituationsSystem#CHECK_INTERVAL_TICKS} ticks.
      */
     public static int countNearby(ServerPlayer player, int radius, BiPredicate<Level, BlockPos> predicate) {
         Level level = player.level();
