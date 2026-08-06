@@ -4,7 +4,6 @@ import com.elementals.morebendings.bending.earthsubbendings.bone.BoneElement;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalElement;
 import com.elementals.morebendings.bending.earthsubbendings.glass.GlassElement;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaElement;
-import com.elementals.morebendings.bending.earthsubbendings.metal.MetalElement;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudElement;
 import com.elementals.morebendings.bending.earthsubbendings.petrification.PetrificationElement;
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandElement;
@@ -57,7 +56,7 @@ import com.elementals.morebendings.bending.watersubbendings.spirit.SpiritElement
 public class MoreBendingCommand {
 
     private static final SimpleCommandExceptionType UNKNOWN_SUBBENDING = new SimpleCommandExceptionType(
-            Component.literal("Sub-bending desconhecida. Use: Gas, Flying, Plant, Spirit, Mud, Crystal, Bone, Sand, Glass, Petrification, Lava, MetalMastery, Atmosphere, Mist, Sound, Temperature, Void, Plasma ou Combustion."));
+            Component.literal("Sub-bending desconhecida. Use: Gas, Flying, Plant, Spirit, Mud, Crystal, Bone, Sand, Glass, Petrification, Lava, Atmosphere, Mist, Sound, Temperature, Void, Plasma ou Combustion."));
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("morebending")
@@ -82,7 +81,6 @@ public class MoreBendingCommand {
     private static String eligibilityMessage(SubbendingType type) {
         return switch (type) {
             case MUD, CRYSTAL, SAND, PETRIFICATION, LAVA -> "precisa ter Earth e ter masterizado a árvore de Earth inteira";
-            case METAL_MASTERY -> "precisa ter Metal Bending e ter masterizado a árvore de Metal inteira";
             case ATMOSPHERE, GAS, MIST, SOUND, TEMPERATURE, VOID -> "precisa ter Air e ter masterizado a árvore de Air inteira";
             case PLANT, SPIRIT -> "precisa ter Water e ter masterizado a árvore de Water inteira";
             case PLASMA, COMBUSTION -> "precisa ter Fire e ter masterizado a árvore de Fire inteira";
@@ -359,7 +357,6 @@ public class MoreBendingCommand {
                 case GLASS -> GlassElement.canAcquire(bender);
                 case PETRIFICATION -> PetrificationElement.canAcquire(bender);
                 case LAVA -> LavaElement.canAcquire(bender);
-                case METAL_MASTERY -> MetalElement.canAcquire(bender);
                 case ATMOSPHERE -> AtmosphereElement.canAcquire(bender);
                 case GAS -> GasElement.canAcquire(bender);
                 case MIST -> MistElement.canAcquire(bender);

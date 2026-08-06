@@ -18,18 +18,20 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 /**
- * "metalSlam" — filho da árvore de {@link MetalElement} (Metal Mastery).
- * Instantânea, mesmo esquema de {@code PetrifyingTouchAbility}: OBRIGATÓRIO
- * liberar {@code currAbility} de volta pra {@code null} em todo caminho de
- * saída de {@link #onCall} e em {@link #onRemove}.
+ * "metalSlam" — nó enxertado no fim do sub-ramo {@code metalLance} (dentro
+ * de {@code metalBullet}) da árvore REAL de Metal Bending do mod base (ver
+ * {@link MetalMasteryGraft}). Instantânea, mesmo esquema de
+ * {@code PetrifyingTouchAbility}: OBRIGATÓRIO liberar {@code currAbility}
+ * de volta pra {@code null} em todo caminho de saída de {@link #onCall} e
+ * em {@link #onRemove}.
  *
  * Comportamento é o já descrito em en_us.json (chave
  * upgrade.elementals.metalSlam.description): puxa toda criatura viva
  * dentro de {@link #RANGE} blocos que esteja usando armadura de metal DE
- * VERDADE (ver {@link MetalElement#isWearingMetal}) na direção do caster,
- * causa {@link #DAMAGE} de dano e aplica Lentidão breve no impacto -- quem
- * não estiver de metal fica completamente intocado. Combina com {@link
- * MetalSenseAbility}, que revela quem tem metal antes do puxão.
+ * VERDADE (ver {@link MetalMasteryGraft#isWearingMetal}) na direção do
+ * caster, causa {@link #DAMAGE} de dano e aplica Lentidão breve no impacto
+ * -- quem não estiver de metal fica completamente intocado. Combina com
+ * {@link MetalSenseAbility}, que revela quem tem metal antes do puxão.
  */
 public class MetalSlamAbility implements Ability {
 
@@ -49,9 +51,14 @@ public class MetalSlamAbility implements Ability {
             return;
         }
 
+        if (!bender.getData().canUseUpgrade(MetalMasteryGraft.METAL_SLAM)) {
+            bender.setCurrAbility(null);
+            return;
+        }
+
         AABB area = caster.getBoundingBox().inflate(RANGE);
         List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class, area,
-                e -> e != caster && e.isAlive() && MetalElement.isWearingMetal(e));
+                e -> e != caster && e.isAlive() && MetalMasteryGraft.isWearingMetal(e));
 
         if (targets.isEmpty()) {
             // Ninguém de metal por perto -- não gasta chi à toa.

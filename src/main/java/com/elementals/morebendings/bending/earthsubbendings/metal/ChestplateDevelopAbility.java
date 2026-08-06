@@ -16,8 +16,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 /**
- * "chestplateDevelop" — filho da árvore de {@link MetalElement} (Metal
- * Mastery). Instantânea, mesmo esquema de {@code PetrifyingTouchAbility}:
+ * "chestplateDevelop" — nó enxertado no fim do ramo {@code metalArmor} da
+ * árvore REAL de Metal Bending do mod base (ver {@link MetalMasteryGraft}).
+ * Instantânea, mesmo esquema de {@code PetrifyingTouchAbility}:
  * OBRIGATÓRIO liberar {@code currAbility} de volta pra {@code null} em
  * todo caminho de saída de {@link #onCall} e em {@link #onRemove}.
  *
@@ -36,6 +37,11 @@ public class ChestplateDevelopAbility implements Ability {
     public void onCall(Bender bender, long heldTimeMs) {
         Player player = bender.player;
         if (!(player instanceof ServerPlayer caster) || !(player.level() instanceof ServerLevel level)) {
+            bender.setCurrAbility(null);
+            return;
+        }
+
+        if (!bender.getData().canUseUpgrade(MetalMasteryGraft.CHESTPLATE_DEVELOP)) {
             bender.setCurrAbility(null);
             return;
         }

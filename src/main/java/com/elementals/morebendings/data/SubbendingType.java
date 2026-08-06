@@ -23,7 +23,6 @@ public enum SubbendingType {
     GLASS("Glass", "Glass Bending"),
     PETRIFICATION("Petrification", "Petrification Bending"),
     LAVA("Lava", "Lava Bending"),
-    METAL_MASTERY("MetalMastery", "Metal Mastery"),
     ATMOSPHERE("Atmosphere", "Atmosphere Bending"),
     MIST("Mist", "Mist Bending"),
     PLASMA("Plasma", "Plasma Bending"),

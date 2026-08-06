@@ -14,6 +14,7 @@
   "subbending.elementalsmorebendings.sand": "Sand Bending",
   "subbending.elementalsmorebendings.glass": "Glass Bending",
   "subbending.elementalsmorebendings.lava": "Lava Bending",
+  "subbending.elementalsmorebendings.metalmastery": "Metal Mastery",
   "subbending.elementalsmorebendings.atmosphere": "Atmosphere Bending",
   "subbending.elementalsmorebendings.plasma": "Plasma Bending",
   "subbending.elementalsmorebendings.combustion": "Combustion Bending",
@@ -120,6 +121,7 @@
   "subbending.elementalsmorebendings.crystal.icon": "symbol/crystal",
   "subbending.elementalsmorebendings.sand.icon": "symbol/sand",
   "subbending.elementalsmorebendings.lava.icon": "symbol/lava",
+  "subbending.elementalsmorebendings.metalmastery.icon": "symbol/metal",
   "subbending.elementalsmorebendings.petrification.icon": "symbol/petrification",
   "subbending.elementalsmorebendings.plasma.icon": "symbol/plasma",
 
@@ -271,6 +273,21 @@
 
   "upgrade.elementals.obsidianCrust": "Obsidian Crust",
   "upgrade.elementals.obsidianCrust.description": "Instantly cools all lava within a short radius of you into solid obsidian, letting you cross lava fields or shut down enemy lava attacks. Permanent -- doesn't revert like Lava Pool or Magma Spike.",
+
+  "upgrade.elementals.metalSense": "Metal Sense",
+  "upgrade.elementals.metalSense.description": "Hold Shift to sense every living creature wearing real metal armor (iron, gold, chainmail, netherite) within range, making them glow through walls.",
+  "upgrade.elementals.metalSense.use": "Use: %d",
+  "upgrade.elementals.metalSense.icon": "metal_cable",
+
+  "upgrade.elementals.chestplateDevelop": "Chestplate Develop",
+  "upgrade.elementals.chestplateDevelop.description": "Gathers 3 iron ingots from your inventory and develops them into a real iron chestplate, equipping it instantly. Only works if your chest slot is empty.",
+  "upgrade.elementals.chestplateDevelop.use": "Use: %d",
+  "upgrade.elementals.chestplateDevelop.icon": "metal_armor",
+
+  "upgrade.elementals.metalSlam": "Metal Slam",
+  "upgrade.elementals.metalSlam.description": "Yanks every nearby creature wearing real metal armor toward you, dealing damage and briefly slowing them. Anyone without metal armor is untouched.",
+  "upgrade.elementals.metalSlam.use": "Use: %d",
+  "upgrade.elementals.metalSlam.icon": "metal_lance",
   "upgrade.elementals.obsidianCrust.use": "Use: %d",
 
   "upgrade.elementals.atmospherePressurePoint": "Pressure Point",
@@ -517,6 +534,8 @@
   "item.elementalsmorebendings.petrification_scroll.tooltip": " Grants Petrification Bending to Earth masters",
   "item.elementalsmorebendings.lava_scroll": "Lava Scroll",
   "item.elementalsmorebendings.lava_scroll.tooltip": " Grants Lava Bending to Earth masters",
+  "item.elementalsmorebendings.metal_mastery_scroll": "Metal Mastery Scroll",
+  "item.elementalsmorebendings.metal_mastery_scroll.tooltip": " Grants Metal Mastery to Metal Bending masters",
 
   "item.elementalsmorebendings.plasma_scroll": "Plasma Scroll",
   "item.elementalsmorebendings.plasma_scroll.tooltip": " Grants Plasma Bending to Fire masters",

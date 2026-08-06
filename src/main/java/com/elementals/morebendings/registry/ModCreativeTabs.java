@@ -39,7 +39,6 @@ public class ModCreativeTabs {
                         entries.accept(ModItems.GLASS_SCROLL.get());
                         entries.accept(ModItems.PETRIFICATION_SCROLL.get());
                         entries.accept(ModItems.LAVA_SCROLL.get());
-                        entries.accept(ModItems.METAL_MASTERY_SCROLL.get());
                         // Scrolls -- Fire
                         entries.accept(ModItems.PLASMA_SCROLL.get());
                         entries.accept(ModItems.COMBUSTION_SCROLL.get());

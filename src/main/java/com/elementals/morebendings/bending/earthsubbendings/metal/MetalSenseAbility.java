@@ -18,14 +18,15 @@ import net.minecraft.world.phys.AABB;
 import java.util.List;
 
 /**
- * "metalSense" — habilidade raiz da árvore de {@link MetalElement} (Metal
- * Mastery). Canalizada por Shift (mesmo esquema de {@code LavaArmorAbility}
- * / {@code StaticLegsAbility}): enquanto segura Shift, o bender "sente"
+ * "metalSense" — nó enxertado no fim do ramo {@code metalCable} da árvore
+ * REAL de Metal Bending do mod base (ver {@link MetalMasteryGraft}).
+ * Canalizada por Shift (mesmo esquema de {@code LavaArmorAbility} /
+ * {@code StaticLegsAbility}): enquanto segura Shift, o bender "sente"
  * qualquer entidade viva com armadura de metal de verdade (ver
- * {@link MetalElement#isWearingMetal}) dentro de {@link #RANGE} blocos --
- * aplica um leve efeito de Brilho (Glowing) nelas, contorno visível através
- * de paredes, igual um sentido de metal de verdade detectando através de
- * obstáculos.
+ * {@link MetalMasteryGraft#isWearingMetal}) dentro de {@link #RANGE} blocos
+ * -- aplica um leve efeito de Brilho (Glowing) nelas, contorno visível
+ * através de paredes, igual um sentido de metal de verdade detectando
+ * através de obstáculos.
  *
  * Puramente utilidade/escoteirismo -- não causa dano nem interfere em
  * ninguém, só revela. Combina bem com {@link MetalSlamAbility} (que só
@@ -47,6 +48,11 @@ public class MetalSenseAbility implements Ability {
     public void onCall(Bender bender, long heldTimeMs) {
         Player player = bender.player;
         if (!(player instanceof ServerPlayer caster) || !(player.level() instanceof ServerLevel level)) {
+            bender.setCurrAbility(null);
+            return;
+        }
+
+        if (!bender.getData().canUseUpgrade(MetalMasteryGraft.METAL_SENSE)) {
             bender.setCurrAbility(null);
             return;
         }
@@ -91,7 +97,7 @@ public class MetalSenseAbility implements Ability {
     private void pulse(ServerLevel level, ServerPlayer caster) {
         AABB area = caster.getBoundingBox().inflate(RANGE);
         List<LivingEntity> nearby = level.getEntitiesOfClass(LivingEntity.class, area,
-                e -> e != caster && e.isAlive() && MetalElement.isWearingMetal(e));
+                e -> e != caster && e.isAlive() && MetalMasteryGraft.isWearingMetal(e));
 
         for (LivingEntity target : nearby) {
             target.addEffect(new MobEffectInstance(MobEffects.GLOWING,
