@@ -215,7 +215,7 @@
       <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\java\com\elementals\morebendings\bending\airsubbendings\sound" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.ObsidianWakeAddon [build]">
+  <component name="RunManager" selected="Gradle.ObsidianWakeAddon [runClient]">
     <configuration name="Client" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
       <module name="elementalmorebendings.main" />
