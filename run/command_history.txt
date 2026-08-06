@@ -1,7 +1,3 @@
-/morebending grant Dev Combustion
-/bending element add Combustion Dev
-/bending element add Plasma Dev
-/bending element add Air Dev
 /bending element add Atmosphere
 /bending element add Gas Dev
 /bending element add Mist Dev
@@ -48,3 +44,7 @@
 /morebending grant Dev Lava
 /bending element add Lava
 /bending level add 10000 Dev
+/morebending grant Dev Plasma
+/
+/bending element add Air Dev
+/morebending grant Dev Gas
