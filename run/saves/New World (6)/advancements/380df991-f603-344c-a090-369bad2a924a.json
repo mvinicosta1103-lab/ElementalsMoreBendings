@@ -1,15 +1,34 @@
 {
-  "minecraft:recipes/transportation/mangrove_boat": {
+  "minecraft:recipes/decorations/crafting_table": {
     "criteria": {
-      "in_water": "2026-08-06 11:08:23 -0300"
+      "unlock_right_away": "2026-08-06 11:07:30 -0300"
     },
     "done": true
   },
-  "minecraft:story/lava_bucket": {
+  "elementals:root": {
     "criteria": {
-      "lava_bucket": "2026-08-06 11:10:34 -0300"
+      "trigger": "2026-08-06 11:07:30 -0300"
     },
     "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:snowy_slopes": "2026-08-06 15:19:07 -0300",
+      "minecraft:beach": "2026-08-06 15:19:26 -0300",
+      "minecraft:dark_forest": "2026-08-06 15:20:37 -0300",
+      "minecraft:forest": "2026-08-06 15:18:36 -0300",
+      "minecraft:sparse_jungle": "2026-08-06 15:21:37 -0300",
+      "minecraft:river": "2026-08-06 15:18:10 -0300",
+      "minecraft:lukewarm_ocean": "2026-08-06 15:21:05 -0300",
+      "minecraft:stony_shore": "2026-08-06 15:19:11 -0300",
+      "minecraft:desert": "2026-08-06 15:22:05 -0300",
+      "minecraft:ocean": "2026-08-06 15:19:15 -0300",
+      "minecraft:jungle": "2026-08-06 15:21:30 -0300",
+      "minecraft:birch_forest": "2026-08-06 15:20:30 -0300",
+      "minecraft:bamboo_jungle": "2026-08-06 15:21:43 -0300",
+      "minecraft:plains": "2026-08-06 11:07:30 -0300"
+    },
+    "done": false
   },
   "elementals:earthbending": {
     "criteria": {
@@ -17,9 +36,9 @@
     },
     "done": true
   },
-  "minecraft:recipes/decorations/crafting_table": {
+  "minecraft:recipes/transportation/mangrove_boat": {
     "criteria": {
-      "unlock_right_away": "2026-08-06 11:07:30 -0300"
+      "in_water": "2026-08-06 11:08:23 -0300"
     },
     "done": true
   },
@@ -34,18 +53,6 @@
       "in_water": "2026-08-06 11:08:23 -0300"
     },
     "done": true
-  },
-  "elementals:root": {
-    "criteria": {
-      "trigger": "2026-08-06 11:07:30 -0300"
-    },
-    "done": true
-  },
-  "minecraft:adventure/adventuring_time": {
-    "criteria": {
-      "minecraft:plains": "2026-08-06 11:07:30 -0300"
-    },
-    "done": false
   },
   "minecraft:recipes/transportation/bamboo_raft": {
     "criteria": {
@@ -80,6 +87,12 @@
   "minecraft:recipes/transportation/dark_oak_boat": {
     "criteria": {
       "in_water": "2026-08-06 11:08:23 -0300"
+    },
+    "done": true
+  },
+  "minecraft:story/lava_bucket": {
+    "criteria": {
+      "lava_bucket": "2026-08-06 11:10:34 -0300"
     },
     "done": true
   },
