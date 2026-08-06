@@ -45,12 +45,6 @@ public class ModCreativeTabs {
                         // Scrolls -- Water
                         entries.accept(ModItems.PLANT_SCROLL.get());
                         entries.accept(ModItems.SPIRIT_SCROLL.get());
-
-                        // Armadura
-                        entries.accept(ModItems.CRYSTAL_HELMET.get());
-                        entries.accept(ModItems.CRYSTAL_CHESTPLATE.get());
-                        entries.accept(ModItems.CRYSTAL_LEGGINGS.get());
-                        entries.accept(ModItems.CRYSTAL_BOOTS.get());
                     }).build());
 
     private ModCreativeTabs() {
