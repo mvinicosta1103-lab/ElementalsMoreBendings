@@ -8,6 +8,7 @@ import com.elementals.morebendings.items.scrolls.CrystalScrollItem;
 import com.elementals.morebendings.items.scrolls.GasScrollItem;
 import com.elementals.morebendings.items.scrolls.GlassScrollItem;
 import com.elementals.morebendings.items.scrolls.LavaScrollItem;
+import com.elementals.morebendings.items.scrolls.MetalMasteryScrollItem;
 import com.elementals.morebendings.items.scrolls.MistScrollItem;
 import com.elementals.morebendings.items.scrolls.MudScrollItem;
 import com.elementals.morebendings.items.scrolls.PetrificationScrollItem;
@@ -76,6 +77,8 @@ public class ModItems {
             () -> new PetrificationScrollItem(new Item.Properties().stacksTo(1)));
     public static final Supplier<LavaScrollItem> LAVA_SCROLL = ITEMS.register("lava_scroll",
             () -> new LavaScrollItem(new Item.Properties().stacksTo(1)));
+    public static final Supplier<MetalMasteryScrollItem> METAL_MASTERY_SCROLL = ITEMS.register("metal_mastery_scroll",
+            () -> new MetalMasteryScrollItem(new Item.Properties().stacksTo(1)));
 
     // Fire
     public static final Supplier<PlasmaScrollItem> PLASMA_SCROLL = ITEMS.register("plasma_scroll",
