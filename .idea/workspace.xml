@@ -5,12 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="Next phase: Make more movements for bendings, fix things.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/AbstractSubbendingScrollItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/registry/ModCreativeTabs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/AtmosphereScrollItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/BoneScrollItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/CombustionScrollItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/CrystalScrollItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/GasScrollItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/GlassScrollItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/LavaScrollItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/MistScrollItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/MudScrollItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/PetrificationScrollItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/PlantScrollItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/PlasmaScrollItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/SandScrollItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/SoundScrollItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/SpiritScrollItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/TemperatureScrollItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/items/scrolls/VoidScrollItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/ElementalsMoreBendingsMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/ElementalsMoreBendingsMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/registry/ModItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/registry/ModItems.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementalsmorebendings/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/elementalsmorebendings/lang/en_us.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,11 +220,11 @@
       <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\resources\assets\gui\png\earth\mud" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\java\com\elementals\morebendings\items\scrolls" />
       <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\resources\assets\elementalsmorebendings\textures\item" />
       <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\resources\assets\elementalsmorebendings\textures\models\armor" />
       <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\resources\assets\elementals\textures\gui" />
       <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\java\com\elementals\morebendings\bending\earthsubbendings" />
-      <recent name="C:\Users\Vinicius\Desktop\ObsidianWakeAddon\src\main\java\com\elementals\morebendings\bending\airsubbendings\sound" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.ObsidianWakeAddon [runClient]">
@@ -299,22 +311,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
-    </task>
-    <task id="LOCAL-00220" summary="Next phase: Make more movements for bendings, fix things.">
-      <option name="closed" value="true" />
-      <created>1785455761974</created>
-      <option name="number" value="00220" />
-      <option name="presentableId" value="LOCAL-00220" />
-      <option name="project" value="LOCAL" />
-      <updated>1785455761974</updated>
-    </task>
-    <task id="LOCAL-00221" summary="Next phase: Make more movements for bendings, fix things.">
-      <option name="closed" value="true" />
-      <created>1785455970630</created>
-      <option name="number" value="00221" />
-      <option name="presentableId" value="LOCAL-00221" />
-      <option name="project" value="LOCAL" />
-      <updated>1785455970630</updated>
     </task>
     <task id="LOCAL-00222" summary="Next phase: Make more movements for bendings, fix things.">
       <option name="closed" value="true" />
@@ -692,7 +688,23 @@
       <option name="project" value="LOCAL" />
       <updated>1785980276203</updated>
     </task>
-    <option name="localTasksCounter" value="269" />
+    <task id="LOCAL-00269" summary="Next phase: Make more movements for bendings, fix things.">
+      <option name="closed" value="true" />
+      <created>1785981845185</created>
+      <option name="number" value="00269" />
+      <option name="presentableId" value="LOCAL-00269" />
+      <option name="project" value="LOCAL" />
+      <updated>1785981845185</updated>
+    </task>
+    <task id="LOCAL-00270" summary="Next phase: Make more movements for bendings, fix things.">
+      <option name="closed" value="true" />
+      <created>1785981928658</created>
+      <option name="number" value="00270" />
+      <option name="presentableId" value="LOCAL-00270" />
+      <option name="project" value="LOCAL" />
+      <updated>1785981928658</updated>
+    </task>
+    <option name="localTasksCounter" value="271" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
