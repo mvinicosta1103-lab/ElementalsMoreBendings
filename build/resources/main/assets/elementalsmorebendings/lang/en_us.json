@@ -290,6 +290,31 @@
   "upgrade.elementals.metalSlam.icon": "metal_lance",
   "upgrade.elementals.obsidianCrust.use": "Use: %d",
 
+  "upgrade.elementals.metalGrapple": "Metal Grapple",
+  "upgrade.elementals.metalGrapple.description": "Fires a magnetic hook at whatever you're aiming at -- a real metal block or a creature wearing real metal armor -- and yanks YOU toward it. Pure mobility, deals no damage.",
+  "upgrade.elementals.metalGrapple.use": "Use: %d",
+  "upgrade.elementals.metalGrapple.icon": "metal_bind",
+
+  "upgrade.elementals.metalShrapnel": "Metal Shrapnel",
+  "upgrade.elementals.metalShrapnel.description": "Fires a metal shard that bursts on impact, damaging every living creature in a short radius. Creatures wearing real metal armor take extra damage from the shrapnel.",
+  "upgrade.elementals.metalShrapnel.use": "Use: %d",
+  "upgrade.elementals.metalShrapnel.icon": "metal_bullet",
+
+  "upgrade.elementals.metalRedirect": "Metal Redirect",
+  "upgrade.elementals.metalRedirect.description": "Grabs every arrow flying near you and redirects it at the nearest living creature, turning an incoming volley into a weapon against your enemies. Deals no damage on its own.",
+  "upgrade.elementals.metalRedirect.use": "Use: %d",
+  "upgrade.elementals.metalRedirect.icon": "metal_lance",
+
+  "upgrade.elementals.metalCoil": "Metal Coil",
+  "upgrade.elementals.metalCoil.description": "Hold Shift while aiming at a creature wearing real metal armor to wrap it in magnetic coils, freezing its movement for as long as you hold the ability. Deals no damage.",
+  "upgrade.elementals.metalCoil.use": "Use: %d",
+  "upgrade.elementals.metalCoil.icon": "metal_cable",
+
+  "upgrade.elementals.metalPlating": "Metal Plating",
+  "upgrade.elementals.metalPlating.description": "Magnetically reinforces the real metal armor you're already wearing, granting temporary Resistance and Absorption. Requires at least one piece of real metal armor equipped.",
+  "upgrade.elementals.metalPlating.use": "Use: %d",
+  "upgrade.elementals.metalPlating.icon": "metal_armor",
+
   "upgrade.elementals.atmospherePressurePoint": "Pressure Point",
   "upgrade.elementals.atmospherePressurePoint.description": "Crushes the ground around the point you're standing on. Anyone caught inside is forced to crawl, and starts taking damage if they linger too long.",
   "upgrade.elementals.atmospherePressurePoint.use": "Use: %d",
