@@ -274,6 +274,15 @@ public class MoreBendingCommand {
                             "Sua árvore de Bone Bending foi reparada -- tente comprar os upgrades de novo."));
                     return 1;
                 }
+                if (type == SubbendingType.GLASS) {
+                    GlassElement.autoUnlockRoot(bender);
+                    syncAndPersist(bender, target);
+                    source.sendSuccess(() -> Component.literal(
+                            "glassShards (nó raiz) sincronizado e persistido pra " + playerName + "."), true);
+                    target.sendSystemMessage(Component.literal(
+                            "Sua árvore de Glass Bending foi reparada -- tente comprar os upgrades de novo."));
+                    return 1;
+                }
                 if (type == SubbendingType.PLANT) {
                     // Não precisa de autoUnlockRoot (os 4 ramos raiz de Plant já
                     // têm preço 0 e são compráveis direto pela UI). O problema
@@ -417,6 +426,9 @@ public class MoreBendingCommand {
             }
             if (type == SubbendingType.BONE) {
                 BoneElement.autoUnlockRoot(bender);
+            }
+            if (type == SubbendingType.GLASS) {
+                GlassElement.autoUnlockRoot(bender);
             }
             syncAndPersist(bender, target);
             source.sendSuccess(() -> Component.literal(type.getDisplayName() + " concedida a " + playerName + "."), true);

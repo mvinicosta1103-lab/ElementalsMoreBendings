@@ -214,6 +214,14 @@
   "upgrade.elementals.glassShards.description": "Fires a shard of glass in the direction you're looking, dealing damage to whatever it hits.",
   "upgrade.elementals.glassShards.use": "Use: %d",
 
+  "upgrade.elementals.glassShardsDamageI": "Sharper Shards I",
+  "upgrade.elementals.glassShardsDamageI.description": "Increases the damage of Glass Shards by 1.",
+  "upgrade.elementals.glassShardsDamageII": "Sharper Shards II",
+  "upgrade.elementals.glassShardsDamageII.description": "Increases the damage of Glass Shards by another 1.",
+
+  "upgrade.elementals.glassShardsSpeedI": "Faster Shards I",
+  "upgrade.elementals.glassShardsSpeedI.description": "Increases the flight speed of Glass Shards, making them harder to dodge.",
+
   "upgrade.elementals.lavaPool": "Lava Pool",
   "upgrade.elementals.lavaPool.description": "Melts the ground where you're aiming into a pool of real lava. Cools into basalt after a while.",
   "upgrade.elementals.lavaPool.use": "Use: %d",

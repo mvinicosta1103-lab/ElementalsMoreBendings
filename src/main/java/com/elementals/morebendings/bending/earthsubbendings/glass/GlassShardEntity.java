@@ -26,7 +26,11 @@ import net.minecraft.world.level.Level;
  */
 public class GlassShardEntity extends AbstractElementalsEntity<Player> {
 
-    private static final float DAMAGE = 3.0f;
+    /** Público pra {@link GlassShardsAbility} poder somar os bônus de glassShardsDamageI/II em cima. */
+    public static final float BASE_DAMAGE = 3.0f;
+
+    /** Dano de verdade deste estilhaço -- escala com glassShardsDamageI/II, ver {@link GlassShardsAbility}. */
+    private float damage = BASE_DAMAGE;
 
     public GlassShardEntity(EntityType<GlassShardEntity> type, Level level) {
         super(type, level, Player.class);
@@ -38,6 +42,11 @@ public class GlassShardEntity extends AbstractElementalsEntity<Player> {
         this.setPos(owner.getX(), owner.getEyeY() - 0.1, owner.getZ());
         this.setNoGravity(true);
         this.maxLifeTime = 40; // 2s a 20 ticks/s -- some sozinho se não acertar nada
+    }
+
+    /** Chamado pela {@link GlassShardsAbility} logo após criar a entidade, já com os upgrades de dano aplicados. */
+    public void setDamage(float damage) {
+        this.damage = damage;
     }
 
     @Override
@@ -54,7 +63,7 @@ public class GlassShardEntity extends AbstractElementalsEntity<Player> {
     @Override
     public void onHitEntity(Entity entity) {
         Player owner = this.getOwner();
-        entity.hurt(this.damageSources().playerAttack(owner), DAMAGE * ElementalConfig.get().BENDING_DAMAGE_MULTIPLIER);
+        entity.hurt(this.damageSources().playerAttack(owner), this.damage * ElementalConfig.get().BENDING_DAMAGE_MULTIPLIER);
         entity.hurtMarked = true;
         this.discard();
     }

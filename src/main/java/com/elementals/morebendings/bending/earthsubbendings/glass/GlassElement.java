@@ -4,6 +4,7 @@ import com.elementals.morebendings.bending.earthsubbendings.sand.SandElement;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Element;
 import dev.saperate.elementals.elements.Upgrade;
+import net.minecraft.server.level.ServerPlayer;
 
 /**
  * Glass Bending — sub-bending de Earth, mesmo padrão de {@link
@@ -15,14 +16,33 @@ import dev.saperate.elementals.elements.Upgrade;
  * masterizado), Glass só exige que o jogador já tenha (não precisa ter
  * masterizado) Sand Bending — ver {@link #canAcquire}. Só pode ser
  * concedida via comando (/morebending grant), nunca automaticamente.
+ *
+ * Árvore (mesmo formato de Gas/Mist/Plasma/Combustion -- "glassShards" é o
+ * único filho direto da raiz sintética e agora TEM filhos, então precisa
+ * do mesmo hack de {@link #autoUnlockRoot}):
+ *
+ * glassShards (grátis, é a habilidade em si -- ver GlassShardsAbility)
+ *  ├─ glassShardsDamageI ─ glassShardsDamageII  (dano do estilhaço)
+ *  └─ glassShardsSpeedI                          (velocidade do projétil)
  */
 public class GlassElement extends Element {
 
     public static final String NAME = "Glass";
 
+    // ---- nomes dos nós (chave de save / lang / canUseUpgrade) ----
+    public static final String GLASS_SHARDS = "glassShards";
+    public static final String GLASS_SHARDS_DAMAGE_I = "glassShardsDamageI";
+    public static final String GLASS_SHARDS_DAMAGE_II = "glassShardsDamageII";
+    public static final String GLASS_SHARDS_SPEED_I = "glassShardsSpeedI";
+
     public GlassElement() {
         super(NAME, new Upgrade[]{
-                new Upgrade("glassShards", 0) // grátis -- ver GlassShardsAbility
+                new Upgrade(GLASS_SHARDS, new Upgrade[]{
+                        new Upgrade(GLASS_SHARDS_DAMAGE_I, new Upgrade[]{
+                                new Upgrade(GLASS_SHARDS_DAMAGE_II, 1)
+                        }, 1),
+                        new Upgrade(GLASS_SHARDS_SPEED_I, 1)
+                }, 0) // grátis -- ver GlassShardsAbility
         });
         addAbility(new GlassShardsAbility(), 0);
     }
@@ -50,8 +70,35 @@ public class GlassElement extends Element {
         return bender.hasElement(get());
     }
 
+    /** Atalho pras abilities, que só têm o ServerPlayer em mãos. */
+    public static boolean hasUpgrade(ServerPlayer player, String upgradeName) {
+        Bender bender = Bender.getBender(player);
+        return bender != null && bender.getData().canUseUpgrade(upgradeName);
+    }
+
+    /**
+     * Marca o nó raiz "glassShards" (preço 0) como já comprado. Chame logo
+     * depois de {@code bender.addElement(GlassElement.get(), true)} no
+     * momento da concessão (ver MoreBendingCommand) -- mesmo motivo do
+     * {@code GasElement#autoUnlockRoot}: "glassShards" é o único filho
+     * direto da raiz sintética do Element e agora TEM filhos (os níveis de
+     * dano/velocidade), então sem esse desbloqueio manual a árvore inteira
+     * fica travada mesmo com level de sobra.
+     */
+    public static void autoUnlockRoot(Bender bender) {
+        Upgrade shardsNode = get().root.children[0]; // glassShards
+        bender.getData().upgrades.put(shardsNode, true);
+    }
+
+    /**
+     * "Masterizado" = os dois níveis de dano e o nível de velocidade
+     * comprados, além da própria habilidade raiz.
+     */
     @Override
     public boolean isSkillTreeComplete(Bender bender) {
-        return bender.hasElement(this) && bender.getData().canUseUpgrade("glassShards");
+        return bender.hasElement(this)
+                && bender.getData().canUseUpgrade(GLASS_SHARDS)
+                && bender.getData().canUseUpgrade(GLASS_SHARDS_DAMAGE_II)
+                && bender.getData().canUseUpgrade(GLASS_SHARDS_SPEED_I);
     }
 }
