@@ -1,6 +1,3 @@
-/weather clear
-/morebending grant Dev Flying
-/bending element add Earth Dev
 /bending element add Crystal Dev
 /bending element add Glass Dev
 /bending element add Lava Dev
@@ -48,3 +45,6 @@
 /morebending grant Dev Temperature
 /morebending grant Dev Atmosphere
 /morebending grant Dev Sound
+/morebending grant Dev Glass
+/morebending grant Dev Sand
+/morebending grant Dev Glass
