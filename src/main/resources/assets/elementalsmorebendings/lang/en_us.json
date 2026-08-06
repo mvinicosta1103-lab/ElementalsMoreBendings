@@ -221,6 +221,18 @@
 
   "upgrade.elementals.glassShardsSpeedI": "Faster Shards I",
   "upgrade.elementals.glassShardsSpeedI.description": "Increases the flight speed of Glass Shards, making them harder to dodge.",
+  "ability.elementalsmorebendings.glass_spray": "Glass Spray",
+  "upgrade.elementals.glassSpray": "Glass Spray",
+  "upgrade.elementals.glassSpray.description": "Shatters a handful of glass toward the direction you're looking, spraying a wide cone of weaker shards to cover an area instead of a single target.",
+  "upgrade.elementals.glassSpray.use": "Use: %d",
+  "upgrade.elementals.glassSprayWideI": "Wider Spray I",
+  "upgrade.elementals.glassSprayWideI.description": "Sprays more shards in a wider cone.",
+  "ability.elementalsmorebendings.glass_armor": "Glass Armor",
+  "upgrade.elementals.glassArmor": "Glass Armor",
+  "upgrade.elementals.glassArmor.description": "Encases you in a thin shell of glass that absorbs part of the damage from the next hit you take before shattering. Toggle it off manually to cancel without shattering.",
+  "upgrade.elementals.glassArmor.use": "Use: %d",
+  "upgrade.elementals.glassArmorShatterI": "Retaliating Shatter I",
+  "upgrade.elementals.glassArmorShatterI.description": "When Glass Armor shatters, the shards fly back at your attacker, dealing extra damage and briefly slowing them.",
 
   "upgrade.elementals.lavaPool": "Lava Pool",
   "upgrade.elementals.lavaPool.description": "Melts the ground where you're aiming into a pool of real lava. Cools into basalt after a while.",
