@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="Next phase: Make more movements for bendings, fix things.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/glass/GlassArmorAbility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/glass/GlassArmorCombatHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/glass/GlassSprayAbility.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/glass/GlassElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/glass/GlassElement.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -294,14 +298,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
-    </task>
-    <task id="LOCAL-00227" summary="Next phase: Make more movements for bendings, fix things.">
-      <option name="closed" value="true" />
-      <created>1785639457758</created>
-      <option name="number" value="00227" />
-      <option name="presentableId" value="LOCAL-00227" />
-      <option name="project" value="LOCAL" />
-      <updated>1785639457758</updated>
     </task>
     <task id="LOCAL-00228" summary="Next phase: Make more movements for bendings, fix things.">
       <option name="closed" value="true" />
@@ -687,7 +683,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786022127090</updated>
     </task>
-    <option name="localTasksCounter" value="276" />
+    <task id="LOCAL-00276" summary="Next phase: Make more movements for bendings, fix things.">
+      <option name="closed" value="true" />
+      <created>1786023806909</created>
+      <option name="number" value="00276" />
+      <option name="presentableId" value="LOCAL-00276" />
+      <option name="project" value="LOCAL" />
+      <updated>1786023806909</updated>
+    </task>
+    <option name="localTasksCounter" value="277" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

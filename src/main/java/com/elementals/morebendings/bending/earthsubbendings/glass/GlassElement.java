@@ -18,12 +18,18 @@ import net.minecraft.server.level.ServerPlayer;
  * concedida via comando (/morebending grant), nunca automaticamente.
  *
  * Árvore (mesmo formato de Gas/Mist/Plasma/Combustion -- "glassShards" é o
- * único filho direto da raiz sintética e agora TEM filhos, então precisa
- * do mesmo hack de {@link #autoUnlockRoot}):
+ * único filho GRÁTIS direto da raiz sintética e TEM filhos, então precisa
+ * do mesmo hack de {@link #autoUnlockRoot}; "glassSpray" e "glassArmor"
+ * entraram depois como os outros 2 filhos diretos -- 3 de 4 possíveis, ver
+ * o limite documentado em {@code CrystalElement}):
  *
  * glassShards (grátis, é a habilidade em si -- ver GlassShardsAbility)
  *  ├─ glassShardsDamageI ─ glassShardsDamageII  (dano do estilhaço)
  *  └─ glassShardsSpeedI                          (velocidade do projétil)
+ * glassSpray (ver GlassSprayAbility -- leque de estilhaços fracos em área)
+ *  └─ glassSprayWideI                             (mais estilhaços, cone mais aberto)
+ * glassArmor (ver GlassArmorAbility -- couraça de um uso só que absorve o próximo golpe)
+ *  └─ glassArmorShatterI                          (retalia com cacos + Lentidão ao estilhaçar)
  */
 public class GlassElement extends Element {
 
@@ -34,6 +40,10 @@ public class GlassElement extends Element {
     public static final String GLASS_SHARDS_DAMAGE_I = "glassShardsDamageI";
     public static final String GLASS_SHARDS_DAMAGE_II = "glassShardsDamageII";
     public static final String GLASS_SHARDS_SPEED_I = "glassShardsSpeedI";
+    public static final String GLASS_SPRAY = "glassSpray";
+    public static final String GLASS_SPRAY_WIDE_I = "glassSprayWideI";
+    public static final String GLASS_ARMOR = "glassArmor";
+    public static final String GLASS_ARMOR_SHATTER_I = "glassArmorShatterI";
 
     public GlassElement() {
         super(NAME, new Upgrade[]{
@@ -42,9 +52,24 @@ public class GlassElement extends Element {
                                 new Upgrade(GLASS_SHARDS_DAMAGE_II, 1)
                         }, 1),
                         new Upgrade(GLASS_SHARDS_SPEED_I, 1)
-                }, 0) // grátis -- ver GlassShardsAbility
+                }, 0), // grátis -- ver GlassShardsAbility
+                new Upgrade(GLASS_SPRAY, new Upgrade[]{
+                        new Upgrade(GLASS_SPRAY_WIDE_I, 1)
+                }, 2),
+                new Upgrade(GLASS_ARMOR, new Upgrade[]{
+                        new Upgrade(GLASS_ARMOR_SHATTER_I, 1)
+                }, 2)
         });
         addAbility(new GlassShardsAbility(), 0);
+        addAbility(new GlassSprayAbility(), 1);
+        addAbility(new GlassArmorAbility(), 2);
+
+        // Registro explícito dos slots de bind (mesmo motivo documentado em
+        // CrystalElement/LavaElement): sem isso, os 3 ramos poderiam ter
+        // getKeybindSlotForUpgrade() colidindo entre si.
+        registerUpgradeKeybind(GLASS_SHARDS, 0);
+        registerUpgradeKeybind(GLASS_SPRAY, 1);
+        registerUpgradeKeybind(GLASS_ARMOR, 2);
     }
 
     /** Registra a instância única no mod base. Chame uma vez, no load do mod. */
