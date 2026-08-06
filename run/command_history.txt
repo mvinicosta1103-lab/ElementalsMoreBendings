@@ -1,7 +1,3 @@
-/bending element add Atmosphere
-/bending element add Gas Dev
-/bending element add Mist Dev
-/time set day
 /weather clear
 /morebending grant Dev Flying
 /bending element add Earth Dev
@@ -48,3 +44,7 @@
 /
 /bending element add Air Dev
 /morebending grant Dev Gas
+/morebending grant Dev Bone
+/morebending grant Dev Temperature
+/morebending grant Dev Atmosphere
+/morebending grant Dev Sound
