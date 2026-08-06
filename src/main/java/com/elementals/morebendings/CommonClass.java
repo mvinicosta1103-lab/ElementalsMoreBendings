@@ -14,6 +14,7 @@ import com.elementals.morebendings.bending.airsubbendings.mist.MistElement;
 import com.elementals.morebendings.bending.airsubbendings.temperature.TemperatureElement;
 import com.elementals.morebendings.bending.airsubbendings.voiding.VoidElement;
 import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionElement;
+import com.elementals.morebendings.bending.firesubbendings.lightning.LightningMasteryGraft;
 import com.elementals.morebendings.bending.firesubbendings.plasma.PlasmaElement;
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantElement;
 import com.elementals.morebendings.bending.watersubbendings.spirit.SpiritElement;
@@ -53,6 +54,10 @@ public class CommonClass {
         // FIRE SUBBENDINGS
         PlasmaElement.register();
         CombustionElement.register();
+        // Lightning Subbending não é mais um Element separado -- suas 7
+        // habilidades são enxertadas direto na árvore de skills do
+        // Lightning base (mesmo esquema de MetalMasteryGraft).
+        LightningMasteryGraft.graft();
 
         // Flying ainda usa o sistema antigo (PlayerSubbendingData) --
         // ainda não convertida pro mesmo padrão de Element real.
