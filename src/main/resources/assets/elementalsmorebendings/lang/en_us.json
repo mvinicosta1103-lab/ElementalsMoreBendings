@@ -131,7 +131,7 @@
 
   "upgrade.elementals.gasCloud": "Gas Cloud",
   "upgrade.elementals.gasCloud.description": "Releases a cloud of gas around you, inflicting Nausea and Slowness on nearby enemies.",
-  "upgrade.elementals.gasCloud.use": "Use: %d",
+  "upgrade.elementals.gasCloud.use": "Use: G",
   "upgrade.elementals.gasCloudSizeI": "Cloud Expansion I",
   "upgrade.elementals.gasCloudSizeI.description": "Increases Gas Cloud radius by +0.75 blocks.",
   "upgrade.elementals.gasCloudSizeII": "Cloud Expansion II",
@@ -143,7 +143,7 @@
 
   "upgrade.elementals.gasSuffocate": "Suffocate",
   "upgrade.elementals.gasSuffocate.description": "Instantly suffocates enemies inside the gas radius, dealing magic burst damage.",
-  "upgrade.elementals.gasSuffocate.use": "Use: %d",
+  "upgrade.elementals.gasSuffocate.use": "Use: J",
   "upgrade.elementals.gasSuffocateDamageI": "Suffocation I",
   "upgrade.elementals.gasSuffocateDamageI.description": "Increases suffocation burst damage by +1.5 HP.",
   "upgrade.elementals.gasSuffocateDamageII": "Suffocation II",
@@ -151,29 +151,29 @@
 
   "upgrade.elementals.gasLeak": "Gas Leak",
   "upgrade.elementals.gasLeak.description": "Leaves a lingering toxic cloud that poisons enemies and spoils farmland/grass underneath.",
-  "upgrade.elementals.gasLeak.use": "Use: %d",
+  "upgrade.elementals.gasLeak.use": "Use: K",
   "upgrade.elementals.gasLeakDurationI": "Lingering Vapors I",
   "upgrade.elementals.gasLeakDurationI.description": "Increases toxic cloud duration by +5 seconds.",
 
   "upgrade.elementals.gasIgnite": "Gas Ignite",
   "upgrade.elementals.gasIgnite.description": "Ignites the surrounding gas, setting enemies and the ground on fire in a violent explosion.",
-  "upgrade.elementals.gasIgnite.use": "Use: %d",
+  "upgrade.elementals.gasIgnite.use": "Use: L",
 
   "upgrade.elementals.gasJet": "Gas Jet",
   "upgrade.elementals.gasJet.description": "Propels yourself backward or upward using a strong blast of compressed gas, disorienting anyone near the nozzle.",
-  "upgrade.elementals.gasJet.use": "Use: %d",
+  "upgrade.elementals.gasJet.use": "Use: N",
   "upgrade.elementals.gasJetForceI": "Higher Pressure I",
   "upgrade.elementals.gasJetForceI.description": "Increases propulsion force of Gas Jet.",
 
   "upgrade.elementals.gasMiasma": "Miasma",
   "upgrade.elementals.gasMiasma.description": "Releases a dense, debilitating fog that afflicts target entities with Blindness and Weakness.",
-  "upgrade.elementals.gasMiasma.use": "Use: %d",
+  "upgrade.elementals.gasMiasma.use": "Use: M",
   "upgrade.elementals.gasMiasmaRadiusI": "Spreading Fog I",
   "upgrade.elementals.gasMiasmaRadiusI.description": "Increases Miasma effect radius by 1.5 blocks.",
 
   "upgrade.elementals.gasCorrosiveMist": "Corrosive Gas",
   "upgrade.elementals.gasCorrosiveMist.description": "Emits an acidic vapor that damages enemies and erodes armor durability over time.",
-  "upgrade.elementals.gasCorrosiveMist.use": "Use: %d",
+  "upgrade.elementals.gasCorrosiveMist.use": "Use: U",
 
   "upgrade.elementals.echoingVoice": "Echoing Voice",
   "upgrade.elementals.echoingVoice.description": "Unleash an amplified shout in a cone in front of you. Anyone caught in it takes sound damage, gets knocked back, is stunned for a couple seconds, and has any fire on them extinguished.",
