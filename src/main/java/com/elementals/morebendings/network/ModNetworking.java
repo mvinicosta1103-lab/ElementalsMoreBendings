@@ -2,6 +2,12 @@ package com.elementals.morebendings.network;
 
 import com.elementals.morebendings.Constants;
 import com.elementals.morebendings.network.packets.CastGasCloudPacket;
+import com.elementals.morebendings.network.packets.CastGasSuffocatePacket;
+import com.elementals.morebendings.network.packets.CastGasLeakPacket;
+import com.elementals.morebendings.network.packets.CastGasIgnitePacket;
+import com.elementals.morebendings.network.packets.CastGasJetPacket;
+import com.elementals.morebendings.network.packets.CastGasMiasmaPacket;
+import com.elementals.morebendings.network.packets.CastGasCorrosiveMistPacket;
 import com.elementals.morebendings.network.packets.CastCombustionBlastPacket;
 import com.elementals.morebendings.network.packets.CycleSpecializationPacket;
 import com.elementals.morebendings.network.packets.ToggleFlyingPacket;
@@ -30,6 +36,24 @@ public final class ModNetworking {
     public static final ResourceLocation CAST_GAS_CLOUD_ID =
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cast_gas_cloud");
 
+    public static final ResourceLocation CAST_GAS_SUFFOCATE_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cast_gas_suffocate");
+
+    public static final ResourceLocation CAST_GAS_LEAK_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cast_gas_leak");
+
+    public static final ResourceLocation CAST_GAS_IGNITE_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cast_gas_ignite");
+
+    public static final ResourceLocation CAST_GAS_JET_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cast_gas_jet");
+
+    public static final ResourceLocation CAST_GAS_MIASMA_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cast_gas_miasma");
+
+    public static final ResourceLocation CAST_GAS_CORROSIVE_MIST_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cast_gas_corrosive_mist");
+
     public static final ResourceLocation CAST_COMBUSTION_BLAST_ID =
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cast_combustion_blast");
 
@@ -44,6 +68,18 @@ public final class ModNetworking {
                 ToggleFlyingPacket.STREAM_CODEC, ToggleFlyingPacket::handle);
         Network.registerPacket(CastGasCloudPacket.type(), CastGasCloudPacket.class,
                 CastGasCloudPacket.STREAM_CODEC, CastGasCloudPacket::handle);
+        Network.registerPacket(CastGasSuffocatePacket.type(), CastGasSuffocatePacket.class,
+                CastGasSuffocatePacket.STREAM_CODEC, CastGasSuffocatePacket::handle);
+        Network.registerPacket(CastGasLeakPacket.type(), CastGasLeakPacket.class,
+                CastGasLeakPacket.STREAM_CODEC, CastGasLeakPacket::handle);
+        Network.registerPacket(CastGasIgnitePacket.type(), CastGasIgnitePacket.class,
+                CastGasIgnitePacket.STREAM_CODEC, CastGasIgnitePacket::handle);
+        Network.registerPacket(CastGasJetPacket.type(), CastGasJetPacket.class,
+                CastGasJetPacket.STREAM_CODEC, CastGasJetPacket::handle);
+        Network.registerPacket(CastGasMiasmaPacket.type(), CastGasMiasmaPacket.class,
+                CastGasMiasmaPacket.STREAM_CODEC, CastGasMiasmaPacket::handle);
+        Network.registerPacket(CastGasCorrosiveMistPacket.type(), CastGasCorrosiveMistPacket.class,
+                CastGasCorrosiveMistPacket.STREAM_CODEC, CastGasCorrosiveMistPacket::handle);
         Network.registerPacket(CastCombustionBlastPacket.type(), CastCombustionBlastPacket.class,
                 CastCombustionBlastPacket.STREAM_CODEC, CastCombustionBlastPacket::handle);
         Network.registerPacket(CycleSpecializationPacket.type(), CycleSpecializationPacket.class,

@@ -2,6 +2,12 @@ package com.elementals.morebendings.client;
 
 import com.elementals.morebendings.Constants;
 import com.elementals.morebendings.network.packets.CastGasCloudPacket;
+import com.elementals.morebendings.network.packets.CastGasSuffocatePacket;
+import com.elementals.morebendings.network.packets.CastGasLeakPacket;
+import com.elementals.morebendings.network.packets.CastGasIgnitePacket;
+import com.elementals.morebendings.network.packets.CastGasJetPacket;
+import com.elementals.morebendings.network.packets.CastGasMiasmaPacket;
+import com.elementals.morebendings.network.packets.CastGasCorrosiveMistPacket;
 import com.elementals.morebendings.network.packets.CastCombustionBlastPacket;
 import com.elementals.morebendings.network.packets.CycleSpecializationPacket;
 import com.elementals.morebendings.network.packets.ToggleFlyingPacket;
@@ -43,6 +49,62 @@ public final class ModKeyMappings {
             "key." + Constants.MOD_ID + ".cast_gas_cloud",
             InputConstants.Type.KEYSYM,
             InputConstants.KEY_G,
+            CATEGORY
+    );
+
+    /**
+     * Solta o Suffocate direto, sem precisar trocar pro elemento Gas nem
+     * usar o slot numérico de habilidade padrão do mod base (ver
+     * {@code GasSuffocateAbility}). Antes esta e as outras habilidades de
+     * Gas abaixo dependiam só do slot numérico compartilhado do mod base,
+     * o que fazia todas caírem na mesma tecla (R) quando não configuradas
+     * manualmente -- agora cada uma tem sua própria tecla dedicada, igual
+     * o Gas Cloud já tinha.
+     */
+    public static final KeyMapping CAST_GAS_SUFFOCATE = new KeyMapping(
+            "key." + Constants.MOD_ID + ".cast_gas_suffocate",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_J,
+            CATEGORY
+    );
+
+    /** Solta o Gas Leak direto (ver {@code GasLeakAbility}). */
+    public static final KeyMapping CAST_GAS_LEAK = new KeyMapping(
+            "key." + Constants.MOD_ID + ".cast_gas_leak",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_K,
+            CATEGORY
+    );
+
+    /** Solta o Gas Ignite direto (ver {@code GasIgniteAbility}). */
+    public static final KeyMapping CAST_GAS_IGNITE = new KeyMapping(
+            "key." + Constants.MOD_ID + ".cast_gas_ignite",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_L,
+            CATEGORY
+    );
+
+    /** Solta o Gas Jet direto (ver {@code GasPropulsionAbility}). */
+    public static final KeyMapping CAST_GAS_JET = new KeyMapping(
+            "key." + Constants.MOD_ID + ".cast_gas_jet",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_N,
+            CATEGORY
+    );
+
+    /** Solta o Miasma direto (ver {@code GasMiasmaAbility}). */
+    public static final KeyMapping CAST_GAS_MIASMA = new KeyMapping(
+            "key." + Constants.MOD_ID + ".cast_gas_miasma",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_M,
+            CATEGORY
+    );
+
+    /** Solta o Corrosive Mist direto (ver {@code CorrosiveGasAbility}). */
+    public static final KeyMapping CAST_GAS_CORROSIVE_MIST = new KeyMapping(
+            "key." + Constants.MOD_ID + ".cast_gas_corrosive_mist",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_U,
             CATEGORY
     );
 
@@ -90,6 +152,12 @@ public final class ModKeyMappings {
     public static void register(RegisterKeyMappingsEvent event) {
         event.register(TOGGLE_FLYING);
         event.register(CAST_GAS_CLOUD);
+        event.register(CAST_GAS_SUFFOCATE);
+        event.register(CAST_GAS_LEAK);
+        event.register(CAST_GAS_IGNITE);
+        event.register(CAST_GAS_JET);
+        event.register(CAST_GAS_MIASMA);
+        event.register(CAST_GAS_CORROSIVE_MIST);
         event.register(CYCLE_SPECIALIZATION);
         event.register(TOGGLE_PLASMA_BOOST);
         event.register(CAST_COMBUSTION_BLAST);
@@ -111,6 +179,24 @@ public final class ModKeyMappings {
         }
         while (CAST_GAS_CLOUD.consumeClick()) {
             Dispatcher.sendToServer(new CastGasCloudPacket());
+        }
+        while (CAST_GAS_SUFFOCATE.consumeClick()) {
+            Dispatcher.sendToServer(new CastGasSuffocatePacket());
+        }
+        while (CAST_GAS_LEAK.consumeClick()) {
+            Dispatcher.sendToServer(new CastGasLeakPacket());
+        }
+        while (CAST_GAS_IGNITE.consumeClick()) {
+            Dispatcher.sendToServer(new CastGasIgnitePacket());
+        }
+        while (CAST_GAS_JET.consumeClick()) {
+            Dispatcher.sendToServer(new CastGasJetPacket());
+        }
+        while (CAST_GAS_MIASMA.consumeClick()) {
+            Dispatcher.sendToServer(new CastGasMiasmaPacket());
+        }
+        while (CAST_GAS_CORROSIVE_MIST.consumeClick()) {
+            Dispatcher.sendToServer(new CastGasCorrosiveMistPacket());
         }
         while (CYCLE_SPECIALIZATION.consumeClick()) {
             Dispatcher.sendToServer(new CycleSpecializationPacket());
