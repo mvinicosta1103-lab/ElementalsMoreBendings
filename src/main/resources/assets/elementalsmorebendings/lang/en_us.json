@@ -594,6 +594,9 @@
   "upgrade.elementals.bloodPickup.description": "Seizes a target and holds them locked to your aim while you channel, stacking heavy Weakness, Slowness, and Mining Fatigue. Left-click yanks them in, right-click lets go.",
   "upgrade.elementals.bloodPickup.use": "Hold: %d",
 
+  "upgrade.elementals.bloodPickupSwarm": "Swarm Grasp",
+  "upgrade.elementals.bloodPickupSwarm.description": "Passive. Once bought, Pickup can hold up to 5 targets at once, arranged in a small ring around your aim. Press Pickup's key again while channeling to grab another target instead of restarting.",
+
   "upgrade.elementals.bloodFreeGrip": "Free Grip",
   "upgrade.elementals.bloodFreeGrip.description": "Passive. Left-click while channeling Pickup now hurls every held target away from you and releases them, instead of yanking them closer. You're also no longer rooted in place while channeling.",
 
