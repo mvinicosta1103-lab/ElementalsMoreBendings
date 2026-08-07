@@ -26,8 +26,7 @@ import java.util.Arrays;
  * │         │    └── bloodControlPrecisionI (2, exclusive)
  * │         │         ├── bloodControlPrecisionII (2)  [leaf -> bloodVeinLock]
  * │         │         └── bloodControlPowerI (2)        [leaf -> bloodForcedGrasp]
- * │         └── bloodShield (4)                          [leaf livre, sem graft --
- * │                                                        ver nota de slots abaixo]
+ * │         └── bloodShield (4)                          [leaf -> bloodPickup]
  * ├── bloodShot (4)
  * │    └── bloodShotEfficiencyI (2)
  * │         ├── bloodShotEfficiencyII (2)                [leaf -> bloodTwinShot]
@@ -40,7 +39,7 @@ import java.util.Arrays;
  * └── bloodBag (4)
  *      └── bloodParalysis (4)
  *           ├── bloodParalysisEfficiencyI (2)
- *           │    └── bloodParalysisEfficiencyII (2)      [leaf -> bloodSilentGrip]
+ *           │    └── bloodParalysisEfficiencyII (2)      [leaf -> bloodSilentGrip, TODO sem slot]
  *           └── bloodParalysisRangeI (2)                 [leaf -> bloodWideGrasp]
  * </pre>
  * Cada graft pendura numa folha DIFERENTE já existente -- nenhum nó passa
@@ -52,14 +51,17 @@ import java.util.Arrays;
  * regra "precisa ter dominado aquele ramo inteiro" sem nenhum
  * {@code canAcquire()} customizado.
  * <br><br>
- * Por que só 8 e não os 9 leaves disponíveis: {@code Ability.MAX_KEYBINDS
- * = 12} é um limite físico do mod base (12 slots de tecla, ver
- * {@code KeyAbility1..12}). Blood já ocupa os slots 0-3 com
- * {@code AbilityBlood1..4} -- sobram exatamente 8 slots livres (4-11).
- * {@code bloodShield} (o único leaf sem novo filho) ficou de fora pra não
- * estourar esse limite; foi o escolhido por já ser o mais próximo,
- * em espírito, de uma habilidade nova de área que já cobrimos noutro
- * lugar (fica reservado caso um addon futuro libere mais slots).
+ * {@code Ability.MAX_KEYBINDS = 12} é um limite físico do mod base (12
+ * slots de tecla, ver {@code KeyAbility1..12}); {@code AbilityBlood1..4}
+ * já ocupam os slots 0-3, sobrando exatamente 8 slots pro addon (4-11) --
+ * um a menos do que o total de leaves grafáveis na árvore de Blood.
+ * {@code bloodShield} era o único leaf sem filho, deixado de propósito
+ * como reserva "caso um addon futuro libere mais slots" -- e é
+ * exatamente onde {@link BloodPickupAbility} (bloodPickup) foi enxertada
+ * ocupa o slot 10, que era a última vaga livre -- não sobrou nenhuma pra
+ * {@code bloodSilentGrip}, que fica pendente (ver TODO abaixo) até
+ * cortarmos/fundirmos alguma das 8 já ativas ou usarmos Mixin (fora do
+ * escopo deste addon).
  * <br><br>
  * Timing: idêntico ao documentado em {@code MetalMasteryGraft} -- chame
  * {@link #graft()} uma única vez, em {@code CommonClass.init()}, depois
@@ -77,8 +79,12 @@ public final class BloodMasteryGraft {
     public static final String BLOOD_MARKED_VEIN = "bloodMarkedVein";
     public static final String BLOOD_RUSH = "bloodRush";
     public static final String BLOOD_ADRENAL_NUMBNESS = "bloodAdrenalNumbness";
-    public static final String BLOOD_SILENT_GRIP = "bloodSilentGrip";
+    public static final String BLOOD_PICKUP = "bloodPickup";
     public static final String BLOOD_WIDE_GRASP = "bloodWideGrasp";
+    // TODO: BloodSilentGripAbility ainda não existe como classe, e não sobrou
+    // nenhum slot de keybind livre (0-11 todos em uso) -- graft() abaixo NÃO
+    // a registra até ela existir E a gente decidir de onde tirar um slot.
+    public static final String BLOOD_SILENT_GRIP = "bloodSilentGrip";
 
     /** Mesma ordem de grandeza dos nós "grandes" já existentes na árvore
      * base (bloodShot/bloodStep/bloodBag/bloodControl/bloodParalysis = 4). */
@@ -112,32 +118,38 @@ public final class BloodMasteryGraft {
         // bloodAdrenalNumbness -- leaf bloodOverchargeStrengthI, sub-ramo
         // bloodOvercharge DENTRO de bloodStep (ícone blood_overcharge).
         graftOnto(blood, "bloodOverchargeStrengthI", BLOOD_ADRENAL_NUMBNESS);
-        // bloodSilentGrip -- leaf bloodParalysisEfficiencyII, ramo
-        // bloodBag/bloodParalysis (ícone blood_paralysis).
-        graftOnto(blood, "bloodParalysisEfficiencyII", BLOOD_SILENT_GRIP);
+        // TODO: bloodSilentGrip -- leaf bloodParalysisEfficiencyII, ramo
+        // bloodBag/bloodParalysis (ícone blood_paralysis). Sem classe/slot
+        // ainda -- ver nota no topo do arquivo.
+        // graftOnto(blood, "bloodParalysisEfficiencyII", BLOOD_SILENT_GRIP);
         // bloodWideGrasp -- leaf IRMÃ bloodParalysisRangeI, mesmo ramo
         // bloodBag/bloodParalysis (ícone blood_paralysis).
         graftOnto(blood, "bloodParalysisRangeI", BLOOD_WIDE_GRASP);
+        // bloodPickup -- direto na leaf bloodShield (ramo bloodPush/
+        // bloodPushPowerI), deixada livre de propósito na árvore base pra
+        // um enxerto futuro (ícone blood_control por ora, reaproveitado).
+        graftOnto(blood, "bloodShield", BLOOD_PICKUP);
 
         // Slots de bind 0-3 já pertencem aos 4 ramos-raiz do Blood base
-        // (AbilityBlood1..4) -- usamos os últimos 8 livres (slots 4-11,
-        // ver KeyAbility1..12 do mod base, MAX_KEYBINDS=12 esgotado).
+        // (AbilityBlood1..4) -- usamos todos os 8 livres (slots 4-11, ver
+        // KeyAbility1..12 do mod base, MAX_KEYBINDS=12, esgotado).
         blood.addAbility(new BloodVeinLockAbility(), 4);
         blood.addAbility(new BloodForcedGraspAbility(), 5);
         blood.addAbility(new BloodTwinShotAbility(), 6);
         blood.addAbility(new BloodMarkedVeinAbility(), 7);
         blood.addAbility(new BloodRushAbility(), 8);
         blood.addAbility(new BloodAdrenalNumbnessAbility(), 9);
-        blood.addAbility(new BloodSilentGripAbility(), 10);
-        blood.addAbility(new BloodWideGraspAbility(), 11);
+        blood.addAbility(new BloodPickupAbility(), 11);
         blood.registerUpgradeKeybind(BLOOD_VEIN_LOCK, 4);
         blood.registerUpgradeKeybind(BLOOD_FORCED_GRASP, 5);
         blood.registerUpgradeKeybind(BLOOD_TWIN_SHOT, 6);
         blood.registerUpgradeKeybind(BLOOD_MARKED_VEIN, 7);
         blood.registerUpgradeKeybind(BLOOD_RUSH, 8);
         blood.registerUpgradeKeybind(BLOOD_ADRENAL_NUMBNESS, 9);
-        blood.registerUpgradeKeybind(BLOOD_SILENT_GRIP, 10);
-        blood.registerUpgradeKeybind(BLOOD_WIDE_GRASP, 11);
+        blood.registerUpgradeKeybind(BLOOD_WIDE_GRASP, 10);
+        blood.registerUpgradeKeybind(BLOOD_PICKUP, 11);
+        // TODO: bloodSilentGrip fica sem tecla até ganhar um slot -- ver nota
+        // no topo do arquivo.
     }
 
     private static void graftOnto(Element blood, String parentUpgradeName, String newUpgradeName) {
