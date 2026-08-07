@@ -29,7 +29,9 @@ public class GasElement extends Element {
     public static final String GAS_JET_FORCE_I = "gasJetForceI";
 
     public static final String GAS_MIASMA = "gasMiasma";
-    public static final String GAS_CORROSIVE = "gasCorrosive";
+    public static final String GAS_MIASMA_RADIUS_I = "gasMiasmaRadiusI";
+
+    public static final String GAS_CORROSIVE = "gasCorrosiveMist";
 
     public GasElement() {
         super(NAME, new Upgrade[]{
@@ -39,29 +41,28 @@ public class GasElement extends Element {
                         }, 1),
                         new Upgrade(GAS_VENT_I, new Upgrade[]{
                                 new Upgrade(GAS_VENT_II, 1)
-                        }, 1)
-                }, 0),
-
-                new Upgrade(GAS_SUFFOCATE, new Upgrade[]{
-                        new Upgrade(GAS_SUFFOCATE_DAMAGE_I, new Upgrade[]{
-                                new Upgrade(GAS_SUFFOCATE_DAMAGE_II, 1)
-                        }, 1)
-                }, 0),
-
-                new Upgrade(GAS_LEAK, new Upgrade[]{
-                        new Upgrade(GAS_LEAK_DURATION_I, 1)
-                }, 0),
-
-                new Upgrade(GAS_IGNITE, 0),
-
-                new Upgrade(GAS_JET, new Upgrade[]{
-                        new Upgrade(GAS_JET_FORCE_I, 1)
-                }, 0),
-
-                new Upgrade(GAS_MIASMA, 0),
-                new Upgrade(GAS_CORROSIVE, 0)
+                        }, 1),
+                        new Upgrade(GAS_SUFFOCATE, new Upgrade[]{
+                                new Upgrade(GAS_SUFFOCATE_DAMAGE_I, new Upgrade[]{
+                                        new Upgrade(GAS_SUFFOCATE_DAMAGE_II, 1)
+                                }, 1),
+                                new Upgrade(GAS_LEAK, new Upgrade[]{
+                                        new Upgrade(GAS_LEAK_DURATION_I, 1)
+                                }, 1)
+                        }, 1),
+                        new Upgrade(GAS_IGNITE, new Upgrade[]{
+                                new Upgrade(GAS_JET, new Upgrade[]{
+                                        new Upgrade(GAS_JET_FORCE_I, 1)
+                                }, 1)
+                        }, 1),
+                        new Upgrade(GAS_MIASMA, new Upgrade[]{
+                                new Upgrade(GAS_MIASMA_RADIUS_I, 1)
+                        }, 1),
+                        new Upgrade(GAS_CORROSIVE, 1)
+                }, 0)
         });
 
+        // Keybind slots individuais (0 = Key 1, 1 = Key 2, 2 = Key 3, etc.)
         addAbility(new GasCloudAbility(), 0);
         addAbility(new GasSuffocateAbility(), 1);
         addAbility(new GasLeakAbility(), 2);
@@ -120,7 +121,7 @@ public class GasElement extends Element {
                 && bender.getData().canUseUpgrade(GAS_LEAK_DURATION_I)
                 && bender.getData().canUseUpgrade(GAS_IGNITE)
                 && bender.getData().canUseUpgrade(GAS_JET_FORCE_I)
-                && bender.getData().canUseUpgrade(GAS_MIASMA)
+                && bender.getData().canUseUpgrade(GAS_MIASMA_RADIUS_I)
                 && bender.getData().canUseUpgrade(GAS_CORROSIVE);
     }
 }

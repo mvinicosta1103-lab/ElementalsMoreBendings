@@ -50,7 +50,7 @@ public class GasMiasmaAbility implements Ability {
 
         AreaEffectCloud cloud = new AreaEffectCloud(level, caster.getX(), caster.getY(), caster.getZ());
         cloud.setOwner(caster);
-        cloud.setRadius((float) BASE_RADIUS);
+        cloud.setRadius((float) getRadius(caster));
         cloud.setDuration(DURATION_TICKS);
         cloud.setParticle(ParticleTypes.DRAGON_BREATH);
         cloud.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 1));
@@ -64,5 +64,13 @@ public class GasMiasmaAbility implements Ability {
     @Override
     public void onRemove(Bender bender) {
         bender.setCurrAbility(null);
+    }
+
+    public static double getRadius(ServerPlayer player) {
+        double radius = BASE_RADIUS;
+        if (GasElement.hasUpgrade(player, GasElement.GAS_MIASMA_RADIUS_I)) {
+            radius += 1.5;
+        }
+        return radius;
     }
 }
