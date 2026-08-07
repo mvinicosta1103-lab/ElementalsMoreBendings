@@ -24,9 +24,14 @@ import java.util.UUID;
  * {@code PressurePointAbility}.
  *
  * Efeito: solta uma nuvem de gás em volta do jogador. Entidades vivas
- * (exceto o próprio caster) dentro do raio recebem Náusea e Lentidão —
- * o dano de verdade vem da especialização escolhida (Sufocamento/
- * Vazamento/Ignição), chamada no fim deste método.
+ * (exceto o próprio caster) dentro do raio recebem Náusea e Lentidão.
+ * <p>
+ * REWORK: antes disparava também a especialização "ativa" do jogador
+ * (Sufocamento/Vazamento/Ignição) automaticamente no final do cast. Isso
+ * mudou -- as três especializações agora são abilities independentes,
+ * com tecla própria cada uma (ver {@link GasSuffocateAbility}, {@link
+ * GasLeakAbility}, {@link GasIgniteAbility}). Esta ability ficou só com
+ * o papel de controle de área/utilidade.
  *
  * Raio e cooldown escalam com os upgrades de crescimento:
  *  - gasCloudSizeI / II  → +0.75 bloco de raio cada
@@ -78,12 +83,13 @@ public class GasCloudAbility implements Ability {
             entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1));
         }
 
-        // No máximo uma especialização fica desbloqueada por vez (nó
-        // "gasSpecialization" é exclusive=true), então é seguro chamar as
-        // três — só a que o jogador realmente comprou vai fazer alguma coisa.
-        GasSuffocateAbility.applyOnCloud(caster, level, radius);
-        GasLeakAbility.applyOnCloud(caster, level, radius);
-        GasIgniteAbility.applyOnCloud(caster, level, radius);
+        // REWORK: Suffocate/Leak/Ignite não são mais disparadas daqui.
+        // Cada uma virou uma Ability própria com tecla dedicada (ver
+        // GasSuffocateAbility/GasLeakAbility/GasIgniteAbility) -- o
+        // jogador escolhe explicitamente qual usar e quando, em vez de
+        // depender da especialização "ativa" no momento em que apertasse
+        // Gas Cloud. Esta ability agora é só o utilitário defensivo/de
+        // controle de área (Confusão + Lentidão).
 
         bender.setCurrAbility(null); // instantânea -- não canaliza
     }

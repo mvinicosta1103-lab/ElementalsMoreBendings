@@ -1,6 +1,5 @@
 package com.elementals.morebendings.bending.airsubbendings.common;
 
-import com.elementals.morebendings.bending.airsubbendings.gas.GasElement;
 import com.elementals.morebendings.bending.airsubbendings.mist.MistElement;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -14,16 +13,23 @@ import java.util.function.BiPredicate;
 /**
  * Guarda, só em memória (não persiste entre logins -- mesmo esquema dos
  * outros mapas de cooldown/estado deste mod, ex.: {@code HeavyFogAbility
- * #lastUse}), qual especialização de Gas/Mist está ATIVA no momento pra
- * cada jogador.
+ * #lastUse}), qual especialização de Mist está ATIVA no momento pra cada
+ * jogador.
  * <p>
- * Diferente de "comprada" ({@link GasElement#hasUpgrade}/{@link
- * MistElement#hasUpgrade}): as três especializações de cada árvore NÃO
- * são mais mutuamente exclusivas na COMPRA (o jogador pode comprar
- * Suffocate, Leak E Ignite ao mesmo tempo, por exemplo -- a árvore em si
- * já permitia isso, nada travava). Esta classe decide qual delas de fato
- * produz efeito quando a habilidade é usada, alternada pela tecla de
- * "Cycle Specialization" (ver {@code ModKeyMappings}/{@code
+ * REWORK (Gas): o lado Gas desta classe foi removido. Suffocate/Leak/
+ * Ignite deixaram de ser "efeitos alternados por uma tecla de cycle" e
+ * viraram abilities independentes, cada uma com tecla própria (ver
+ * {@code GasSuffocateAbility}, {@code GasLeakAbility}, {@code
+ * GasIgniteAbility}) -- não faz mais sentido "ciclar" entre elas, o
+ * jogador escolhe direto qual apertar. Mist continua no esquema antigo
+ * por enquanto.
+ * <p>
+ * Diferente de "comprada" ({@link MistElement#hasUpgrade}): as três
+ * especializações de Mist NÃO são mutuamente exclusivas na COMPRA (o
+ * jogador pode comprar Choke, Veil E Freeze ao mesmo tempo -- a árvore
+ * em si já permitia isso, nada travava). Esta classe decide qual delas
+ * de fato produz efeito quando Heavy Fog é lançado, alternada pela tecla
+ * de "Cycle Specialization" (ver {@code ModKeyMappings}/{@code
  * CycleSpecializationPacket}).
  * <p>
  * Se o jogador nunca apertou a tecla (ou relogou -- estado não persiste),
@@ -33,30 +39,17 @@ import java.util.function.BiPredicate;
  */
 public final class SpecializationCycle {
 
-    private static final String[] GAS_ORDER = {
-            GasElement.GAS_SUFFOCATE, GasElement.GAS_LEAK, GasElement.GAS_IGNITE
-    };
     private static final String[] MIST_ORDER = {
             MistElement.MIST_CHOKE, MistElement.MIST_VEIL, MistElement.MIST_FREEZE
     };
 
-    private static final Map<UUID, String> activeGas = new HashMap<>();
     private static final Map<UUID, String> activeMist = new HashMap<>();
 
     private SpecializationCycle() {
     }
 
-    public static boolean isGasActive(ServerPlayer player, String upgradeName) {
-        return upgradeName.equals(resolve(player, GAS_ORDER, activeGas, GasElement::hasUpgrade));
-    }
-
     public static boolean isMistActive(ServerPlayer player, String upgradeName) {
         return upgradeName.equals(resolve(player, MIST_ORDER, activeMist, MistElement::hasUpgrade));
-    }
-
-    /** @return o novo caminho ativo, ou null se o jogador não comprou nenhuma especialização de Gas ainda. */
-    public static String cycleGas(ServerPlayer player) {
-        return cycle(player, GAS_ORDER, activeGas, GasElement::hasUpgrade);
     }
 
     /** @return o novo caminho ativo, ou null se o jogador não comprou nenhuma especialização de Mist ainda. */
