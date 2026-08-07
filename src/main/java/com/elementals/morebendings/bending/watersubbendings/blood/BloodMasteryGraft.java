@@ -81,6 +81,18 @@ public final class BloodMasteryGraft {
     public static final String BLOOD_ADRENAL_NUMBNESS = "bloodAdrenalNumbness";
     public static final String BLOOD_PICKUP = "bloodPickup";
     public static final String BLOOD_WIDE_GRASP = "bloodWideGrasp";
+    /** Filho de {@code bloodPickup} -- passivo, sem ability/keybind própria,
+     * só eleva o limite de alvos simultâneos de {@link BloodPickupAbility}
+     * de 1 pra 5 (checado via {@code canUseUpgrade} dentro da própria
+     * ability). Ver comentário de {@link BloodPickupAbility}. */
+    public static final String BLOOD_PICKUP_SWARM = "bloodPickupSwarm";
+    /** Filho IRMÃO de {@code bloodPickupSwarm}, mesmo pai
+     * ({@code bloodPickup}) -- passivo, sem ability/keybind própria. Troca
+     * o clique esquerdo de Pickup (puxão pra perto) por um arremesso
+     * (solta os alvos longe) e libera o caster pra andar livremente
+     * enquanto canaliza, em vez de ficar imóvel. Ver comentário de
+     * {@link BloodPickupAbility}. */
+    public static final String BLOOD_FREE_GRIP = "bloodFreeGrip";
     // TODO: BloodSilentGripAbility ainda não existe como classe, e não sobrou
     // nenhum slot de keybind livre (0-11 todos em uso) -- graft() abaixo NÃO
     // a registra até ela existir E a gente decidir de onde tirar um slot.
@@ -89,6 +101,12 @@ public final class BloodMasteryGraft {
     /** Mesma ordem de grandeza dos nós "grandes" já existentes na árvore
      * base (bloodShot/bloodStep/bloodBag/bloodControl/bloodParalysis = 4). */
     private static final int GRAFT_PRICE = 4;
+    /** bloodPickupSwarm é um capstone passivo (quintuplica a capacidade de
+     * alvos de Pickup) -- mais caro que os nós normais de propósito. */
+    private static final int SWARM_UPGRADE_PRICE = 6;
+    /** bloodFreeGrip troca comportamento (arremesso) + libera movimento --
+     * mesma ordem de grandeza dos nós normais, não é capstone. */
+    private static final int FREE_GRIP_UPGRADE_PRICE = 4;
 
     private BloodMasteryGraft() {
     }
@@ -129,6 +147,15 @@ public final class BloodMasteryGraft {
         // bloodPushPowerI), deixada livre de propósito na árvore base pra
         // um enxerto futuro (ícone blood_control por ora, reaproveitado).
         graftOnto(blood, "bloodShield", BLOOD_PICKUP);
+        // bloodPickupSwarm -- filho de bloodPickup (acabou de ser enxertado
+        // acima, então já existe na árvore pra graftOnto encontrar). Passivo,
+        // sem ability/keybind própria -- ver BloodPickupAbility.
+        graftOnto(blood, BLOOD_PICKUP, BLOOD_PICKUP_SWARM, SWARM_UPGRADE_PRICE);
+        // bloodFreeGrip -- filho IRMÃO de bloodPickupSwarm, mesmo pai
+        // bloodPickup (2 filhos agora, ainda dentro do limite de 4 do
+        // UpgradeTreeScreen). Passivo, sem ability/keybind própria -- ver
+        // BloodPickupAbility.
+        graftOnto(blood, BLOOD_PICKUP, BLOOD_FREE_GRIP, FREE_GRIP_UPGRADE_PRICE);
 
         // Slots de bind 0-3 já pertencem aos 4 ramos-raiz do Blood base
         // (AbilityBlood1..4) -- usamos todos os 8 livres (slots 4-11, ver
@@ -153,6 +180,10 @@ public final class BloodMasteryGraft {
     }
 
     private static void graftOnto(Element blood, String parentUpgradeName, String newUpgradeName) {
+        graftOnto(blood, parentUpgradeName, newUpgradeName, GRAFT_PRICE);
+    }
+
+    private static void graftOnto(Element blood, String parentUpgradeName, String newUpgradeName, int price) {
         Upgrade parent = blood.root.getUpgradeByNameRecursive(parentUpgradeName);
         if (parent == null) {
             Constants.LOG.error(
@@ -169,7 +200,7 @@ public final class BloodMasteryGraft {
             }
         }
 
-        Upgrade grafted = new Upgrade(newUpgradeName, GRAFT_PRICE);
+        Upgrade grafted = new Upgrade(newUpgradeName, price);
         Upgrade[] newChildren = Arrays.copyOf(parent.children, parent.children.length + 1);
         newChildren[newChildren.length - 1] = grafted;
         parent.children = newChildren;
