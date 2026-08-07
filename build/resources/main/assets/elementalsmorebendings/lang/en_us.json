@@ -562,6 +562,38 @@
   "upgrade.elementals.curseMinion.use": "Use: %d",
   "upgrade.elementals.curseMinion.icon": "curse_minion",
 
+  "upgrade.elementals.bloodVeinLock": "Vein Lock",
+  "upgrade.elementals.bloodVeinLock.description": "Reach out and lock your target's veins and joints from a distance, afflicting heavy Slowness and Mining Fatigue for several seconds. Lasts longer and hits harder at night.",
+  "upgrade.elementals.bloodVeinLock.use": "Use: %d",
+
+  "upgrade.elementals.bloodForcedGrasp": "Forced Grasp",
+  "upgrade.elementals.bloodForcedGrasp.description": "Seizes your target's hand tendons at range, forcing their fingers open and knocking whatever they're holding out of their grip. No damage, pure disarm.",
+  "upgrade.elementals.bloodForcedGrasp.use": "Use: %d",
+
+  "upgrade.elementals.bloodTwinShot": "Twin Shot",
+  "upgrade.elementals.bloodTwinShot.description": "Fires two Blood Shot projectiles at once in a narrow spread, each carrying your active effects onto whoever it strikes.",
+  "upgrade.elementals.bloodTwinShot.use": "Use: %d",
+
+  "upgrade.elementals.bloodMarkedVein": "Marked Vein",
+  "upgrade.elementals.bloodMarkedVein.description": "Pinpoints a vessel in your target from a distance, revealing their position through walls with Glowing and weakening their muscles for a few seconds.",
+  "upgrade.elementals.bloodMarkedVein.use": "Use: %d",
+
+  "upgrade.elementals.bloodRush": "Blood Rush",
+  "upgrade.elementals.bloodRush.description": "Surges your own circulation while you hold Shift, granting continuous Speed and Jump Boost for as long as you can keep it up.",
+  "upgrade.elementals.bloodRush.use": "Use: %d",
+
+  "upgrade.elementals.bloodAdrenalNumbness": "Adrenal Numbness",
+  "upgrade.elementals.bloodAdrenalNumbness.description": "Only usable while Overcharged. Draws on that surplus to numb your body against pain, granting brief Resistance and Absorption.",
+  "upgrade.elementals.bloodAdrenalNumbness.use": "Use: %d",
+
+  "upgrade.elementals.bloodWideGrasp": "Wide Grasp",
+  "upgrade.elementals.bloodWideGrasp.description": "Widens the reach of your Blood Bag's paralysis, letting you lock down targets from further away.",
+  "upgrade.elementals.bloodWideGrasp.use": "Use: %d",
+
+  "upgrade.elementals.bloodPickup": "Pickup",
+  "upgrade.elementals.bloodPickup.description": "Seizes a target and holds them locked to your aim while you channel, stacking heavy Weakness, Slowness, and Mining Fatigue. Left-click yanks them in, right-click lets go.",
+  "upgrade.elementals.bloodPickup.use": "Hold: %d",
+
   "item.elementalsmorebendings.crystal_helmet": "Crystal Helmet",
   "item.elementalsmorebendings.crystal_chestplate": "Crystal Chestplate",
   "item.elementalsmorebendings.crystal_leggings": "Crystal Leggings",

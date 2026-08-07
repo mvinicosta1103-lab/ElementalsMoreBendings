@@ -16,6 +16,7 @@ import com.elementals.morebendings.bending.airsubbendings.voiding.VoidElement;
 import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionElement;
 import com.elementals.morebendings.bending.firesubbendings.lightning.LightningMasteryGraft;
 import com.elementals.morebendings.bending.firesubbendings.plasma.PlasmaElement;
+import com.elementals.morebendings.bending.watersubbendings.blood.BloodMasteryGraft;
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantElement;
 import com.elementals.morebendings.bending.watersubbendings.spirit.SpiritElement;
 import com.elementals.morebendings.bending.airsubbendings.sound.SoundElement;
@@ -30,6 +31,10 @@ public class CommonClass {
         // WATER SUBBENDINGS
         PlantElement.register();
         SpiritElement.register();
+        // Blood Mastery não é mais um Element separado -- suas 8 habilidades
+        // são enxertadas direto na árvore de skills do Blood base (mesmo
+        // esquema de MetalMasteryGraft/LightningMasteryGraft).
+        BloodMasteryGraft.graft();
 
         // EARTH SUBBENDINGS
         MudElement.register();
