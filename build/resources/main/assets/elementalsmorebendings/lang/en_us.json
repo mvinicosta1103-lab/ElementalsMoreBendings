@@ -315,6 +315,41 @@
   "upgrade.elementals.metalPlating.use": "Use: %d",
   "upgrade.elementals.metalPlating.icon": "metal_armor",
 
+  "upgrade.elementals.lightningSense": "Lightning Sense",
+  "upgrade.elementals.lightningSense.description": "Hold Shift to sense every conductive living creature (real metal armor, or soaked by water/rain) within range, making them glow through walls.",
+  "upgrade.elementals.lightningSense.use": "Use: %d",
+  "upgrade.elementals.lightningSense.icon": "lightning_redirection",
+
+  "upgrade.elementals.lightningChainWhip": "Chain Whip",
+  "upgrade.elementals.lightningChainWhip.description": "Strikes whatever you're aiming at, then arcs the shock to nearby conductive creatures, jumping up to 3 times. Damage weakens with every jump.",
+  "upgrade.elementals.lightningChainWhip.use": "Use: %d",
+  "upgrade.elementals.lightningChainWhip.icon": "lightning_bolt",
+
+  "upgrade.elementals.thunderStep": "Thunder Step",
+  "upgrade.elementals.thunderStep.description": "Instantly teleports you in the direction you're looking, leaving a trail of sparks that damages anyone caught along the way.",
+  "upgrade.elementals.thunderStep.use": "Use: %d",
+  "upgrade.elementals.thunderStep.icon": "lightning_emp",
+
+  "upgrade.elementals.staticOvercharge": "Static Overcharge",
+  "upgrade.elementals.staticOvercharge.description": "Charges yourself with static electricity, granting temporary Speed and Haste.",
+  "upgrade.elementals.staticOvercharge.use": "Use: %d",
+  "upgrade.elementals.staticOvercharge.icon": "lightning_volt_arc",
+
+  "upgrade.elementals.electroParalysis": "Electroparalysis",
+  "upgrade.elementals.electroParalysis.description": "Hold Shift while aiming at a creature to lock it in place with a continuous shock for as long as you hold the ability. Conductive targets also take light damage over time.",
+  "upgrade.elementals.electroParalysis.use": "Use: %d",
+  "upgrade.elementals.electroParalysis.icon": "lightning_static_aura",
+
+  "upgrade.elementals.lightningRod": "Lightning Rod",
+  "upgrade.elementals.lightningRod.description": "Turns you into a living lightning rod -- a real bolt strikes your own position. You're immune to it, but everyone else nearby takes splash damage, and the strike refunds some of your chi.",
+  "upgrade.elementals.lightningRod.use": "Use: %d",
+  "upgrade.elementals.lightningRod.icon": "lightning_overcharge",
+
+  "upgrade.elementals.judgmentStrike": "Judgment Strike",
+  "upgrade.elementals.judgmentStrike.description": "Calls down a real, precise lightning bolt on whatever you're aiming at, guaranteeing the hit instead of relying on the vanilla bolt's random targeting. The costly culmination of mastering the storm.",
+  "upgrade.elementals.judgmentStrike.use": "Use: %d",
+  "upgrade.elementals.judgmentStrike.icon": "lightning_localised_storm",
+
   "upgrade.elementals.atmospherePressurePoint": "Pressure Point",
   "upgrade.elementals.atmospherePressurePoint.description": "Crushes the ground around the point you're standing on. Anyone caught inside is forced to crawl, and starts taking damage if they linger too long.",
   "upgrade.elementals.atmospherePressurePoint.use": "Use: %d",

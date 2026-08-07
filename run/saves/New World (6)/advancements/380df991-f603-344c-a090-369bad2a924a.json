@@ -306,5 +306,11 @@
     },
     "done": true
   },
+  "elementals:lightningbending": {
+    "criteria": {
+      "element": "2026-08-06 20:57:18 -0300"
+    },
+    "done": true
+  },
   "DataVersion": 3955
 }
