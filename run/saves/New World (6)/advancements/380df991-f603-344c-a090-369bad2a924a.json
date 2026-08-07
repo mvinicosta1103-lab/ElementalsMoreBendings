@@ -312,5 +312,11 @@
     },
     "done": true
   },
+  "elementals:bloodbending": {
+    "criteria": {
+      "element": "2026-08-06 22:10:08 -0300"
+    },
+    "done": true
+  },
   "DataVersion": 3955
 }
