@@ -146,7 +146,7 @@ public class BloodPickupAbility implements Ability {
         // Já canalizando -- tecla de novo tenta agarrar um alvo ADICIONAL
         // em vez de reiniciar o canal (só rende alguma coisa com
         // bloodPickupSwarm comprado, ver maxTargets()).
-        if (bender.getCurrAbility() == this) {
+        if (bender.currAbility == this) {
             tryGrabAdditionalTarget(bender, caster, level);
             return;
         }
@@ -367,7 +367,10 @@ public class BloodPickupAbility implements Ability {
 
     @Override
     public boolean shouldImmobilizePlayer(Player player) {
-        Bender bender = Bender.getBender(player);
+        if (!(player instanceof ServerPlayer serverPlayer)) {
+            return true;
+        }
+        Bender bender = Bender.getBender(serverPlayer);
         if (bender != null && bender.getData().canUseUpgrade(BloodMasteryGraft.BLOOD_FREE_GRIP)) {
             // bloodFreeGrip -- caster livre pra andar enquanto canaliza.
             return false;
