@@ -14,12 +14,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class GasCloudAbility implements Ability {
+public class GasMiasmaAbility implements Ability {
 
-    private static final double BASE_RADIUS = 5.0;
-    private static final int DURATION_TICKS = 300; // 15s
-    private static final int BASE_COOLDOWN_TICKS = 140;
-    private static final float CAST_CHI_COST = 5.0f;
+    private static final int DURATION_TICKS = 240;
+    private static final int COOLDOWN_TICKS = 180;
+    private static final float CHI_COST = 7.0f;
+    private static final double BASE_RADIUS = 4.5;
 
     private static final Map<UUID, Long> lastUse = new HashMap<>();
 
@@ -31,30 +31,31 @@ public class GasCloudAbility implements Ability {
             return;
         }
 
-        long now = level.getGameTime();
-        if (now - lastUse.getOrDefault(caster.getUUID(), -100000L) < getCooldownTicks(caster)) {
+        if (!GasElement.hasUpgrade(caster, GasElement.GAS_MIASMA)) {
             bender.setCurrAbility(null);
             return;
         }
 
-        if (!bender.reduceChi(CAST_CHI_COST)) {
+        long now = level.getGameTime();
+        if (now - lastUse.getOrDefault(caster.getUUID(), -100000L) < COOLDOWN_TICKS) {
+            bender.setCurrAbility(null);
+            return;
+        }
+
+        if (!bender.reduceChi(CHI_COST)) {
             bender.setCurrAbility(null);
             return;
         }
         lastUse.put(caster.getUUID(), now);
 
-        float radius = (float) getRadius(caster);
-
-        // Nuvem de Fumaça usando API nativa
         AreaEffectCloud cloud = new AreaEffectCloud(level, caster.getX(), caster.getY(), caster.getZ());
         cloud.setOwner(caster);
-        cloud.setRadius(radius);
+        cloud.setRadius((float) BASE_RADIUS);
         cloud.setDuration(DURATION_TICKS);
-        cloud.setParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE);
-
-        // Efeitos aplicados a quem entrar na nuvem
-        cloud.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100, 0));
-        cloud.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
+        cloud.setParticle(ParticleTypes.DRAGON_BREATH);
+        cloud.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 1));
+        cloud.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 1));
+        cloud.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 0));
 
         level.addFreshEntity(cloud);
         bender.setCurrAbility(null);
@@ -63,19 +64,5 @@ public class GasCloudAbility implements Ability {
     @Override
     public void onRemove(Bender bender) {
         bender.setCurrAbility(null);
-    }
-
-    public static double getRadius(ServerPlayer player) {
-        double radius = BASE_RADIUS;
-        if (GasElement.hasUpgrade(player, GasElement.GAS_CLOUD_SIZE_I)) radius += 0.75;
-        if (GasElement.hasUpgrade(player, GasElement.GAS_CLOUD_SIZE_II)) radius += 0.75;
-        return radius;
-    }
-
-    public static int getCooldownTicks(ServerPlayer player) {
-        int cooldown = BASE_COOLDOWN_TICKS;
-        if (GasElement.hasUpgrade(player, GasElement.GAS_VENT_I)) cooldown -= 20;
-        if (GasElement.hasUpgrade(player, GasElement.GAS_VENT_II)) cooldown -= 20;
-        return Math.max(cooldown, 60);
     }
 }
