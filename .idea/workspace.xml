@@ -293,14 +293,6 @@
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
     </task>
-    <task id="LOCAL-00250" summary="Next phase: Make more movements for bendings, fix things.">
-      <option name="closed" value="true" />
-      <created>1785718797933</created>
-      <option name="number" value="00250" />
-      <option name="presentableId" value="LOCAL-00250" />
-      <option name="project" value="LOCAL" />
-      <updated>1785718797933</updated>
-    </task>
     <task id="LOCAL-00251" summary="Next phase: Make more movements for bendings, fix things.">
       <option name="closed" value="true" />
       <created>1785797600019</created>
@@ -685,7 +677,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786069277294</updated>
     </task>
-    <option name="localTasksCounter" value="299" />
+    <task id="LOCAL-00299" summary="Next phase: Make more movements for bendings, fix things.">
+      <option name="closed" value="true" />
+      <created>1786111556921</created>
+      <option name="number" value="00299" />
+      <option name="presentableId" value="LOCAL-00299" />
+      <option name="project" value="LOCAL" />
+      <updated>1786111556922</updated>
+    </task>
+    <option name="localTasksCounter" value="300" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

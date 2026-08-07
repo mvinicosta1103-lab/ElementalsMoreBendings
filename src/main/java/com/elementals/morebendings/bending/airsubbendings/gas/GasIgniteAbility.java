@@ -1,6 +1,5 @@
 package com.elementals.morebendings.bending.airsubbendings.gas;
 
-import com.elementals.morebendings.bending.airsubbendings.common.SpecializationCycle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -25,10 +24,10 @@ import java.util.List;
  * colocado (pode se apagar sozinho, se espalhar pra blocos inflamáveis
  * vizinhos, etc.).
  * <p>
- * Comprar não é mais exclusivo com Suffocate/Leak (ver {@link
- * SpecializationCycle}); só faz efeito se for a especialização
- * ATUALMENTE ATIVA pro jogador (alternada pela tecla de "Cycle
- * Specialization").
+ * REWORK: Suffocate/Leak/Ignite deixaram de ser "efeitos alternados por
+ * uma tecla de cycle" e viraram abilities independentes, cada uma com
+ * tecla própria -- não existe mais uma especialização "ativa" pra
+ * checar aqui. Só faz efeito se o jogador tiver comprado o nó.
  * <p>
  * É um nó terminal (sem upgrades de melhoria ainda) e o mais caro dos três
  * (3 pontos), justamente por não precisar de investimento extra pra ser forte.
@@ -41,8 +40,7 @@ public class GasIgniteAbility {
     private static final int MAX_GROUND_HEIGHT_DIFF = 3; // não desce/sobe além disso em relação ao caster (evita acender um penhasco/caverna distante embaixo)
 
     public static void applyOnCloud(ServerPlayer caster, ServerLevel level, double radius) {
-        if (!GasElement.hasUpgrade(caster, GasElement.GAS_IGNITE)
-                || !SpecializationCycle.isGasActive(caster, GasElement.GAS_IGNITE)) {
+        if (!GasElement.hasUpgrade(caster, GasElement.GAS_IGNITE)) {
             return;
         }
 

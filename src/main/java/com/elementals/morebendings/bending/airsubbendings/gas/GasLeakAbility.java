@@ -1,6 +1,5 @@
 package com.elementals.morebendings.bending.airsubbendings.gas;
 
-import com.elementals.morebendings.bending.airsubbendings.common.SpecializationCycle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -23,10 +22,10 @@ import net.minecraft.world.level.levelgen.Heightmap;
  * sozinho, ao contrário da nuvem em si), aplicado uma única vez no
  * momento do cast em {@link #spoilGround}.
  * <p>
- * Comprar não é mais exclusivo com Suffocate/Ignite (ver {@link
- * SpecializationCycle}); só faz efeito se for a especialização
- * ATUALMENTE ATIVA pro jogador (alternada pela tecla de "Cycle
- * Specialization").
+ * REWORK: Suffocate/Leak/Ignite deixaram de ser "efeitos alternados por
+ * uma tecla de cycle" e viraram abilities independentes, cada uma com
+ * tecla própria -- não existe mais uma especialização "ativa" pra
+ * checar aqui. Só faz efeito se o jogador tiver comprado o nó.
  * <p>
  * Duração da nuvem escala com:
  *  - gasLeakDurationI → +100 ticks (5s)
@@ -37,8 +36,7 @@ public class GasLeakAbility {
     private static final float RADIUS = 3.5f;
 
     public static void applyOnCloud(ServerPlayer caster, ServerLevel level, double radius) {
-        if (!GasElement.hasUpgrade(caster, GasElement.GAS_LEAK)
-                || !SpecializationCycle.isGasActive(caster, GasElement.GAS_LEAK)) {
+        if (!GasElement.hasUpgrade(caster, GasElement.GAS_LEAK)) {
             return;
         }
         int duration = getDuration(caster);

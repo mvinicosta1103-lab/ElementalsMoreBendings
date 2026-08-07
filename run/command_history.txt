@@ -1,4 +1,3 @@
-/bending element add Sound Dev
 /morebending grant Dev Temperature
 /bending element add Temperature Dev
 /morebending grant Dev Void
@@ -48,3 +47,4 @@
 /time set day
 /bending element add Lightning Dev
 /bending element add Blood Dev
+/bending element add Gas Dev
