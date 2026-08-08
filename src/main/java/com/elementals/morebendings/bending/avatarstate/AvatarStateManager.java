@@ -282,16 +282,12 @@ public final class AvatarStateManager {
         double spinEarth = Math.toRadians(t * 1.6);
         double spinAir = Math.toRadians(-t * 4.2);
 
-        // ---- Fogo: bem denso e chamativo -- mais pontos (POINTS_FIRE) +
-        // 3 partículas por ponto (era 2), com um pingo de fagulha branca
-        // pra dar brilho no meio da chama.
+        // ---- Fogo: bem denso e chamativo, mas SÓ fogo puro -- sem LAVA
+        // (que solta fuligem/fumaça cinza como efeito colateral) nem
+        // FIRE_DUST (poeira quadrada). Só FLAME + SMALL_FLAME, mais
+        // pontos (POINTS_FIRE) e 3 partículas por ponto.
         drawElementalRing(level, player, baseY, FIRE_RADIUS, FIRE_TILT, spinFire, POINTS_FIRE,
-                i -> switch (i % 5) {
-                    case 0 -> ParticleTypes.LAVA;
-                    case 1 -> FIRE_DUST;
-                    case 2 -> ParticleTypes.SMALL_FLAME;
-                    default -> ParticleTypes.FLAME;
-                }, 3);
+                i -> (i % 4 == 0) ? ParticleTypes.SMALL_FLAME : ParticleTypes.FLAME, 3);
 
         // ---- Água: UMA faixa contínua só, feita majoritariamente de gotas
         // de água de verdade (chunk d'água) -- não mais duas camadas de
