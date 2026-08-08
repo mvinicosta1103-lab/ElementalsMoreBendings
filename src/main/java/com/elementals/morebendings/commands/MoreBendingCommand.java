@@ -218,8 +218,10 @@ public class MoreBendingCommand {
 
     /** Manda os pacotes de sincronização + persiste em disco. Chamar sempre
      * que o estado de upgrades do bender for alterado fora do fluxo normal
-     * de BuyUpgradePacket/ToggleUpgradePacket (que já fazem isso sozinhos). */
-    private static void syncAndPersist(Bender bender, ServerPlayer target) {
+     * de BuyUpgradePacket/ToggleUpgradePacket (que já fazem isso sozinhos).
+     * Público -- reaproveitado fora deste arquivo por {@code
+     * AvatarBendingGrantAbility}/{@code AvatarBendingRemoveAbility}. */
+    public static void syncAndPersist(Bender bender, ServerPlayer target) {
         Network.getNetworkHandler().sendToClient(SyncUpgradeListPacket.createFromBender(bender), target);
         Network.getNetworkHandler().sendToClient(SyncLevelPacket.createFromBender(bender), target);
         StateDataSaverAndLoader.getServerState(target.getServer()).setDirty();

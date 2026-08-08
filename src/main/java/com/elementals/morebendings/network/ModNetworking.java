@@ -20,6 +20,13 @@ import com.elementals.morebendings.network.packets.TogglePlasmaBoostPacket;
 import com.elementals.morebendings.network.packets.PlayPlasmaClawsFxPacket;
 import com.elementals.morebendings.network.packets.ToggleAvatarStatePacket;
 import com.elementals.morebendings.network.packets.SyncAvatarStatePacket;
+import com.elementals.morebendings.network.packets.ToggleFireRingPacket;
+import com.elementals.morebendings.network.packets.ToggleWaterRingPacket;
+import com.elementals.morebendings.network.packets.ToggleEarthRingPacket;
+import com.elementals.morebendings.network.packets.ToggleAirRingPacket;
+import com.elementals.morebendings.network.packets.CycleAvatarBendingPacket;
+import com.elementals.morebendings.network.packets.CastAvatarBendingGrantPacket;
+import com.elementals.morebendings.network.packets.CastAvatarBendingRemovePacket;
 
 public final class ModNetworking {
 
@@ -71,6 +78,27 @@ public final class ModNetworking {
     public static final ResourceLocation SYNC_CRYSTAL_ARMOR_ID =
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "sync_crystal_armor");
 
+    public static final ResourceLocation TOGGLE_FIRE_RING_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "toggle_fire_ring");
+
+    public static final ResourceLocation TOGGLE_WATER_RING_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "toggle_water_ring");
+
+    public static final ResourceLocation TOGGLE_EARTH_RING_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "toggle_earth_ring");
+
+    public static final ResourceLocation TOGGLE_AIR_RING_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "toggle_air_ring");
+
+    public static final ResourceLocation CYCLE_AVATAR_BENDING_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cycle_avatar_bending");
+
+    public static final ResourceLocation CAST_AVATAR_BENDING_GRANT_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cast_avatar_bending_grant");
+
+    public static final ResourceLocation CAST_AVATAR_BENDING_REMOVE_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cast_avatar_bending_remove");
+
     public static void register() {
         Network.registerPacket(ToggleFlyingPacket.type(), ToggleFlyingPacket.class,
                 ToggleFlyingPacket.STREAM_CODEC, ToggleFlyingPacket::handle);
@@ -104,6 +132,20 @@ public final class ModNetworking {
                 ToggleAvatarStatePacket.STREAM_CODEC, ToggleAvatarStatePacket::handle);
         Network.registerPacket(SyncAvatarStatePacket.type(), SyncAvatarStatePacket.class,
                 SyncAvatarStatePacket.STREAM_CODEC, SyncAvatarStatePacket::handle);
+        Network.registerPacket(ToggleFireRingPacket.type(), ToggleFireRingPacket.class,
+                ToggleFireRingPacket.STREAM_CODEC, ToggleFireRingPacket::handle);
+        Network.registerPacket(ToggleWaterRingPacket.type(), ToggleWaterRingPacket.class,
+                ToggleWaterRingPacket.STREAM_CODEC, ToggleWaterRingPacket::handle);
+        Network.registerPacket(ToggleEarthRingPacket.type(), ToggleEarthRingPacket.class,
+                ToggleEarthRingPacket.STREAM_CODEC, ToggleEarthRingPacket::handle);
+        Network.registerPacket(ToggleAirRingPacket.type(), ToggleAirRingPacket.class,
+                ToggleAirRingPacket.STREAM_CODEC, ToggleAirRingPacket::handle);
+        Network.registerPacket(CycleAvatarBendingPacket.type(), CycleAvatarBendingPacket.class,
+                CycleAvatarBendingPacket.STREAM_CODEC, CycleAvatarBendingPacket::handle);
+        Network.registerPacket(CastAvatarBendingGrantPacket.type(), CastAvatarBendingGrantPacket.class,
+                CastAvatarBendingGrantPacket.STREAM_CODEC, CastAvatarBendingGrantPacket::handle);
+        Network.registerPacket(CastAvatarBendingRemovePacket.type(), CastAvatarBendingRemovePacket.class,
+                CastAvatarBendingRemovePacket.STREAM_CODEC, CastAvatarBendingRemovePacket::handle);
     }
 
     public static void expectSideOrThrow(Side current, Side expected) {
