@@ -227,10 +227,10 @@ public final class AvatarStateManager {
     // Pontos por volta do círculo -- Água e Ar bem densos de propósito pra
     // parecerem uma faixa CONTÍNUA (sem gaps entre os pontos), não uma
     // sequência de partículas soltas.
-    private static final int POINTS_FIRE = 70;
-    private static final int POINTS_WATER = 130;
-    private static final int POINTS_EARTH = 80;
-    private static final int POINTS_AIR = 100;
+    private static final int POINTS_FIRE = 90;
+    private static final int POINTS_WATER = 150;
+    private static final int POINTS_EARTH = 90;
+    private static final int POINTS_AIR = 150;
 
     // Raios bem maiores que antes -- os anéis ficam longe o suficiente do
     // corpo pra não poluir a visão de quem É o Avatar (primeira pessoa),
@@ -240,9 +240,8 @@ public final class AvatarStateManager {
     private static final double EARTH_RADIUS = 5.1;
     private static final double AIR_RADIUS = 7.0;
 
-    // Água e Terra ganham uma segunda "camada" concêntrica (raio + offset)
-    // pra dar espessura de verdade (tubo/faixa grossa), não uma linha fina.
-    private static final double WATER_THICKNESS = 0.35;
+    // Terra ganha um jitter de posição pra dar espessura de verdade
+    // (pedaços soltos tombando), não uma linha fina.
     private static final double EARTH_JITTER = 0.4;
 
     private static final double FIRE_TILT = Math.toRadians(12);   // quase deitado, na cintura
@@ -256,15 +255,20 @@ public final class AvatarStateManager {
      * quem está no Avatar State. Cada elemento tem uma linguagem visual
      * própria, parecida com a referência (Avatar: A Lenda de Aang):
      * <ul>
-     *     <li><b>Água</b> -- faixa CONTÍNUA e grossa (duas camadas de
-     *     partículas de cor sólida + gotas reais por cima), sem gaps.</li>
-     *     <li><b>Fogo</b> -- bem denso e chamativo, mistura de chama, lava
-     *     e brilho de cor.</li>
+     *     <li><b>Água</b> -- UMA faixa contínua só (sem camada duplicada),
+     *     composta majoritariamente de gotas de água de verdade
+     *     (FALLING_WATER/SPLASH) em vez de poeira quadrada -- isso é o que
+     *     elimina a "nuvem de cubos azuis" poluída de antes. WATER_DUST
+     *     entra só como um terço dos pontos, pra dar corpo/cor sólida sem
+     *     dominar o visual.</li>
+     *     <li><b>Fogo</b> -- bem denso e chamativo: mais pontos no anel +
+     *     mais partículas por ponto (chama, lava e brilho de cor
+     *     misturados), pra ficar bem "berrante".</li>
      *     <li><b>Terra</b> -- vários blocos de verdade girando, com jitter
      *     de posição pra parecer pedaços soltos tombando, não uma linha
      *     perfeita.</li>
      *     <li><b>Ar</b> -- as mesmas partículas de fumaça de antes, só que
-     *     com rate bem maior (mais pontos + mais partículas por ponto).</li>
+     *     com rate BEM maior (mais pontos + mais partículas por ponto).</li>
      * </ul>
      */
     private static void spawnMajesticRings(ServerPlayer player) {
@@ -278,30 +282,36 @@ public final class AvatarStateManager {
         double spinEarth = Math.toRadians(t * 1.6);
         double spinAir = Math.toRadians(-t * 4.2);
 
-        // ---- Fogo: denso, chamativo, várias partículas por ponto ----
+        // ---- Fogo: bem denso e chamativo -- mais pontos (POINTS_FIRE) +
+        // 3 partículas por ponto (era 2), com um pingo de fagulha branca
+        // pra dar brilho no meio da chama.
         drawElementalRing(level, player, baseY, FIRE_RADIUS, FIRE_TILT, spinFire, POINTS_FIRE,
-                i -> switch (i % 4) {
+                i -> switch (i % 5) {
                     case 0 -> ParticleTypes.LAVA;
                     case 1 -> FIRE_DUST;
+                    case 2 -> ParticleTypes.SMALL_FLAME;
                     default -> ParticleTypes.FLAME;
-                }, 2);
+                }, 3);
 
-        // ---- Água: faixa contínua e grossa (duas camadas + gotas) ----
+        // ---- Água: UMA faixa contínua só, feita majoritariamente de gotas
+        // de água de verdade (chunk d'água) -- não mais duas camadas de
+        // poeira quadrada empilhadas, que era o que poluía a tela na
+        // ativação. WATER_DUST some pra dar cor sólida só 1 em cada 3
+        // pontos; o resto é água "de verdade" caindo/splashando.
         drawElementalRing(level, player, baseY, WATER_RADIUS, WATER_TILT, spinWater, POINTS_WATER,
                 i -> (i % 9 == 0) ? ParticleTypes.SPLASH
-                        : (i % 5 == 0) ? ParticleTypes.FALLING_WATER
-                        : WATER_DUST, 1);
-        drawElementalRing(level, player, baseY, WATER_RADIUS + WATER_THICKNESS, WATER_TILT, spinWater, POINTS_WATER,
-                i -> (i % 5 == 0) ? ParticleTypes.FALLING_WATER : WATER_DUST, 1);
+                        : (i % 3 == 0) ? WATER_DUST
+                        : ParticleTypes.FALLING_WATER, 2);
 
         // ---- Terra: vários blocos tombando, com jitter de posição ----
         drawElementalRingJittered(level, player, baseY, EARTH_RADIUS, EARTH_TILT, spinEarth, POINTS_EARTH,
                 i -> (i % 6 == 0) ? EARTH_DUST : new BlockParticleOption(ParticleTypes.BLOCK, randomEarthBlock()),
                 EARTH_JITTER);
 
-        // ---- Ar: mesma fumaça de antes, rate bem maior ----
+        // ---- Ar: mesma fumaça de antes, rate BEM maior -- mais pontos
+        // (POINTS_AIR) + 5 partículas por ponto (era 3).
         drawElementalRing(level, player, baseY, AIR_RADIUS, AIR_TILT, spinAir, POINTS_AIR,
-                i -> (i % 4 == 0) ? AIR_DUST : ParticleTypes.CLOUD, 3);
+                i -> (i % 5 == 0) ? AIR_DUST : ParticleTypes.CLOUD, 5);
 
         // Brilhos de destaque correndo pelos anéis -- reforça a sensação
         // de "energia" cruzando o corpo, igual as fagulhas claras na
