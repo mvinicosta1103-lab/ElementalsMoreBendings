@@ -10,7 +10,10 @@ import com.elementals.morebendings.bending.earthsubbendings.sand.SandElement;
 import com.elementals.morebendings.bending.airsubbendings.atmosphere.AtmosphereElement;
 import com.elementals.morebendings.bending.airsubbendings.AirMasteryCheck;
 import com.elementals.morebendings.bending.firesubbendings.FireMasteryCheck;
+import dev.saperate.elementals.elements.earth.EarthElement;
 import dev.saperate.elementals.elements.fire.FireElement;
+import dev.saperate.elementals.elements.water.WaterElement;
+import com.elementals.morebendings.data.PlayerAvatarData;
 import com.elementals.morebendings.data.PlayerSubbendingData;
 import com.elementals.morebendings.data.SubbendingType;
 import com.elementals.morebendings.registry.ModAttachments;
@@ -23,6 +26,7 @@ import dev.saperate.elementals.elements.Upgrade;
 import dev.saperate.elementals.elements.air.AirElement;
 import dev.saperate.elementals.network.packets.common.SyncLevelPacket;
 import dev.saperate.elementals.network.packets.common.SyncUpgradeListPacket;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -48,10 +52,18 @@ import com.elementals.morebendings.bending.watersubbendings.spirit.SpiritElement
  * /morebending grant <player> <subbending>
  * /morebending remove <player> <subbending>
  * /morebending debug <player> <subbending>
+ * /morebending avatar <player> <true|false>
  *
  * Requer permissão de operador (nível 2), igual aos comandos vanilla de
  * /gamemode e /xp. <subbending> aceita: gas, plant, spirit, mud, crystal, bone, sand,
  * glass, petrification, lava, atmosphere, mist, sound, temperature, void, plasma (com autocomplete no jogo).
+ *
+ * "avatar" liga/desliga o Avatar State do jogador (ver {@link
+ * PlayerAvatarData}) — igual ao Avatar de verdade, concede TODOS os 4
+ * elementos-base e TODAS as sub-bendings deste addon de uma vez, sem
+ * exigir os pré-requisitos normais. Desligar remove só o que o Avatar
+ * State concedeu, preservando qualquer bending que o jogador já tinha
+ * por fora.
  */
 public class MoreBendingCommand {
 
@@ -75,7 +87,11 @@ public class MoreBendingCommand {
                         .then(Commands.argument("player", EntityArgument.player())
                                 .then(Commands.argument("subbending", StringArgumentType.word())
                                         .suggests(MoreBendingCommand::suggestSubbendings)
-                                        .executes(MoreBendingCommand::debug)))));
+                                        .executes(MoreBendingCommand::debug))))
+                .then(Commands.literal("avatar")
+                        .then(Commands.argument("player", EntityArgument.player())
+                                .then(Commands.argument("state", BoolArgumentType.bool())
+                                        .executes(MoreBendingCommand::setAvatarState)))));
     }
 
     private static String eligibilityMessage(SubbendingType type) {
@@ -194,9 +210,9 @@ public class MoreBendingCommand {
         StateDataSaverAndLoader.getServerState(target.getServer()).setDirty();
     }
 
-    private static int runRealElement(CommandSourceStack source, ServerPlayer target, SubbendingType type, boolean grant) {
-        Bender bender = Bender.getBender(target);
-        Element element = switch (type) {
+    /** Mapeamento sub-bending -> Element real correspondente. FLYING não tem Element de verdade (flag-only, ver PlayerSubbendingData). */
+    private static Element elementFor(SubbendingType type) {
+        return switch (type) {
             case MUD -> MudElement.get();
             case CRYSTAL -> CrystalElement.get();
             case BONE -> BoneElement.get();
@@ -214,8 +230,30 @@ public class MoreBendingCommand {
             case SOUND -> SoundElement.get();
             case TEMPERATURE -> TemperatureElement.get();
             case VOID -> VoidElement.get();
-            default -> throw new IllegalArgumentException("Sub-bending sem Element real: " + type);
+            default -> null;
         };
+    }
+
+    private static int runRealElement(CommandSourceStack source, ServerPlayer target, SubbendingType type, boolean grant) {
+        return runRealElement(source, target, type, grant, false);
+    }
+
+    /**
+     * @param bypassEligibility quando {@code true}, pula a checagem normal de
+     *                          {@code canAcquire} (masterizar a árvore-base,
+     *                          proximidade de Blood bender, etc.) — usado só
+     *                          pelo Avatar State (ver {@link #grantAvatarState}),
+     *                          que transcende esses pré-requisitos. Todo o
+     *                          resto do fluxo (autoUnlockRoot por tipo, sync,
+     *                          mensagens) continua idêntico ao grant normal.
+     */
+    private static int runRealElement(CommandSourceStack source, ServerPlayer target, SubbendingType type,
+                                      boolean grant, boolean bypassEligibility) {
+        Bender bender = Bender.getBender(target);
+        Element element = elementFor(type);
+        if (element == null) {
+            throw new IllegalArgumentException("Sub-bending sem Element real: " + type);
+        }
         String playerName = target.getName().getString();
 
         if (grant) {
@@ -349,7 +387,7 @@ public class MoreBendingCommand {
                 // pré-requisito específico é dispensado pelo comando.
                 target.getData(ModAttachments.SUBBENDINGS).setMetBloodBender(true);
             }
-            boolean eligible = switch (type) {
+            boolean eligible = bypassEligibility || switch (type) {
                 case MUD -> MudElement.canAcquire(bender);
                 case CRYSTAL -> CrystalElement.canAcquire(bender);
                 case BONE -> BoneElement.canAcquire(bender);
@@ -444,5 +482,108 @@ public class MoreBendingCommand {
             target.sendSystemMessage(Component.literal("Você perdeu acesso a " + type.getDisplayName() + "."));
             return 1;
         }
+    }
+
+    // ==================== Avatar State ====================
+
+    /** {@code /morebending avatar <player> <true|false>}. */
+    private static int setAvatarState(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer target = EntityArgument.getPlayer(ctx, "player");
+        boolean enable = BoolArgumentType.getBool(ctx, "state");
+        CommandSourceStack source = ctx.getSource();
+        String playerName = target.getName().getString();
+
+        PlayerAvatarData avatarData = target.getData(ModAttachments.AVATAR);
+        if (enable == avatarData.isAvatarState()) {
+            source.sendFailure(Component.literal(playerName + " já estava "
+                    + (enable ? "no" : "fora do") + " Avatar State."));
+            return 0;
+        }
+
+        if (enable) {
+            grantAvatarState(source, target, avatarData);
+        } else {
+            revokeAvatarState(target, avatarData);
+        }
+        avatarData.setAvatarState(enable);
+
+        source.sendSuccess(() -> Component.literal(playerName + " agora "
+                + (enable ? "ESTÁ" : "NÃO está mais") + " no Avatar State."), true);
+        target.sendSystemMessage(enable
+                ? Component.literal("Você entrou no Avatar State! Todas as bendings estão liberadas.")
+                : Component.literal("Você saiu do Avatar State. As bendings concedidas por ele foram removidas."));
+        return 1;
+    }
+
+    /**
+     * Concede os 4 elementos-base (Air, Water, Earth, Fire) e todas as
+     * sub-bendings deste addon que o jogador ainda não tem — pulando os
+     * pré-requisitos normais de cada uma (ver {@code bypassEligibility} em
+     * {@link #runRealElement(CommandSourceStack, ServerPlayer, SubbendingType, boolean, boolean)}),
+     * já que o Avatar transcende esses requisitos. Só marca em {@code
+     * avatarData} o que REALMENTE foi concedido agora (o jogador não tinha
+     * antes) — é isso que permite {@link #revokeAvatarState} desfazer com
+     * precisão, sem tocar em nada que já era do jogador por fora.
+     */
+    private static void grantAvatarState(CommandSourceStack source, ServerPlayer target, PlayerAvatarData avatarData) {
+        Bender bender = Bender.getBender(target);
+
+        grantCoreElementIfMissing(bender, avatarData, AirElement.get());
+        grantCoreElementIfMissing(bender, avatarData, WaterElement.get());
+        grantCoreElementIfMissing(bender, avatarData, EarthElement.get());
+        grantCoreElementIfMissing(bender, avatarData, FireElement.get());
+
+        for (SubbendingType type : SubbendingType.values()) {
+            if (type == SubbendingType.FLYING) {
+                continue; // sem Element de verdade -- tratado à parte, abaixo
+            }
+            Element element = elementFor(type);
+            if (element == null || bender.hasElement(element)) {
+                continue; // já tinha por fora do Avatar -- não mexe, não marca como concedido por ele
+            }
+            runRealElement(source, target, type, true, true);
+            avatarData.markGrantedElement(element.getName());
+        }
+
+        // Flying é flag-only (sem Element) -- concedida direto pelos dados de sub-bending, não via runRealElement.
+        PlayerSubbendingData subData = target.getData(ModAttachments.SUBBENDINGS);
+        if (subData.grant(SubbendingType.FLYING)) {
+            avatarData.markGrantedFlag(SubbendingType.FLYING);
+        }
+
+        syncAndPersist(bender, target);
+    }
+
+    private static void grantCoreElementIfMissing(Bender bender, PlayerAvatarData avatarData, Element element) {
+        if (!bender.hasElement(element)) {
+            bender.addElement(element, true);
+            avatarData.markGrantedElement(element.getName());
+        }
+    }
+
+    /**
+     * Desfaz só o que {@link #grantAvatarState} concedeu (ver o rastreamento
+     * em {@code avatarData}) -- qualquer bending que o jogador já tinha
+     * antes de entrar no Avatar State, ou que adquiriu legitimamente
+     * enquanto estava nele, NÃO está nesses conjuntos e continua intocada.
+     */
+    private static void revokeAvatarState(ServerPlayer target, PlayerAvatarData avatarData) {
+        Bender bender = Bender.getBender(target);
+
+        for (String elementName : avatarData.getGrantedElements()) {
+            Element element = Element.getElement(elementName);
+            if (element != null && bender.hasElement(element)) {
+                bender.removeElement(element, true);
+            }
+        }
+        avatarData.clearGrantedElements();
+
+        PlayerSubbendingData subData = target.getData(ModAttachments.SUBBENDINGS);
+        for (SubbendingType type : avatarData.getGrantedFlagSubbendings()) {
+            subData.revoke(type);
+        }
+        avatarData.clearGrantedFlagSubbendings();
+
+        syncAndPersist(bender, target);
     }
 }
