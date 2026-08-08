@@ -13,7 +13,9 @@
   },
   "minecraft:adventure/adventuring_time": {
     "criteria": {
+      "minecraft:frozen_river": "2026-08-08 00:04:47 -0300",
       "minecraft:forest": "2026-08-07 22:59:11 -0300",
+      "minecraft:river": "2026-08-08 00:04:50 -0300",
       "minecraft:snowy_plains": "2026-08-07 23:09:58 -0300"
     },
     "done": false

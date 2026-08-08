@@ -217,12 +217,18 @@ public final class AvatarStateManager {
     // VERDADE (Display.BlockDisplay), não partícula/falling_dust. O ANEL EM
     // SI NÃO GIRA -- cada bloco fica numa posição fixa (ângulo fixo dentro
     // do círculo, calculado só a partir do índice dele, sem nenhum termo de
-    // tempo). O que gira, e rápido, é cada bloco individualmente em torno
-    // do PRÓPRIO eixo (own-spin), com um eixo diferente por elemento:
-    //   - Ar    -> eixo X  (giro "vertical", tipo roda de bicicleta em pé)
-    //   - Água  -> eixo Y  (giro "horizontal", tipo pião/disco girando)
-    //   - Terra -> eixo diagonal (-1,1,0) (diagonal pra esquerda)
-    //   - Fogo  -> eixo diagonal ( 1,1,0) (diagonal pra direita)
+    // tempo). O que gira agora, RÁPIDO, é o PONTO NO CÍRCULO em torno do
+    // eixo do elemento -- isto é, cada bloco/partícula percorre o anel
+    // (orbita), não só gira parado no próprio lugar. O eixo de cada
+    // elemento é o eixo de rotação do círculo inteiro (perpendicular ao
+    // plano onde o anel vive):
+    //   - Ar    -> eixo X (1,0,0)  -> plano Y-Z -> anel VERTICAL
+    //   - Água  -> eixo Y (0,1,0)  -> plano X-Z -> anel HORIZONTAL
+    //   - Terra -> eixo (-1,1,0)   -> plano diagonal, inclinado à ESQUERDA
+    //   - Fogo  -> eixo ( 1,1,0)   -> plano diagonal, inclinado à DIREITA
+    // Além de orbitar, cada bloco também gira um pouco em torno de si
+    // mesmo (own-spin, bem mais lento que a órbita) só pra dar textura --
+    // o movimento dominante é sempre a órbita.
 
     private enum RingElement { FIRE, WATER, EARTH, AIR }
 
@@ -255,29 +261,51 @@ public final class AvatarStateManager {
     };
     private static final BlockState WATER_BLOCK = Blocks.LIGHT_BLUE_STAINED_GLASS.defaultBlockState();
 
-    // Raios/inclinações dos planos dos anéis -- controla o "desenho" de
-    // cada anel ao redor do corpo (não tem nada a ver com o own-spin).
+    // Raios dos anéis -- controla o tamanho de cada anel ao redor do
+    // corpo (o PLANO de cada anel agora vem do eixo, não de um "tilt").
     private static final double FIRE_RADIUS = 4.4;
     private static final double WATER_RADIUS = 5.8;
     private static final double EARTH_RADIUS = 5.1;
     private static final double AIR_RADIUS = 7.0;
 
-    private static final double FIRE_TILT = Math.toRadians(12);   // quase deitado, na cintura
-    private static final double WATER_TILT = Math.toRadians(68);  // quase em pé, subindo alto
-    private static final double EARTH_TILT = Math.toRadians(40);  // diagonal, cruzando os outros
-    private static final double AIR_TILT = Math.toRadians(-55);   // diagonal oposta, o mais alto de todos
+    // Eixos de órbita (e também de own-spin) de cada elemento -- ver
+    // explicação no topo da seção. Já normalizados.
+    private static final Vector3f AIR_AXIS = new Vector3f(1f, 0f, 0f);
+    private static final Vector3f WATER_AXIS = new Vector3f(0f, 1f, 0f);
+    private static final Vector3f EARTH_AXIS = new Vector3f(-1f, 1f, 0f).normalize();
+    private static final Vector3f FIRE_AXIS = new Vector3f(1f, 1f, 0f).normalize();
 
     /**
-     * Configuração fixa de cada anel. {@code spinAxis} é o eixo (já
-     * normalizado) em torno do qual CADA BLOCO gira em torno de si mesmo;
-     * {@code spinDegPerTick} é a velocidade desse giro (bem alta = "muito
-     * rápido" como pedido). {@code jitterRadius}/{@code jitterHeight}
-     * dão variação fixa por índice (só a Terra usa, pra parecer pedaços
-     * de chão desalinhados -- mas sem recalcular a cada tick, senão o
-     * bloco ficaria "tremendo" em vez de só girando).
+     * Duas direções unitárias perpendiculares entre si e perpendiculares
+     * a {@code axis} -- formam a base do plano em que o anel vive. Um
+     * ponto do anel a um ângulo {@code θ} fica em
+     * {@code center + radius*(cos θ * u + sin θ * v)}; fazer {@code θ}
+     * avançar com o tempo é o que faz o anel ORBITAR em torno de
+     * {@code axis} (em vez de só ficar girando no próprio centro).
      */
-    private record RingConfig(double radius, double tilt, int count, float scale,
-                              Vector3f spinAxis, double spinDegPerTick,
+    private static Vector3f[] perpendicularBasis(Vector3f axis) {
+        Vector3f a = new Vector3f(axis).normalize();
+        Vector3f arbitrary = Math.abs(a.y) < 0.99f ? new Vector3f(0f, 1f, 0f) : new Vector3f(1f, 0f, 0f);
+        Vector3f u = new Vector3f();
+        a.cross(arbitrary, u);
+        u.normalize();
+        Vector3f v = new Vector3f();
+        a.cross(u, v);
+        v.normalize();
+        return new Vector3f[]{u, v};
+    }
+
+    /**
+     * Configuração fixa de cada anel de bloco. {@code axis} é o eixo de
+     * órbita do anel inteiro (ver {@link #perpendicularBasis}); {@code
+     * orbitDegPerTick} é a velocidade da órbita (bem alta = "muito
+     * rápido"); {@code ownSpinDegPerTick} é um giro adicional, bem mais
+     * lento, do bloco em torno de si mesmo (só textura, não é o
+     * movimento principal). {@code jitterRadius}/{@code jitterHeight}
+     * dão variação fixa por índice (só a Terra usa).
+     */
+    private record RingConfig(double radius, int count, float scale,
+                              Vector3f axis, double orbitDegPerTick, double ownSpinDegPerTick,
                               IntFunction<BlockState> blockAt,
                               double jitterRadius, double jitterHeight) {
     }
@@ -286,34 +314,41 @@ public final class AvatarStateManager {
     private static final List<RingElement> BLOCK_ELEMENTS = List.of(RingElement.WATER, RingElement.EARTH);
 
     private static final Map<RingElement, RingConfig> CONFIGS = new EnumMap<>(RingElement.class);
+    private static final Map<RingElement, Vector3f[]> BLOCK_BASIS = new EnumMap<>(RingElement.class);
     static {
         CONFIGS.put(RingElement.WATER, new RingConfig(
-                WATER_RADIUS, WATER_TILT, 26, 0.40f,
-                new Vector3f(0f, 1f, 0f), 30,
+                WATER_RADIUS, 26, 0.40f,
+                WATER_AXIS, 34, 8,
                 i -> WATER_BLOCK,
                 0.0, 0.0));
         CONFIGS.put(RingElement.EARTH, new RingConfig(
-                EARTH_RADIUS, EARTH_TILT, 32, 0.45f,
-                new Vector3f(-1f, 1f, 0f).normalize(), 26,
+                EARTH_RADIUS, 32, 0.45f,
+                EARTH_AXIS, 30, 8,
                 i -> EARTH_BLOCKS[i % EARTH_BLOCKS.length],
                 0.4, 0.25));
+        for (Map.Entry<RingElement, RingConfig> entry : CONFIGS.entrySet()) {
+            BLOCK_BASIS.put(entry.getKey(), perpendicularBasis(entry.getValue().axis()));
+        }
     }
 
     /**
      * Configuração dos anéis 100% partícula (Fogo e Ar) -- sem entidade
-     * nenhuma, só {@code level.sendParticles} todo tick, na posição FIXA
-     * do anel (mesmo princípio de antes: sem termo de tempo na posição,
-     * só a densidade/rate é alta). {@code particlesPerPoint} é o que dá
-     * o "rate alto" pedido -- cada ponto do anel dispara várias
-     * partículas por tick, não só uma.
+     * nenhuma, só {@code level.sendParticles} todo tick. A posição
+     * também orbita em torno de {@code axis}, igual aos anéis de bloco.
+     * {@code particlesPerPoint} é o que dá o "rate alto" pedido.
      */
-    private record ParticleRingConfig(double radius, double tilt, int count, int particlesPerPoint) {
+    private record ParticleRingConfig(double radius, int count, int particlesPerPoint,
+                                      Vector3f axis, double orbitDegPerTick) {
     }
 
     private static final Map<RingElement, ParticleRingConfig> PARTICLE_CONFIGS = new EnumMap<>(RingElement.class);
+    private static final Map<RingElement, Vector3f[]> PARTICLE_BASIS = new EnumMap<>(RingElement.class);
     static {
-        PARTICLE_CONFIGS.put(RingElement.FIRE, new ParticleRingConfig(FIRE_RADIUS, FIRE_TILT, 70, 3));
-        PARTICLE_CONFIGS.put(RingElement.AIR, new ParticleRingConfig(AIR_RADIUS, AIR_TILT, 90, 4));
+        PARTICLE_CONFIGS.put(RingElement.FIRE, new ParticleRingConfig(FIRE_RADIUS, 70, 3, FIRE_AXIS, 38));
+        PARTICLE_CONFIGS.put(RingElement.AIR, new ParticleRingConfig(AIR_RADIUS, 90, 4, AIR_AXIS, 44));
+        for (Map.Entry<RingElement, ParticleRingConfig> entry : PARTICLE_CONFIGS.entrySet()) {
+            PARTICLE_BASIS.put(entry.getKey(), perpendicularBasis(entry.getValue().axis()));
+        }
     }
 
     private static final Map<RingElement, Map<UUID, List<Display.BlockDisplay>>> CHUNKS = new EnumMap<>(RingElement.class);
@@ -345,25 +380,32 @@ public final class AvatarStateManager {
     }
 
     /**
-     * Anel 100% partícula (Fogo/Ar) -- posição fixa por índice (sem
-     * orbitar, mesmo princípio dos anéis de bloco), rate alto de
-     * partículas por ponto. Fogo = só FLAME/SMALL_FLAME (nunca LAVA). Ar
-     * = só WHITE_SMOKE (fumaça branca pura, nada de dust/bloco).
+     * Anel 100% partícula (Fogo/Ar) -- cada ponto ORBITA em torno do
+     * eixo do elemento (ver {@link #perpendicularBasis}), rápido. Fogo =
+     * só FLAME/SMALL_FLAME (nunca LAVA). Ar = só WHITE_SMOKE.
      */
     private static void drawParticleRing(RingElement element, ServerPlayer player, double baseY) {
         if (!(player.level() instanceof ServerLevel level)) {
             return;
         }
         ParticleRingConfig config = PARTICLE_CONFIGS.get(element);
+        Vector3f[] basis = PARTICLE_BASIS.get(element);
+        Vector3f u = basis[0];
+        Vector3f v = basis[1];
         int count = config.count();
+        double t = player.tickCount;
+        double orbit = Math.toRadians(t * config.orbitDegPerTick());
+
         for (int i = 0; i < count; i++) {
-            double angle = (2 * Math.PI * i) / count;
-            double localX = config.radius() * Math.cos(angle);
-            double localY = config.radius() * Math.sin(angle) * Math.sin(config.tilt());
-            double localZ = config.radius() * Math.sin(angle) * Math.cos(config.tilt());
-            double x = player.getX() + localX;
-            double y = baseY + localY;
-            double z = player.getZ() + localZ;
+            // Ângulo base do ponto (posição dele dentro do anel) + órbita
+            // (avança com o tempo) -- é a soma dos dois que faz o ponto
+            // percorrer o círculo inteiro em volta do eixo, rápido.
+            double angle = (2 * Math.PI * i) / count + orbit;
+            double cos = Math.cos(angle);
+            double sin = Math.sin(angle);
+            double x = player.getX() + config.radius() * (cos * u.x + sin * v.x);
+            double y = baseY + config.radius() * (cos * u.y + sin * v.y);
+            double z = player.getZ() + config.radius() * (cos * u.z + sin * v.z);
 
             net.minecraft.core.particles.ParticleOptions particle = switch (element) {
                 case FIRE -> (i % 5 == 0) ? ParticleTypes.SMALL_FLAME : ParticleTypes.FLAME;
@@ -442,9 +484,11 @@ public final class AvatarStateManager {
     }
 
     /**
-     * Reposiciona (na posição FIXA do anel, sem termo de tempo -- é isso
-     * que faz o anel em si não girar) e aplica o own-spin rápido em cada
-     * bloco do anel deste elemento.
+     * Reposiciona cada bloco ORBITANDO em torno do eixo do elemento
+     * (posição = ângulo base do bloco + ângulo de órbita que avança com
+     * o tempo -- é isso que faz o anel percorrer o círculo em vez de
+     * ficar parado) e aplica um own-spin leve (bem mais lento que a
+     * órbita) só de textura.
      */
     private static void updateRing(RingElement element, ServerPlayer player, double baseY) {
         Map<UUID, List<Display.BlockDisplay>> storage = CHUNKS.get(element);
@@ -460,8 +504,12 @@ public final class AvatarStateManager {
             return;
         }
         RingConfig config = CONFIGS.get(element);
+        Vector3f[] basis = BLOCK_BASIS.get(element);
+        Vector3f u = basis[0];
+        Vector3f v = basis[1];
         double t = player.tickCount;
         int count = chunks.size();
+        double orbit = Math.toRadians(t * config.orbitDegPerTick());
 
         for (int i = 0; i < count; i++) {
             Display.BlockDisplay display = chunks.get(i);
@@ -472,33 +520,29 @@ public final class AvatarStateManager {
                 chunks.set(i, display);
             }
 
-            // ---- Posição: SÓ depende do índice (ângulo fixo) + jitter
-            // fixo por índice. Nenhum termo de tempo aqui -- é isso que
-            // mantém o anel parado na posição, sem orbitar.
-            double angle = (2 * Math.PI * i) / count;
+            // ---- Posição: ângulo base do bloco (índice) + órbita (t) --
+            // é a soma dos dois que faz o bloco PERCORRER o anel em volta
+            // do eixo, em vez de ficar parado numa posição fixa.
+            double angle = (2 * Math.PI * i) / count + orbit;
             double jitterR = config.jitterRadius() != 0.0
                     ? config.jitterRadius() * Math.sin(i * 2.399963) : 0.0;
             double jitterH = config.jitterHeight() != 0.0
                     ? config.jitterHeight() * Math.cos(i * 1.618034) : 0.0;
             double radius = config.radius() + jitterR;
 
-            double localX = radius * Math.cos(angle);
-            double localY = radius * Math.sin(angle) * Math.sin(config.tilt());
-            double localZ = radius * Math.sin(angle) * Math.cos(config.tilt());
-
-            double worldX = player.getX() + localX;
-            double worldY = baseY + localY + jitterH;
-            double worldZ = player.getZ() + localZ;
+            double cos = Math.cos(angle);
+            double sin = Math.sin(angle);
+            double worldX = player.getX() + radius * (cos * u.x + sin * v.x);
+            double worldY = baseY + jitterH + radius * (cos * u.y + sin * v.y);
+            double worldZ = player.getZ() + radius * (cos * u.z + sin * v.z);
             display.setPos(worldX, worldY, worldZ);
             spawnRingAccent(element, level, i, worldX, worldY, worldZ);
 
-            // ---- Own-spin: aqui sim tem termo de tempo (t), bem rápido
-            // (spinDegPerTick alto), em torno do eixo específico do
-            // elemento. Um pequeno offset de fase por índice evita que
-            // todos os blocos girem exatamente em sincronia (fica mais
-            // orgânico), mas não afeta a posição, só a rotação visual.
-            float phase = (float) Math.toRadians(t * config.spinDegPerTick() + i * 17);
-            Vector3f axis = config.spinAxis();
+            // ---- Own-spin: giro leve do bloco em torno de si mesmo,
+            // bem mais lento que a órbita -- só textura, o movimento
+            // dominante é a órbita acima.
+            float phase = (float) Math.toRadians(t * config.ownSpinDegPerTick() + i * 17);
+            Vector3f axis = config.axis();
             Quaternionf rotation = new Quaternionf().rotateAxis(phase, axis.x, axis.y, axis.z);
 
             float scale = config.scale();
