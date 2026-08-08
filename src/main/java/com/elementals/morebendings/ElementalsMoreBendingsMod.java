@@ -47,6 +47,7 @@ import com.elementals.morebendings.bending.watersubbendings.plant.PlantVineWallM
 import com.elementals.morebendings.bending.watersubbendings.spirit.CurseMinionManager;
 import com.elementals.morebendings.bending.watersubbendings.spirit.PurifyingWaterManager;
 import com.elementals.morebendings.bending.avatarstate.AvatarStateManager;
+import com.elementals.morebendings.bending.avatarstate.ServerAvatarManager;
 
 
 @Mod(Constants.MOD_ID)
@@ -230,6 +231,16 @@ public class ElementalsMoreBendingsMod {
 
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerRespawnEvent event) -> {
             if (event.getEntity() instanceof ServerPlayer sp) CrystalArmorSetManager.reapplyAfterRespawn(sp);
+        });
+
+        // Sistema de Avatar-título persistente (/morebending serveravatar) --
+        // passa o título pra outro jogador online quando o Avatar atual
+        // morre, e o atribui automaticamente a quem entrar caso tenha
+        // ficado vago (ninguém online no momento da morte) -- ver
+        // ServerAvatarManager.
+        NeoForge.EVENT_BUS.addListener(ServerAvatarManager::onAvatarDeath);
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent event) -> {
+            ServerAvatarManager.onPlayerLoggedIn(event);
         });
     }
 

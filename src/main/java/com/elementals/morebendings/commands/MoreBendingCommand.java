@@ -10,6 +10,7 @@ import com.elementals.morebendings.bending.earthsubbendings.sand.SandElement;
 import com.elementals.morebendings.bending.airsubbendings.atmosphere.AtmosphereElement;
 import com.elementals.morebendings.bending.airsubbendings.AirMasteryCheck;
 import com.elementals.morebendings.bending.firesubbendings.FireMasteryCheck;
+import com.elementals.morebendings.bending.avatarstate.ServerAvatarManager;
 import dev.saperate.elementals.elements.earth.EarthElement;
 import dev.saperate.elementals.elements.fire.FireElement;
 import dev.saperate.elementals.elements.water.WaterElement;
@@ -53,6 +54,7 @@ import com.elementals.morebendings.bending.watersubbendings.spirit.SpiritElement
  * /morebending remove <player> <subbending>
  * /morebending debug <player> <subbending>
  * /morebending avatar <player> <true|false>
+ * /morebending serveravatar start|stop|status|set <player>
  *
  * Requer permissão de operador (nível 2), igual aos comandos vanilla de
  * /gamemode e /xp. <subbending> aceita: gas, plant, spirit, mud, crystal, bone, sand,
@@ -64,6 +66,12 @@ import com.elementals.morebendings.bending.watersubbendings.spirit.SpiritElement
  * exigir os pré-requisitos normais. Desligar remove só o que o Avatar
  * State concedeu, preservando qualquer bending que o jogador já tinha
  * por fora.
+ *
+ * "serveravatar" é o sistema de Avatar-TÍTULO (ver {@link ServerAvatarManager}):
+ * diferente do "avatar" acima, só um jogador do server inteiro é o Avatar
+ * por vez, ele concede só os 4 elementos-base (não todas as sub-bendings)
+ * e nunca é revogado — o título passa pra outro jogador (aleatório, dentre
+ * os online) quando o Avatar atual morre.
  */
 public class MoreBendingCommand {
 
@@ -91,7 +99,14 @@ public class MoreBendingCommand {
                 .then(Commands.literal("avatar")
                         .then(Commands.argument("player", EntityArgument.player())
                                 .then(Commands.argument("state", BoolArgumentType.bool())
-                                        .executes(MoreBendingCommand::setAvatarState)))));
+                                        .executes(MoreBendingCommand::setAvatarState))))
+                .then(Commands.literal("serveravatar")
+                        .then(Commands.literal("start").executes(ServerAvatarManager::cmdStart))
+                        .then(Commands.literal("stop").executes(ServerAvatarManager::cmdStop))
+                        .then(Commands.literal("status").executes(ServerAvatarManager::cmdStatus))
+                        .then(Commands.literal("set")
+                                .then(Commands.argument("player", EntityArgument.player())
+                                        .executes(ServerAvatarManager::cmdSet)))));
     }
 
     private static String eligibilityMessage(SubbendingType type) {

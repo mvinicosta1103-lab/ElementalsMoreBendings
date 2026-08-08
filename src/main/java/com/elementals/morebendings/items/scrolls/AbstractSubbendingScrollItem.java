@@ -1,5 +1,6 @@
 package com.elementals.morebendings.items.scrolls;
 
+import com.elementals.morebendings.bending.avatarstate.ServerAvatarManager;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.data.StateDataSaverAndLoader;
 import dev.saperate.elementals.elements.Element;
@@ -31,7 +32,11 @@ import java.util.List;
  * IMPORTANTE sobre Bone: o scroll usa o {@code canAcquire} DE VERDADE,
  * sem o bypass que {@code /morebending grant} aplica (que marca a flag de
  * "já cruzou com um Blood bender" automaticamente). Um item que qualquer
- * jogador pode usar sozinho não deve conseguir pular esse requisito.
+ * jogador pode usar sozinho não deve conseguir pular esse requisito --
+ * EXCETO o Avatar atual do server (ver {@link ServerAvatarManager}), que
+ * pula {@code canAcquire} por inteiro pra qualquer sub-bending enquanto
+ * segurar o título, o mesmo nível de privilégio que {@code
+ * AvatarStateManager} já concede pro Avatar State temporário.
  */
 public abstract class AbstractSubbendingScrollItem extends Item {
 
@@ -47,7 +52,7 @@ public abstract class AbstractSubbendingScrollItem extends Item {
             Element element = getElement();
 
             if (!bender.hasElement(element)) {
-                if (!canAcquire(bender)) {
+                if (!canAcquire(bender) && !ServerAvatarManager.isCurrentAvatar(player)) {
                     SapsUtils.showActionBarTitle(player,
                             Component.literal(getRequirementMessage()).withColor(0xFFC22106));
                     return super.use(level, user, hand);
