@@ -10,18 +10,18 @@ import dev.saperate.elementals.elements.air.AirElement;
 import dev.saperate.elementals.elements.earth.EarthElement;
 import dev.saperate.elementals.elements.fire.FireElement;
 import dev.saperate.elementals.elements.water.WaterElement;
-import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
+import org.joml.Vector3f;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -146,17 +146,21 @@ public final class AvatarStateManager {
         if (!(player.level() instanceof ServerLevel level)) {
             return;
         }
-        level.sendParticles(ParticleTypes.EXPLOSION, player.getX(), player.getY() + 1.0, player.getZ(),
+        level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, player.getX(), player.getY() + 1.0, player.getZ(),
                 1, 0.0, 0.0, 0.0, 0.0);
         level.sendParticles(ParticleTypes.END_ROD, player.getX(), player.getY() + 1.0, player.getZ(),
-                40, 0.4, 0.7, 0.4, 0.06);
+                80, 0.6, 1.0, 0.6, 0.12);
+        level.sendParticles(FIRE_DUST, player.getX(), player.getY() + 1.0, player.getZ(),
+                60, 0.8, 0.4, 0.8, 0.0);
+        level.sendParticles(WATER_DUST, player.getX(), player.getY() + 1.0, player.getZ(),
+                60, 0.8, 1.2, 0.8, 0.0);
     }
 
     /**
      * Registrado via NeoForge.EVENT_BUS em ElementalsMoreBendingsMod. Reforça
-     * os efeitos periodicamente (senão expirariam) e desenha o anel dos 4
-     * elementos girando ao redor de quem está no Avatar State -- ver
-     * {@link #spawnElementRing}.
+     * os efeitos periodicamente (senão expirariam) e desenha os anéis
+     * majestosos ao redor de quem está no Avatar State -- ver
+     * {@link #spawnMajesticRings}.
      */
     public static void onServerTick(ServerTickEvent.Post event) {
         if (ACTIVE.isEmpty()) {
@@ -177,41 +181,87 @@ public final class AvatarStateManager {
             if (player.tickCount % EFFECT_REFRESH_INTERVAL == 0) {
                 applyBuffs(player);
             }
-            if (player.tickCount % 2 == 0) {
-                spawnElementRing(player);
-            }
+            spawnMajesticRings(player);
         }
     }
 
+    // ==================== Efeito visual: anéis majestosos ====================
+
+    // Anel de Fogo/Terra -- quase horizontal, na cintura, cor quente.
+    private static final DustParticleOptions FIRE_DUST =
+            new DustParticleOptions(new Vector3f(1.0f, 0.55f, 0.10f), 2.6f);
+    // Anel de Água/Ar -- bem inclinado, subindo alto de um lado, cor fria.
+    private static final DustParticleOptions WATER_DUST =
+            new DustParticleOptions(new Vector3f(0.25f, 0.55f, 1.0f), 2.6f);
+
+    private static final int POINTS_PER_RING = 42;
+    private static final double FIRE_RADIUS = 2.6;
+    private static final double WATER_RADIUS = 3.4;
+    private static final double FIRE_TILT = Math.toRadians(12); // quase deitado
+    private static final double WATER_TILT = Math.toRadians(68); // quase em pé, cruzando o de fogo
+
     /**
-     * Anel dos 4 elementos-base girando ao redor do corpo, cada um em um
-     * quadrante (90° de diferença), subindo lentamente enquanto giram --
-     * Ar (nuvem), Água (respingo), Terra (poeira de pedra/terra) e Fogo
-     * (chama). Referência visual: olhos brilhantes + elementos girando ao
-     * redor do Avatar.
+     * Dois anéis largos e contínuos cruzando o corpo, girando devagar --
+     * um baixo e quente (Fogo/Terra), outro alto e inclinado, frio
+     * (Água/Ar), igual a referência visual do Avatar em Estado Avatar:
+     * grosso, brilhante, cobrindo o jogador dos pés à cabeça. Desenhados
+     * com {@link DustParticleOptions} (cor sólida, não depende de luz)
+     * em vez de partículas soltas -- ponto a ponto ao redor do círculo
+     * inteiro a cada tick, então nunca ficam esparsos.
      */
-    private static void spawnElementRing(ServerPlayer player) {
+    private static void spawnMajesticRings(ServerPlayer player) {
         if (!(player.level() instanceof ServerLevel level)) {
             return;
         }
-        double radius = 1.3;
-        double baseY = player.getY() + 0.1;
-        double bob = Math.sin(player.tickCount * 0.1) * 0.5 + 0.6; // 0.1..1.1, sobe e desce girando
-        double angle = Math.toRadians((player.tickCount * 6.0) % 360.0);
+        double baseY = player.getY() + 1.0;
+        double spinFire = Math.toRadians(player.tickCount * 3.0);
+        double spinWater = Math.toRadians(-player.tickCount * 2.2);
 
-        spawnRingParticle(level, player, ParticleTypes.CLOUD, angle, radius, baseY + bob);
-        spawnRingParticle(level, player, ParticleTypes.SPLASH, angle + Math.PI / 2, radius, baseY + bob);
-        spawnRingParticle(level, player, new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DIRT.defaultBlockState()),
-                angle + Math.PI, radius, baseY + bob);
-        spawnRingParticle(level, player, ParticleTypes.FLAME, angle + 3 * Math.PI / 2, radius, baseY + bob);
+        drawRing(level, player, baseY, FIRE_DUST, FIRE_RADIUS, FIRE_TILT, spinFire);
+        drawRing(level, player, baseY, WATER_DUST, WATER_RADIUS, WATER_TILT, spinWater);
+
+        // Brilhos de destaque passando pelo anel -- reforça a sensação de
+        // "energia correndo" em volta do corpo, igual as fagulhas claras
+        // na referência.
+        if (player.tickCount % 4 == 0) {
+            spawnHighlight(level, player, baseY, FIRE_RADIUS, FIRE_TILT, spinFire, ParticleTypes.FLAME);
+            spawnHighlight(level, player, baseY, WATER_RADIUS, WATER_TILT, spinWater, ParticleTypes.END_ROD);
+        }
     }
 
-    private static void spawnRingParticle(ServerLevel level, ServerPlayer player,
-                                          net.minecraft.core.particles.ParticleOptions type,
-                                          double angle, double radius, double y) {
-        double x = player.getX() + Math.cos(angle) * radius;
-        double z = player.getZ() + Math.sin(angle) * radius;
-        level.sendParticles(type, x, y, z, 1, 0.0, 0.0, 0.0, 0.0);
+    private static void drawRing(ServerLevel level, ServerPlayer player, double baseY,
+                                 DustParticleOptions dust, double radius, double tilt, double spin) {
+        for (int i = 0; i < POINTS_PER_RING; i++) {
+            double angle = (2 * Math.PI * i) / POINTS_PER_RING;
+            sendRingPoint(level, player, baseY, dust, radius, tilt, spin, angle);
+        }
+    }
+
+    private static void spawnHighlight(ServerLevel level, ServerPlayer player, double baseY,
+                                       double radius, double tilt, double spin,
+                                       net.minecraft.core.particles.ParticleOptions type) {
+        // Dois pontos opostos no anel, pra parecer um brilho correndo dos
+        // dois lados ao mesmo tempo.
+        sendRingPoint(level, player, baseY, type, radius, tilt, spin, 0);
+        sendRingPoint(level, player, baseY, type, radius, tilt, spin, Math.PI);
+    }
+
+    private static void sendRingPoint(ServerLevel level, ServerPlayer player, double baseY,
+                                      net.minecraft.core.particles.ParticleOptions particle,
+                                      double radius, double tilt, double spin, double angle) {
+        // Círculo "deitado" no plano XZ, inclinado (tilt) pra levantar um
+        // lado em direção ao céu, depois girado (spin) em torno do eixo
+        // vertical -- é isso que dá o efeito de anel inclinado rodando.
+        double localX = radius * Math.cos(angle);
+        double localY = radius * Math.sin(angle) * Math.sin(tilt);
+        double localZ = radius * Math.sin(angle) * Math.cos(tilt);
+
+        double worldX = localX * Math.cos(spin) - localZ * Math.sin(spin);
+        double worldZ = localX * Math.sin(spin) + localZ * Math.cos(spin);
+
+        level.sendParticles(particle,
+                player.getX() + worldX, baseY + localY, player.getZ() + worldZ,
+                1, 0.0, 0.0, 0.0, 0.0);
     }
 
     /** Limpa o UUID de quem desconecta com o Avatar State ligado (sem tentar revogar bendings -- já persistem no NBT). */
