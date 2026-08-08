@@ -19,6 +19,13 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import com.elementals.morebendings.network.packets.TogglePlasmaBoostPacket;
 import com.elementals.morebendings.network.packets.ToggleAvatarStatePacket;
+import com.elementals.morebendings.network.packets.ToggleFireRingPacket;
+import com.elementals.morebendings.network.packets.ToggleWaterRingPacket;
+import com.elementals.morebendings.network.packets.ToggleEarthRingPacket;
+import com.elementals.morebendings.network.packets.ToggleAirRingPacket;
+import com.elementals.morebendings.network.packets.CycleAvatarBendingPacket;
+import com.elementals.morebendings.network.packets.CastAvatarBendingGrantPacket;
+import com.elementals.morebendings.network.packets.CastAvatarBendingRemovePacket;
 
 /**
  * Keybinds do addon. Só é carregada no lado cliente -- ver
@@ -161,6 +168,73 @@ public final class ModKeyMappings {
             CATEGORY
     );
 
+    /** Liga/desliga individualmente o anel de Fogo do Avatar State (ver {@code AvatarStateManager#toggleRing}). */
+    public static final KeyMapping TOGGLE_RING_FIRE = new KeyMapping(
+            "key." + Constants.MOD_ID + ".toggle_ring_fire",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_I,
+            CATEGORY
+    );
+
+    /** Liga/desliga individualmente o anel de Água do Avatar State (ver {@code AvatarStateManager#toggleRing}). */
+    public static final KeyMapping TOGGLE_RING_WATER = new KeyMapping(
+            "key." + Constants.MOD_ID + ".toggle_ring_water",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_T,
+            CATEGORY
+    );
+
+    /** Liga/desliga individualmente o anel de Terra do Avatar State (ver {@code AvatarStateManager#toggleRing}). */
+    public static final KeyMapping TOGGLE_RING_EARTH = new KeyMapping(
+            "key." + Constants.MOD_ID + ".toggle_ring_earth",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_Y,
+            CATEGORY
+    );
+
+    /** Liga/desliga individualmente o anel de Ar do Avatar State (ver {@code AvatarStateManager#toggleRing}). */
+    public static final KeyMapping TOGGLE_RING_AIR = new KeyMapping(
+            "key." + Constants.MOD_ID + ".toggle_ring_air",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_C,
+            CATEGORY
+    );
+
+    /**
+     * Avança o elemento-base selecionado pra conceder/remover (ver
+     * {@code AvatarBendingSelection}, {@code CycleAvatarBendingPacket}).
+     */
+    public static final KeyMapping CYCLE_AVATAR_BENDING = new KeyMapping(
+            "key." + Constants.MOD_ID + ".cycle_avatar_bending",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_X,
+            CATEGORY
+    );
+
+    /**
+     * Concede o elemento-base selecionado ({@code AvatarBendingSelection})
+     * a quem estiver mirando -- só funciona no Avatar State (ver {@code
+     * AvatarBendingGrantAbility}).
+     */
+    public static final KeyMapping CAST_AVATAR_BENDING_GRANT = new KeyMapping(
+            "key." + Constants.MOD_ID + ".cast_avatar_bending_grant",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_Z,
+            CATEGORY
+    );
+
+    /**
+     * Remove o elemento-base selecionado ({@code AvatarBendingSelection})
+     * de quem estiver mirando -- só funciona no Avatar State (ver {@code
+     * AvatarBendingRemoveAbility}).
+     */
+    public static final KeyMapping CAST_AVATAR_BENDING_REMOVE = new KeyMapping(
+            "key." + Constants.MOD_ID + ".cast_avatar_bending_remove",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_R,
+            CATEGORY
+    );
+
     /** Registrado no mod event bus via RegisterKeyMappingsEvent. */
     public static void register(RegisterKeyMappingsEvent event) {
         event.register(TOGGLE_FLYING);
@@ -175,6 +249,13 @@ public final class ModKeyMappings {
         event.register(TOGGLE_PLASMA_BOOST);
         event.register(CAST_COMBUSTION_BLAST);
         event.register(TOGGLE_AVATAR_STATE);
+        event.register(TOGGLE_RING_FIRE);
+        event.register(TOGGLE_RING_WATER);
+        event.register(TOGGLE_RING_EARTH);
+        event.register(TOGGLE_RING_AIR);
+        event.register(CYCLE_AVATAR_BENDING);
+        event.register(CAST_AVATAR_BENDING_GRANT);
+        event.register(CAST_AVATAR_BENDING_REMOVE);
     }
 
     /**
@@ -223,6 +304,27 @@ public final class ModKeyMappings {
         }
         while (TOGGLE_AVATAR_STATE.consumeClick()) {
             Dispatcher.sendToServer(new ToggleAvatarStatePacket());
+        }
+        while (TOGGLE_RING_FIRE.consumeClick()) {
+            Dispatcher.sendToServer(new ToggleFireRingPacket());
+        }
+        while (TOGGLE_RING_WATER.consumeClick()) {
+            Dispatcher.sendToServer(new ToggleWaterRingPacket());
+        }
+        while (TOGGLE_RING_EARTH.consumeClick()) {
+            Dispatcher.sendToServer(new ToggleEarthRingPacket());
+        }
+        while (TOGGLE_RING_AIR.consumeClick()) {
+            Dispatcher.sendToServer(new ToggleAirRingPacket());
+        }
+        while (CYCLE_AVATAR_BENDING.consumeClick()) {
+            Dispatcher.sendToServer(new CycleAvatarBendingPacket());
+        }
+        while (CAST_AVATAR_BENDING_GRANT.consumeClick()) {
+            Dispatcher.sendToServer(new CastAvatarBendingGrantPacket());
+        }
+        while (CAST_AVATAR_BENDING_REMOVE.consumeClick()) {
+            Dispatcher.sendToServer(new CastAvatarBendingRemovePacket());
         }
     }
 
