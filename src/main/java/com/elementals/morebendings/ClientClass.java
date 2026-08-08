@@ -4,7 +4,9 @@ import com.elementals.morebendings.bending.earthsubbendings.bone.BoneSpikeEntity
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalShardEntityRenderer;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalSpikeVisualEntityRenderer;
 import com.elementals.morebendings.bending.earthsubbendings.glass.GlassShardEntityRenderer;
+import com.elementals.morebendings.bending.earthsubbendings.lava.LavaGeyserVisualEntityRenderer;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaShurikenEntityRenderer;
+import com.elementals.morebendings.bending.earthsubbendings.lava.LavaSurfWaveVisualEntityRenderer;
 import com.elementals.morebendings.bending.earthsubbendings.lava.MagmaSpikeVisualEntityRenderer;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudBallEntityRenderer;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudSpikeVisualEntityRenderer;
@@ -30,6 +32,8 @@ public class ClientClass {
         event.registerEntityRenderer(ModEntities.COMBUSTION_BOLT.get(), CombustionBoltEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.LAVA_SHURIKEN.get(), LavaShurikenEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.MAGMA_SPIKE_VISUAL.get(), MagmaSpikeVisualEntityRenderer::new);
+        event.registerEntityRenderer(ModEntities.LAVA_GEYSER_VISUAL.get(), LavaGeyserVisualEntityRenderer::new);
+        event.registerEntityRenderer(ModEntities.LAVA_SURF_WAVE.get(), LavaSurfWaveVisualEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.CRYSTAL_SPIKE_VISUAL.get(), CrystalSpikeVisualEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.MUD_BALL.get(), MudBallEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.MUD_SPIKE_VISUAL.get(), MudSpikeVisualEntityRenderer::new);

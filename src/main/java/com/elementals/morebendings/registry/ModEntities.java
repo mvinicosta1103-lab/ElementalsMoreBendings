@@ -5,7 +5,9 @@ import com.elementals.morebendings.bending.earthsubbendings.bone.BoneSpikeEntity
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalShardEntity;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalSpikeVisualEntity;
 import com.elementals.morebendings.bending.earthsubbendings.glass.GlassShardEntity;
+import com.elementals.morebendings.bending.earthsubbendings.lava.LavaGeyserVisualEntity;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaShurikenEntity;
+import com.elementals.morebendings.bending.earthsubbendings.lava.LavaSurfWaveVisualEntity;
 import com.elementals.morebendings.bending.earthsubbendings.lava.MagmaSpikeVisualEntity;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudBallEntity;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudSpikeVisualEntity;
@@ -121,6 +123,39 @@ public class ModEntities {
                             .clientTrackingRange(64)
                             .updateInterval(20)
                             .build("magma_spike_visual"));
+
+    /**
+     * Jato de lava puramente visual de "lavaGeyser" (ver {@link
+     * LavaGeyserVisualEntity}) -- substitui o antigo espaço de {@code
+     * lavaArmor}. Mesmo esquema de {@link #MAGMA_SPIKE_VISUAL}: sem
+     * física, sem colisão, {@code updateInterval} alto porque não se move
+     * (nasce parada e conta os próprios ticks pra sumir).
+     */
+    public static final Supplier<EntityType<LavaGeyserVisualEntity>> LAVA_GEYSER_VISUAL =
+            ENTITY_TYPES.register("lava_geyser_visual",
+                    () -> EntityType.Builder.<LavaGeyserVisualEntity>of(LavaGeyserVisualEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .sized(0.6f, 0.6f)
+                            .clientTrackingRange(64)
+                            .updateInterval(20)
+                            .build("lava_geyser_visual"));
+
+    /**
+     * Onda de lava puramente visual de "lavaSurf" (ver {@link
+     * LavaSurfWaveVisualEntity}) -- diferente de {@link #MAGMA_SPIKE_VISUAL},
+     * esta SE MOVE de verdade (a ability reposiciona ela todo tick pros pés
+     * do jogador enquanto ele surfa, ver {@code LavaSurfAbility#onTick}),
+     * então {@code updateInterval} fica baixo, mesmo esquema de {@link
+     * #PLANT_VINE_GRASP} pro cipó.
+     */
+    public static final Supplier<EntityType<LavaSurfWaveVisualEntity>> LAVA_SURF_WAVE =
+            ENTITY_TYPES.register("lava_surf_wave",
+                    () -> EntityType.Builder.<LavaSurfWaveVisualEntity>of(LavaSurfWaveVisualEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .sized(0.6f, 0.4f)
+                            .clientTrackingRange(64)
+                            .updateInterval(1)
+                            .build("lava_surf_wave"));
 
     /**
      * Espinho de cristal puramente visual (ver {@link CrystalSpikeVisualEntity}) --

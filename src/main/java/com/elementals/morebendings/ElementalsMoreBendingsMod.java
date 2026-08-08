@@ -10,7 +10,6 @@ import com.elementals.morebendings.bending.earthsubbendings.bone.BonePuppeteerMa
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalPrisonManager;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalSpikeManager;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalWallManager;
-import com.elementals.morebendings.bending.earthsubbendings.lava.LavaArmorCombatHandler;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaFlowManager;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaPoolManager;
 import com.elementals.morebendings.bending.earthsubbendings.lava.MagmaSpikeManager;
@@ -149,10 +148,6 @@ public class ElementalsMoreBendingsMod {
         // anel de espinhos, cada um com seu próprio tempo de reversão) --
         // ver VolcanicEruptionManager.
         NeoForge.EVENT_BUS.addListener(VolcanicEruptionManager::onServerTick);
-
-        // Incendeia quem acerta um golpe corpo a corpo direto em quem
-        // estiver com lavaArmor ativa -- ver LavaArmorCombatHandler.
-        NeoForge.EVENT_BUS.addListener(LavaArmorCombatHandler::onIncomingDamage);
 
         // Aplica Náusea + Envenenamento em quem estiver dentro de uma nuvem
         // residual de gasLeak, exceto o próprio caster -- ver GasLeakManager.

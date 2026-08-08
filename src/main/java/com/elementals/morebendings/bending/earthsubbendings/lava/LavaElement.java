@@ -31,8 +31,9 @@ import dev.saperate.elementals.elements.earth.EarthElement;
  *
  * O LavaElement original passava 7 Upgrades soltos direto na raiz, por
  * isso só lavaPool/lavaJet/magmaSpike (índices 0-2) apareciam e
- * lavaShuriken/lavaSurf/volcanicEruption/lavaArmor (índices 3-6) eram
- * ignorados silenciosamente pelo renderer.
+ * lavaShuriken/lavaSurf/volcanicEruption/lavaGeyser (índices 3-6, este
+ * último originalmente lavaArmor) eram ignorados silenciosamente pelo
+ * renderer.
  *
  * Correção: reagrupar em 4 ramos diretos, aninhando o resto como filhos
  * de cada ramo (igual ao padrão do jogo base).
@@ -47,7 +48,7 @@ public class LavaElement extends Element {
     public static final String LAVA_SHURIKEN = "lavaShuriken";
     public static final String LAVA_SURF = "lavaSurf";
     public static final String VOLCANIC_ERUPTION = "volcanicEruption";
-    public static final String LAVA_ARMOR = "lavaArmor";
+    public static final String LAVA_GEYSER = "lavaGeyser";
     public static final String OBSIDIAN_CRUST = "obsidianCrust";
     public static final String LAVA_FLOW = "lavaFlow";
 
@@ -60,7 +61,7 @@ public class LavaElement extends Element {
         // com suas dezenas de upgrades.
         super(NAME, new Upgrade[]{
                 new Upgrade(LAVA_POOL, new Upgrade[]{
-                        new Upgrade(LAVA_ARMOR, 0)
+                        new Upgrade(LAVA_GEYSER, 0)
                 }, 0),
                 new Upgrade(LAVA_JET, new Upgrade[]{
                         new Upgrade(LAVA_SURF, 0),
@@ -79,7 +80,7 @@ public class LavaElement extends Element {
         addAbility(new LavaShurikenAbility(), 3);
         addAbility(new LavaSurfAbility(), 4);
         addAbility(new VolcanicEruptionAbility(), 5);
-        addAbility(new LavaArmorAbility(), 6);
+        addAbility(new LavaGeyserAbility(), 6);
         addAbility(new ObsidianCrustAbility(), 7);
         addAbility(new LavaFlowAbility(), 8);
 
@@ -98,7 +99,7 @@ public class LavaElement extends Element {
         registerUpgradeKeybind(LAVA_SHURIKEN, 3);
         registerUpgradeKeybind(LAVA_SURF, 4);
         registerUpgradeKeybind(VOLCANIC_ERUPTION, 5);
-        registerUpgradeKeybind(LAVA_ARMOR, 6);
+        registerUpgradeKeybind(LAVA_GEYSER, 6);
         registerUpgradeKeybind(OBSIDIAN_CRUST, 7);
         registerUpgradeKeybind(LAVA_FLOW, 8);
     }
@@ -136,7 +137,7 @@ public class LavaElement extends Element {
                 && bender.getData().canUseUpgrade(LAVA_SHURIKEN)
                 && bender.getData().canUseUpgrade(LAVA_SURF)
                 && bender.getData().canUseUpgrade(VOLCANIC_ERUPTION)
-                && bender.getData().canUseUpgrade(LAVA_ARMOR)
+                && bender.getData().canUseUpgrade(LAVA_GEYSER)
                 && bender.getData().canUseUpgrade(OBSIDIAN_CRUST)
                 && bender.getData().canUseUpgrade(LAVA_FLOW);
     }
