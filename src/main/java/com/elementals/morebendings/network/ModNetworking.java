@@ -18,8 +18,16 @@ import net.minecraft.resources.ResourceLocation;
 import com.elementals.morebendings.network.packets.SyncPlasmaBoostPacket;
 import com.elementals.morebendings.network.packets.TogglePlasmaBoostPacket;
 import com.elementals.morebendings.network.packets.PlayPlasmaClawsFxPacket;
+import com.elementals.morebendings.network.packets.ToggleAvatarStatePacket;
+import com.elementals.morebendings.network.packets.SyncAvatarStatePacket;
 
 public final class ModNetworking {
+
+    public static final ResourceLocation TOGGLE_AVATAR_STATE_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "toggle_avatar_state");
+
+    public static final ResourceLocation SYNC_AVATAR_STATE_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "sync_avatar_state");
 
     public static final ResourceLocation TOGGLE_PLASMA_BOOST_ID =
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "toggle_plasma_boost");
@@ -92,6 +100,10 @@ public final class ModNetworking {
                 SyncCrystalArmorPacket.STREAM_CODEC, SyncCrystalArmorPacket::handle);
         Network.registerPacket(PlayPlasmaClawsFxPacket.type(), PlayPlasmaClawsFxPacket.class,
                 PlayPlasmaClawsFxPacket.STREAM_CODEC, PlayPlasmaClawsFxPacket::handle);
+        Network.registerPacket(ToggleAvatarStatePacket.type(), ToggleAvatarStatePacket.class,
+                ToggleAvatarStatePacket.STREAM_CODEC, ToggleAvatarStatePacket::handle);
+        Network.registerPacket(SyncAvatarStatePacket.type(), SyncAvatarStatePacket.class,
+                SyncAvatarStatePacket.STREAM_CODEC, SyncAvatarStatePacket::handle);
     }
 
     public static void expectSideOrThrow(Side current, Side expected) {

@@ -46,6 +46,7 @@ import com.elementals.morebendings.bending.airsubbendings.sound.SilenceFieldMana
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantVineWallManager;
 import com.elementals.morebendings.bending.watersubbendings.spirit.CurseMinionManager;
 import com.elementals.morebendings.bending.watersubbendings.spirit.PurifyingWaterManager;
+import com.elementals.morebendings.bending.avatarstate.AvatarStateManager;
 
 
 @Mod(Constants.MOD_ID)
@@ -217,6 +218,11 @@ public class ElementalsMoreBendingsMod {
         NeoForge.EVENT_BUS.addListener(CrystalPrisonManager::onServerTick);
 
         NeoForge.EVENT_BUS.addListener(CrystalArmorManager::onServerTick);
+
+        NeoForge.EVENT_BUS.addListener(AvatarStateManager::onServerTick);
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent event) -> {
+            AvatarStateManager.onPlayerLoggedOut(event);
+        });
 
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent event) -> {
             if (event.getEntity() instanceof ServerPlayer sp) CrystalArmorSetManager.restoreOnLogout(sp);

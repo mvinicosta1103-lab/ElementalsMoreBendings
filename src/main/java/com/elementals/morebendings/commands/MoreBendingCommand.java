@@ -525,7 +525,7 @@ public class MoreBendingCommand {
      * antes) — é isso que permite {@link #revokeAvatarState} desfazer com
      * precisão, sem tocar em nada que já era do jogador por fora.
      */
-    private static void grantAvatarState(CommandSourceStack source, ServerPlayer target, PlayerAvatarData avatarData) {
+    public static void grantAvatarState(CommandSourceStack source, ServerPlayer target, PlayerAvatarData avatarData) {
         Bender bender = Bender.getBender(target);
 
         grantCoreElementIfMissing(bender, avatarData, AirElement.get());
@@ -567,7 +567,7 @@ public class MoreBendingCommand {
      * antes de entrar no Avatar State, ou que adquiriu legitimamente
      * enquanto estava nele, NÃO está nesses conjuntos e continua intocada.
      */
-    private static void revokeAvatarState(ServerPlayer target, PlayerAvatarData avatarData) {
+    public static void revokeAvatarState(ServerPlayer target, PlayerAvatarData avatarData) {
         Bender bender = Bender.getBender(target);
 
         for (String elementName : avatarData.getGrantedElements()) {

@@ -18,6 +18,7 @@ import net.minecraft.client.Minecraft;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import com.elementals.morebendings.network.packets.TogglePlasmaBoostPacket;
+import com.elementals.morebendings.network.packets.ToggleAvatarStatePacket;
 
 /**
  * Keybinds do addon. Só é carregada no lado cliente -- ver
@@ -148,6 +149,18 @@ public final class ModKeyMappings {
             CATEGORY
     );
 
+    /**
+     * Liga/desliga o Avatar State (ver {@code AvatarStateManager}) -- só
+     * funciona se o jogador já dominar os 4 elementos-base; o servidor
+     * confirma isso antes de conceder o boost + as bendings.
+     */
+    public static final KeyMapping TOGGLE_AVATAR_STATE = new KeyMapping(
+            "key." + Constants.MOD_ID + ".toggle_avatar_state",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_P,
+            CATEGORY
+    );
+
     /** Registrado no mod event bus via RegisterKeyMappingsEvent. */
     public static void register(RegisterKeyMappingsEvent event) {
         event.register(TOGGLE_FLYING);
@@ -161,6 +174,7 @@ public final class ModKeyMappings {
         event.register(CYCLE_SPECIALIZATION);
         event.register(TOGGLE_PLASMA_BOOST);
         event.register(CAST_COMBUSTION_BLAST);
+        event.register(TOGGLE_AVATAR_STATE);
     }
 
     /**
@@ -206,6 +220,9 @@ public final class ModKeyMappings {
         }
         while (CAST_COMBUSTION_BLAST.consumeClick()) {
             Dispatcher.sendToServer(new CastCombustionBlastPacket());
+        }
+        while (TOGGLE_AVATAR_STATE.consumeClick()) {
+            Dispatcher.sendToServer(new ToggleAvatarStatePacket());
         }
     }
 

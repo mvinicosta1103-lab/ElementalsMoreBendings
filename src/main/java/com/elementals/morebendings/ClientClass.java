@@ -17,6 +17,7 @@ import com.elementals.morebendings.bending.watersubbendings.plant.PlantThornVoll
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantVineGraspVisualEntityRenderer;
 import com.elementals.morebendings.registry.ModEntities;
 import com.elementals.morebendings.client.layers.CrystalArmorRenderLayer;
+import com.elementals.morebendings.client.layers.AvatarStateEyesLayer;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import com.elementals.morebendings.client.layers.PlasmaHandFlameLayer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
@@ -48,6 +49,7 @@ public class ClientClass {
             if (renderer != null) {
                 renderer.addLayer(new PlasmaHandFlameLayer(renderer));
                 renderer.addLayer(new CrystalArmorRenderLayer(renderer));
+                renderer.addLayer(new AvatarStateEyesLayer(renderer));
             }
         }
     }
