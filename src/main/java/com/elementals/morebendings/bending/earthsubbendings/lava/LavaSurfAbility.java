@@ -14,21 +14,28 @@ import net.minecraft.world.entity.player.Player;
 
 /**
  * "lavaSurf" — quinta habilidade raiz da árvore de Lava (ver {@link
- * LavaElement}). Mobilidade: o bender "surfa" sobre uma onda de lava que
- * corre rente ao chão embaixo dele.
- *
- * Mesmo esquema de canalização por Shift de {@code StaticLegsAbility}
- * (Petrification): {@link #activatesOnPress()} retorna {@code true} pra
- * ativar imediatamente ao apertar a tecla, e como o mod base não expõe um
- * hook de "tecla solta", usamos {@code isShiftKeyDown()} em {@link
- * #onTick} como gatilho de cancelamento -- por isso também exigimos Shift
- * já pressionado no instante do cast.
- *
- * Enquanto ativa: Velocidade + Resistência a Fogo (a "onda" é lava de
+ * LavaElement}). Mobilidade: o bender surfa em cima de uma onda de lava
+ * DE VERDADE (modelo 3D, não mais só partículas) que nasce debaixo dos
+ * pés e o acompanha enquanto ele corre -- ver {@link
+ * LavaSurfWaveVisualEntity}/{@link LavaSurfWaveVisualEntityRenderer}.
+ * <p>
+ * REDESENHO: antes exigia segurar Shift (agachado) pra canalizar, igual
+ * {@code StaticLegsAbility}/o antigo {@code LavaArmorAbility} (agora
+ * {@code lavaGeyser}). Agora o gatilho é {@link Player#isSprinting()}: a
+ * surfada continua enquanto o jogador estiver correndo e solta sozinha
+ * assim que ele para (anda, fica parado ou agacha) -- não precisa mais
+ * ficar segurando Shift o tempo todo. Ainda usa {@link
+ * #activatesOnPress()}=true e checa o requisito já no instante do cast
+ * pelo mesmo motivo de sempre: sem isso a surfada nasceria e morreria no
+ * mesmo tick, gastando chi sem o jogador perceber.
+ * <p>
+ * Enquanto ativa: Velocidade + Resistência a Fogo (a onda é lava de
  * verdade debaixo do jogador) + zera a distância de queda a cada tick pra
- * nunca tomar dano de queda saindo da surfada. Puramente cosmético/
- * utilitário -- não empurra nem acerta ninguém, ao contrário de {@link
- * LavaJetAbility}/{@link MagmaSpikeAbility}.
+ * nunca tomar dano de queda saindo da surfada. A entidade da onda é
+ * reposicionada pros pés do jogador todo tick (ver {@link #onTick}) --
+ * estado por-jogador em {@link LavaSurfState}, porque esta ability é uma
+ * instância ÚNICA compartilhada por todos os lavabenders (não dá pra
+ * guardar a referência da onda como campo de instância aqui).
  */
 public class LavaSurfAbility implements Ability {
 
@@ -51,11 +58,11 @@ public class LavaSurfAbility implements Ability {
             return;
         }
 
-        if (!player.isShiftKeyDown()) {
-            // Mesmo motivo do StaticLegsAbility: sem isso a surfada nasceria
-            // e morreria no mesmo tick, gastando chi sem o jogador perceber.
+        if (!player.isSprinting()) {
+            // Mesmo motivo do antigo requisito de Shift: sem isso a surfada
+            // nasceria e morreria no mesmo tick, gastando chi sem o jogador perceber.
             caster.displayClientMessage(
-                    Component.literal("Segure Shift para surfar na lava."), true);
+                    Component.literal("Esteja correndo para surfar na lava."), true);
             bender.setCurrAbility(null);
             return;
         }
@@ -65,16 +72,17 @@ public class LavaSurfAbility implements Ability {
             return;
         }
 
+        spawnWave(level, caster);
         applyEffects(player);
         playTrailFeedback(level, player);
 
-        bender.setCurrAbility(this); // canalizada -- solta ao soltar Shift, ver onTick
+        bender.setCurrAbility(this); // canalizada -- solta ao parar de correr, ver onTick
     }
 
     @Override
     public void onTick(Bender bender) {
         Player player = bender.player;
-        if (!player.isShiftKeyDown()) {
+        if (!(player instanceof ServerPlayer caster) || !player.isSprinting()) {
             onRemove(bender);
             return;
         }
@@ -85,6 +93,7 @@ public class LavaSurfAbility implements Ability {
 
         applyEffects(player);
         player.fallDistance = 0; // surfando não devia doer ao "descer" da onda
+        followWave(caster);
 
         if (player.level() instanceof ServerLevel level && level.getGameTime() % 4 == 0) {
             playTrailFeedback(level, player);
@@ -93,7 +102,32 @@ public class LavaSurfAbility implements Ability {
 
     @Override
     public void onRemove(Bender bender) {
+        if (bender.player instanceof ServerPlayer caster) {
+            LavaSurfWaveVisualEntity wave = LavaSurfState.get(caster);
+            if (wave != null) {
+                wave.discard();
+            }
+            LavaSurfState.clear(caster);
+        }
         bender.setCurrAbility(null);
+    }
+
+    /** Nasce a onda debaixo dos pés do jogador e registra em {@link LavaSurfState}. */
+    private void spawnWave(ServerLevel level, ServerPlayer caster) {
+        LavaSurfWaveVisualEntity existing = LavaSurfState.get(caster);
+        if (existing != null && existing.isAlive()) {
+            existing.discard(); // não deveria sobrar uma onda velha, mas evita duplicar se sobrar
+        }
+        LavaSurfWaveVisualEntity wave = LavaSurfWaveVisualEntity.spawn(level, caster.position(), caster.getYRot());
+        LavaSurfState.set(caster, wave);
+    }
+
+    /** Reposiciona a onda já ativa pros pés atuais do jogador -- chamado todo tick enquanto surfa. */
+    private void followWave(ServerPlayer caster) {
+        LavaSurfWaveVisualEntity wave = LavaSurfState.get(caster);
+        if (wave != null && wave.isAlive()) {
+            wave.followPlayer(caster.position(), caster.getYRot());
+        }
     }
 
     private void applyEffects(Player player) {
@@ -103,7 +137,7 @@ public class LavaSurfAbility implements Ability {
                 EFFECT_REFRESH_TICKS, 0, false, false, true));
     }
 
-    /** Trilha de partículas/som de lava debaixo dos pés -- puramente visual. */
+    /** Trilha de partículas/som de lava debaixo dos pés -- complementa o modelo 3D da onda, puramente cosmético. */
     private void playTrailFeedback(ServerLevel level, Player player) {
         level.sendParticles(ParticleTypes.LAVA,
                 player.getX(), player.getY() + 0.1, player.getZ(), 4, 0.3, 0.02, 0.3, 0.0);

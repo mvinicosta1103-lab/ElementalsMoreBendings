@@ -138,6 +138,12 @@ key_key.elementals.cycle:key.keyboard.z
 key_key.elementals.toggle_blue_fire:key.keyboard.n
 key_key.elementalsmorebendings.toggle_flying:key.keyboard.end
 key_key.elementalsmorebendings.cast_gas_cloud:key.keyboard.period
+key_key.elementalsmorebendings.cast_gas_suffocate:key.keyboard.j
+key_key.elementalsmorebendings.cast_gas_leak:key.keyboard.k
+key_key.elementalsmorebendings.cast_gas_ignite:key.keyboard.l
+key_key.elementalsmorebendings.cast_gas_jet:key.keyboard.n
+key_key.elementalsmorebendings.cast_gas_miasma:key.keyboard.m
+key_key.elementalsmorebendings.cast_gas_corrosive_mist:key.keyboard.u
 key_key.elementalsmorebendings.cycle_specialization:key.keyboard.pause
 key_key.elementalsmorebendings.toggle_plasma_boost:key.keyboard.page.down
 key_key.elementalsmorebendings.cast_combustion_blast:key.keyboard.b

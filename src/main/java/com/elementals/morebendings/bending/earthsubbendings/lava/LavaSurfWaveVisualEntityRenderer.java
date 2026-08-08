@@ -36,11 +36,14 @@ public class LavaSurfWaveVisualEntityRenderer extends EntityRenderer<LavaSurfWav
      * = atrás do jogador, na direção contrária ao avanço), largura, altura,
      * comprimento, e um fator de tint 0..1 (0 = cor base/escura, 1 = cor de
      * crista/clara) usado pra interpolar entre BASE_* e CREST_*.
+     * <p>
+     * Dimensões pequenas de propósito -- é uma onda discreta rente aos pés,
+     * não uma parede de lava.
      */
     private static final float[][] SEGMENTS = {
-            {0.00f, 0.02f, 0.10f, 1.15f, 0.10f, 0.55f, 0.0f},   // corpo achatado debaixo/na frente dos pés
-            {0.00f, 0.12f, -0.30f, 0.95f, 0.22f, 0.45f, 0.5f},  // meio, começando a curvar/subir atrás
-            {0.00f, 0.32f, -0.55f, 0.70f, 0.30f, 0.30f, 1.0f},  // crista, mais alta e clara -- a "espuma"
+            {0.00f, 0.02f, 0.08f, 0.85f, 0.08f, 0.40f, 0.0f},   // corpo achatado debaixo/na frente dos pés
+            {0.00f, 0.08f, -0.20f, 0.68f, 0.15f, 0.32f, 0.5f},  // meio, começando a curvar/subir atrás
+            {0.00f, 0.20f, -0.36f, 0.48f, 0.20f, 0.22f, 1.0f},  // crista, mais alta e clara -- a "espuma"
     };
 
     public LavaSurfWaveVisualEntityRenderer(EntityRendererProvider.Context context) {

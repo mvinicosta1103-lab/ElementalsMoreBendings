@@ -5,18 +5,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="Next phase: Make more movements for bendings, fix things.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/lava/LavaSurfState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/lava/LavaSurfWaveVisualEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/lava/LavaSurfWaveVisualEntityRenderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/ClientClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/ClientClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/ElementalsMoreBendingsMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/ElementalsMoreBendingsMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/lava/LavaArmorAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/lava/LavaGeyserAbility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/lava/LavaArmorCombatHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/lava/LavaGeyserVisualEntityRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/lava/LavaArmorState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/lava/LavaGeyserVisualEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/lava/LavaElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/lava/LavaElement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/registry/ModEntities.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/registry/ModEntities.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/elementalsmorebendings/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/elementalsmorebendings/lang/en_us.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" beforeDir="false" afterPath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-1.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-2.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-3.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-4.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-5.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-6.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-6.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-7.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-7.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-1.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-2.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-3.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-4.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-5.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/latest.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/latest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/options.txt" beforeDir="false" afterPath="$PROJECT_DIR$/run/options.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/DIM-1/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/DIM-1/data/raids.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/DIM1/data/raids_end.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/DIM1/data/raids_end.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/data/elementals.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/data/elementals.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/data/raids.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/entities/r.-1.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/entities/r.-1.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/entities/r.3.3.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/entities/r.3.3.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/entities/r.3.4.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/entities/r.3.4.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/entities/r.4.3.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/entities/r.4.3.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/entities/r.4.4.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/entities/r.4.4.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/level.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/level.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/level.dat_old" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/level.dat_old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/playerdata/380df991-f603-344c-a090-369bad2a924a.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/playerdata/380df991-f603-344c-a090-369bad2a924a.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/playerdata/380df991-f603-344c-a090-369bad2a924a.dat_old" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/playerdata/380df991-f603-344c-a090-369bad2a924a.dat_old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/region/r.-1.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/region/r.-1.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/region/r.3.3.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/region/r.3.3.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/region/r.3.4.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/region/r.3.4.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/region/r.4.3.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/region/r.4.3.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/region/r.4.4.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/region/r.4.4.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/session.lock" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/session.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/saves/New World (6)/stats/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (6)/stats/380df991-f603-344c-a090-369bad2a924a.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/usercache.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/usercache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/lava/LavaSurfAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/lava/LavaSurfAbility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/lava/LavaSurfWaveVisualEntityRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/earthsubbendings/lava/LavaSurfWaveVisualEntityRenderer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -305,14 +333,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
-    </task>
-    <task id="LOCAL-00258" summary="Next phase: Make more movements for bendings, fix things.">
-      <option name="closed" value="true" />
-      <created>1785947531313</created>
-      <option name="number" value="00258" />
-      <option name="presentableId" value="LOCAL-00258" />
-      <option name="project" value="LOCAL" />
-      <updated>1785947531313</updated>
     </task>
     <task id="LOCAL-00259" summary="Next phase: Make more movements for bendings, fix things.">
       <option name="closed" value="true" />
@@ -698,7 +718,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786139932529</updated>
     </task>
-    <option name="localTasksCounter" value="307" />
+    <task id="LOCAL-00307" summary="Next phase: Make more movements for bendings, fix things.">
+      <option name="closed" value="true" />
+      <created>1786148327023</created>
+      <option name="number" value="00307" />
+      <option name="presentableId" value="LOCAL-00307" />
+      <option name="project" value="LOCAL" />
+      <updated>1786148327023</updated>
+    </task>
+    <option name="localTasksCounter" value="308" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
