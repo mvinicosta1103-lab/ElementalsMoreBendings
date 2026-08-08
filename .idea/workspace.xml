@@ -4,70 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="Next phase: Make more movements for bendings, fix things.">
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/bending/avatarstate/AvatarStateManager$RingParticleFactory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/bending/avatarstate/AvatarStateManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/bending/avatarstate/AvatarStateManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/AvatarStateManager$RingParticleFactory.class.uniqueId2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/AvatarStateManager.class.uniqueId0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ElementalsMoreBendingsMod.class.uniqueId3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ToggleAvatarStatePacket.class.uniqueId1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" beforeDir="false" afterPath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-1.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-10.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-10.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-11.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-11.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-12.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-12.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-13.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-13.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-14.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-14.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-15.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-15.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-16.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-16.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-17.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-17.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-18.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-18.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-19.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-19.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-2.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-20.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-20.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-3.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-4.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-5.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-6.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-6.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-7.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-7.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-8.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-8.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-9.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-9.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-1.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-2.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-3.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-4.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-5.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/latest.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/latest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/DIM-1/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/DIM-1/data/raids.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/DIM1/data/raids_end.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/DIM1/data/raids_end.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/data/elementals.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/data/elementals.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/data/raids.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/entities/r.-1.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/entities/r.-1.-1.mca" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/entities/r.-1.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/entities/r.-1.0.mca" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/entities/r.0.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/entities/r.0.-1.mca" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/entities/r.0.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/entities/r.0.0.mca" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/level.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/level.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/level.dat_old" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/level.dat_old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/playerdata/380df991-f603-344c-a090-369bad2a924a.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/playerdata/380df991-f603-344c-a090-369bad2a924a.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/playerdata/380df991-f603-344c-a090-369bad2a924a.dat_old" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/playerdata/380df991-f603-344c-a090-369bad2a924a.dat_old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/region/r.-1.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/region/r.-1.-1.mca" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/region/r.-1.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/region/r.-1.0.mca" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/region/r.0.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/region/r.0.-1.mca" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/region/r.0.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/region/r.0.0.mca" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/session.lock" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/session.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/stats/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/stats/380df991-f603-344c-a090-369bad2a924a.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/usercache.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/usercache.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/avatarstate/AvatarStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/avatarstate/AvatarStateManager.java" afterDir="false" />
-    </list>
+    <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="Next phase: Make more movements for bendings, fix things." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -355,14 +292,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
-    </task>
-    <task id="LOCAL-00276" summary="Next phase: Make more movements for bendings, fix things.">
-      <option name="closed" value="true" />
-      <created>1786023806909</created>
-      <option name="number" value="00276" />
-      <option name="presentableId" value="LOCAL-00276" />
-      <option name="project" value="LOCAL" />
-      <updated>1786023806909</updated>
     </task>
     <task id="LOCAL-00277" summary="Next phase: Make more movements for bendings, fix things.">
       <option name="closed" value="true" />
@@ -748,7 +677,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786157097668</updated>
     </task>
-    <option name="localTasksCounter" value="325" />
+    <task id="LOCAL-00325" summary="Next phase: Make more movements for bendings, fix things.">
+      <option name="closed" value="true" />
+      <created>1786158036127</created>
+      <option name="number" value="00325" />
+      <option name="presentableId" value="LOCAL-00325" />
+      <option name="project" value="LOCAL" />
+      <updated>1786158036127</updated>
+    </task>
+    <option name="localTasksCounter" value="326" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
