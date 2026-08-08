@@ -10,6 +10,7 @@ import dev.saperate.elementals.elements.air.AirElement;
 import dev.saperate.elementals.elements.earth.EarthElement;
 import dev.saperate.elementals.elements.fire.FireElement;
 import dev.saperate.elementals.elements.water.WaterElement;
+import com.mojang.math.Transformation;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -18,16 +19,24 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Display;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.server.MinecraftServer;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
+import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
@@ -40,8 +49,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * {@link MoreBendingCommand#revokeAvatarState} pra conceder/revogar as
  * bendings (mesmo rastreamento via {@link PlayerAvatarData}, então nunca
  * tira algo que o jogador já tinha por fora), e por cima disso aplica o
- * "boost" (efeitos de status) e o efeito visual (partículas dos 4
- * elementos girando + olhos brilhantes, ver {@code AvatarStateEyesLayer}).
+ * "boost" (efeitos de status) e o efeito visual (4 anéis de blocos reais
+ * girando + olhos brilhantes, ver {@code AvatarStateEyesLayer}).
  * <p>
  * Só pode ser ligado por quem já domina os 4 elementos-base (Air, Water,
  * Earth, Fire) -- ninguém "ganha" o Avatar sem antes ser um bender
@@ -50,6 +59,11 @@ import java.util.concurrent.ThreadLocalRandom;
 public final class AvatarStateManager {
 
     private static final Set<UUID> ACTIVE = new HashSet<>();
+
+    // Chunks de água -- entidades Display de verdade (não partícula) que
+    // giram ao redor de quem está no Avatar State, ver
+    // {@link #spawnWaterChunks}/{@link #updateWaterChunks}.
+    private static final Map<UUID, List<Display.BlockDisplay>> WATER_CHUNKS = new HashMap<>();
 
     // Reforçado a cada ~4s (80 ticks) enquanto ativo, com folga de sobra
     // pra nunca deixar o efeito cair antes do próximo reforço.
@@ -98,6 +112,7 @@ public final class AvatarStateManager {
 
         ACTIVE.add(player.getUUID());
         applyBuffs(player);
+        spawnWaterChunks(player);
         spawnActivationBurst(player);
         broadcastSync(player, true);
         player.displayClientMessage(Component.literal("§bVocê entrou no Avatar State!"), true);
@@ -109,6 +124,7 @@ public final class AvatarStateManager {
             return;
         }
         ACTIVE.remove(player.getUUID());
+        removeWaterChunks(player);
 
         PlayerAvatarData avatarData = player.getData(ModAttachments.AVATAR);
         if (avatarData.isAvatarState()) {
@@ -224,13 +240,19 @@ public final class AvatarStateManager {
             Blocks.MOSS_BLOCK.defaultBlockState(),
     };
 
-    // Pontos por volta do círculo -- Água e Ar bem densos de propósito pra
-    // parecerem uma faixa CONTÍNUA (sem gaps entre os pontos), não uma
-    // sequência de partículas soltas.
+    // Ar bem denso de propósito pra parecer uma faixa CONTÍNUA (sem gaps
+    // entre os pontos), não uma sequência de partículas soltas. Água não
+    // usa mais "pontos de partícula" -- ver WATER_CHUNK_COUNT.
     private static final int POINTS_FIRE = 90;
-    private static final int POINTS_WATER = 150;
     private static final int POINTS_EARTH = 90;
     private static final int POINTS_AIR = 150;
+
+    // Chunks de água de verdade (Display entities, não partícula) -- vidro
+    // azul translúcido bem pequeno, pra parecer pedaço de água sólida
+    // girando, não um bloco cheio.
+    private static final BlockState WATER_CHUNK_BLOCK = Blocks.LIGHT_BLUE_STAINED_GLASS.defaultBlockState();
+    private static final int WATER_CHUNK_COUNT = 26;
+    private static final float WATER_CHUNK_SCALE = 0.4f;
 
     // Raios bem maiores que antes -- os anéis ficam longe o suficiente do
     // corpo pra não poluir a visão de quem É o Avatar (primeira pessoa),
@@ -289,15 +311,11 @@ public final class AvatarStateManager {
         drawElementalRing(level, player, baseY, FIRE_RADIUS, FIRE_TILT, spinFire, POINTS_FIRE,
                 i -> (i % 4 == 0) ? ParticleTypes.SMALL_FLAME : ParticleTypes.FLAME, 3);
 
-        // ---- Água: UMA faixa contínua só, feita majoritariamente de gotas
-        // de água de verdade (chunk d'água) -- não mais duas camadas de
-        // poeira quadrada empilhadas, que era o que poluía a tela na
-        // ativação. WATER_DUST some pra dar cor sólida só 1 em cada 3
-        // pontos; o resto é água "de verdade" caindo/splashando.
-        drawElementalRing(level, player, baseY, WATER_RADIUS, WATER_TILT, spinWater, POINTS_WATER,
-                i -> (i % 9 == 0) ? ParticleTypes.SPLASH
-                        : (i % 3 == 0) ? WATER_DUST
-                        : ParticleTypes.FALLING_WATER, 2);
+        // ---- Água: NÃO é partícula -- são chunks de água de verdade
+        // (Display entities com bloco de vidro azul translúcido, cada um
+        // girando no próprio eixo) orbitando o corpo. Ver
+        // updateWaterChunks. Nada de FALLING_WATER/fumaça azul aqui.
+        updateWaterChunks(player, baseY, spinWater);
 
         // ---- Terra: vários blocos tombando, com jitter de posição ----
         drawElementalRingJittered(level, player, baseY, EARTH_RADIUS, EARTH_TILT, spinEarth, POINTS_EARTH,
@@ -316,6 +334,133 @@ public final class AvatarStateManager {
             spawnHighlight(level, player, baseY, FIRE_RADIUS, FIRE_TILT, spinFire, ParticleTypes.FLAME);
             spawnHighlight(level, player, baseY, WATER_RADIUS, WATER_TILT, spinWater, ParticleTypes.END_ROD);
             spawnHighlight(level, player, baseY, AIR_RADIUS, AIR_TILT, spinAir, ParticleTypes.END_ROD);
+        }
+    }
+
+    /**
+     * {@code BlockDisplay#setBlockState} e {@code Display#setTransformation}
+     * não são públicos (o vanilla só espera que sejam chamados de dentro do
+     * próprio pacote {@code net.minecraft.world.entity} ou via NBT/comando).
+     * Como o mod está em outro pacote, chamamos via reflection pra contornar
+     * isso -- os métodos existem de verdade (foi confirmado pelo próprio
+     * erro de compilação, "has private access"/"cannot find symbol" só
+     * porque não é visível daqui), então isso é seguro e estável entre
+     * builds, só não entre versões do Minecraft que renomeiem o método.
+     */
+    private static final Method BLOCK_DISPLAY_SET_BLOCK_STATE;
+    private static final Method DISPLAY_SET_TRANSFORMATION;
+
+    static {
+        try {
+            BLOCK_DISPLAY_SET_BLOCK_STATE = Display.BlockDisplay.class.getDeclaredMethod("setBlockState", BlockState.class);
+            BLOCK_DISPLAY_SET_BLOCK_STATE.setAccessible(true);
+            DISPLAY_SET_TRANSFORMATION = Display.class.getDeclaredMethod("setTransformation", Transformation.class);
+            DISPLAY_SET_TRANSFORMATION.setAccessible(true);
+        } catch (NoSuchMethodException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    private static void applyBlockState(Display.BlockDisplay display, BlockState state) {
+        try {
+            BLOCK_DISPLAY_SET_BLOCK_STATE.invoke(display, state);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException("Falha ao aplicar block state no chunk de água", e);
+        }
+    }
+
+    private static void applyTransformation(Display display, Transformation transformation) {
+        try {
+            DISPLAY_SET_TRANSFORMATION.invoke(display, transformation);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException("Falha ao aplicar transformação no chunk de água", e);
+        }
+    }
+
+    /**
+     * Cria os chunks de água (Display entities) de um jogador ao entrar no
+     * Avatar State. São {@code WATER_CHUNK_COUNT} blocos de vidro azul
+     * translúcido, minúsculos, sem física/gravidade -- só visual, cada um
+     * atualizado todo tick em {@link #updateWaterChunks}.
+     */
+    private static void spawnWaterChunks(ServerPlayer player) {
+        if (!(player.level() instanceof ServerLevel level)) {
+            return;
+        }
+        removeWaterChunks(player); // por garantia, nunca duplica se já tinha algum sobrando
+        List<Display.BlockDisplay> chunks = new ArrayList<>(WATER_CHUNK_COUNT);
+        for (int i = 0; i < WATER_CHUNK_COUNT; i++) {
+            chunks.add(newWaterChunkEntity(level, player));
+        }
+        WATER_CHUNKS.put(player.getUUID(), chunks);
+    }
+
+    private static Display.BlockDisplay newWaterChunkEntity(ServerLevel level, ServerPlayer player) {
+        Display.BlockDisplay display = new Display.BlockDisplay(EntityType.BLOCK_DISPLAY, level);
+        applyBlockState(display, WATER_CHUNK_BLOCK);
+        display.setNoGravity(true);
+        display.setPos(player.getX(), player.getY() + 1.0, player.getZ());
+        level.addFreshEntity(display);
+        return display;
+    }
+
+    /**
+     * Reposiciona todo tick os chunks de água no anel girando ao redor do
+     * corpo (mesma matemática de {@link #sendRingPoint}, mas aplicada
+     * numa entidade de verdade em vez de mandar partícula), e dá pra cada
+     * um uma rotação própria (own-spin) pra parecer pedaço de água
+     * tombando, não um cubo estático grudado no anel.
+     */
+    private static void updateWaterChunks(ServerPlayer player, double baseY, double spinWater) {
+        List<Display.BlockDisplay> chunks = WATER_CHUNKS.get(player.getUUID());
+        if (chunks == null) {
+            spawnWaterChunks(player);
+            chunks = WATER_CHUNKS.get(player.getUUID());
+            if (chunks == null) {
+                return;
+            }
+        }
+        if (!(player.level() instanceof ServerLevel level)) {
+            return;
+        }
+        double t = player.tickCount;
+        int count = chunks.size();
+        for (int i = 0; i < count; i++) {
+            Display.BlockDisplay display = chunks.get(i);
+            if (display.isRemoved()) {
+                // Chunk sumiu (chunk do mundo descarregou, etc.) -- recria
+                // no lugar pra nunca ficar faltando um pedaço do anel.
+                display = newWaterChunkEntity(level, player);
+                chunks.set(i, display);
+            }
+
+            double angle = (2 * Math.PI * i) / count;
+            double localX = WATER_RADIUS * Math.cos(angle);
+            double localY = WATER_RADIUS * Math.sin(angle) * Math.sin(WATER_TILT);
+            double localZ = WATER_RADIUS * Math.sin(angle) * Math.cos(WATER_TILT);
+            double worldX = localX * Math.cos(spinWater) - localZ * Math.sin(spinWater);
+            double worldZ = localX * Math.sin(spinWater) + localZ * Math.cos(spinWater);
+            display.setPos(player.getX() + worldX, baseY + localY, player.getZ() + worldZ);
+
+            float ownSpin = (float) Math.toRadians(t * 6 + i * 37);
+            Quaternionf rotation = new Quaternionf().rotateY(ownSpin).rotateX(ownSpin * 0.6f);
+            Transformation transformation = new Transformation(
+                    new Vector3f(-WATER_CHUNK_SCALE / 2f, -WATER_CHUNK_SCALE / 2f, -WATER_CHUNK_SCALE / 2f),
+                    rotation,
+                    new Vector3f(WATER_CHUNK_SCALE),
+                    new Quaternionf());
+            applyTransformation(display, transformation);
+        }
+    }
+
+    /** Descarta os chunks de água de um jogador (saída do Avatar State/logout). */
+    private static void removeWaterChunks(ServerPlayer player) {
+        List<Display.BlockDisplay> chunks = WATER_CHUNKS.remove(player.getUUID());
+        if (chunks == null) {
+            return;
+        }
+        for (Display.BlockDisplay display : chunks) {
+            display.discard();
         }
     }
 
@@ -392,6 +537,7 @@ public final class AvatarStateManager {
     public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
         if (event.getEntity() instanceof ServerPlayer sp) {
             ACTIVE.remove(sp.getUUID());
+            removeWaterChunks(sp);
         }
     }
 }
