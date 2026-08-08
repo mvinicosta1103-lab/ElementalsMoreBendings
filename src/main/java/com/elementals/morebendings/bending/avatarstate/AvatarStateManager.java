@@ -4,7 +4,6 @@ import com.elementals.morebendings.commands.MoreBendingCommand;
 import com.elementals.morebendings.data.PlayerAvatarData;
 import com.elementals.morebendings.network.packets.SyncAvatarStatePacket;
 import com.elementals.morebendings.registry.ModAttachments;
-import com.elementals.morebendings.registry.ModBlocks;
 import commonnetwork.api.Dispatcher;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.air.AirElement;
@@ -260,13 +259,11 @@ public final class AvatarStateManager {
             Blocks.ROOTED_DIRT.defaultBlockState(),
             Blocks.MOSS_BLOCK.defaultBlockState(),
     };
-    // Água DE VERDADE (mesma sprite animada da água real do jogo, com o
-    // mesmo tint azul), não vidro -- ver ModBlocks#WATER_RING_DISPLAY
-    // pro motivo de não dar simplesmente pra usar Blocks.WATER aqui
-    // (fluido não tem baked model, então um BlockDisplay com
-    // Blocks.WATER.defaultBlockState() renderiza o cubo "missing", não
-    // água).
-    private static final BlockState WATER_BLOCK = ModBlocks.WATER_RING_DISPLAY.get().defaultBlockState();
+
+    // Água agora é água DE VERDADE (fluido renderizado via BlockDisplay),
+    // não mais vidro azul -- troca simples, o resto do pipeline do anel
+    // (spawnRing/updateRing) não precisa saber a diferença.
+    private static final BlockState WATER_BLOCK = Blocks.WATER.defaultBlockState();
 
     // Raios dos anéis -- controla o tamanho de cada anel ao redor do
     // corpo (o PLANO de cada anel agora vem do eixo, não de um "tilt").
@@ -323,14 +320,8 @@ public final class AvatarStateManager {
     private static final Map<RingElement, RingConfig> CONFIGS = new EnumMap<>(RingElement.class);
     private static final Map<RingElement, Vector3f[]> BLOCK_BASIS = new EnumMap<>(RingElement.class);
     static {
-        // Rate bem mais alto que antes (26 -> 90) + scale um pouco maior
-        // que o espaçamento angular resultante (2*pi*WATER_RADIUS/90 ≈
-        // 0.40 bloco) -- é a combinação dessas duas contas que faz os
-        // cubos se sobreporem e formarem uma fita contínua de água em
-        // vez de cubos soltos boiando (era o caso antes, ver imagem de
-        // referência do pedido).
         CONFIGS.put(RingElement.WATER, new RingConfig(
-                WATER_RADIUS, 90, 0.46f,
+                WATER_RADIUS, 26, 0.40f,
                 WATER_AXIS, 34, 8,
                 i -> WATER_BLOCK,
                 0.0, 0.0));
@@ -351,25 +342,14 @@ public final class AvatarStateManager {
      * {@code particlesPerPoint} é o que dá o "rate alto" pedido.
      */
     private record ParticleRingConfig(double radius, int count, int particlesPerPoint,
-                                      Vector3f axis, double orbitDegPerTick, double heightOffset) {
+                                      Vector3f axis, double orbitDegPerTick) {
     }
-
-    // O eixo do Fogo é diagonal a 45° (FIRE_AXIS = (1,1,0)), então metade
-    // do anel mergulha ABAIXO do centro (baseY). Pra um jogador em pé no
-    // chão (baseY = pés + 1), o ponto mais baixo do anel cai uns
-    // radius*0.71 ≈ 3.1 blocos abaixo do centro -- ou seja, uns 2 blocos
-    // DENTRO do chão. O que parecia um "rastro" reto de fogo grudado no
-    // terreno era exatamente isso: o anel sendo cortado pela superfície,
-    // não fogo de verdade rastejando. FIRE_HEIGHT_OFFSET sobe o centro
-    // do anel o suficiente pra até o ponto mais baixo ficar acima dos
-    // pés, então o anel inteiro fica visível no ar, sem tocar o chão.
-    private static final double FIRE_HEIGHT_OFFSET = 2.6;
 
     private static final Map<RingElement, ParticleRingConfig> PARTICLE_CONFIGS = new EnumMap<>(RingElement.class);
     private static final Map<RingElement, Vector3f[]> PARTICLE_BASIS = new EnumMap<>(RingElement.class);
     static {
-        PARTICLE_CONFIGS.put(RingElement.FIRE, new ParticleRingConfig(FIRE_RADIUS, 70, 3, FIRE_AXIS, 38, FIRE_HEIGHT_OFFSET));
-        PARTICLE_CONFIGS.put(RingElement.AIR, new ParticleRingConfig(AIR_RADIUS, 90, 4, AIR_AXIS, 44, 0.0));
+        PARTICLE_CONFIGS.put(RingElement.FIRE, new ParticleRingConfig(FIRE_RADIUS, 70, 3, FIRE_AXIS, 38));
+        PARTICLE_CONFIGS.put(RingElement.AIR, new ParticleRingConfig(AIR_RADIUS, 90, 4, AIR_AXIS, 44));
         for (Map.Entry<RingElement, ParticleRingConfig> entry : PARTICLE_CONFIGS.entrySet()) {
             PARTICLE_BASIS.put(entry.getKey(), perpendicularBasis(entry.getValue().axis()));
         }
@@ -428,7 +408,7 @@ public final class AvatarStateManager {
             double cos = Math.cos(angle);
             double sin = Math.sin(angle);
             double x = player.getX() + config.radius() * (cos * u.x + sin * v.x);
-            double y = baseY + config.heightOffset() + config.radius() * (cos * u.y + sin * v.y);
+            double y = baseY + config.radius() * (cos * u.y + sin * v.y);
             double z = player.getZ() + config.radius() * (cos * u.z + sin * v.z);
 
             net.minecraft.core.particles.ParticleOptions particle = switch (element) {
@@ -493,7 +473,6 @@ public final class AvatarStateManager {
         applyBlockState(display, state);
         display.setNoGravity(true);
         display.setPos(player.getX(), player.getY() + 1.0, player.getZ());
-        enableSmoothInterpolation(display);
         level.addFreshEntity(display);
         return display;
     }
@@ -592,23 +571,6 @@ public final class AvatarStateManager {
      */
     private static final Method BLOCK_DISPLAY_SET_BLOCK_STATE;
     private static final Method DISPLAY_SET_TRANSFORMATION;
-    private static final Method DISPLAY_SET_POS_ROT_INTERPOLATION_DURATION;
-    private static final Method DISPLAY_SET_TRANSFORMATION_INTERPOLATION_DURATION;
-
-    // Quantos ticks o CLIENTE leva pra interpolar entre uma posição/
-    // transformação e a próxima. Sem isso, cada display.setPos(...) (e
-    // cada applyTransformation, no own-spin) é um TELEPORTE instantâneo
-    // -- o cliente só recebe a posição nova do nada, nunca as
-    // intermediárias -- e como a água orbita 34°/tick num anel de 90
-    // blocos (espaçados só 4° entre si), cada bloco pula bem mais que
-    // um "slot" a cada tick. É isso que lia como "girando bagunçado e
-    // duro" em vez de fluido: geometricamente já era um círculo
-    // perfeito, só não estava sendo desenhado suave entre os ticks.
-    // Ligar a interpolação (usada normalmente pra qualquer animação de
-    // Display no jogo) faz o cliente preencher o movimento entre um
-    // tick e o outro em vez de saltar, virando um giro contínuo e
-    // perfeitamente circunferencial.
-    private static final int RING_INTERPOLATION_TICKS = 3;
 
     static {
         try {
@@ -616,10 +578,6 @@ public final class AvatarStateManager {
             BLOCK_DISPLAY_SET_BLOCK_STATE.setAccessible(true);
             DISPLAY_SET_TRANSFORMATION = Display.class.getDeclaredMethod("setTransformation", Transformation.class);
             DISPLAY_SET_TRANSFORMATION.setAccessible(true);
-            DISPLAY_SET_POS_ROT_INTERPOLATION_DURATION = Display.class.getDeclaredMethod("setPosRotInterpolationDuration", int.class);
-            DISPLAY_SET_POS_ROT_INTERPOLATION_DURATION.setAccessible(true);
-            DISPLAY_SET_TRANSFORMATION_INTERPOLATION_DURATION = Display.class.getDeclaredMethod("setTransformationInterpolationDuration", int.class);
-            DISPLAY_SET_TRANSFORMATION_INTERPOLATION_DURATION.setAccessible(true);
         } catch (NoSuchMethodException e) {
             throw new ExceptionInInitializerError(e);
         }
@@ -638,22 +596,6 @@ public final class AvatarStateManager {
             DISPLAY_SET_TRANSFORMATION.invoke(display, transformation);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException("Falha ao aplicar transformação no chunk do anel", e);
-        }
-    }
-
-    /**
-     * Liga a interpolação suave (posição + transformação) uma única vez,
-     * na criação do chunk -- depois disso, todo {@code setPos}/{@code
-     * applyTransformation} chamado nos ticks seguintes já é
-     * automaticamente suavizado pelo cliente ao longo de
-     * {@link #RING_INTERPOLATION_TICKS}, em vez de teleportar.
-     */
-    private static void enableSmoothInterpolation(Display display) {
-        try {
-            DISPLAY_SET_POS_ROT_INTERPOLATION_DURATION.invoke(display, RING_INTERPOLATION_TICKS);
-            DISPLAY_SET_TRANSFORMATION_INTERPOLATION_DURATION.invoke(display, RING_INTERPOLATION_TICKS);
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException("Falha ao ligar interpolação suave no chunk do anel", e);
         }
     }
 
