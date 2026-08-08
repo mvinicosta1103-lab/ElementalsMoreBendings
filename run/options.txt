@@ -148,6 +148,13 @@ key_key.elementalsmorebendings.cycle_specialization:key.keyboard.pause
 key_key.elementalsmorebendings.toggle_plasma_boost:key.keyboard.page.down
 key_key.elementalsmorebendings.cast_combustion_blast:key.keyboard.b
 key_key.elementalsmorebendings.toggle_avatar_state:key.keyboard.p
+key_key.elementalsmorebendings.toggle_ring_fire:key.keyboard.i
+key_key.elementalsmorebendings.toggle_ring_water:key.keyboard.o
+key_key.elementalsmorebendings.toggle_ring_earth:key.keyboard.semicolon
+key_key.elementalsmorebendings.toggle_ring_air:key.keyboard.comma
+key_key.elementalsmorebendings.cycle_avatar_bending:key.keyboard.x
+key_key.elementalsmorebendings.cast_avatar_bending_grant:key.keyboard.world.2
+key_key.elementalsmorebendings.cast_avatar_bending_remove:key.keyboard.grave.accent
 soundCategory_master:1.0
 soundCategory_music:0.0
 soundCategory_record:1.0

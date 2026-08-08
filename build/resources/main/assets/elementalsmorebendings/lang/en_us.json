@@ -10,6 +10,13 @@
   "key.elementalsmorebendings.cast_gas_corrosive_mist": "Cast Corrosive Mist",
   "key.elementalsmorebendings.cast_combustion_blast": "Cast Combustion Blast",
   "key.elementalsmorebendings.toggle_avatar_state": "Toggle Avatar State",
+  "key.elementalsmorebendings.toggle_ring_fire": "Toggle Fire Ring",
+  "key.elementalsmorebendings.toggle_ring_water": "Toggle Water Ring",
+  "key.elementalsmorebendings.toggle_ring_earth": "Toggle Earth Ring",
+  "key.elementalsmorebendings.toggle_ring_air": "Toggle Air Ring",
+  "key.elementalsmorebendings.cycle_avatar_bending": "Cycle Avatar Bending Selection",
+  "key.elementalsmorebendings.cast_avatar_bending_grant": "Grant Bending (Avatar State)",
+  "key.elementalsmorebendings.cast_avatar_bending_remove": "Remove Bending (Avatar State)",
 
   "subbending.elementalsmorebendings.flying": "Flying",
   "subbending.elementalsmorebendings.gas": "Gas Bending",
