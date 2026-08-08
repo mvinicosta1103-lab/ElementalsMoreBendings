@@ -19,9 +19,14 @@ import org.joml.Matrix4f;
  * torno do próprio eixo Y continuamente, com velocidade de giro crescendo
  * por segmento (o topo gira mais rápido que a base) -- dá a sensação de
  * um jato sob pressão torcendo no ar, não algo brotando devagar do chão.
- * Sobe quase instantâneo ({@link #ERUPT_TICKS}) e recolhe rápido no fim
- * da vida ({@link #RETRACT_TICKS}), coerente com ser uma erupção pontual
- * (ver {@link LavaGeyserAbility}), não algo que fica.
+ * Sobe quase instantâneo ({@link #ERUPT_TICKS}) mas agora FICA de pé
+ * jorrando por alguns segundos antes de recolher ({@link #RETRACT_TICKS}
+ * antes do fim de {@link LavaGeyserVisualEntity#getJetTicks()}) -- ver
+ * {@link LavaGeyserAbility}. O modelo some no fim do jato, mas a
+ * entidade continua viva além disso só emitindo fuligem (ver {@link
+ * LavaGeyserVisualEntity#tick()}), por isso este renderer usa {@code
+ * getJetTicks()} (não {@code getLifetimeTicks()}) pra decidir quando
+ * parar de desenhar.
  */
 public class LavaGeyserVisualEntityRenderer extends EntityRenderer<LavaGeyserVisualEntity> {
 
@@ -49,7 +54,9 @@ public class LavaGeyserVisualEntityRenderer extends EntityRenderer<LavaGeyserVis
                        PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         int seed = entity.getSeed();
         float age = entity.tickCount + partialTick;
-        int lifetime = entity.getLifetimeTicks();
+        // getJetTicks(), não getLifetimeTicks() -- o modelo some no fim do JATO, mesmo que a
+        // entidade continue viva mais um tempo só pra terminar de soltar fuligem (ver classe).
+        int lifetime = entity.getJetTicks();
 
         // Fatores "aleatórios" determinísticos a partir do seed -- mesmo jato em todo cliente.
         float heightMult = 0.85f + 0.3f * ((seed % 100) / 100.0f); // ~0.85..1.15

@@ -29,10 +29,17 @@ import net.minecraft.world.phys.EntityHitResult;
  * mesmo esquema de {@link MagmaSpikeVisualEntity}/{@code
  * MagmaSpikeVisualEntityRenderer} usado por {@code magmaSpike}/{@code
  * volcanicEruption}, só que vertical/fino (jato) em vez de uma estalagmite.
+ * Diferente deles, porém, o jato fica de pé JORRANDO lava de verdade por
+ * alguns segundos ({@link #JET_LIFETIME_TICKS}) em vez de sumir quase
+ * instantâneo, e a fuligem que ele solta continua no ar por mais um
+ * tempo depois que o jato já recolheu ({@link #SOOT_TAIL_TICKS}) -- ver
+ * {@link LavaGeyserVisualEntity#tick()} pra a emissão contínua de
+ * partícula em vez de só a explosão pontual do instante do impacto.
  * <p>
- * Instantânea (sem {@code onTick}/sem estado próprio, igual {@code
- * MagmaSpikeAbility}) -- por isso {@code setCurrAbility(null)} é chamado
- * sempre no fim do {@link #onCall}.
+ * A ability em si continua instantânea (sem {@code onTick}/sem estado
+ * próprio, igual {@code MagmaSpikeAbility}) -- quem carrega a duração
+ * agora é a própria {@link LavaGeyserVisualEntity}, então {@code
+ * setCurrAbility(null)} ainda é chamado sempre no fim do {@link #onCall}.
  */
 public class LavaGeyserAbility implements Ability {
 
@@ -41,8 +48,12 @@ public class LavaGeyserAbility implements Ability {
     private static final float DAMAGE = 6.0f;
     private static final double LAUNCH_UP = 1.3;
     private static final int IGNITE_SECONDS = 4;
-    /** Quanto tempo (em ticks de servidor) o jato visual dura -- rápido, é uma erupção pontual. */
-    private static final int VISUAL_LIFETIME_TICKS = 18; // ~0.9s
+    /** Quanto tempo (em ticks de servidor) o jato de lava fica de pé jorrando de verdade. */
+    private static final int JET_LIFETIME_TICKS = 60; // ~3s jorrando
+    /** Quanto tempo a fuligem continua sozinha no ar depois que o jato já recolheu. */
+    private static final int SOOT_TAIL_TICKS = 40; // ~2s de fuligem assentando após o jato acabar
+    /** Vida total da entidade visual (jato + cauda de fuligem). */
+    private static final int VISUAL_LIFETIME_TICKS = JET_LIFETIME_TICKS + SOOT_TAIL_TICKS; // ~5s no total
 
     @Override
     public void onCall(Bender bender, long heldTimeMs) {
@@ -76,13 +87,16 @@ public class LavaGeyserAbility implements Ability {
 
     /** Faz o jato brotar sob {@code ground} e aplica dano/arremesso/ignição em {@code target}. */
     private void erupt(ServerLevel level, LivingEntity target, BlockPos ground) {
-        LavaGeyserVisualEntity.spawn(level, ground, VISUAL_LIFETIME_TICKS);
+        LavaGeyserVisualEntity.spawn(level, ground, JET_LIFETIME_TICKS, VISUAL_LIFETIME_TICKS);
 
         target.hurt(level.damageSources().lava(), DAMAGE);
         target.push(0, LAUNCH_UP, 0);
         target.hurtMarked = true; // garante que o cliente sincronize o impulso vertical
         target.igniteForSeconds(IGNITE_SECONDS);
 
+        // Explosão de partículas só no instante do impacto -- o jorro contínuo de lava e a
+        // fuligem que dura além disso já ficam por conta da própria LavaGeyserVisualEntity
+        // (ver seu tick()), então isso aqui é só o "estouro" inicial pra dar impacto na hora.
         level.sendParticles(ParticleTypes.LAVA,
                 ground.getX() + 0.5, ground.getY() + 0.6, ground.getZ() + 0.5, 16, 0.25, 0.3, 0.25, 0.05);
         level.sendParticles(ParticleTypes.LARGE_SMOKE,
