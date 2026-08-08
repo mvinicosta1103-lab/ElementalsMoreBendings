@@ -10,6 +10,7 @@ import dev.saperate.elementals.elements.air.AirElement;
 import dev.saperate.elementals.elements.earth.EarthElement;
 import dev.saperate.elementals.elements.fire.FireElement;
 import dev.saperate.elementals.elements.water.WaterElement;
+import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -17,6 +18,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.server.MinecraftServer;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -27,6 +30,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Avatar State "de verdade" -- ligado pelo próprio jogador (tecla, ver
@@ -151,9 +155,18 @@ public final class AvatarStateManager {
         level.sendParticles(ParticleTypes.END_ROD, player.getX(), player.getY() + 1.0, player.getZ(),
                 80, 0.6, 1.0, 0.6, 0.12);
         level.sendParticles(FIRE_DUST, player.getX(), player.getY() + 1.0, player.getZ(),
-                60, 0.8, 0.4, 0.8, 0.0);
+                50, 0.8, 0.4, 0.8, 0.0);
         level.sendParticles(WATER_DUST, player.getX(), player.getY() + 1.0, player.getZ(),
-                60, 0.8, 1.2, 0.8, 0.0);
+                50, 0.8, 1.2, 0.8, 0.0);
+        level.sendParticles(AIR_DUST, player.getX(), player.getY() + 1.0, player.getZ(),
+                40, 1.0, 0.8, 1.0, 0.0);
+        // Chuva de blocos de terra explodindo pra fora na ativação -- some
+        // sozinha (partícula BLOCK não fica presa, só voa e desaparece).
+        for (int i = 0; i < 30; i++) {
+            level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, randomEarthBlock()),
+                    player.getX(), player.getY() + 1.0, player.getZ(),
+                    2, 0.7, 0.5, 0.7, 0.15);
+        }
     }
 
     /**
@@ -185,55 +198,103 @@ public final class AvatarStateManager {
         }
     }
 
-    // ==================== Efeito visual: anéis majestosos ====================
+    // ==================== Efeito visual: 4 anéis majestosos ====================
 
-    // Anel de Fogo/Terra -- quase horizontal, na cintura, cor quente.
+    // Cores sólidas (independem de luz) de cada elemento -- usadas junto
+    // com partículas "de verdade" (chama, água, poeira, nuvem) pra dar
+    // volume sem perder a identidade de cada uma.
     private static final DustParticleOptions FIRE_DUST =
             new DustParticleOptions(new Vector3f(1.0f, 0.55f, 0.10f), 2.6f);
-    // Anel de Água/Ar -- bem inclinado, subindo alto de um lado, cor fria.
     private static final DustParticleOptions WATER_DUST =
             new DustParticleOptions(new Vector3f(0.25f, 0.55f, 1.0f), 2.6f);
+    private static final DustParticleOptions EARTH_DUST =
+            new DustParticleOptions(new Vector3f(0.42f, 0.30f, 0.16f), 2.2f);
+    private static final DustParticleOptions AIR_DUST =
+            new DustParticleOptions(new Vector3f(0.92f, 0.96f, 1.0f), 2.0f);
 
-    private static final int POINTS_PER_RING = 42;
+    // Blocos que aparecem girando no anel de Terra -- bem variados pra não
+    // ficar um bloco só repetido, dá a sensação de "pedaços de chão"
+    // arrancados e girando ao redor do corpo.
+    private static final BlockState[] EARTH_BLOCKS = {
+            Blocks.DIRT.defaultBlockState(),
+            Blocks.COARSE_DIRT.defaultBlockState(),
+            Blocks.STONE.defaultBlockState(),
+            Blocks.GRAVEL.defaultBlockState(),
+            Blocks.ROOTED_DIRT.defaultBlockState(),
+            Blocks.MOSS_BLOCK.defaultBlockState(),
+    };
+
+    // Pontos por volta do círculo -- Terra é o mais denso de propósito
+    // ("grande quantidade de blocos de terra girando").
+    private static final int POINTS_FIRE = 42;
+    private static final int POINTS_WATER = 42;
+    private static final int POINTS_EARTH = 64;
+    private static final int POINTS_AIR = 48;
+
     private static final double FIRE_RADIUS = 2.6;
     private static final double WATER_RADIUS = 3.4;
-    private static final double FIRE_TILT = Math.toRadians(12); // quase deitado
-    private static final double WATER_TILT = Math.toRadians(68); // quase em pé, cruzando o de fogo
+    private static final double EARTH_RADIUS = 3.0;
+    private static final double AIR_RADIUS = 3.9;
+
+    private static final double FIRE_TILT = Math.toRadians(12);   // quase deitado, na cintura
+    private static final double WATER_TILT = Math.toRadians(68);  // quase em pé, subindo alto
+    private static final double EARTH_TILT = Math.toRadians(40);  // diagonal, cruzando os outros
+    private static final double AIR_TILT = Math.toRadians(-55);   // diagonal oposta, o mais alto de todos
 
     /**
-     * Dois anéis largos e contínuos cruzando o corpo, girando devagar --
-     * um baixo e quente (Fogo/Terra), outro alto e inclinado, frio
-     * (Água/Ar), igual a referência visual do Avatar em Estado Avatar:
-     * grosso, brilhante, cobrindo o jogador dos pés à cabeça. Desenhados
-     * com {@link DustParticleOptions} (cor sólida, não depende de luz)
-     * em vez de partículas soltas -- ponto a ponto ao redor do círculo
-     * inteiro a cada tick, então nunca ficam esparsos.
+     * Os 4 elementos-base girando ao redor do corpo inteiro, cada um com
+     * raio/inclinação/velocidade diferente pra não ficarem sobrepostos --
+     * Fogo (baixo, quase horizontal), Água (alto, quase vertical), Terra
+     * (diagonal, denso de blocos de verdade) e Ar (o mais alto e rápido,
+     * nuvens leves). Desenhados ponto a ponto ao redor do círculo INTEIRO
+     * a cada tick (rate alto de propósito), então nunca ficam esparsos --
+     * parecem faixas sólidas e contínuas, como no Estado Avatar de
+     * verdade.
      */
     private static void spawnMajesticRings(ServerPlayer player) {
         if (!(player.level() instanceof ServerLevel level)) {
             return;
         }
         double baseY = player.getY() + 1.0;
-        double spinFire = Math.toRadians(player.tickCount * 3.0);
-        double spinWater = Math.toRadians(-player.tickCount * 2.2);
+        double t = player.tickCount;
+        double spinFire = Math.toRadians(t * 3.4);
+        double spinWater = Math.toRadians(-t * 2.2);
+        double spinEarth = Math.toRadians(t * 1.6);
+        double spinAir = Math.toRadians(-t * 4.2);
 
-        drawRing(level, player, baseY, FIRE_DUST, FIRE_RADIUS, FIRE_TILT, spinFire);
-        drawRing(level, player, baseY, WATER_DUST, WATER_RADIUS, WATER_TILT, spinWater);
+        drawElementalRing(level, player, baseY, FIRE_RADIUS, FIRE_TILT, spinFire, POINTS_FIRE,
+                i -> (i % 3 == 0) ? ParticleTypes.FLAME : FIRE_DUST);
+        drawElementalRing(level, player, baseY, WATER_RADIUS, WATER_TILT, spinWater, POINTS_WATER,
+                i -> (i % 3 == 0) ? ParticleTypes.SPLASH : WATER_DUST);
+        drawElementalRing(level, player, baseY, EARTH_RADIUS, EARTH_TILT, spinEarth, POINTS_EARTH,
+                i -> (i % 4 == 0) ? EARTH_DUST : new BlockParticleOption(ParticleTypes.BLOCK, randomEarthBlock()));
+        drawElementalRing(level, player, baseY, AIR_RADIUS, AIR_TILT, spinAir, POINTS_AIR,
+                i -> (i % 3 == 0) ? ParticleTypes.CLOUD : AIR_DUST);
 
-        // Brilhos de destaque passando pelo anel -- reforça a sensação de
-        // "energia correndo" em volta do corpo, igual as fagulhas claras
-        // na referência.
-        if (player.tickCount % 4 == 0) {
+        // Brilhos de destaque correndo pelos anéis -- reforça a sensação
+        // de "energia" cruzando o corpo, igual as fagulhas claras na
+        // referência.
+        if (t % 4 == 0) {
             spawnHighlight(level, player, baseY, FIRE_RADIUS, FIRE_TILT, spinFire, ParticleTypes.FLAME);
             spawnHighlight(level, player, baseY, WATER_RADIUS, WATER_TILT, spinWater, ParticleTypes.END_ROD);
+            spawnHighlight(level, player, baseY, AIR_RADIUS, AIR_TILT, spinAir, ParticleTypes.END_ROD);
         }
     }
 
-    private static void drawRing(ServerLevel level, ServerPlayer player, double baseY,
-                                 DustParticleOptions dust, double radius, double tilt, double spin) {
-        for (int i = 0; i < POINTS_PER_RING; i++) {
-            double angle = (2 * Math.PI * i) / POINTS_PER_RING;
-            sendRingPoint(level, player, baseY, dust, radius, tilt, spin, angle);
+    private static BlockState randomEarthBlock() {
+        return EARTH_BLOCKS[ThreadLocalRandom.current().nextInt(EARTH_BLOCKS.length)];
+    }
+
+    private interface RingParticleFactory {
+        net.minecraft.core.particles.ParticleOptions particleFor(int index);
+    }
+
+    private static void drawElementalRing(ServerLevel level, ServerPlayer player, double baseY,
+                                          double radius, double tilt, double spin, int points,
+                                          RingParticleFactory factory) {
+        for (int i = 0; i < points; i++) {
+            double angle = (2 * Math.PI * i) / points;
+            sendRingPoint(level, player, baseY, factory.particleFor(i), radius, tilt, spin, angle);
         }
     }
 
