@@ -24,6 +24,7 @@ import com.elementals.morebendings.bending.firesubbendings.plasma.PlasmaBoostCom
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalArmorManager;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalArmorSetManager;
 import com.elementals.morebendings.registry.ModArmorMaterials;
+import com.elementals.morebendings.registry.ModBlocks;
 import com.elementals.morebendings.registry.ModCreativeTabs;
 import com.elementals.morebendings.registry.ModItems;
 import com.elementals.morebendings.effects.MoreBendingsEffects;
@@ -61,6 +62,9 @@ public class ElementalsMoreBendingsMod {
         ModEntities.ENTITY_TYPES.register(modEventBus);
 
         ModArmorMaterials.ARMOR_MATERIALS.register(modEventBus);
+        // Bloco fantasma da água de verdade usada no anel do Avatar
+        // State -- ver ModBlocks e AvatarStateManager#WATER_BLOCK.
+        ModBlocks.BLOCKS.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
         ModCreativeTabs.CREATIVE_TABS.register(modEventBus);
         MoreBendingsEffects.register(modEventBus);
@@ -71,6 +75,10 @@ public class ElementalsMoreBendingsMod {
         if (FMLEnvironment.dist == Dist.CLIENT) {
             modEventBus.addListener(ClientClass::onRegisterRenderers);
             modEventBus.addListener(ClientClass::onAddLayers);
+            // Tint azul do bloco fantasma de água do anel do Avatar
+            // State (RegisterColorHandlersEvent é client-only) -- ver
+            // ClientClass#onRegisterBlockColors.
+            modEventBus.addListener(ClientClass::onRegisterBlockColors);
 
             // Keybind de "ligar/desligar voo" (Flying) -- registro da tecla
             // em si precisa do mod bus (RegisterKeyMappingsEvent); o listener

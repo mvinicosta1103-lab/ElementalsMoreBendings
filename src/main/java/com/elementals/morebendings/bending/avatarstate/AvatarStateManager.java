@@ -4,6 +4,7 @@ import com.elementals.morebendings.commands.MoreBendingCommand;
 import com.elementals.morebendings.data.PlayerAvatarData;
 import com.elementals.morebendings.network.packets.SyncAvatarStatePacket;
 import com.elementals.morebendings.registry.ModAttachments;
+import com.elementals.morebendings.registry.ModBlocks;
 import commonnetwork.api.Dispatcher;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.air.AirElement;
@@ -259,7 +260,13 @@ public final class AvatarStateManager {
             Blocks.ROOTED_DIRT.defaultBlockState(),
             Blocks.MOSS_BLOCK.defaultBlockState(),
     };
-    private static final BlockState WATER_BLOCK = Blocks.LIGHT_BLUE_STAINED_GLASS.defaultBlockState();
+    // Água DE VERDADE (mesma sprite animada da água real do jogo, com o
+    // mesmo tint azul), não vidro -- ver ModBlocks#WATER_RING_DISPLAY
+    // pro motivo de não dar simplesmente pra usar Blocks.WATER aqui
+    // (fluido não tem baked model, então um BlockDisplay com
+    // Blocks.WATER.defaultBlockState() renderiza o cubo "missing", não
+    // água).
+    private static final BlockState WATER_BLOCK = ModBlocks.WATER_RING_DISPLAY.get().defaultBlockState();
 
     // Raios dos anéis -- controla o tamanho de cada anel ao redor do
     // corpo (o PLANO de cada anel agora vem do eixo, não de um "tilt").
@@ -316,8 +323,14 @@ public final class AvatarStateManager {
     private static final Map<RingElement, RingConfig> CONFIGS = new EnumMap<>(RingElement.class);
     private static final Map<RingElement, Vector3f[]> BLOCK_BASIS = new EnumMap<>(RingElement.class);
     static {
+        // Rate bem mais alto que antes (26 -> 90) + scale um pouco maior
+        // que o espaçamento angular resultante (2*pi*WATER_RADIUS/90 ≈
+        // 0.40 bloco) -- é a combinação dessas duas contas que faz os
+        // cubos se sobreporem e formarem uma fita contínua de água em
+        // vez de cubos soltos boiando (era o caso antes, ver imagem de
+        // referência do pedido).
         CONFIGS.put(RingElement.WATER, new RingConfig(
-                WATER_RADIUS, 26, 0.40f,
+                WATER_RADIUS, 90, 0.46f,
                 WATER_AXIS, 34, 8,
                 i -> WATER_BLOCK,
                 0.0, 0.0));
