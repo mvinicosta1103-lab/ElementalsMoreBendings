@@ -11,7 +11,13 @@
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.2.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/AvatarStateManager.class.uniqueId0" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/AvatarStateManager.class.uniqueId0" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/bending/avatarstate/AvatarStateManager$RingParticleFactory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/bending/avatarstate/AvatarStateManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/bending/avatarstate/AvatarStateManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/AvatarStateManager$RingParticleFactory.class.uniqueId2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/AvatarStateManager.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ElementalsMoreBendingsMod.class.uniqueId3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ToggleAvatarStatePacket.class.uniqueId1" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" beforeDir="false" afterPath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-1.log.gz" afterDir="false" />
@@ -26,6 +32,7 @@
       <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-18.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-18.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-19.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-19.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-2.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-20.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-20.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-3.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-4.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/2026-08-07-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2026-08-07-5.log.gz" afterDir="false" />
@@ -59,6 +66,7 @@
       <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/session.lock" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/session.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/saves/New World (8)/stats/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World (8)/stats/380df991-f603-344c-a090-369bad2a924a.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/usercache.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/usercache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/avatarstate/AvatarStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/elementals/morebendings/bending/avatarstate/AvatarStateManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -347,14 +355,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
-    </task>
-    <task id="LOCAL-00275" summary="Next phase: Make more movements for bendings, fix things.">
-      <option name="closed" value="true" />
-      <created>1786022127089</created>
-      <option name="number" value="00275" />
-      <option name="presentableId" value="LOCAL-00275" />
-      <option name="project" value="LOCAL" />
-      <updated>1786022127090</updated>
     </task>
     <task id="LOCAL-00276" summary="Next phase: Make more movements for bendings, fix things.">
       <option name="closed" value="true" />
@@ -740,7 +740,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786156751377</updated>
     </task>
-    <option name="localTasksCounter" value="324" />
+    <task id="LOCAL-00324" summary="Next phase: Make more movements for bendings, fix things.">
+      <option name="closed" value="true" />
+      <created>1786157097668</created>
+      <option name="number" value="00324" />
+      <option name="presentableId" value="LOCAL-00324" />
+      <option name="project" value="LOCAL" />
+      <updated>1786157097668</updated>
+    </task>
+    <option name="localTasksCounter" value="325" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

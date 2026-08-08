@@ -32,7 +32,7 @@ import org.joml.Vector3f;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -40,6 +40,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.IntFunction;
 
 /**
  * Avatar State "de verdade" -- ligado pelo próprio jogador (tecla, ver
@@ -59,11 +60,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public final class AvatarStateManager {
 
     private static final Set<UUID> ACTIVE = new HashSet<>();
-
-    // Chunks de água -- entidades Display de verdade (não partícula) que
-    // giram ao redor de quem está no Avatar State, ver
-    // {@link #spawnWaterChunks}/{@link #updateWaterChunks}.
-    private static final Map<UUID, List<Display.BlockDisplay>> WATER_CHUNKS = new HashMap<>();
 
     // Reforçado a cada ~4s (80 ticks) enquanto ativo, com folga de sobra
     // pra nunca deixar o efeito cair antes do próximo reforço.
@@ -112,7 +108,7 @@ public final class AvatarStateManager {
 
         ACTIVE.add(player.getUUID());
         applyBuffs(player);
-        spawnWaterChunks(player);
+        spawnAllRings(player);
         spawnActivationBurst(player);
         broadcastSync(player, true);
         player.displayClientMessage(Component.literal("§bVocê entrou no Avatar State!"), true);
@@ -124,7 +120,7 @@ public final class AvatarStateManager {
             return;
         }
         ACTIVE.remove(player.getUUID());
-        removeWaterChunks(player);
+        removeAllRings(player);
 
         PlayerAvatarData avatarData = player.getData(ModAttachments.AVATAR);
         if (avatarData.isAvatarState()) {
@@ -176,8 +172,9 @@ public final class AvatarStateManager {
                 50, 0.8, 1.2, 0.8, 0.0);
         level.sendParticles(AIR_DUST, player.getX(), player.getY() + 1.0, player.getZ(),
                 40, 1.0, 0.8, 1.0, 0.0);
-        // Chuva de blocos de terra explodindo pra fora na ativação -- some
-        // sozinha (partícula BLOCK não fica presa, só voa e desaparece).
+        // Chuva de blocos de terra explodindo pra fora na ativação -- isso
+        // aqui continua sendo só partícula de impacto (BlockParticleOption),
+        // não faz parte do anel -- some sozinha, é só o "boom" inicial.
         for (int i = 0; i < 30; i++) {
             level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, randomEarthBlock()),
                     player.getX(), player.getY() + 1.0, player.getZ(),
@@ -187,9 +184,9 @@ public final class AvatarStateManager {
 
     /**
      * Registrado via NeoForge.EVENT_BUS em ElementalsMoreBendingsMod. Reforça
-     * os efeitos periodicamente (senão expirariam) e desenha os anéis
-     * majestosos ao redor de quem está no Avatar State -- ver
-     * {@link #spawnMajesticRings}.
+     * os efeitos periodicamente (senão expirariam) e atualiza os 4 anéis de
+     * blocos reais ao redor de quem está no Avatar State -- ver
+     * {@link #updateAllRings}.
      */
     public static void onServerTick(ServerTickEvent.Post event) {
         if (ACTIVE.isEmpty()) {
@@ -210,27 +207,44 @@ public final class AvatarStateManager {
             if (player.tickCount % EFFECT_REFRESH_INTERVAL == 0) {
                 applyBuffs(player);
             }
-            spawnMajesticRings(player);
+            updateAllRings(player);
         }
     }
 
-    // ==================== Efeito visual: 4 anéis majestosos ====================
+    // ==================== Efeito visual: 4 anéis de blocos reais ====================
+    //
+    // Os 4 elementos-base giram ao redor do corpo inteiro como blocos DE
+    // VERDADE (Display.BlockDisplay), não partícula/falling_dust. O ANEL EM
+    // SI NÃO GIRA -- cada bloco fica numa posição fixa (ângulo fixo dentro
+    // do círculo, calculado só a partir do índice dele, sem nenhum termo de
+    // tempo). O que gira, e rápido, é cada bloco individualmente em torno
+    // do PRÓPRIO eixo (own-spin), com um eixo diferente por elemento:
+    //   - Ar    -> eixo X  (giro "vertical", tipo roda de bicicleta em pé)
+    //   - Água  -> eixo Y  (giro "horizontal", tipo pião/disco girando)
+    //   - Terra -> eixo diagonal (-1,1,0) (diagonal pra esquerda)
+    //   - Fogo  -> eixo diagonal ( 1,1,0) (diagonal pra direita)
 
-    // Cores sólidas (independem de luz) de cada elemento -- usadas junto
-    // com partículas "de verdade" (chama, água, poeira, nuvem) pra dar
-    // volume sem perder a identidade de cada uma.
+    private enum RingElement { FIRE, WATER, EARTH, AIR }
+
+    /** Cores sólidas usadas só no burst de ativação (não fazem parte do anel). */
     private static final DustParticleOptions FIRE_DUST =
             new DustParticleOptions(new Vector3f(1.0f, 0.55f, 0.10f), 3.0f);
     private static final DustParticleOptions WATER_DUST =
             new DustParticleOptions(new Vector3f(0.20f, 0.50f, 1.0f), 3.4f);
-    private static final DustParticleOptions EARTH_DUST =
-            new DustParticleOptions(new Vector3f(0.42f, 0.30f, 0.16f), 2.4f);
     private static final DustParticleOptions AIR_DUST =
             new DustParticleOptions(new Vector3f(0.92f, 0.96f, 1.0f), 2.0f);
 
-    // Blocos que aparecem girando no anel de Terra -- bem variados pra não
-    // ficar um bloco só repetido, dá a sensação de "pedaços de chão"
-    // arrancados e girando ao redor do corpo.
+    // ---- Partículas de ACENTO por cima dos blocos do anel de Água (não
+    // substituem os blocos, só reforçam a identidade visual) ----
+    // Fumaça azul -- mistura SMOKE puro (sem cor própria) com um tint
+    // azul (WATER_RING_SMOKE_TINT), pra dar a sensação de neblina em vez
+    // de "cubo colorido flutuando". Rate alto = dispara em quase todo
+    // índice do anel, não só uma fração pequena.
+    private static final DustParticleOptions WATER_RING_SMOKE_TINT =
+            new DustParticleOptions(new Vector3f(0.35f, 0.55f, 0.95f), 1.8f);
+
+    // Blocos variados -- só Água e Terra ainda usam blocos de verdade.
+    // Fogo e Ar viraram 100% partícula (ver PARTICLE_CONFIGS).
     private static final BlockState[] EARTH_BLOCKS = {
             Blocks.DIRT.defaultBlockState(),
             Blocks.COARSE_DIRT.defaultBlockState(),
@@ -239,32 +253,14 @@ public final class AvatarStateManager {
             Blocks.ROOTED_DIRT.defaultBlockState(),
             Blocks.MOSS_BLOCK.defaultBlockState(),
     };
+    private static final BlockState WATER_BLOCK = Blocks.LIGHT_BLUE_STAINED_GLASS.defaultBlockState();
 
-    // Ar bem denso de propósito pra parecer uma faixa CONTÍNUA (sem gaps
-    // entre os pontos), não uma sequência de partículas soltas. Água não
-    // usa mais "pontos de partícula" -- ver WATER_CHUNK_COUNT.
-    private static final int POINTS_FIRE = 90;
-    private static final int POINTS_EARTH = 90;
-    private static final int POINTS_AIR = 150;
-
-    // Chunks de água de verdade (Display entities, não partícula) -- vidro
-    // azul translúcido bem pequeno, pra parecer pedaço de água sólida
-    // girando, não um bloco cheio.
-    private static final BlockState WATER_CHUNK_BLOCK = Blocks.LIGHT_BLUE_STAINED_GLASS.defaultBlockState();
-    private static final int WATER_CHUNK_COUNT = 26;
-    private static final float WATER_CHUNK_SCALE = 0.4f;
-
-    // Raios bem maiores que antes -- os anéis ficam longe o suficiente do
-    // corpo pra não poluir a visão de quem É o Avatar (primeira pessoa),
-    // só visíveis "de fora"/em volta, tipo uma redoma.
+    // Raios/inclinações dos planos dos anéis -- controla o "desenho" de
+    // cada anel ao redor do corpo (não tem nada a ver com o own-spin).
     private static final double FIRE_RADIUS = 4.4;
     private static final double WATER_RADIUS = 5.8;
     private static final double EARTH_RADIUS = 5.1;
     private static final double AIR_RADIUS = 7.0;
-
-    // Terra ganha um jitter de posição pra dar espessura de verdade
-    // (pedaços soltos tombando), não uma linha fina.
-    private static final double EARTH_JITTER = 0.4;
 
     private static final double FIRE_TILT = Math.toRadians(12);   // quase deitado, na cintura
     private static final double WATER_TILT = Math.toRadians(68);  // quase em pé, subindo alto
@@ -272,68 +268,246 @@ public final class AvatarStateManager {
     private static final double AIR_TILT = Math.toRadians(-55);   // diagonal oposta, o mais alto de todos
 
     /**
-     * Os 4 elementos-base girando ao redor do corpo inteiro, bem afastados
-     * (raios grandes, ver constantes acima) pra não atrapalhar a visão de
-     * quem está no Avatar State. Cada elemento tem uma linguagem visual
-     * própria, parecida com a referência (Avatar: A Lenda de Aang):
-     * <ul>
-     *     <li><b>Água</b> -- UMA faixa contínua só (sem camada duplicada),
-     *     composta majoritariamente de gotas de água de verdade
-     *     (FALLING_WATER/SPLASH) em vez de poeira quadrada -- isso é o que
-     *     elimina a "nuvem de cubos azuis" poluída de antes. WATER_DUST
-     *     entra só como um terço dos pontos, pra dar corpo/cor sólida sem
-     *     dominar o visual.</li>
-     *     <li><b>Fogo</b> -- bem denso e chamativo: mais pontos no anel +
-     *     mais partículas por ponto (chama, lava e brilho de cor
-     *     misturados), pra ficar bem "berrante".</li>
-     *     <li><b>Terra</b> -- vários blocos de verdade girando, com jitter
-     *     de posição pra parecer pedaços soltos tombando, não uma linha
-     *     perfeita.</li>
-     *     <li><b>Ar</b> -- as mesmas partículas de fumaça de antes, só que
-     *     com rate BEM maior (mais pontos + mais partículas por ponto).</li>
-     * </ul>
+     * Configuração fixa de cada anel. {@code spinAxis} é o eixo (já
+     * normalizado) em torno do qual CADA BLOCO gira em torno de si mesmo;
+     * {@code spinDegPerTick} é a velocidade desse giro (bem alta = "muito
+     * rápido" como pedido). {@code jitterRadius}/{@code jitterHeight}
+     * dão variação fixa por índice (só a Terra usa, pra parecer pedaços
+     * de chão desalinhados -- mas sem recalcular a cada tick, senão o
+     * bloco ficaria "tremendo" em vez de só girando).
      */
-    private static void spawnMajesticRings(ServerPlayer player) {
+    private record RingConfig(double radius, double tilt, int count, float scale,
+                              Vector3f spinAxis, double spinDegPerTick,
+                              IntFunction<BlockState> blockAt,
+                              double jitterRadius, double jitterHeight) {
+    }
+
+    // Só Água e Terra usam blocos de verdade agora.
+    private static final List<RingElement> BLOCK_ELEMENTS = List.of(RingElement.WATER, RingElement.EARTH);
+
+    private static final Map<RingElement, RingConfig> CONFIGS = new EnumMap<>(RingElement.class);
+    static {
+        CONFIGS.put(RingElement.WATER, new RingConfig(
+                WATER_RADIUS, WATER_TILT, 26, 0.40f,
+                new Vector3f(0f, 1f, 0f), 30,
+                i -> WATER_BLOCK,
+                0.0, 0.0));
+        CONFIGS.put(RingElement.EARTH, new RingConfig(
+                EARTH_RADIUS, EARTH_TILT, 32, 0.45f,
+                new Vector3f(-1f, 1f, 0f).normalize(), 26,
+                i -> EARTH_BLOCKS[i % EARTH_BLOCKS.length],
+                0.4, 0.25));
+    }
+
+    /**
+     * Configuração dos anéis 100% partícula (Fogo e Ar) -- sem entidade
+     * nenhuma, só {@code level.sendParticles} todo tick, na posição FIXA
+     * do anel (mesmo princípio de antes: sem termo de tempo na posição,
+     * só a densidade/rate é alta). {@code particlesPerPoint} é o que dá
+     * o "rate alto" pedido -- cada ponto do anel dispara várias
+     * partículas por tick, não só uma.
+     */
+    private record ParticleRingConfig(double radius, double tilt, int count, int particlesPerPoint) {
+    }
+
+    private static final Map<RingElement, ParticleRingConfig> PARTICLE_CONFIGS = new EnumMap<>(RingElement.class);
+    static {
+        PARTICLE_CONFIGS.put(RingElement.FIRE, new ParticleRingConfig(FIRE_RADIUS, FIRE_TILT, 70, 3));
+        PARTICLE_CONFIGS.put(RingElement.AIR, new ParticleRingConfig(AIR_RADIUS, AIR_TILT, 90, 4));
+    }
+
+    private static final Map<RingElement, Map<UUID, List<Display.BlockDisplay>>> CHUNKS = new EnumMap<>(RingElement.class);
+    static {
+        for (RingElement element : BLOCK_ELEMENTS) {
+            CHUNKS.put(element, new java.util.HashMap<>());
+        }
+    }
+
+    private static void spawnAllRings(ServerPlayer player) {
+        for (RingElement element : BLOCK_ELEMENTS) {
+            spawnRing(element, player);
+        }
+    }
+
+    private static void removeAllRings(ServerPlayer player) {
+        for (RingElement element : BLOCK_ELEMENTS) {
+            removeRing(element, player);
+        }
+    }
+
+    private static void updateAllRings(ServerPlayer player) {
+        double baseY = player.getY() + 1.0;
+        for (RingElement element : BLOCK_ELEMENTS) {
+            updateRing(element, player, baseY);
+        }
+        drawParticleRing(RingElement.FIRE, player, baseY);
+        drawParticleRing(RingElement.AIR, player, baseY);
+    }
+
+    /**
+     * Anel 100% partícula (Fogo/Ar) -- posição fixa por índice (sem
+     * orbitar, mesmo princípio dos anéis de bloco), rate alto de
+     * partículas por ponto. Fogo = só FLAME/SMALL_FLAME (nunca LAVA). Ar
+     * = só WHITE_SMOKE (fumaça branca pura, nada de dust/bloco).
+     */
+    private static void drawParticleRing(RingElement element, ServerPlayer player, double baseY) {
         if (!(player.level() instanceof ServerLevel level)) {
             return;
         }
-        double baseY = player.getY() + 1.0;
+        ParticleRingConfig config = PARTICLE_CONFIGS.get(element);
+        int count = config.count();
+        for (int i = 0; i < count; i++) {
+            double angle = (2 * Math.PI * i) / count;
+            double localX = config.radius() * Math.cos(angle);
+            double localY = config.radius() * Math.sin(angle) * Math.sin(config.tilt());
+            double localZ = config.radius() * Math.sin(angle) * Math.cos(config.tilt());
+            double x = player.getX() + localX;
+            double y = baseY + localY;
+            double z = player.getZ() + localZ;
+
+            net.minecraft.core.particles.ParticleOptions particle = switch (element) {
+                case FIRE -> (i % 5 == 0) ? ParticleTypes.SMALL_FLAME : ParticleTypes.FLAME;
+                case AIR -> ParticleTypes.WHITE_SMOKE;
+                default -> ParticleTypes.CLOUD; // nunca usado (só FIRE/AIR chamam este método)
+            };
+
+            level.sendParticles(particle, x, y, z, config.particlesPerPoint(), 0.06, 0.06, 0.06, 0.01);
+        }
+    }
+
+    /**
+     * Partícula de acento tocada na posição atual (real, do tick) de um
+     * bloco do anel. Usa {@code index % N} pra não disparar em TODOS os
+     * blocos todo tick (ia virar uma nuvem sólida) -- só numa fração
+     * deles, o que já basta pra reforçar a identidade do elemento sem
+     * abafar os blocos.
+     */
+    private static void spawnRingAccent(RingElement element, ServerLevel level, int index,
+                                        double x, double y, double z) {
+        switch (element) {
+            case WATER -> {
+                // Fumaça azul com RATE ALTO agora -- dispara em quase
+                // todo bloco do anel (era 1 a cada 4/8, agora 1 a cada
+                // 2/3), alternando SMOKE puro (neblina) com o tint azul
+                // (WATER_RING_SMOKE_TINT) pra não virar um borrão sólido
+                // de cor por cima dos blocos.
+                if (index % 2 == 0) {
+                    level.sendParticles(ParticleTypes.SMOKE, x, y, z, 2, 0.06, 0.09, 0.06, 0.006);
+                }
+                if (index % 3 == 0) {
+                    level.sendParticles(WATER_RING_SMOKE_TINT, x, y, z, 1, 0.06, 0.06, 0.06, 0.0);
+                }
+            }
+            case EARTH -> {
+                // Terra fica só com os blocos de verdade, sem acento --
+                // não foi pedido e ia poluir a leitura de "pedra tombando".
+            }
+            default -> {
+                // Fogo e Ar não passam mais por aqui -- viraram anéis
+                // 100% partícula, ver drawParticleRing.
+            }
+        }
+    }
+
+    private static void spawnRing(RingElement element, ServerPlayer player) {
+        if (!(player.level() instanceof ServerLevel level)) {
+            return;
+        }
+        removeRing(element, player); // por garantia, nunca duplica se já tinha algo sobrando
+        RingConfig config = CONFIGS.get(element);
+        List<Display.BlockDisplay> chunks = new ArrayList<>(config.count());
+        for (int i = 0; i < config.count(); i++) {
+            chunks.add(newRingChunkEntity(level, player, config.blockAt().apply(i)));
+        }
+        CHUNKS.get(element).put(player.getUUID(), chunks);
+    }
+
+    private static Display.BlockDisplay newRingChunkEntity(ServerLevel level, ServerPlayer player, BlockState state) {
+        Display.BlockDisplay display = new Display.BlockDisplay(EntityType.BLOCK_DISPLAY, level);
+        applyBlockState(display, state);
+        display.setNoGravity(true);
+        display.setPos(player.getX(), player.getY() + 1.0, player.getZ());
+        level.addFreshEntity(display);
+        return display;
+    }
+
+    private static void removeRing(RingElement element, ServerPlayer player) {
+        List<Display.BlockDisplay> chunks = CHUNKS.get(element).remove(player.getUUID());
+        if (chunks == null) {
+            return;
+        }
+        for (Display.BlockDisplay display : chunks) {
+            display.discard();
+        }
+    }
+
+    /**
+     * Reposiciona (na posição FIXA do anel, sem termo de tempo -- é isso
+     * que faz o anel em si não girar) e aplica o own-spin rápido em cada
+     * bloco do anel deste elemento.
+     */
+    private static void updateRing(RingElement element, ServerPlayer player, double baseY) {
+        Map<UUID, List<Display.BlockDisplay>> storage = CHUNKS.get(element);
+        List<Display.BlockDisplay> chunks = storage.get(player.getUUID());
+        if (chunks == null) {
+            spawnRing(element, player);
+            chunks = storage.get(player.getUUID());
+            if (chunks == null) {
+                return;
+            }
+        }
+        if (!(player.level() instanceof ServerLevel level)) {
+            return;
+        }
+        RingConfig config = CONFIGS.get(element);
         double t = player.tickCount;
-        double spinFire = Math.toRadians(t * 3.4);
-        double spinWater = Math.toRadians(-t * 2.2);
-        double spinEarth = Math.toRadians(t * 1.6);
-        double spinAir = Math.toRadians(-t * 4.2);
+        int count = chunks.size();
 
-        // ---- Fogo: bem denso e chamativo, mas SÓ fogo puro -- sem LAVA
-        // (que solta fuligem/fumaça cinza como efeito colateral) nem
-        // FIRE_DUST (poeira quadrada). Só FLAME + SMALL_FLAME, mais
-        // pontos (POINTS_FIRE) e 3 partículas por ponto.
-        drawElementalRing(level, player, baseY, FIRE_RADIUS, FIRE_TILT, spinFire, POINTS_FIRE,
-                i -> (i % 4 == 0) ? ParticleTypes.SMALL_FLAME : ParticleTypes.FLAME, 3);
+        for (int i = 0; i < count; i++) {
+            Display.BlockDisplay display = chunks.get(i);
+            if (display.isRemoved()) {
+                // Chunk sumiu (chunk do mundo descarregou, etc.) -- recria
+                // no lugar pra nunca ficar faltando um pedaço do anel.
+                display = newRingChunkEntity(level, player, config.blockAt().apply(i));
+                chunks.set(i, display);
+            }
 
-        // ---- Água: NÃO é partícula -- são chunks de água de verdade
-        // (Display entities com bloco de vidro azul translúcido, cada um
-        // girando no próprio eixo) orbitando o corpo. Ver
-        // updateWaterChunks. Nada de FALLING_WATER/fumaça azul aqui.
-        updateWaterChunks(player, baseY, spinWater);
+            // ---- Posição: SÓ depende do índice (ângulo fixo) + jitter
+            // fixo por índice. Nenhum termo de tempo aqui -- é isso que
+            // mantém o anel parado na posição, sem orbitar.
+            double angle = (2 * Math.PI * i) / count;
+            double jitterR = config.jitterRadius() != 0.0
+                    ? config.jitterRadius() * Math.sin(i * 2.399963) : 0.0;
+            double jitterH = config.jitterHeight() != 0.0
+                    ? config.jitterHeight() * Math.cos(i * 1.618034) : 0.0;
+            double radius = config.radius() + jitterR;
 
-        // ---- Terra: vários blocos tombando, com jitter de posição ----
-        drawElementalRingJittered(level, player, baseY, EARTH_RADIUS, EARTH_TILT, spinEarth, POINTS_EARTH,
-                i -> (i % 6 == 0) ? EARTH_DUST : new BlockParticleOption(ParticleTypes.BLOCK, randomEarthBlock()),
-                EARTH_JITTER);
+            double localX = radius * Math.cos(angle);
+            double localY = radius * Math.sin(angle) * Math.sin(config.tilt());
+            double localZ = radius * Math.sin(angle) * Math.cos(config.tilt());
 
-        // ---- Ar: mesma fumaça de antes, rate BEM maior -- mais pontos
-        // (POINTS_AIR) + 5 partículas por ponto (era 3).
-        drawElementalRing(level, player, baseY, AIR_RADIUS, AIR_TILT, spinAir, POINTS_AIR,
-                i -> (i % 5 == 0) ? AIR_DUST : ParticleTypes.CLOUD, 5);
+            double worldX = player.getX() + localX;
+            double worldY = baseY + localY + jitterH;
+            double worldZ = player.getZ() + localZ;
+            display.setPos(worldX, worldY, worldZ);
+            spawnRingAccent(element, level, i, worldX, worldY, worldZ);
 
-        // Brilhos de destaque correndo pelos anéis -- reforça a sensação
-        // de "energia" cruzando o corpo, igual as fagulhas claras na
-        // referência.
-        if (t % 4 == 0) {
-            spawnHighlight(level, player, baseY, FIRE_RADIUS, FIRE_TILT, spinFire, ParticleTypes.FLAME);
-            spawnHighlight(level, player, baseY, WATER_RADIUS, WATER_TILT, spinWater, ParticleTypes.END_ROD);
-            spawnHighlight(level, player, baseY, AIR_RADIUS, AIR_TILT, spinAir, ParticleTypes.END_ROD);
+            // ---- Own-spin: aqui sim tem termo de tempo (t), bem rápido
+            // (spinDegPerTick alto), em torno do eixo específico do
+            // elemento. Um pequeno offset de fase por índice evita que
+            // todos os blocos girem exatamente em sincronia (fica mais
+            // orgânico), mas não afeta a posição, só a rotação visual.
+            float phase = (float) Math.toRadians(t * config.spinDegPerTick() + i * 17);
+            Vector3f axis = config.spinAxis();
+            Quaternionf rotation = new Quaternionf().rotateAxis(phase, axis.x, axis.y, axis.z);
+
+            float scale = config.scale();
+            Transformation transformation = new Transformation(
+                    new Vector3f(-scale / 2f, -scale / 2f, -scale / 2f),
+                    rotation,
+                    new Vector3f(scale),
+                    new Quaternionf());
+            applyTransformation(display, transformation);
         }
     }
 
@@ -365,7 +539,7 @@ public final class AvatarStateManager {
         try {
             BLOCK_DISPLAY_SET_BLOCK_STATE.invoke(display, state);
         } catch (ReflectiveOperationException e) {
-            throw new RuntimeException("Falha ao aplicar block state no chunk de água", e);
+            throw new RuntimeException("Falha ao aplicar block state no chunk do anel", e);
         }
     }
 
@@ -373,94 +547,7 @@ public final class AvatarStateManager {
         try {
             DISPLAY_SET_TRANSFORMATION.invoke(display, transformation);
         } catch (ReflectiveOperationException e) {
-            throw new RuntimeException("Falha ao aplicar transformação no chunk de água", e);
-        }
-    }
-
-    /**
-     * Cria os chunks de água (Display entities) de um jogador ao entrar no
-     * Avatar State. São {@code WATER_CHUNK_COUNT} blocos de vidro azul
-     * translúcido, minúsculos, sem física/gravidade -- só visual, cada um
-     * atualizado todo tick em {@link #updateWaterChunks}.
-     */
-    private static void spawnWaterChunks(ServerPlayer player) {
-        if (!(player.level() instanceof ServerLevel level)) {
-            return;
-        }
-        removeWaterChunks(player); // por garantia, nunca duplica se já tinha algum sobrando
-        List<Display.BlockDisplay> chunks = new ArrayList<>(WATER_CHUNK_COUNT);
-        for (int i = 0; i < WATER_CHUNK_COUNT; i++) {
-            chunks.add(newWaterChunkEntity(level, player));
-        }
-        WATER_CHUNKS.put(player.getUUID(), chunks);
-    }
-
-    private static Display.BlockDisplay newWaterChunkEntity(ServerLevel level, ServerPlayer player) {
-        Display.BlockDisplay display = new Display.BlockDisplay(EntityType.BLOCK_DISPLAY, level);
-        applyBlockState(display, WATER_CHUNK_BLOCK);
-        display.setNoGravity(true);
-        display.setPos(player.getX(), player.getY() + 1.0, player.getZ());
-        level.addFreshEntity(display);
-        return display;
-    }
-
-    /**
-     * Reposiciona todo tick os chunks de água no anel girando ao redor do
-     * corpo (mesma matemática de {@link #sendRingPoint}, mas aplicada
-     * numa entidade de verdade em vez de mandar partícula), e dá pra cada
-     * um uma rotação própria (own-spin) pra parecer pedaço de água
-     * tombando, não um cubo estático grudado no anel.
-     */
-    private static void updateWaterChunks(ServerPlayer player, double baseY, double spinWater) {
-        List<Display.BlockDisplay> chunks = WATER_CHUNKS.get(player.getUUID());
-        if (chunks == null) {
-            spawnWaterChunks(player);
-            chunks = WATER_CHUNKS.get(player.getUUID());
-            if (chunks == null) {
-                return;
-            }
-        }
-        if (!(player.level() instanceof ServerLevel level)) {
-            return;
-        }
-        double t = player.tickCount;
-        int count = chunks.size();
-        for (int i = 0; i < count; i++) {
-            Display.BlockDisplay display = chunks.get(i);
-            if (display.isRemoved()) {
-                // Chunk sumiu (chunk do mundo descarregou, etc.) -- recria
-                // no lugar pra nunca ficar faltando um pedaço do anel.
-                display = newWaterChunkEntity(level, player);
-                chunks.set(i, display);
-            }
-
-            double angle = (2 * Math.PI * i) / count;
-            double localX = WATER_RADIUS * Math.cos(angle);
-            double localY = WATER_RADIUS * Math.sin(angle) * Math.sin(WATER_TILT);
-            double localZ = WATER_RADIUS * Math.sin(angle) * Math.cos(WATER_TILT);
-            double worldX = localX * Math.cos(spinWater) - localZ * Math.sin(spinWater);
-            double worldZ = localX * Math.sin(spinWater) + localZ * Math.cos(spinWater);
-            display.setPos(player.getX() + worldX, baseY + localY, player.getZ() + worldZ);
-
-            float ownSpin = (float) Math.toRadians(t * 6 + i * 37);
-            Quaternionf rotation = new Quaternionf().rotateY(ownSpin).rotateX(ownSpin * 0.6f);
-            Transformation transformation = new Transformation(
-                    new Vector3f(-WATER_CHUNK_SCALE / 2f, -WATER_CHUNK_SCALE / 2f, -WATER_CHUNK_SCALE / 2f),
-                    rotation,
-                    new Vector3f(WATER_CHUNK_SCALE),
-                    new Quaternionf());
-            applyTransformation(display, transformation);
-        }
-    }
-
-    /** Descarta os chunks de água de um jogador (saída do Avatar State/logout). */
-    private static void removeWaterChunks(ServerPlayer player) {
-        List<Display.BlockDisplay> chunks = WATER_CHUNKS.remove(player.getUUID());
-        if (chunks == null) {
-            return;
-        }
-        for (Display.BlockDisplay display : chunks) {
-            display.discard();
+            throw new RuntimeException("Falha ao aplicar transformação no chunk do anel", e);
         }
     }
 
@@ -468,76 +555,11 @@ public final class AvatarStateManager {
         return EARTH_BLOCKS[ThreadLocalRandom.current().nextInt(EARTH_BLOCKS.length)];
     }
 
-    private interface RingParticleFactory {
-        net.minecraft.core.particles.ParticleOptions particleFor(int index);
-    }
-
-    /** @param particlesPerPoint quantas partículas mandar em cada ponto do anel (rate/densidade visual). */
-    private static void drawElementalRing(ServerLevel level, ServerPlayer player, double baseY,
-                                          double radius, double tilt, double spin, int points,
-                                          RingParticleFactory factory, int particlesPerPoint) {
-        for (int i = 0; i < points; i++) {
-            double angle = (2 * Math.PI * i) / points;
-            sendRingPoint(level, player, baseY, factory.particleFor(i), radius, tilt, spin, angle, particlesPerPoint);
-        }
-    }
-
-    /**
-     * Igual a {@link #drawElementalRing}, mas com um pequeno deslocamento
-     * ALEATÓRIO (recalculado a cada tick) no raio e na altura de cada
-     * ponto -- usado só pela Terra, pra parecer pedaços de chão soltos
-     * tombando ao redor do corpo em vez de uma linha perfeitamente lisa.
-     */
-    private static void drawElementalRingJittered(ServerLevel level, ServerPlayer player, double baseY,
-                                                  double radius, double tilt, double spin, int points,
-                                                  RingParticleFactory factory, double jitter) {
-        ThreadLocalRandom random = ThreadLocalRandom.current();
-        for (int i = 0; i < points; i++) {
-            double angle = (2 * Math.PI * i) / points;
-            double jitteredRadius = radius + random.nextDouble(-jitter, jitter);
-            sendRingPoint(level, player, baseY + random.nextDouble(-jitter, jitter),
-                    factory.particleFor(i), jitteredRadius, tilt, spin, angle, 1);
-        }
-    }
-
-    private static void spawnHighlight(ServerLevel level, ServerPlayer player, double baseY,
-                                       double radius, double tilt, double spin,
-                                       net.minecraft.core.particles.ParticleOptions type) {
-        // Dois pontos opostos no anel, pra parecer um brilho correndo dos
-        // dois lados ao mesmo tempo.
-        sendRingPoint(level, player, baseY, type, radius, tilt, spin, 0, 1);
-        sendRingPoint(level, player, baseY, type, radius, tilt, spin, Math.PI, 1);
-    }
-
-    private static void sendRingPoint(ServerLevel level, ServerPlayer player, double baseY,
-                                      net.minecraft.core.particles.ParticleOptions particle,
-                                      double radius, double tilt, double spin, double angle,
-                                      int count) {
-        // Círculo "deitado" no plano XZ, inclinado (tilt) pra levantar um
-        // lado em direção ao céu, depois girado (spin) em torno do eixo
-        // vertical -- é isso que dá o efeito de anel inclinado rodando.
-        double localX = radius * Math.cos(angle);
-        double localY = radius * Math.sin(angle) * Math.sin(tilt);
-        double localZ = radius * Math.sin(angle) * Math.cos(tilt);
-
-        double worldX = localX * Math.cos(spin) - localZ * Math.sin(spin);
-        double worldZ = localX * Math.sin(spin) + localZ * Math.cos(spin);
-
-        // count > 1 espalha um pouquinho as partículas extras (spread
-        // pequeno) em vez de empilhar todas exatamente no mesmo pixel --
-        // é isso que dá a sensação de "mais denso"/"rate maior" (usado no
-        // Fogo e no Ar) sem parecer um bug de partícula duplicada.
-        double spread = count > 1 ? 0.10 : 0.0;
-        level.sendParticles(particle,
-                player.getX() + worldX, baseY + localY, player.getZ() + worldZ,
-                count, spread, spread, spread, 0.0);
-    }
-
     /** Limpa o UUID de quem desconecta com o Avatar State ligado (sem tentar revogar bendings -- já persistem no NBT). */
     public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
         if (event.getEntity() instanceof ServerPlayer sp) {
             ACTIVE.remove(sp.getUUID());
-            removeWaterChunks(sp);
+            removeAllRings(sp);
         }
     }
 }
