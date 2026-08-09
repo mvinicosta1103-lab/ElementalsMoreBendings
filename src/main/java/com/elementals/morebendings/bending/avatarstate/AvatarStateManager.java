@@ -4,7 +4,6 @@ import com.elementals.morebendings.commands.MoreBendingCommand;
 import com.elementals.morebendings.data.PlayerAvatarData;
 import com.elementals.morebendings.network.packets.SyncAvatarStatePacket;
 import com.elementals.morebendings.registry.ModAttachments;
-import com.elementals.morebendings.registry.ModBlocks;
 import commonnetwork.api.Dispatcher;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.air.AirElement;
@@ -64,58 +63,23 @@ public final class AvatarStateManager {
 
     private static final Set<UUID> ACTIVE = new HashSet<>();
 
-    // Quais anéis (Fogo/Água/Terra/Ar) cada jogador desligou manualmente
-    // enquanto o Avatar State está ligado (ver #toggleRing). Vazio/sem
-    // entrada = todos os anéis ligados (comportamento padrão de antes).
-    // Reseta (todos voltam a ligado) toda vez que o Avatar State é
-    // reativado -- ver #deactivate/#onPlayerLoggedOut.
-    private static final Map<UUID, Set<RingElement>> DISABLED_RINGS = new HashMap<>();
-
     // Reforçado a cada ~4s (80 ticks) enquanto ativo, com folga de sobra
     // pra nunca deixar o efeito cair antes do próximo reforço.
     private static final int EFFECT_DURATION_TICKS = 140;
     private static final int EFFECT_REFRESH_INTERVAL = 80;
+
+    // Anéis desligados individualmente (por elemento) pelo próprio
+    // jogador enquanto está no Avatar State -- ver #toggleRing. Vazio ou
+    // sem entrada = todos ligados. Resetado (removido) sempre que o
+    // Avatar State inteiro desliga, pra nunca "vazar" pra próxima
+    // ativação.
+    private static final Map<UUID, Set<RingElement>> DISABLED_RINGS = new HashMap<>();
 
     private AvatarStateManager() {
     }
 
     public static boolean isActive(ServerPlayer player) {
         return ACTIVE.contains(player.getUUID());
-    }
-
-    /**
-     * Liga/desliga individualmente um dos 4 anéis do Avatar State pra
-     * este jogador (ver {@code ToggleFireRingPacket} e as outras 3
-     * variantes, uma tecla dedicada por anel). Só tem efeito se o
-     * Avatar State já estiver ativo. Anéis de bloco (Água/Terra) são
-     * removidos NA HORA ao desligar, em vez de esperar o próximo tick
-     * -- não faz sentido o jogador desligar e ainda ver o anel parado
-     * ali até o próximo {@link #updateAllRings}.
-     *
-     * @return o novo estado do anel (true = ligado agora), ou {@code
-     * null} se o Avatar State nem estava ativo (nada mudou).
-     */
-    public static Boolean toggleRing(ServerPlayer player, RingElement element) {
-        if (!isActive(player)) {
-            return null;
-        }
-        Set<RingElement> disabled = DISABLED_RINGS.computeIfAbsent(player.getUUID(), id -> EnumSet.noneOf(RingElement.class));
-        boolean nowEnabled;
-        if (disabled.remove(element)) {
-            nowEnabled = true;
-        } else {
-            disabled.add(element);
-            nowEnabled = false;
-            if (BLOCK_ELEMENTS.contains(element)) {
-                removeRing(element, player);
-            }
-        }
-        return nowEnabled;
-    }
-
-    private static boolean isRingEnabled(ServerPlayer player, RingElement element) {
-        Set<RingElement> disabled = DISABLED_RINGS.get(player.getUUID());
-        return disabled == null || !disabled.contains(element);
     }
 
     public static boolean isEligible(ServerPlayer player) {
@@ -133,6 +97,44 @@ public final class AvatarStateManager {
             return false;
         }
         return activate(player);
+    }
+
+    /**
+     * Liga/desliga o anel de UM elemento específico enquanto o jogador
+     * está no Avatar State (ver {@code ToggleFireRingPacket} e as outras
+     * 3 packets equivalentes). Não faz nada (retorna {@code null}) se o
+     * jogador nem está no Avatar State -- não tem anel nenhum ativo pra
+     * mexer. O estado é lembrado em {@link #DISABLED_RINGS} e respeitado
+     * ali até o próximo {@link #updateAllRings}.
+     *
+     * @return o novo estado do anel (true = ligado, false = desligado),
+     * ou {@code null} se o jogador não está no Avatar State.
+     */
+    public static Boolean toggleRing(ServerPlayer player, RingElement element) {
+        if (!isActive(player)) {
+            return null;
+        }
+        Set<RingElement> disabled = DISABLED_RINGS.computeIfAbsent(player.getUUID(), id -> EnumSet.noneOf(RingElement.class));
+        boolean nowEnabled;
+        if (disabled.contains(element)) {
+            disabled.remove(element);
+            nowEnabled = true;
+        } else {
+            disabled.add(element);
+            nowEnabled = false;
+            if (BLOCK_ELEMENTS.contains(element)) {
+                // Anéis de bloco têm entidade de verdade -- some na hora.
+                // Anéis de partícula (Fogo/Ar) não têm entidade, só param
+                // de ser desenhados no próximo tick (ver updateAllRings).
+                removeRing(element, player);
+            }
+        }
+        return nowEnabled;
+    }
+
+    private static boolean isRingEnabled(ServerPlayer player, RingElement element) {
+        Set<RingElement> disabled = DISABLED_RINGS.get(player.getUUID());
+        return disabled == null || !disabled.contains(element);
     }
 
     public static boolean activate(ServerPlayer player) {
@@ -276,6 +278,7 @@ public final class AvatarStateManager {
     // mesmo (own-spin, bem mais lento que a órbita) só pra dar textura --
     // o movimento dominante é sempre a órbita.
 
+    /** Público agora -- precisa ser referenciado pelas 4 packets de toggle individual. */
     public enum RingElement { FIRE, WATER, EARTH, AIR }
 
     /** Cores sólidas usadas só no burst de ativação (não fazem parte do anel). */
@@ -305,13 +308,7 @@ public final class AvatarStateManager {
             Blocks.ROOTED_DIRT.defaultBlockState(),
             Blocks.MOSS_BLOCK.defaultBlockState(),
     };
-    // Água DE VERDADE (mesma sprite animada da água real do jogo, com o
-    // mesmo tint azul), não vidro -- ver ModBlocks#WATER_RING_DISPLAY
-    // pro motivo de não dar simplesmente pra usar Blocks.WATER aqui
-    // (fluido não tem baked model, então um BlockDisplay com
-    // Blocks.WATER.defaultBlockState() renderiza o cubo "missing", não
-    // água).
-    private static final BlockState WATER_BLOCK = ModBlocks.WATER_RING_DISPLAY.get().defaultBlockState();
+    private static final BlockState WATER_BLOCK = Blocks.LIGHT_BLUE_STAINED_GLASS.defaultBlockState();
 
     // Raios dos anéis -- controla o tamanho de cada anel ao redor do
     // corpo (o PLANO de cada anel agora vem do eixo, não de um "tilt").
@@ -368,14 +365,8 @@ public final class AvatarStateManager {
     private static final Map<RingElement, RingConfig> CONFIGS = new EnumMap<>(RingElement.class);
     private static final Map<RingElement, Vector3f[]> BLOCK_BASIS = new EnumMap<>(RingElement.class);
     static {
-        // Rate bem mais alto que antes (26 -> 90) + scale um pouco maior
-        // que o espaçamento angular resultante (2*pi*WATER_RADIUS/90 ≈
-        // 0.40 bloco) -- é a combinação dessas duas contas que faz os
-        // cubos se sobreporem e formarem uma fita contínua de água em
-        // vez de cubos soltos boiando (era o caso antes, ver imagem de
-        // referência do pedido).
         CONFIGS.put(RingElement.WATER, new RingConfig(
-                WATER_RADIUS, 90, 0.46f,
+                WATER_RADIUS, 26, 0.40f,
                 WATER_AXIS, 34, 8,
                 i -> WATER_BLOCK,
                 0.0, 0.0));
@@ -396,25 +387,14 @@ public final class AvatarStateManager {
      * {@code particlesPerPoint} é o que dá o "rate alto" pedido.
      */
     private record ParticleRingConfig(double radius, int count, int particlesPerPoint,
-                                      Vector3f axis, double orbitDegPerTick, double heightOffset) {
+                                      Vector3f axis, double orbitDegPerTick) {
     }
-
-    // O eixo do Fogo é diagonal a 45° (FIRE_AXIS = (1,1,0)), então metade
-    // do anel mergulha ABAIXO do centro (baseY). Pra um jogador em pé no
-    // chão (baseY = pés + 1), o ponto mais baixo do anel cai uns
-    // radius*0.71 ≈ 3.1 blocos abaixo do centro -- ou seja, uns 2 blocos
-    // DENTRO do chão. O que parecia um "rastro" reto de fogo grudado no
-    // terreno era exatamente isso: o anel sendo cortado pela superfície,
-    // não fogo de verdade rastejando. FIRE_HEIGHT_OFFSET sobe o centro
-    // do anel o suficiente pra até o ponto mais baixo ficar acima dos
-    // pés, então o anel inteiro fica visível no ar, sem tocar o chão.
-    private static final double FIRE_HEIGHT_OFFSET = 2.6;
 
     private static final Map<RingElement, ParticleRingConfig> PARTICLE_CONFIGS = new EnumMap<>(RingElement.class);
     private static final Map<RingElement, Vector3f[]> PARTICLE_BASIS = new EnumMap<>(RingElement.class);
     static {
-        PARTICLE_CONFIGS.put(RingElement.FIRE, new ParticleRingConfig(FIRE_RADIUS, 70, 3, FIRE_AXIS, 38, FIRE_HEIGHT_OFFSET));
-        PARTICLE_CONFIGS.put(RingElement.AIR, new ParticleRingConfig(AIR_RADIUS, 90, 4, AIR_AXIS, 44, 0.0));
+        PARTICLE_CONFIGS.put(RingElement.FIRE, new ParticleRingConfig(FIRE_RADIUS, 70, 3, FIRE_AXIS, 38));
+        PARTICLE_CONFIGS.put(RingElement.AIR, new ParticleRingConfig(AIR_RADIUS, 90, 4, AIR_AXIS, 44));
         for (Map.Entry<RingElement, ParticleRingConfig> entry : PARTICLE_CONFIGS.entrySet()) {
             PARTICLE_BASIS.put(entry.getKey(), perpendicularBasis(entry.getValue().axis()));
         }
@@ -481,7 +461,7 @@ public final class AvatarStateManager {
             double cos = Math.cos(angle);
             double sin = Math.sin(angle);
             double x = player.getX() + config.radius() * (cos * u.x + sin * v.x);
-            double y = baseY + config.heightOffset() + config.radius() * (cos * u.y + sin * v.y);
+            double y = baseY + config.radius() * (cos * u.y + sin * v.y);
             double z = player.getZ() + config.radius() * (cos * u.z + sin * v.z);
 
             net.minecraft.core.particles.ParticleOptions particle = switch (element) {
@@ -546,7 +526,6 @@ public final class AvatarStateManager {
         applyBlockState(display, state);
         display.setNoGravity(true);
         display.setPos(player.getX(), player.getY() + 1.0, player.getZ());
-        enableSmoothInterpolation(display);
         level.addFreshEntity(display);
         return display;
     }
@@ -645,23 +624,6 @@ public final class AvatarStateManager {
      */
     private static final Method BLOCK_DISPLAY_SET_BLOCK_STATE;
     private static final Method DISPLAY_SET_TRANSFORMATION;
-    private static final Method DISPLAY_SET_POS_ROT_INTERPOLATION_DURATION;
-    private static final Method DISPLAY_SET_TRANSFORMATION_INTERPOLATION_DURATION;
-
-    // Quantos ticks o CLIENTE leva pra interpolar entre uma posição/
-    // transformação e a próxima. Sem isso, cada display.setPos(...) (e
-    // cada applyTransformation, no own-spin) é um TELEPORTE instantâneo
-    // -- o cliente só recebe a posição nova do nada, nunca as
-    // intermediárias -- e como a água orbita 34°/tick num anel de 90
-    // blocos (espaçados só 4° entre si), cada bloco pula bem mais que
-    // um "slot" a cada tick. É isso que lia como "girando bagunçado e
-    // duro" em vez de fluido: geometricamente já era um círculo
-    // perfeito, só não estava sendo desenhado suave entre os ticks.
-    // Ligar a interpolação (usada normalmente pra qualquer animação de
-    // Display no jogo) faz o cliente preencher o movimento entre um
-    // tick e o outro em vez de saltar, virando um giro contínuo e
-    // perfeitamente circunferencial.
-    private static final int RING_INTERPOLATION_TICKS = 3;
 
     static {
         try {
@@ -669,10 +631,6 @@ public final class AvatarStateManager {
             BLOCK_DISPLAY_SET_BLOCK_STATE.setAccessible(true);
             DISPLAY_SET_TRANSFORMATION = Display.class.getDeclaredMethod("setTransformation", Transformation.class);
             DISPLAY_SET_TRANSFORMATION.setAccessible(true);
-            DISPLAY_SET_POS_ROT_INTERPOLATION_DURATION = Display.class.getDeclaredMethod("setPosRotInterpolationDuration", int.class);
-            DISPLAY_SET_POS_ROT_INTERPOLATION_DURATION.setAccessible(true);
-            DISPLAY_SET_TRANSFORMATION_INTERPOLATION_DURATION = Display.class.getDeclaredMethod("setTransformationInterpolationDuration", int.class);
-            DISPLAY_SET_TRANSFORMATION_INTERPOLATION_DURATION.setAccessible(true);
         } catch (NoSuchMethodException e) {
             throw new ExceptionInInitializerError(e);
         }
@@ -694,22 +652,6 @@ public final class AvatarStateManager {
         }
     }
 
-    /**
-     * Liga a interpolação suave (posição + transformação) uma única vez,
-     * na criação do chunk -- depois disso, todo {@code setPos}/{@code
-     * applyTransformation} chamado nos ticks seguintes já é
-     * automaticamente suavizado pelo cliente ao longo de
-     * {@link #RING_INTERPOLATION_TICKS}, em vez de teleportar.
-     */
-    private static void enableSmoothInterpolation(Display display) {
-        try {
-            DISPLAY_SET_POS_ROT_INTERPOLATION_DURATION.invoke(display, RING_INTERPOLATION_TICKS);
-            DISPLAY_SET_TRANSFORMATION_INTERPOLATION_DURATION.invoke(display, RING_INTERPOLATION_TICKS);
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException("Falha ao ligar interpolação suave no chunk do anel", e);
-        }
-    }
-
     private static BlockState randomEarthBlock() {
         return EARTH_BLOCKS[ThreadLocalRandom.current().nextInt(EARTH_BLOCKS.length)];
     }
@@ -718,8 +660,8 @@ public final class AvatarStateManager {
     public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
         if (event.getEntity() instanceof ServerPlayer sp) {
             ACTIVE.remove(sp.getUUID());
-            removeAllRings(sp);
             DISABLED_RINGS.remove(sp.getUUID());
+            removeAllRings(sp);
         }
     }
 }

@@ -20,6 +20,8 @@ import com.elementals.morebendings.bending.watersubbendings.blood.BloodMasteryGr
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantElement;
 import com.elementals.morebendings.bending.watersubbendings.spirit.SpiritElement;
 import com.elementals.morebendings.bending.airsubbendings.sound.SoundElement;
+import com.elementals.morebendings.bending.avatarstate.AvatarElement;
+import com.elementals.morebendings.bending.avatarstate.EnergyElement;
 import com.elementals.morebendings.registry.ModAbilities;
 
 
@@ -63,6 +65,14 @@ public class CommonClass {
         // habilidades são enxertadas direto na árvore de skills do
         // Lightning base (mesmo esquema de MetalMasteryGraft).
         LightningMasteryGraft.graft();
+
+        // AVATAR STATE -- Element/Energy só existem enquanto o Avatar State
+        // está ativo (ver AvatarStateManager#activate/deactivate). Registro
+        // aqui igual qualquer outro Element -- quem controla QUANDO o
+        // jogador de fato tem acesso a eles é o AvatarStateManager, não o
+        // sistema normal de aquisição.
+        AvatarElement.register();
+        EnergyElement.register();
 
         // Flying ainda usa o sistema antigo (PlayerSubbendingData) --
         // ainda não convertida pro mesmo padrão de Element real.
