@@ -232,6 +232,11 @@ public class ElementalsMoreBendingsMod {
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent event) -> {
             AvatarStateManager.onPlayerLoggedOut(event);
         });
+        // Retoma anéis/buffs de quem relogou ainda com o Avatar State ligado
+        // -- ver AvatarStateManager#onPlayerLoggedIn.
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent event) -> {
+            AvatarStateManager.onPlayerLoggedIn(event);
+        });
 
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent event) -> {
             if (event.getEntity() instanceof ServerPlayer sp) CrystalArmorSetManager.restoreOnLogout(sp);

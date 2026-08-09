@@ -10,6 +10,8 @@ import dev.saperate.elementals.elements.air.AirElement;
 import dev.saperate.elementals.elements.earth.EarthElement;
 import dev.saperate.elementals.elements.fire.FireElement;
 import dev.saperate.elementals.elements.water.WaterElement;
+import dev.saperate.elementals.elements.Element;
+import dev.saperate.elementals.elements.NoneElement;
 import com.mojang.math.Transformation;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -148,8 +150,9 @@ public final class AvatarStateManager {
         }
 
         PlayerAvatarData avatarData = player.getData(ModAttachments.AVATAR);
+        Bender bender = Bender.getBender(player);
         if (!avatarData.isAvatarState()) {
-            MoreBendingCommand.grantAvatarState(player.createCommandSourceStack().withSuppressedOutput(), player, avatarData);
+            lockCurrentBendingsAndGrantAvatar(player, bender, avatarData);
             avatarData.setAvatarState(true);
         }
 
@@ -158,7 +161,8 @@ public final class AvatarStateManager {
         spawnAllRings(player);
         spawnActivationBurst(player);
         broadcastSync(player, true);
-        player.displayClientMessage(Component.literal("§bVocê entrou no Avatar State!"), true);
+        player.displayClientMessage(Component.literal(
+                "§bVocê entrou no Avatar State! Suas outras bendings ficaram bloqueadas -- só Avatar e Energy disponíveis pra ciclar."), true);
         return true;
     }
 
@@ -172,12 +176,70 @@ public final class AvatarStateManager {
 
         PlayerAvatarData avatarData = player.getData(ModAttachments.AVATAR);
         if (avatarData.isAvatarState()) {
-            MoreBendingCommand.revokeAvatarState(player, avatarData);
+            restoreLockedBendings(player, Bender.getBender(player), avatarData);
             avatarData.setAvatarState(false);
         }
         removeBuffs(player);
         broadcastSync(player, false);
-        player.displayClientMessage(Component.literal("§7Você saiu do Avatar State."), true);
+        player.displayClientMessage(Component.literal("§7Você saiu do Avatar State. Suas bendings de antes foram restauradas."), true);
+    }
+
+    /**
+     * Tira uma "foto" de tudo que o jogador tem em {@code Bender#plrData.elements}
+     * (a lista que o Cycle Elements percorre) e guarda em {@link PlayerAvatarData}
+     * -- depois troca a lista inteira só pelos 2 elementos do Avatar ({@link
+     * AvatarElement}/{@link EnergyElement}). Isso NÃO apaga o progresso de upgrade
+     * de nenhuma bending (fica gravado à parte, em {@code PlayerData#upgrades},
+     * que nunca é tocado aqui) -- só esconde as bendings do Cycle Elements
+     * enquanto o Avatar State estiver ligado. Ver {@link #restoreLockedBendings}
+     * pra devolução.
+     */
+    private static void lockCurrentBendingsAndGrantAvatar(ServerPlayer player, Bender bender, PlayerAvatarData avatarData) {
+        List<String> snapshot = new ArrayList<>();
+        for (Element element : bender.plrData.elements) {
+            if (element != NoneElement.get()) {
+                snapshot.add(element.getName());
+            }
+        }
+        avatarData.setSavedElements(snapshot);
+        avatarData.setSavedActiveElementIndex(bender.plrData.activeElementIndex);
+
+        bender.plrData.elements.clear();
+        bender.plrData.elements.add(AvatarElement.get());
+        bender.plrData.elements.add(EnergyElement.get());
+        bender.plrData.activeElementIndex = 0;
+        bender.bindDefaultAbilities();
+        bender.syncElements();
+        MoreBendingCommand.syncAndPersist(bender, player);
+    }
+
+    /**
+     * Desfaz {@link #lockCurrentBendingsAndGrantAvatar}: tira Avatar/Energy da
+     * lista e devolve exatamente os elementos que estavam salvos (mesma ordem,
+     * mesmo elemento ativo de antes quando possível). Se algum elemento salvo
+     * não existir mais (mod removido, renomeado, etc.) ele é simplesmente
+     * ignorado em vez de travar a restauração dos outros.
+     */
+    private static void restoreLockedBendings(ServerPlayer player, Bender bender, PlayerAvatarData avatarData) {
+        bender.plrData.elements.clear();
+        for (String name : avatarData.getSavedElements()) {
+            Element element = Element.getElement(name);
+            if (element != null && element.getName().equalsIgnoreCase(name)) {
+                bender.plrData.elements.add(element);
+            }
+        }
+        if (bender.plrData.elements.isEmpty()) {
+            bender.plrData.elements.add(NoneElement.get());
+        }
+
+        int savedIndex = avatarData.getSavedActiveElementIndex();
+        bender.plrData.activeElementIndex =
+                (savedIndex >= 0 && savedIndex < bender.plrData.elements.size()) ? savedIndex : 0;
+
+        bender.bindDefaultAbilities();
+        bender.syncElements();
+        MoreBendingCommand.syncAndPersist(bender, player);
+        avatarData.clearSavedElements();
     }
 
     private static void applyBuffs(ServerPlayer player) {
@@ -662,6 +724,29 @@ public final class AvatarStateManager {
             ACTIVE.remove(sp.getUUID());
             DISABLED_RINGS.remove(sp.getUUID());
             removeAllRings(sp);
+        }
+    }
+
+    /**
+     * Quem desconecta com o Avatar State ligado volta com {@code
+     * PlayerAvatarData#isAvatarState()} ainda {@code true} (é persistido) mas
+     * sem entrar em {@link #ACTIVE} de novo sozinho -- sem isso o jogador
+     * ficaria preso só com Avatar+Energy, sem anéis/buffs, até apertar a
+     * tecla de novo (o que aliás reativaria certo, já que {@link #activate}
+     * só chama {@link #lockCurrentBendingsAndGrantAvatar} quando ainda NÃO
+     * está marcado como avatarState). Aqui só retomamos a parte visual/buff
+     * automaticamente pra não deixar essa pegadinha pro jogador.
+     */
+    public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+        PlayerAvatarData avatarData = player.getData(ModAttachments.AVATAR);
+        if (avatarData.isAvatarState()) {
+            ACTIVE.add(player.getUUID());
+            applyBuffs(player);
+            spawnAllRings(player);
+            broadcastSync(player, true);
         }
     }
 }
