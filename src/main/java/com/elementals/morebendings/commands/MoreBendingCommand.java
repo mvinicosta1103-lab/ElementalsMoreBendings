@@ -10,6 +10,7 @@ import com.elementals.morebendings.bending.earthsubbendings.sand.SandElement;
 import com.elementals.morebendings.bending.airsubbendings.atmosphere.AtmosphereElement;
 import com.elementals.morebendings.bending.airsubbendings.AirMasteryCheck;
 import com.elementals.morebendings.bending.firesubbendings.FireMasteryCheck;
+import com.elementals.morebendings.bending.avatarstate.AvatarElement;
 import com.elementals.morebendings.bending.avatarstate.ServerAvatarManager;
 import dev.saperate.elementals.elements.earth.EarthElement;
 import dev.saperate.elementals.elements.fire.FireElement;
@@ -549,6 +550,10 @@ public class MoreBendingCommand {
         grantCoreElementIfMissing(bender, avatarData, WaterElement.get());
         grantCoreElementIfMissing(bender, avatarData, EarthElement.get());
         grantCoreElementIfMissing(bender, avatarData, FireElement.get());
+        // O Avatar Element em si (as 8 super-moves) -- sem isso, ligar o
+        // Avatar State só reforçava os 4 elementos-base e nunca dava as
+        // abilities avatarEarthquake/avatarInfernoNova/etc.
+        grantCoreElementIfMissing(bender, avatarData, AvatarElement.get());
 
         for (SubbendingType type : SubbendingType.values()) {
             if (type == SubbendingType.FLYING) {
