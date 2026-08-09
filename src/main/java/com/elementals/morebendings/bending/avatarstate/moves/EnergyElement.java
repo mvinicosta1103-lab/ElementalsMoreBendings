@@ -1,5 +1,9 @@
-package com.elementals.morebendings.bending.avatarstate;
+package com.elementals.morebendings.bending.avatarstate.moves;
 
+import com.elementals.morebendings.bending.avatarstate.AvatarBendingGrantAbility;
+import com.elementals.morebendings.bending.avatarstate.AvatarBendingRemoveAbility;
+import com.elementals.morebendings.bending.avatarstate.AvatarBendingSelection;
+import com.elementals.morebendings.bending.avatarstate.AvatarStateManager;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Element;
 import dev.saperate.elementals.elements.Upgrade;

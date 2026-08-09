@@ -21,6 +21,7 @@ import com.elementals.morebendings.bending.watersubbendings.plant.PlantElement;
 import com.elementals.morebendings.bending.watersubbendings.spirit.SpiritElement;
 import com.elementals.morebendings.bending.airsubbendings.sound.SoundElement;
 import com.elementals.morebendings.bending.avatarstate.AvatarElement;
+import com.elementals.morebendings.bending.avatarstate.moves.EnergyElement;
 import com.elementals.morebendings.registry.ModAbilities;
 
 

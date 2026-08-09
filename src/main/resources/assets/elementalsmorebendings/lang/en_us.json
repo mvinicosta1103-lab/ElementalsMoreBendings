@@ -649,5 +649,40 @@
   "item.elementalsmorebendings.plant_scroll": "Plant Scroll",
   "item.elementalsmorebendings.plant_scroll.tooltip": " Grants Plant Bending to Water masters",
   "item.elementalsmorebendings.spirit_scroll": "Spirit Scroll",
-  "item.elementalsmorebendings.spirit_scroll.tooltip": " Grants Spirit Bending to Water masters"
+  "item.elementalsmorebendings.spirit_scroll.tooltip": " Grants Spirit Bending to Water masters",
+
+  "upgrade.elementals.avatarEarthquake": "Avatar Earthquake",
+  "upgrade.elementals.avatarEarthquake.description": "Slams the ground with the Avatar's full might, dealing up to 9 damage and launching every enemy within 10 blocks into the air, with damage falling off the further they are from you.",
+  "upgrade.elementals.avatarEarthquake.use": "Use: %d",
+  "upgrade.elementals.avatarStonePillars": "Avatar Stone Pillars",
+  "upgrade.elementals.avatarStonePillars.description": "Erupts a ring of massive stone pillars from the ground at a targeted spot up to 18 blocks away, dealing 7 damage to anyone caught in the 6-block impact zone.",
+  "upgrade.elementals.avatarStonePillars.use": "Use: %d",
+
+  "upgrade.elementals.avatarTidalWave": "Avatar Tidal Wave",
+  "upgrade.elementals.avatarTidalWave.description": "Summons a colossal wave of water that surges 14 blocks forward, dealing 6 damage and violently pushing back everything caught in its path.",
+  "upgrade.elementals.avatarTidalWave.use": "Use: %d",
+  "upgrade.elementals.avatarMaelstrom": "Avatar Maelstrom",
+  "upgrade.elementals.avatarMaelstrom.description": "Conjures a swirling maelstrom at a targeted spot up to 16 blocks away, dealing up to 5 damage and dragging nearby enemies into its 7-block vortex.",
+  "upgrade.elementals.avatarMaelstrom.use": "Use: %d",
+
+  "upgrade.elementals.avatarInfernoNova": "Avatar Inferno Nova",
+  "upgrade.elementals.avatarInfernoNova.description": "Unleashes a nova of fire around you, dealing up to 10 damage to everything within 8 blocks and setting enemies ablaze for 8 seconds.",
+  "upgrade.elementals.avatarInfernoNova.use": "Use: %d",
+  "upgrade.elementals.avatarMeteorStorm": "Avatar Meteor Storm",
+  "upgrade.elementals.avatarMeteorStorm.description": "Calls down a storm of 6 flaming meteors onto a 7-block area up to 20 blocks away, each dealing 5 damage on impact and igniting the ground for 5 seconds.",
+  "upgrade.elementals.avatarMeteorStorm.use": "Use: %d",
+
+  "upgrade.elementals.avatarCyclone": "Avatar Cyclone",
+  "upgrade.elementals.avatarCyclone.description": "Forms a giant cyclone around you, dealing up to 4 damage and hurling everyone within 9 blocks upward and outward in a spiral.",
+  "upgrade.elementals.avatarCyclone.use": "Use: %d",
+  "upgrade.elementals.avatarSkyfall": "Avatar Skyfall",
+  "upgrade.elementals.avatarSkyfall.description": "Hurls a blast of compressed wind at a targeted spot up to 20 blocks away, exploding into a radial shockwave that deals up to 6 damage and violently pushes everything within 8 blocks outward.",
+  "upgrade.elementals.avatarSkyfall.use": "Use: %d",
+
+  "upgrade.elementals.energyGrant": "Energybend: Grant",
+  "upgrade.elementals.energyGrant.description": "Channels the Avatar's energybending to grant a targeted player one of the 4 base elements, chosen beforehand with the Cycle Avatar Bending Selection key.",
+  "upgrade.elementals.energyGrant.use": "Use: %d",
+  "upgrade.elementals.energyStrip": "Energybend: Strip",
+  "upgrade.elementals.energyStrip.description": "Channels the Avatar's energybending to strip a targeted player of one of the 4 base elements, chosen beforehand with the Cycle Avatar Bending Selection key.",
+  "upgrade.elementals.energyStrip.use": "Use: %d"
 }
