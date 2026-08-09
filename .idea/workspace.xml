@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="Next phase: Make more movements for bendings, fix things." />
+    <list default="true" id="9efe09d1-0718-4b1f-9f7e-d650799c6c8f" name="Changes" comment="Next phase: Make more movements for bendings, fix things.">
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/CommonClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/elementals/morebendings/CommonClass.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -292,14 +294,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1784505567545</updated>
-    </task>
-    <task id="LOCAL-00291" summary="Next phase: Make more movements for bendings, fix things.">
-      <option name="closed" value="true" />
-      <created>1786062371524</created>
-      <option name="number" value="00291" />
-      <option name="presentableId" value="LOCAL-00291" />
-      <option name="project" value="LOCAL" />
-      <updated>1786062371524</updated>
     </task>
     <task id="LOCAL-00292" summary="Next phase: Make more movements for bendings, fix things.">
       <option name="closed" value="true" />
@@ -685,7 +679,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786235537454</updated>
     </task>
-    <option name="localTasksCounter" value="340" />
+    <task id="LOCAL-00340" summary="Next phase: Make more movements for bendings, fix things.">
+      <option name="closed" value="true" />
+      <created>1786236662394</created>
+      <option name="number" value="00340" />
+      <option name="presentableId" value="LOCAL-00340" />
+      <option name="project" value="LOCAL" />
+      <updated>1786236662394</updated>
+    </task>
+    <option name="localTasksCounter" value="341" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
