@@ -59,7 +59,7 @@ public class AvatarInfernoNovaAbility implements Ability {
                 120, RADIUS * 0.4, 1.0, RADIUS * 0.4, 0.06);
         level.sendParticles(ParticleTypes.LAVA, caster.getX(), caster.getY() + 1.0, caster.getZ(),
                 20, RADIUS * 0.3, 0.5, RADIUS * 0.3, 0.0);
-        level.playSound(null, caster.blockPosition(), SoundEvents.GENERIC_EXPLODE,
+        level.playSound(null, caster.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(),
                 SoundSource.PLAYERS, 1.6f, 1.1f);
         level.playSound(null, caster.blockPosition(), SoundEvents.BLAZE_SHOOT,
                 SoundSource.PLAYERS, 1.4f, 0.8f);

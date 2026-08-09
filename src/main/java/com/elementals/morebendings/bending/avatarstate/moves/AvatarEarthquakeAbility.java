@@ -70,7 +70,7 @@ public class AvatarEarthquakeAbility implements Ability {
         }
         level.sendParticles(ParticleTypes.EXPLOSION, caster.getX(), caster.getY(), caster.getZ(),
                 1, 0.0, 0.0, 0.0, 0.0);
-        level.playSound(null, caster.blockPosition(), SoundEvents.GENERIC_EXPLODE,
+        level.playSound(null, caster.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(),
                 SoundSource.PLAYERS, 1.6f, 0.6f);
         level.playSound(null, caster.blockPosition(), SoundEvents.STONE_BREAK,
                 SoundSource.PLAYERS, 1.4f, 0.5f);
