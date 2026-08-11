@@ -2,6 +2,7 @@ package com.elementals.morebendings.bending.avatarstate;
 
 import com.elementals.morebendings.commands.MoreBendingCommand;
 import com.elementals.morebendings.bending.avatarstate.fx.AvatarFxScheduler;
+import com.elementals.morebendings.bending.avatarstate.moves.EnergyElement;
 import com.elementals.morebendings.data.PlayerAvatarData;
 import com.elementals.morebendings.network.packets.SyncAvatarStatePacket;
 import com.elementals.morebendings.registry.ModAttachments;
