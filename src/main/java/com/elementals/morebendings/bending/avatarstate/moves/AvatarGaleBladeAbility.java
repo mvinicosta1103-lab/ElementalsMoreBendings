@@ -73,7 +73,7 @@ public class AvatarGaleBladeAbility implements Ability {
             target.hurtMarked = true;
         }
 
-        level.playSound(null, caster.blockPosition(), SoundEvents.BREEZE_WIND_CHARGE_BURST,
+        level.playSound(null, origin.x, origin.y, origin.z, SoundEvents.BREEZE_WIND_CHARGE_BURST,
                 SoundSource.PLAYERS, 1.5f, 1.6f);
 
         for (int step = 1; step <= TRAIL_TICKS; step++) {
