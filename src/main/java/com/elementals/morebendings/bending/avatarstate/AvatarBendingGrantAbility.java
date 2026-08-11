@@ -1,5 +1,6 @@
 package com.elementals.morebendings.bending.avatarstate;
 
+import com.elementals.morebendings.bending.avatarstate.fx.AvatarFxScheduler;
 import com.elementals.morebendings.commands.MoreBendingCommand;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
@@ -22,15 +23,18 @@ import net.minecraft.world.phys.Vec3;
  * pacote antes de chamar esta ability) -- é a contraparte de {@link
  * AvatarBendingRemoveAbility}.
  * <p>
- * Instantânea (sem canal, sem {@code currAbility} setado) -- mesmo
- * espírito de {@code GasCloudAbility}. Só funciona em outro {@code
- * ServerPlayer} de verdade: dobra, no sistema base do mod, não existe em
- * cima de mobs (ver {@link AvatarBendingTargeting}), então mirar em algo
- * que não seja jogador simplesmente não acha alvo.
+ * A concessão em si continua instantânea (o alvo já recebe o elemento no
+ * momento do cast, como antes) -- só a "casca" visual ganhou um feixe de
+ * energia dourado viajando do caster até o alvo ao longo de alguns ticks,
+ * em vez de só um burst de partículas em cima do alvo -- ver {@link
+ * AvatarFxScheduler}.
  */
 public class AvatarBendingGrantAbility implements Ability {
 
     private static final float CHI_COST = 20.0f;
+    private static final DustParticleOptions BEAM_DUST =
+            new DustParticleOptions(Vec3.fromRGB24(0xFFD700).toVector3f(), 1.3f);
+    private static final int BEAM_STEPS = 8;
 
     @Override
     public void onCall(Bender bender, long heldTimeMs) {
@@ -73,11 +77,24 @@ public class AvatarBendingGrantAbility implements Ability {
         target.displayClientMessage(Component.literal(
                 "§bO Avatar concedeu a você a dobra de " + name + "!"), true);
 
-        level.playSound(null, target.getX(), target.getY(), target.getZ(),
-                SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 0.6f, 1.4f);
-        level.sendParticles(new DustParticleOptions(Vec3.fromRGB24(0xFFD700).toVector3f(), 1.6f),
-                target.getX(), target.getY() + target.getBbHeight() * 0.5, target.getZ(),
-                40, 0.4, 0.6, 0.4, 0.02);
+        level.playSound(null, caster.getX(), caster.getY(), caster.getZ(),
+                SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 0.6f, 1.6f);
+
+        Vec3 from = caster.position().add(0, caster.getBbHeight() * 0.6, 0);
+        Vec3 to = target.position().add(0, target.getBbHeight() * 0.5, 0);
+        for (int step = 0; step <= BEAM_STEPS; step++) {
+            final double t = (double) step / BEAM_STEPS;
+            AvatarFxScheduler.schedule(step, () -> {
+                Vec3 point = from.lerp(to, t);
+                level.sendParticles(BEAM_DUST, point.x, point.y, point.z, 6, 0.15, 0.15, 0.15, 0.0);
+                if (t >= 1.0) {
+                    // feixe chegou -- estouro de luz no alvo, igual antes
+                    level.sendParticles(BEAM_DUST, point.x, point.y, point.z, 40, 0.4, 0.6, 0.4, 0.02);
+                    level.playSound(null, target.getX(), target.getY(), target.getZ(),
+                            SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 0.6f, 1.4f);
+                }
+            });
+        }
     }
 
     @Override

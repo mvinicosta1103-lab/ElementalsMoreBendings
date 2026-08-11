@@ -1,7 +1,7 @@
 package com.elementals.morebendings.bending.avatarstate;
 
-import com.elementals.morebendings.bending.avatarstate.moves.EnergyElement;
 import com.elementals.morebendings.commands.MoreBendingCommand;
+import com.elementals.morebendings.bending.avatarstate.fx.AvatarFxScheduler;
 import com.elementals.morebendings.data.PlayerAvatarData;
 import com.elementals.morebendings.network.packets.SyncAvatarStatePacket;
 import com.elementals.morebendings.registry.ModAttachments;
@@ -300,6 +300,7 @@ public final class AvatarStateManager {
      * {@link #updateAllRings}.
      */
     public static void onServerTick(ServerTickEvent.Post event) {
+        AvatarFxScheduler.tick(); // anima pilares/ondas/etc mesmo se ACTIVE ficar vazio no meio de uma animação
         if (ACTIVE.isEmpty()) {
             return;
         }

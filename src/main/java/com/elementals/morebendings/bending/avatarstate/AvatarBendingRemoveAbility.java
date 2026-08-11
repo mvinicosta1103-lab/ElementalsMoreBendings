@@ -1,5 +1,6 @@
 package com.elementals.morebendings.bending.avatarstate;
 
+import com.elementals.morebendings.bending.avatarstate.fx.AvatarFxScheduler;
 import com.elementals.morebendings.commands.MoreBendingCommand;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
@@ -22,13 +23,18 @@ import net.minecraft.world.phys.Vec3;
  * pacote antes de chamar esta ability) -- é a contraparte de {@link
  * AvatarBendingGrantAbility}.
  * <p>
- * Instantânea (sem canal, sem {@code currAbility} setado). Só funciona em
- * outro {@code ServerPlayer} de verdade -- ver {@link
- * AvatarBendingTargeting}.
+ * A remoção em si continua instantânea (o alvo já perde o elemento no
+ * momento do cast, como antes) -- só a "casca" visual ganhou um feixe de
+ * energia escuro sendo "puxado" do alvo pro caster ao longo de alguns
+ * ticks (efeito de dreno), em vez de só um burst de partículas em cima do
+ * alvo -- ver {@link AvatarFxScheduler}.
  */
 public class AvatarBendingRemoveAbility implements Ability {
 
     private static final float CHI_COST = 25.0f;
+    private static final DustParticleOptions DRAIN_DUST =
+            new DustParticleOptions(Vec3.fromRGB24(0x400040).toVector3f(), 1.3f);
+    private static final int BEAM_STEPS = 8;
 
     @Override
     public void onCall(Bender bender, long heldTimeMs) {
@@ -73,9 +79,24 @@ public class AvatarBendingRemoveAbility implements Ability {
 
         level.playSound(null, target.getX(), target.getY(), target.getZ(),
                 SoundEvents.CONDUIT_DEACTIVATE, SoundSource.PLAYERS, 0.6f, 0.7f);
-        level.sendParticles(new DustParticleOptions(Vec3.fromRGB24(0x400040).toVector3f(), 1.6f),
-                target.getX(), target.getY() + target.getBbHeight() * 0.5, target.getZ(),
-                40, 0.4, 0.6, 0.4, 0.02);
+        level.sendParticles(DRAIN_DUST, target.getX(), target.getY() + target.getBbHeight() * 0.5, target.getZ(),
+                24, 0.4, 0.6, 0.4, 0.02);
+
+        Vec3 from = target.position().add(0, target.getBbHeight() * 0.5, 0);
+        Vec3 to = caster.position().add(0, caster.getBbHeight() * 0.6, 0);
+        for (int step = 0; step <= BEAM_STEPS; step++) {
+            final double t = (double) step / BEAM_STEPS;
+            AvatarFxScheduler.schedule(step, () -> {
+                Vec3 point = from.lerp(to, t);
+                level.sendParticles(DRAIN_DUST, point.x, point.y, point.z, 6, 0.15, 0.15, 0.15, 0.0);
+                if (t >= 1.0) {
+                    // energia absorvida pelo caster
+                    level.sendParticles(DRAIN_DUST, point.x, point.y, point.z, 20, 0.3, 0.4, 0.3, 0.02);
+                    level.playSound(null, caster.getX(), caster.getY(), caster.getZ(),
+                            SoundEvents.CONDUIT_DEACTIVATE, SoundSource.PLAYERS, 0.5f, 1.1f);
+                }
+            });
+        }
     }
 
     @Override

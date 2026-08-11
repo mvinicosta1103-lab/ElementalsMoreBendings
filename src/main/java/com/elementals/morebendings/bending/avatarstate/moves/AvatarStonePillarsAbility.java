@@ -1,5 +1,6 @@
 package com.elementals.morebendings.bending.avatarstate.moves;
 
+import com.elementals.morebendings.bending.avatarstate.fx.AvatarFxScheduler;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
 import dev.saperate.elementals.utils.SapsUtils;
@@ -12,6 +13,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -23,6 +25,12 @@ import java.util.List;
  * AvatarElement}. Raycast até o ponto mirado e arremessa vários "pilares"
  * de pedra pra cima naquela área (dano/knockup em impacto), muito mais
  * amplo e destrutivo que qualquer EarthSpike normal.
+ * <p>
+ * Dano/knockup continuam instantâneos no momento do impacto (como antes).
+ * A parte visual agora é uma sequência de verdade: os pilares erupcionam
+ * um a um ao redor do círculo (não todos juntos) e cada um CRESCE de
+ * baixo pra cima ao longo de alguns ticks, em vez de aparecer pronto —
+ * ver {@link AvatarFxScheduler}.
  */
 public class AvatarStonePillarsAbility implements Ability {
 
@@ -30,6 +38,11 @@ public class AvatarStonePillarsAbility implements Ability {
     private static final double IMPACT_RADIUS = 6.0;
     private static final float DAMAGE = 7.0f;
     private static final float CHI_COST = 30.0f;
+
+    private static final int PILLAR_COUNT = 8;
+    private static final double PILLAR_HEIGHT = 2.6;
+    private static final int GROWTH_STEPS = 6; // ticks pra um pilar crescer do chão até o topo
+    private static final int STAGGER_TICKS = 2; // atraso entre um pilar começar e o próximo
 
     @Override
     public void onCall(Bender bender, long heldTimeMs) {
@@ -54,18 +67,41 @@ public class AvatarStonePillarsAbility implements Ability {
             target.hurtMarked = true;
         }
 
-        for (int i = 0; i < 10; i++) {
-            double angle = (2 * Math.PI * i) / 10;
+        BlockState stone = Blocks.STONE.defaultBlockState();
+        BlockState deepslate = Blocks.COBBLED_DEEPSLATE.defaultBlockState();
+
+        // marca o alvo instantaneamente (poeira baixa) pra dar aviso do impacto vindo
+        level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, stone),
+                center.x, center.y + 0.1, center.z, 16, IMPACT_RADIUS * 0.5, 0.1, IMPACT_RADIUS * 0.5, 0.05);
+
+        for (int i = 0; i < PILLAR_COUNT; i++) {
+            double angle = (2 * Math.PI * i) / PILLAR_COUNT;
             double dist = IMPACT_RADIUS * 0.6;
-            double x = center.x + dist * Math.cos(angle);
-            double z = center.z + dist * Math.sin(angle);
-            level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState()),
-                    x, center.y + 1.5, z, 24, 0.3, 1.4, 0.3, 0.2);
+            double px = center.x + dist * Math.cos(angle);
+            double pz = center.z + dist * Math.sin(angle);
+            double baseY = center.y;
+            BlockState blockState = (i % 2 == 0) ? stone : deepslate;
+            int startDelay = i * STAGGER_TICKS;
+
+            AvatarFxScheduler.schedule(startDelay, () -> {
+                level.playSound(null, px, baseY, pz, SoundEvents.STONE_PLACE, SoundSource.PLAYERS, 1.3f, 0.6f);
+                for (int step = 1; step <= GROWTH_STEPS; step++) {
+                    final int s = step;
+                    AvatarFxScheduler.schedule(step - 1, () -> {
+                        double topY = baseY + (PILLAR_HEIGHT * s) / GROWTH_STEPS;
+                        level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, blockState),
+                                px, topY, pz, 10, 0.35, 0.15, 0.35, 0.05);
+                        if (s == GROWTH_STEPS) {
+                            // topo do pilar terminando de subir -- estilhaço final + som de impacto
+                            level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, blockState),
+                                    px, topY, pz, 18, 0.4, 0.2, 0.4, 0.15);
+                            level.playSound(null, px, topY, pz, SoundEvents.GENERIC_BIG_FALL,
+                                    SoundSource.PLAYERS, 1.0f, 0.9f);
+                        }
+                    });
+                }
+            });
         }
-        level.playSound(null, center.x, center.y, center.z,
-                SoundEvents.STONE_PLACE, SoundSource.PLAYERS, 1.6f, 0.5f);
-        level.playSound(null, center.x, center.y, center.z,
-                SoundEvents.GENERIC_BIG_FALL, SoundSource.PLAYERS, 1.2f, 0.8f);
     }
 
     @Override

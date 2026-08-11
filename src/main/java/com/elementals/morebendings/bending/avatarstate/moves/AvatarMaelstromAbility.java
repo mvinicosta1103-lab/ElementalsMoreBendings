@@ -1,5 +1,6 @@
 package com.elementals.morebendings.bending.avatarstate.moves;
 
+import com.elementals.morebendings.bending.avatarstate.fx.AvatarFxScheduler;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
 import dev.saperate.elementals.utils.SapsUtils;
@@ -22,6 +23,11 @@ import java.util.List;
  * Cria um redemoinho gigante no ponto mirado que puxa tudo por perto pro
  * centro (e pra baixo) enquanto causa dano contínuo de afogamento --
  * muito mais amplo que o WaterVortex normal.
+ * <p>
+ * Puxão/dano continuam instantâneos (como antes) -- o redemoinho visual
+ * agora de fato GIRA e vai FECHANDO (raio encolhendo) ao longo de vários
+ * ticks até sumir no centro, em vez de 3 braços estáticos desenhados de
+ * uma vez -- ver {@link AvatarFxScheduler}.
  */
 public class AvatarMaelstromAbility implements Ability {
 
@@ -32,6 +38,11 @@ public class AvatarMaelstromAbility implements Ability {
 
     private static final DustParticleOptions SWIRL_DUST =
             new DustParticleOptions(new Vector3f(0.10f, 0.35f, 0.85f), 2.2f);
+    private static final DustParticleOptions CORE_DUST =
+            new DustParticleOptions(new Vector3f(0.55f, 0.75f, 1.0f), 1.4f);
+
+    private static final int ARMS = 3;
+    private static final int SPIN_STEPS = 12; // ticks até o redemoinho fechar de vez
 
     @Override
     public void onCall(Bender bender, long heldTimeMs) {
@@ -61,19 +72,39 @@ public class AvatarMaelstromAbility implements Ability {
             target.hurtMarked = true;
         }
 
-        int arms = 3;
-        for (int a = 0; a < arms; a++) {
-            for (int r = 1; r <= RADIUS; r++) {
-                double angle = (2 * Math.PI * a) / arms + r * 0.7;
-                double x = center.x + r * Math.cos(angle);
-                double z = center.z + r * Math.sin(angle);
-                level.sendParticles(SWIRL_DUST, x, center.y + 0.2, z, 6, 0.15, 0.6, 0.15, 0.0);
-            }
-        }
         level.playSound(null, center.x, center.y, center.z,
                 SoundEvents.GENERIC_SPLASH, SoundSource.PLAYERS, 1.4f, 0.4f);
         level.playSound(null, center.x, center.y, center.z,
                 SoundEvents.CONDUIT_AMBIENT, SoundSource.PLAYERS, 1.2f, 0.7f);
+
+        for (int step = 0; step < SPIN_STEPS; step++) {
+            final int s = step;
+            AvatarFxScheduler.schedule(step, () -> {
+                // raio encolhe conforme o passo avança -- o vórtice vai "engolindo" a si mesmo
+                double currentRadius = RADIUS * (1.0 - (double) s / SPIN_STEPS);
+                double spinOffset = s * 0.9; // gira mais rápido perto do centro que da borda
+                for (int a = 0; a < ARMS; a++) {
+                    for (double r = 1.0; r <= currentRadius; r += 1.0) {
+                        double angle = (2 * Math.PI * a) / ARMS + r * 0.7 + spinOffset;
+                        double x = center.x + r * Math.cos(angle);
+                        double z = center.z + r * Math.sin(angle);
+                        double depth = -0.15 * (1.0 - r / RADIUS); // afunda um pouco perto do centro
+                        level.sendParticles(SWIRL_DUST, x, center.y + 0.2 + depth, z, 4, 0.15, 0.4, 0.15, 0.0);
+                    }
+                }
+                if (s % 2 == 0) {
+                    level.sendParticles(CORE_DUST, center.x, center.y + 0.1, center.z,
+                            3, 0.3, 0.2, 0.3, 0.0);
+                }
+                if (s == SPIN_STEPS - 1) {
+                    // engoliu tudo -- borbulhão final no centro
+                    level.sendParticles(CORE_DUST, center.x, center.y + 0.2, center.z,
+                            24, 0.4, 0.3, 0.4, 0.05);
+                    level.playSound(null, center.x, center.y, center.z,
+                            SoundEvents.GENERIC_SWIM, SoundSource.PLAYERS, 1.0f, 1.3f);
+                }
+            });
+        }
     }
 
     @Override

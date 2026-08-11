@@ -1,5 +1,6 @@
 package com.elementals.morebendings.bending.avatarstate.moves;
 
+import com.elementals.morebendings.bending.avatarstate.fx.AvatarFxScheduler;
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
 import dev.saperate.elementals.utils.SapsUtils;
@@ -22,6 +23,14 @@ import java.util.List;
  * "explode" numa onda de choque radial ao impactar -- empurra e machuca
  * tudo pra fora do centro, com alcance e força muito maiores que qualquer
  * AirBlast normal.
+ * <p>
+ * Dano/empurrão continuam 100% instantâneos no momento do impacto (como
+ * antes) -- diferente do Meteor Storm, aqui o golpe em si continua
+ * imediato, só a "casca" visual ganhou uma trilha descendo até o alvo
+ * (desenhada retroativamente, sem atrasar o dano) e, depois do impacto,
+ * a onda de choque agora se expande em múltiplos anéis ao longo de
+ * alguns ticks em vez de um {@code EXPLOSION}+{@code CLOUD} só -- ver
+ * {@link AvatarFxScheduler}.
  */
 public class AvatarSkyfallAbility implements Ability {
 
@@ -30,6 +39,9 @@ public class AvatarSkyfallAbility implements Ability {
     private static final float DAMAGE = 6.0f;
     private static final float PUSH_STRENGTH = 2.0f;
     private static final float CHI_COST = 32.0f;
+
+    private static final double BOLT_HEIGHT = 10.0;
+    private static final int SHOCKWAVE_RINGS = 4;
 
     @Override
     public void onCall(Bender bender, long heldTimeMs) {
@@ -60,14 +72,36 @@ public class AvatarSkyfallAbility implements Ability {
             target.hurtMarked = true;
         }
 
+        // bólido de vento descendo até o ponto de impacto -- puramente decorativo, desenhado
+        // instantaneamente (não atrasa o golpe, que já aconteceu acima) como uma linha vertical densa.
+        for (double h = BOLT_HEIGHT; h >= 0; h -= 1.0) {
+            level.sendParticles(ParticleTypes.GUST, center.x, center.y + h, center.z, 2, 0.1, 0.1, 0.1, 0.0);
+        }
+
         level.sendParticles(ParticleTypes.EXPLOSION, center.x, center.y, center.z, 1, 0.0, 0.0, 0.0, 0.0);
-        level.sendParticles(ParticleTypes.CLOUD, center.x, center.y, center.z,
-                80, RADIUS * 0.5, 0.6, RADIUS * 0.5, 0.15);
         level.sendParticles(ParticleTypes.GUST, center.x, center.y, center.z, 6, 0.4, 0.4, 0.4, 0.0);
         level.playSound(null, center.x, center.y, center.z,
                 SoundEvents.BREEZE_WIND_CHARGE_BURST, SoundSource.PLAYERS, 1.6f, 0.8f);
         level.playSound(null, center.x, center.y, center.z,
                 SoundEvents.GENERIC_EXPLODE, SoundSource.PLAYERS, 1.0f, 1.3f);
+
+        // onda de choque se expandindo pra fora em anéis, um a cada tick
+        for (int ring = 1; ring <= SHOCKWAVE_RINGS; ring++) {
+            final int r = ring;
+            AvatarFxScheduler.schedule(ring, () -> {
+                double waveRadius = RADIUS * r / SHOCKWAVE_RINGS;
+                int points = 10 + r * 4;
+                for (int i = 0; i < points; i++) {
+                    double angle = (2 * Math.PI * i) / points;
+                    double x = center.x + waveRadius * Math.cos(angle);
+                    double z = center.z + waveRadius * Math.sin(angle);
+                    level.sendParticles(ParticleTypes.CLOUD, x, center.y + 0.3, z, 2, 0.1, 0.2, 0.1, 0.02);
+                    if (i % 3 == 0) {
+                        level.sendParticles(ParticleTypes.GUST, x, center.y + 0.3, z, 1, 0.05, 0.05, 0.05, 0.0);
+                    }
+                }
+            });
+        }
     }
 
     @Override
