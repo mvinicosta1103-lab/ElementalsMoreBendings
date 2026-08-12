@@ -657,6 +657,9 @@
   "upgrade.elementals.avatarStonePillars": "Avatar Stone Pillars",
   "upgrade.elementals.avatarStonePillars.description": "Erupts a ring of massive stone pillars from the ground at a targeted spot up to 18 blocks away, dealing 7 damage to anyone caught in the 6-block impact zone.",
   "upgrade.elementals.avatarStonePillars.use": "Use: %d",
+  "upgrade.elementals.avatarColossusFist": "Avatar Colossus Fist",
+  "upgrade.elementals.avatarColossusFist.description": "Punches a straight corridor up to 16 blocks in front of you, erupting stone spikes along the way and dealing up to 11 damage with a heavy shove at the end.",
+  "upgrade.elementals.avatarColossusFist.use": "Use: %d",
 
   "upgrade.elementals.avatarTidalWave": "Avatar Tidal Wave",
   "upgrade.elementals.avatarTidalWave.description": "Summons a colossal wave of water that surges 14 blocks forward, dealing 6 damage and violently pushing back everything caught in its path.",
@@ -664,6 +667,9 @@
   "upgrade.elementals.avatarMaelstrom": "Avatar Maelstrom",
   "upgrade.elementals.avatarMaelstrom.description": "Conjures a swirling maelstrom at a targeted spot up to 16 blocks away, dealing up to 5 damage and dragging nearby enemies into its 7-block vortex.",
   "upgrade.elementals.avatarMaelstrom.use": "Use: %d",
+  "upgrade.elementals.avatarDeepFreeze": "Avatar Deep Freeze",
+  "upgrade.elementals.avatarDeepFreeze.description": "Fires a blast of ice up to 16 blocks away, dealing up to 6 damage in a 5-block radius and locking everyone caught in it with heavy Slowness and Mining Fatigue for about 3.5 seconds.",
+  "upgrade.elementals.avatarDeepFreeze.use": "Use: %d",
 
   "upgrade.elementals.avatarInfernoNova": "Avatar Inferno Nova",
   "upgrade.elementals.avatarInfernoNova.description": "Unleashes a nova of fire around you, dealing up to 10 damage to everything within 8 blocks and setting enemies ablaze for 8 seconds.",
@@ -671,6 +677,9 @@
   "upgrade.elementals.avatarMeteorStorm": "Avatar Meteor Storm",
   "upgrade.elementals.avatarMeteorStorm.description": "Calls down a storm of 6 flaming meteors onto a 7-block area up to 20 blocks away, each dealing 5 damage on impact and igniting the ground for 5 seconds.",
   "upgrade.elementals.avatarMeteorStorm.use": "Use: %d",
+  "upgrade.elementals.avatarSolarFlare": "Avatar Solar Flare",
+  "upgrade.elementals.avatarSolarFlare.description": "Unleashes a blinding flare in a 9-block radius around you, inflicting Blindness on everyone caught in it for 5 seconds and dealing up to 8 damage that falls off with distance.",
+  "upgrade.elementals.avatarSolarFlare.use": "Use: %d",
 
   "upgrade.elementals.avatarCyclone": "Avatar Cyclone",
   "upgrade.elementals.avatarCyclone.description": "Forms a giant cyclone around you, dealing up to 4 damage and hurling everyone within 9 blocks upward and outward in a spiral.",
@@ -678,6 +687,9 @@
   "upgrade.elementals.avatarSkyfall": "Avatar Skyfall",
   "upgrade.elementals.avatarSkyfall.description": "Hurls a blast of compressed wind at a targeted spot up to 20 blocks away, exploding into a radial shockwave that deals up to 6 damage and violently pushes everything within 8 blocks outward.",
   "upgrade.elementals.avatarSkyfall.use": "Use: %d",
+  "upgrade.elementals.avatarGaleBlade": "Avatar Gale Blade",
+  "upgrade.elementals.avatarGaleBlade.description": "Slices a thin, blindingly fast blade of compressed wind through a narrow corridor up to 24 blocks in front of you, dealing up to 9 damage and knocking back anything it strikes.",
+  "upgrade.elementals.avatarGaleBlade.use": "Use: %d",
 
   "upgrade.elementals.energyGrant": "Energybend: Grant",
   "upgrade.elementals.energyGrant.description": "Channels the Avatar's energybending to grant a targeted player one of the 4 base elements, chosen beforehand with the Cycle Avatar Bending Selection key.",
