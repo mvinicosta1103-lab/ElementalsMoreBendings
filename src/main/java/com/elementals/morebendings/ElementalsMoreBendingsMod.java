@@ -9,6 +9,7 @@ import com.elementals.morebendings.situations.SituationsSystem;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BonePuppeteerManager;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalPrisonManager;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalSpikeManager;
+import com.elementals.morebendings.bending.watersubbendings.ice.IceSpikeManager;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalWallManager;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaFlowManager;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaPoolManager;
@@ -217,6 +218,10 @@ public class ElementalsMoreBendingsMod {
         // Desmancha os clusters de espinhos de crystalSpike ativos depois do
         // tempo, devolvendo o terreno original -- ver CrystalSpikeManager.
         NeoForge.EVENT_BUS.addListener(CrystalSpikeManager::onServerTick);
+
+        // Desmancha os clusters de espinhos de iceSpike ativos depois do
+        // tempo, devolvendo o terreno original -- ver IceSpikeManager.
+        NeoForge.EVENT_BUS.addListener(IceSpikeManager::onServerTick);
 
         // Estilhaça as paredes de crystalWall ativas depois do tempo -- ver
         // CrystalWallManager. Mesmo esquema do PlantVineWallManager.

@@ -4,6 +4,8 @@ import com.elementals.morebendings.Constants;
 import com.elementals.morebendings.bending.earthsubbendings.bone.BoneSpikeEntity;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalShardEntity;
 import com.elementals.morebendings.bending.earthsubbendings.crystal.CrystalSpikeVisualEntity;
+import com.elementals.morebendings.bending.watersubbendings.ice.IceShardEntity;
+import com.elementals.morebendings.bending.watersubbendings.ice.IceSpikeVisualEntity;
 import com.elementals.morebendings.bending.earthsubbendings.glass.GlassShardEntity;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaGeyserVisualEntity;
 import com.elementals.morebendings.bending.earthsubbendings.lava.LavaShurikenEntity;
@@ -44,6 +46,24 @@ public class ModEntities {
                             .clientTrackingRange(64)
                             .updateInterval(1)
                             .build("crystal_shard"));
+
+    public static final Supplier<EntityType<IceShardEntity>> ICE_SHARD =
+            ENTITY_TYPES.register("ice_shard",
+                    () -> EntityType.Builder.<IceShardEntity>of(IceShardEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .sized(0.25f, 0.25f)
+                            .clientTrackingRange(64)
+                            .updateInterval(1)
+                            .build("ice_shard"));
+
+    public static final Supplier<EntityType<IceSpikeVisualEntity>> ICE_SPIKE_VISUAL =
+            ENTITY_TYPES.register("ice_spike_visual",
+                    () -> EntityType.Builder.<IceSpikeVisualEntity>of(IceSpikeVisualEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .sized(0.5f, 0.5f)
+                            .clientTrackingRange(64)
+                            .updateInterval(20)
+                            .build("ice_spike_visual"));
 
     public static final Supplier<EntityType<BoneSpikeEntity>> BONE_SPIKE =
             ENTITY_TYPES.register("bone_spike",

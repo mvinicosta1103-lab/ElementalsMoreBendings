@@ -15,6 +15,8 @@ import com.elementals.morebendings.bending.airsubbendings.mist.MistFogEntityRend
 import com.elementals.morebendings.bending.firesubbendings.combustion.CombustionBoltEntityRenderer;
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantThornVolleyEntityRenderer;
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantVineGraspVisualEntityRenderer;
+import com.elementals.morebendings.bending.watersubbendings.ice.IceShardEntityRenderer;
+import com.elementals.morebendings.bending.watersubbendings.ice.IceSpikeVisualEntityRenderer;
 import com.elementals.morebendings.registry.ModBlocks;
 import com.elementals.morebendings.registry.ModEntities;
 import com.elementals.morebendings.client.layers.CrystalArmorRenderLayer;
@@ -57,6 +59,8 @@ public class ClientClass {
         event.registerEntityRenderer(ModEntities.LAVA_GEYSER_VISUAL.get(), LavaGeyserVisualEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.LAVA_SURF_WAVE.get(), LavaSurfWaveVisualEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.CRYSTAL_SPIKE_VISUAL.get(), CrystalSpikeVisualEntityRenderer::new);
+        event.registerEntityRenderer(ModEntities.ICE_SHARD.get(), IceShardEntityRenderer::new);
+        event.registerEntityRenderer(ModEntities.ICE_SPIKE_VISUAL.get(), IceSpikeVisualEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.MUD_BALL.get(), MudBallEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.MUD_SPIKE_VISUAL.get(), MudSpikeVisualEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.MUD_SURGE_CHUNK.get(), MudSurgeChunkEntityRenderer::new);

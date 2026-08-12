@@ -16,6 +16,7 @@ public enum SubbendingType {
     FLYING("Flying", "Flying"),
     PLANT("Plant", "Plant Bending"),
     SPIRIT("Spirit", "Spirit Bending"),
+    ICE("Ice", "Ice Bending"),
     MUD("Mud", "Mud Bending"),
     CRYSTAL("Crystal", "Crystal Bending"),
     BONE("Bone", "Bone Bending"),

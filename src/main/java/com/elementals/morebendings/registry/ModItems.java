@@ -7,6 +7,7 @@ import com.elementals.morebendings.items.scrolls.CombustionScrollItem;
 import com.elementals.morebendings.items.scrolls.CrystalScrollItem;
 import com.elementals.morebendings.items.scrolls.GasScrollItem;
 import com.elementals.morebendings.items.scrolls.GlassScrollItem;
+import com.elementals.morebendings.items.scrolls.IceScrollItem;
 import com.elementals.morebendings.items.scrolls.LavaScrollItem;
 import com.elementals.morebendings.items.scrolls.MistScrollItem;
 import com.elementals.morebendings.items.scrolls.MudScrollItem;
@@ -88,6 +89,8 @@ public class ModItems {
             () -> new PlantScrollItem(new Item.Properties().stacksTo(1)));
     public static final Supplier<SpiritScrollItem> SPIRIT_SCROLL = ITEMS.register("spirit_scroll",
             () -> new SpiritScrollItem(new Item.Properties().stacksTo(1)));
+    public static final Supplier<IceScrollItem> ICE_SCROLL = ITEMS.register("ice_scroll",
+            () -> new IceScrollItem(new Item.Properties().stacksTo(1)));
 
     private ModItems() {
     }

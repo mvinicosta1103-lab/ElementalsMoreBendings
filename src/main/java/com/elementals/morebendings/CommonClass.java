@@ -19,6 +19,7 @@ import com.elementals.morebendings.bending.firesubbendings.plasma.PlasmaElement;
 import com.elementals.morebendings.bending.watersubbendings.blood.BloodMasteryGraft;
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantElement;
 import com.elementals.morebendings.bending.watersubbendings.spirit.SpiritElement;
+import com.elementals.morebendings.bending.watersubbendings.ice.IceElement;
 import com.elementals.morebendings.bending.airsubbendings.sound.SoundElement;
 import com.elementals.morebendings.bending.avatarstate.AvatarElement;
 import com.elementals.morebendings.bending.avatarstate.moves.EnergyElement;
@@ -28,11 +29,12 @@ import com.elementals.morebendings.registry.ModAbilities;
 public class CommonClass {
 
     public static void init() {
-        Constants.LOG.info("Inicializando sub-bendings comuns (Plant, Spirit, Mud, Crystal, Sand, Glass, Petrification, Lava, Bone, Atmosphere, Gas, Mist, Sound, Temperature, Void, Plasma) na 1.21.1...");
+        Constants.LOG.info("Inicializando sub-bendings comuns (Plant, Spirit, Ice, Mud, Crystal, Sand, Glass, Petrification, Lava, Bone, Atmosphere, Gas, Mist, Sound, Temperature, Void, Plasma) na 1.21.1...");
 
         // WATER SUBBENDINGS
         PlantElement.register();
         SpiritElement.register();
+        IceElement.register();
         // Blood Mastery não é mais um Element separado -- suas 8 habilidades
         // são enxertadas direto na árvore de skills do Blood base (mesmo
         // esquema de MetalMasteryGraft/LightningMasteryGraft).

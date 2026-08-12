@@ -45,6 +45,7 @@ public class ModCreativeTabs {
                         // Scrolls -- Water
                         entries.accept(ModItems.PLANT_SCROLL.get());
                         entries.accept(ModItems.SPIRIT_SCROLL.get());
+                        entries.accept(ModItems.ICE_SCROLL.get());
                     }).build());
 
     private ModCreativeTabs() {
