@@ -1,5 +1,3 @@
-/morebending grant Dev Void
-/bending element add Void Dev
 /morebending grant Dev Bone
 /bending element add Blood
 /morebending grant Dev Bone
@@ -48,3 +46,5 @@
 /bending element add Gas Dev
 /morebending avatar Dev true
 /morebending serveravatar set Dev
+/morebending grant Dev Ice
+/bending element add Ice
