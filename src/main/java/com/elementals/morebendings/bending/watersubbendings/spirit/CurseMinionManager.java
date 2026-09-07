@@ -24,12 +24,21 @@ import java.util.UUID;
  * tempo). Dirigido por {@link ServerTickEvent.Post}, registrado em
  * {@link com.elementals.morebendings.ElementalsMoreBendingsMod}.
  *
- * COMPORTAMENTO: o mob amaldiçoado vira efetivamente um aliado do caster
- * enquanto a maldição durar --
+ * COMPORTAMENTO: o mob amaldiçoado vira efetivamente um inimigo hostil
+ * de verdade enquanto a maldição durar, MESMO que seja um mob pacífico
+ * (vaca, ovelha, aldeão...) ou neutro (lobo, golem de ferro...) que
+ * normalmente não ataca ninguém --
  *
  *  - Ao ser amaldiçoado, para imediatamente de atacar o caster (se já
  *    estava fazendo isso) e passa a caçar outros mobs/players hostis por
  *    perto, alternando de alvo entre eles periodicamente.
+ *  - Uma goal própria ({@link CursedAttackGoal}) é injetada com prioridade
+ *    máxima no {@code goalSelector} da vítima, garantindo que ela
+ *    realmente persegue e bate no alvo escolhido -- mobs sem nenhuma IA
+ *    de combate nativa (a maioria dos pacíficos) passam a lutar do mesmo
+ *    jeito que um hostil de verdade lutaria. É removida quando a
+ *    maldição acaba (ver {@link #endCurse}), restaurando o mob ao
+ *    comportamento original.
  *  - O caster NUNCA é um alvo válido -- se a IA vanilla da criatura tentar
  *    voltar a mirar nele (ex: um Zombie que tem goal própria de perseguir
  *    o jogador mais perto), o Manager detecta e limpa o alvo em todo tick,
@@ -43,6 +52,7 @@ public final class CurseMinionManager {
     static final int CURSE_DURATION_TICKS = 200; // 10s
     private static final int RETARGET_INTERVAL_TICKS = 30; // 1.5s
     private static final double RETARGET_RADIUS = 12.0;
+    private static final double ATTACK_SPEED_MODIFIER = 1.2;
 
     private static final Map<UUID, Curse> ACTIVE = new HashMap<>();
 
@@ -52,6 +62,11 @@ public final class CurseMinionManager {
     public static void curse(ServerLevel level, ServerPlayer caster, Mob victim) {
         Curse curse = new Curse(level, caster.getUUID());
         ACTIVE.put(victim.getUUID(), curse);
+
+        // Injeta a goal de ataque própria -- ver CursedAttackGoal pra explicação
+        // de por que isso é necessário mesmo em mobs que já são hostis por natureza.
+        curse.attackGoal = new CursedAttackGoal(victim, ATTACK_SPEED_MODIFIER);
+        victim.goalSelector.addGoal(0, curse.attackGoal);
 
         // Para de atacar o caster imediatamente, se já estava.
         if (victim.getTarget() == caster) {
@@ -81,6 +96,7 @@ public final class CurseMinionManager {
 
             curse.remainingTicks--;
             if (curse.remainingTicks <= 0) {
+                endCurse(victim, curse);
                 it.remove();
                 continue; // maldição acaba -- IA vanilla volta ao normal sozinha
             }
@@ -118,6 +134,13 @@ public final class CurseMinionManager {
         curse.level.playSound(null, victim.blockPosition(), SoundEvents.EVOKER_CAST_SPELL, SoundSource.HOSTILE, 0.4f, 1.6f);
     }
 
+    /** Remove a goal de ataque injetada -- restaura a IA original do mob. */
+    private static void endCurse(Mob victim, Curse curse) {
+        if (curse.attackGoal != null) {
+            victim.goalSelector.removeGoal(curse.attackGoal);
+        }
+    }
+
     private static Mob findMob(ServerLevel level, UUID id) {
         return level.getEntity(id) instanceof Mob mob ? mob : null;
     }
@@ -127,6 +150,9 @@ public final class CurseMinionManager {
         final UUID casterId;
         int remainingTicks = CURSE_DURATION_TICKS;
         int ticksUntilRetarget = RETARGET_INTERVAL_TICKS;
+
+        /** Goal de ataque injetada em {@link #curse}, removida em {@link #endCurse}. */
+        CursedAttackGoal attackGoal;
 
         Curse(ServerLevel level, UUID casterId) {
             this.level = level;
