@@ -37,7 +37,7 @@ public record CastAvatarBendingGrantPacket() {
 
         if (!AvatarStateManager.isActive(player)) {
             player.displayClientMessage(Component.literal(
-                    "§7Você precisa estar no Avatar State pra fazer isso."), true);
+                    "§7You need to be in the Avatar State to do that."), true);
             return;
         }
 

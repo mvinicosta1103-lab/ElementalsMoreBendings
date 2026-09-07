@@ -118,7 +118,12 @@ public class MudSurgeChunkEntity extends AbstractElementalsEntity<Player> {
         }
 
         Player owner = this.getOwner();
-        if (owner == null) {
+        if (owner == null || entity == owner) {
+            // entity == owner: os pedaços nascem quase colados no caster (ver
+            // MudSurgeAbility#onCall, spawnPos = origin + forward*0.6), então sem essa
+            // checagem o próprio dono conta como "tocado" no instante do spawn -- ao
+            // contrário de onHitEntity (raycast), esse caminho via onTouchEntity/
+            // damagesOnTouch() não exclui o dono sozinho.
             return;
         }
 

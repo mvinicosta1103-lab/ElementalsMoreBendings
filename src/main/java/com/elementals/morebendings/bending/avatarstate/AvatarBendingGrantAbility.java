@@ -47,11 +47,11 @@ public class AvatarBendingGrantAbility implements Ability {
 
         ServerPlayer target = AvatarBendingTargeting.raycastPlayerTarget(caster, level);
         if (target == null) {
-            caster.displayClientMessage(Component.literal("§7Nenhum jogador à vista."), true);
+            caster.displayClientMessage(Component.literal("§7No player in sight."), true);
             return;
         }
         if (target == caster) {
-            caster.displayClientMessage(Component.literal("§7Você não pode usar isso em si mesmo."), true);
+            caster.displayClientMessage(Component.literal("§7You can't use this on yourself."), true);
             return;
         }
 
@@ -60,12 +60,12 @@ public class AvatarBendingGrantAbility implements Ability {
         Bender targetBender = Bender.getBender(target);
         if (targetBender.hasElement(element)) {
             caster.displayClientMessage(Component.literal(
-                    "§7" + target.getName().getString() + " já domina " + name + "."), true);
+                    "§7" + target.getName().getString() + " already masters " + name + "."), true);
             return;
         }
 
         if (!bender.reduceChi(CHI_COST)) {
-            caster.displayClientMessage(Component.literal("§7Chi insuficiente."), true);
+            caster.displayClientMessage(Component.literal("§7Not enough chi."), true);
             return;
         }
 
@@ -73,9 +73,9 @@ public class AvatarBendingGrantAbility implements Ability {
         MoreBendingCommand.syncAndPersist(targetBender, target);
 
         caster.displayClientMessage(Component.literal(
-                "§bVocê concedeu " + name + " a " + target.getName().getString() + "."), true);
+                "§bYou granted " + name + " to " + target.getName().getString() + "."), true);
         target.displayClientMessage(Component.literal(
-                "§bO Avatar concedeu a você a dobra de " + name + "!"), true);
+                "§bThe Avatar granted you the bending of " + name + "!"), true);
 
         level.playSound(null, caster.getX(), caster.getY(), caster.getZ(),
                 SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 0.6f, 1.6f);

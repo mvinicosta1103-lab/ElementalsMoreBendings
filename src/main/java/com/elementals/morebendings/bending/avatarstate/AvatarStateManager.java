@@ -25,6 +25,8 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Display;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Abilities;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.server.MinecraftServer;
@@ -147,7 +149,7 @@ public final class AvatarStateManager {
         }
         if (!isEligible(player)) {
             player.displayClientMessage(Component.literal(
-                    "§7Você precisa dominar os 4 elementos-base (Ar, Água, Terra e Fogo) antes de entrar no Avatar State."), true);
+                    "§7You need to master all 4 base elements (Air, Water, Earth, and Fire) before entering the Avatar State."), true);
             return false;
         }
 
@@ -160,11 +162,12 @@ public final class AvatarStateManager {
 
         ACTIVE.add(player.getUUID());
         applyBuffs(player);
+        grantAvatarFlight(player);
         spawnAllRings(player);
         spawnActivationBurst(player);
         broadcastSync(player, true);
         player.displayClientMessage(Component.literal(
-                "§bVocê entrou no Avatar State! Suas outras bendings ficaram bloqueadas -- só Avatar e Energy disponíveis pra ciclar."), true);
+                "§bYou entered the Avatar State! Your other bendings are locked -- only Avatar and Energy are available to cycle."), true);
         return true;
     }
 
@@ -182,8 +185,9 @@ public final class AvatarStateManager {
             avatarData.setAvatarState(false);
         }
         removeBuffs(player);
+        revokeAvatarFlight(player);
         broadcastSync(player, false);
-        player.displayClientMessage(Component.literal("§7Você saiu do Avatar State. Suas bendings de antes foram restauradas."), true);
+        player.displayClientMessage(Component.literal("§7You left the Avatar State. Your previous bendings have been restored."), true);
     }
 
     /**
@@ -251,6 +255,15 @@ public final class AvatarStateManager {
         player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, EFFECT_DURATION_TICKS, 1, true, false));
         player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, EFFECT_DURATION_TICKS, 0, true, false));
         player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, EFFECT_DURATION_TICKS, 0, true, false));
+        // Jump Boost II (agilidade extra ao pular) e Slow Falling (queda de
+        // pena -- amortece qualquer queda mesmo se o voo estiver desligado
+        // no momento).
+        player.addEffect(new MobEffectInstance(MobEffects.JUMP, EFFECT_DURATION_TICKS, 1, true, false));
+        player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, EFFECT_DURATION_TICKS, 0, true, false));
+        player.addEffect(new MobEffectInstance(MobEffects.SATURATION, EFFECT_DURATION_TICKS, 0, true, false));
+        // Health Boost II -- +4 corações extras (8 HP) por cima da vida
+        // máxima normal, enquanto o Avatar State estiver ligado.
+        player.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, EFFECT_DURATION_TICKS, 1, true, false));
     }
 
     private static void removeBuffs(ServerPlayer player) {
@@ -259,8 +272,45 @@ public final class AvatarStateManager {
         player.removeEffect(MobEffects.REGENERATION);
         player.removeEffect(MobEffects.FIRE_RESISTANCE);
         player.removeEffect(MobEffects.WATER_BREATHING);
-        // Speed é deixada decair sozinha (some em poucos segundos) pra não
-        // cortar o movimento do jogador de forma abrupta ao desligar.
+        player.removeEffect(MobEffects.SATURATION);
+        player.removeEffect(MobEffects.HEALTH_BOOST);
+        // Speed, Jump Boost e Slow Falling são deixados decair sozinhos
+        // (somem em poucos segundos) pra não cortar o movimento do
+        // jogador de forma abrupta ao desligar.
+    }
+
+    /**
+     * Concede voo de verdade mesmo em Survival/Adventure -- mesmo mecanismo
+     * usado por {@code FlyingAbility} (Air): liga {@code mayfly} (permite
+     * ativar/desativar o voo com duplo-espaço) e já entra voando
+     * ({@code flying = true}) no instante da ativação. Chamado em
+     * {@link #activate} e em {@link #onPlayerLoggedIn} (pra devolver o voo
+     * a quem loga já com o Avatar State ligado). NÃO é reforçado a cada
+     * tick de buff (ver {@link #onServerTick}) de propósito -- senão o
+     * jogador que pousasse e desligasse o voo manualmente (duplo-espaço)
+     * seria forçado de volta ao ar a cada poucos segundos.
+     */
+    private static void grantAvatarFlight(ServerPlayer player) {
+        Abilities abilities = player.getAbilities();
+        abilities.mayfly = true;
+        abilities.flying = true;
+        player.onUpdateAbilities();
+    }
+
+    /**
+     * Desfaz {@link #grantAvatarFlight}. Só desliga {@code flying}/{@code
+     * mayfly} se o jogador estiver em Survival/Adventure -- em
+     * Creative/Spectator o voo já é do próprio modo de jogo, então nunca
+     * mexemos nele (mesma checagem de {@code FlyingAbility#stopFlying}).
+     */
+    private static void revokeAvatarFlight(ServerPlayer player) {
+        if (player.gameMode.getGameModeForPlayer() == GameType.SURVIVAL
+                || player.gameMode.getGameModeForPlayer() == GameType.ADVENTURE) {
+            Abilities abilities = player.getAbilities();
+            abilities.flying = false;
+            abilities.mayfly = false;
+            player.onUpdateAbilities();
+        }
     }
 
     private static void broadcastSync(ServerPlayer player, boolean active) {
@@ -748,6 +798,7 @@ public final class AvatarStateManager {
         if (avatarData.isAvatarState()) {
             ACTIVE.add(player.getUUID());
             applyBuffs(player);
+            grantAvatarFlight(player);
             spawnAllRings(player);
             broadcastSync(player, true);
         }

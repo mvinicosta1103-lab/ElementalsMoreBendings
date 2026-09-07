@@ -47,11 +47,11 @@ public class AvatarBendingRemoveAbility implements Ability {
 
         ServerPlayer target = AvatarBendingTargeting.raycastPlayerTarget(caster, level);
         if (target == null) {
-            caster.displayClientMessage(Component.literal("§7Nenhum jogador à vista."), true);
+            caster.displayClientMessage(Component.literal("§7No player in sight."), true);
             return;
         }
         if (target == caster) {
-            caster.displayClientMessage(Component.literal("§7Você não pode usar isso em si mesmo."), true);
+            caster.displayClientMessage(Component.literal("§7You can't use this on yourself."), true);
             return;
         }
 
@@ -60,12 +60,12 @@ public class AvatarBendingRemoveAbility implements Ability {
         Bender targetBender = Bender.getBender(target);
         if (!targetBender.hasElement(element)) {
             caster.displayClientMessage(Component.literal(
-                    "§7" + target.getName().getString() + " não domina " + name + "."), true);
+                    "§7" + target.getName().getString() + " doesn't master " + name + "."), true);
             return;
         }
 
         if (!bender.reduceChi(CHI_COST)) {
-            caster.displayClientMessage(Component.literal("§7Chi insuficiente."), true);
+            caster.displayClientMessage(Component.literal("§7Not enough chi."), true);
             return;
         }
 
@@ -73,9 +73,9 @@ public class AvatarBendingRemoveAbility implements Ability {
         MoreBendingCommand.syncAndPersist(targetBender, target);
 
         caster.displayClientMessage(Component.literal(
-                "§cVocê removeu " + name + " de " + target.getName().getString() + "."), true);
+                "§cYou removed " + name + " from " + target.getName().getString() + "."), true);
         target.displayClientMessage(Component.literal(
-                "§cO Avatar removeu sua dobra de " + name + "!"), true);
+                "§cThe Avatar stripped you of your " + name + " bending!"), true);
 
         level.playSound(null, target.getX(), target.getY(), target.getZ(),
                 SoundEvents.CONDUIT_DEACTIVATE, SoundSource.PLAYERS, 0.6f, 0.7f);

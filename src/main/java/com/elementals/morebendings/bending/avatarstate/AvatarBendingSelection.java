@@ -60,12 +60,12 @@ public final class AvatarBendingSelection {
         return 0;
     }
 
-    /** Nome em PT-BR pra mensagens -- {@code Element#getName()} só devolve o id interno (ex.: "fire"). */
+    /** Nome em inglês pra mensagens -- {@code Element#getName()} só devolve o id interno (ex.: "fire"). */
     public static String displayName(Element element) {
-        if (element == AirElement.get()) return "Ar";
-        if (element == WaterElement.get()) return "Água";
-        if (element == EarthElement.get()) return "Terra";
-        if (element == FireElement.get()) return "Fogo";
+        if (element == AirElement.get()) return "Air";
+        if (element == WaterElement.get()) return "Water";
+        if (element == EarthElement.get()) return "Earth";
+        if (element == FireElement.get()) return "Fire";
         return element.getName();
     }
 
