@@ -51,6 +51,7 @@ import com.elementals.morebendings.bending.watersubbendings.plant.PlantVineWallM
 import com.elementals.morebendings.bending.watersubbendings.spirit.CurseMinionManager;
 import com.elementals.morebendings.bending.watersubbendings.spirit.PurifyingWaterManager;
 import com.elementals.morebendings.bending.avatarstate.AvatarStateManager;
+import com.elementals.morebendings.bending.avatarstate.AvatarNearDeathGuardian;
 import com.elementals.morebendings.bending.avatarstate.ServerAvatarManager;
 
 
@@ -269,6 +270,15 @@ public class ElementalsMoreBendingsMod {
         NeoForge.EVENT_BUS.addListener(ServerAvatarManager::onAvatarDeath);
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent event) -> {
             ServerAvatarManager.onPlayerLoggedIn(event);
+        });
+
+        // Instinto de sobrevivência do Avatar: perto de morrer, o Avatar
+        // State liga sozinho e um arco elemental aleatório (Ar/Fogo/Água/
+        // Terra) reage protegendo com dano em área e/ou escudo -- ver
+        // AvatarNearDeathGuardian.
+        NeoForge.EVENT_BUS.addListener(AvatarNearDeathGuardian::onIncomingDamage);
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent event) -> {
+            AvatarNearDeathGuardian.onPlayerLoggedOut(event);
         });
     }
 

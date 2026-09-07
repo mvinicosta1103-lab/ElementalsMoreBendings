@@ -14,6 +14,11 @@ public final class MoreBendingsEffects {
     public static final DeferredHolder<MobEffect, CrushedStatusEffect> CRUSHED =
             EFFECTS.register("crushed", CrushedStatusEffect::new);
 
+    // Usado pelo burst defensivo do Avatar perto de morrer -- ver
+    // AvatarNearDeathGuardian (arcos de Ar e Água aplicam isso).
+    public static final DeferredHolder<MobEffect, BleedingStatusEffect> BLEEDING =
+            EFFECTS.register("bleeding", BleedingStatusEffect::new);
+
     private MoreBendingsEffects() {}
 
     public static void register(IEventBus modEventBus) {
