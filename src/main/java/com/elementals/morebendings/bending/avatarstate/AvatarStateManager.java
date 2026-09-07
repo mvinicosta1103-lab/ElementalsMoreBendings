@@ -25,10 +25,13 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Display;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.server.MinecraftServer;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -81,6 +84,32 @@ public final class AvatarStateManager {
     // ativação.
     private static final Map<UUID, Set<RingElement>> DISABLED_RINGS = new HashMap<>();
 
+    // ---- Timer de 60s dos anéis "automáticos" ----
+    //
+    // Ao ativar o Avatar State, os 4 anéis ligam sozinhos (como sempre
+    // ligaram) só que agora por tempo limitado: se o jogador não mexer
+    // MANUALMENTE (keybind) num anel específico dentro desses 60s, ele
+    // se desliga sozinho quando o tempo acaba. Isso é o que dá
+    // "individualidade" aos anéis pedida pelo usuário: assim que o
+    // jogador toca a keybind de um anel (pra ligar OU desligar), aquele
+    // anel específico sai do timer automático de vez -- passa a ficar
+    // só sob controle manual, na posição que o jogador deixou, até a
+    // próxima vez que ele apertar a tecla de novo (sem prazo nenhum).
+
+    /** 60 segundos (1200 ticks) -- duração do período automático dos anéis. */
+    private static final int RING_AUTO_DURATION_TICKS = 1200;
+
+    /** Tick (Entity#tickCount do jogador) em que o período automático
+     * expira. Removido do mapa assim que o desligamento automático
+     * acontece (ou quando o Avatar State inteiro desliga/reativa) --
+     * nunca dispara duas vezes pra mesma ativação. */
+    private static final Map<UUID, Long> RING_AUTO_EXPIRE_TICK = new HashMap<>();
+
+    /** Anéis que o jogador já tocou manualmente (keybind) desde a
+     * última ativação -- ficam imunes ao desligamento automático de
+     * 60s, esteja o anel ligado ou desligado no momento. */
+    private static final Map<UUID, Set<RingElement>> MANUAL_RINGS = new HashMap<>();
+
     private AvatarStateManager() {
     }
 
@@ -120,6 +149,10 @@ public final class AvatarStateManager {
         if (!isActive(player)) {
             return null;
         }
+        // A partir do momento que a keybind é usada, este anel específico
+        // sai do timer automático de 60s (ver #checkRingAutoExpire) --
+        // fica só sob controle manual dali em diante, ligado ou desligado.
+        MANUAL_RINGS.computeIfAbsent(player.getUUID(), id -> EnumSet.noneOf(RingElement.class)).add(element);
         Set<RingElement> disabled = DISABLED_RINGS.computeIfAbsent(player.getUUID(), id -> EnumSet.noneOf(RingElement.class));
         boolean nowEnabled;
         if (disabled.contains(element)) {
@@ -161,6 +194,8 @@ public final class AvatarStateManager {
         }
 
         ACTIVE.add(player.getUUID());
+        MANUAL_RINGS.remove(player.getUUID()); // nenhum anel foi tocado manualmente ainda nesta ativação
+        RING_AUTO_EXPIRE_TICK.put(player.getUUID(), player.tickCount + (long) RING_AUTO_DURATION_TICKS);
         applyBuffs(player);
         grantAvatarFlight(player);
         spawnAllRings(player);
@@ -178,6 +213,8 @@ public final class AvatarStateManager {
         ACTIVE.remove(player.getUUID());
         removeAllRings(player);
         DISABLED_RINGS.remove(player.getUUID());
+        MANUAL_RINGS.remove(player.getUUID());
+        RING_AUTO_EXPIRE_TICK.remove(player.getUUID());
 
         PlayerAvatarData avatarData = player.getData(ModAttachments.AVATAR);
         if (avatarData.isAvatarState()) {
@@ -370,7 +407,44 @@ public final class AvatarStateManager {
             if (player.tickCount % EFFECT_REFRESH_INTERVAL == 0) {
                 applyBuffs(player);
             }
+            checkRingAutoExpire(player);
             updateAllRings(player);
+            applyRingCombatEffects(player);
+        }
+    }
+
+    /**
+     * Desliga sozinho qualquer anel que ainda esteja no período
+     * automático de 60s desde a ativação (ver {@link #RING_AUTO_DURATION_TICKS})
+     * e que o jogador nunca tenha tocado manualmente (ver {@link #MANUAL_RINGS}).
+     * Dispara no máximo uma vez por ativação -- some de {@link #RING_AUTO_EXPIRE_TICK}
+     * assim que roda, então anéis ligados/desligados depois disso via
+     * keybind não sofrem mais nenhum desligamento automático.
+     */
+    private static void checkRingAutoExpire(ServerPlayer player) {
+        Long expireTick = RING_AUTO_EXPIRE_TICK.get(player.getUUID());
+        if (expireTick == null || player.tickCount < expireTick) {
+            return;
+        }
+        RING_AUTO_EXPIRE_TICK.remove(player.getUUID());
+
+        Set<RingElement> manual = MANUAL_RINGS.getOrDefault(player.getUUID(), EnumSet.noneOf(RingElement.class));
+        Set<RingElement> disabled = DISABLED_RINGS.computeIfAbsent(player.getUUID(), id -> EnumSet.noneOf(RingElement.class));
+        boolean anyTurnedOff = false;
+        for (RingElement element : RingElement.values()) {
+            if (manual.contains(element)) {
+                continue; // jogador já assumiu o controle manual deste anel -- não mexe
+            }
+            if (disabled.add(element)) {
+                anyTurnedOff = true;
+                if (BLOCK_ELEMENTS.contains(element)) {
+                    removeRing(element, player); // anéis de partícula somem sozinhos no próximo updateAllRings
+                }
+            }
+        }
+        if (anyTurnedOff) {
+            player.displayClientMessage(Component.literal(
+                    "§7The elemental rings turned off automatically after 60 seconds. Use each ring's keybind to bring one back individually."), true);
         }
     }
 
@@ -548,6 +622,118 @@ public final class AvatarStateManager {
         }
         if (isRingEnabled(player, RingElement.AIR)) {
             drawParticleRing(RingElement.AIR, player, baseY);
+        }
+    }
+
+    // ==================== Efeitos de combate dos anéis ====================
+    //
+    // Cada anel LIGADO protege o Avatar de quem chegar perto (pedido do
+    // usuário, uma "individualidade" por elemento):
+    //   - Fogo  -> queima (fire ticks) + dano que aumenta quanto mais perto
+    //     do centro do anel o alvo estiver;
+    //   - Água  -> só dispara pra quem chega bem perto o suficiente pra
+    //     "tocar" o Avatar (não o anel inteiro): sufocamento rápido
+    //     (dano de afogamento em intervalo curto) + congelamento
+    //     (trava com lentidão pesada, igual iceMastery);
+    //   - Terra -> dano contínuo pra qualquer um dentro do raio do anel;
+    //   - Ar    -> nunca deixa ninguém chegar perto: empurrão radial pra
+    //     fora todo tick + dano cortante periódico.
+
+    private static final int RING_DAMAGE_INTERVAL_TICKS = 10; // a cada 0.5s
+
+    private static final float FIRE_RING_BASE_DAMAGE = 1.0f;
+    private static final float FIRE_RING_MAX_BONUS_DAMAGE = 3.0f; // no centro do anel, dano = base + bonus
+    private static final int FIRE_RING_BURN_TICKS = 60; // 3s de fogo, reforçado a cada intervalo
+
+    private static final double WATER_RING_TOUCH_RANGE = 2.0; // "tocar" o Avatar -- não é o raio inteiro do anel
+    private static final float WATER_RING_SUFFOCATE_DAMAGE = 1.5f;
+    private static final int WATER_RING_SUFFOCATE_INTERVAL_TICKS = 4; // "muito rápido" -- a cada 0.2s
+
+    private static final float EARTH_RING_DAMAGE = 1.5f;
+
+    private static final float AIR_RING_SLASH_DAMAGE = 2.0f;
+    private static final double AIR_RING_PUSH = 0.9;
+
+    private static void applyRingCombatEffects(ServerPlayer player) {
+        if (!(player.level() instanceof ServerLevel level)) {
+            return;
+        }
+        boolean fireOn = isRingEnabled(player, RingElement.FIRE);
+        boolean waterOn = isRingEnabled(player, RingElement.WATER);
+        boolean earthOn = isRingEnabled(player, RingElement.EARTH);
+        boolean airOn = isRingEnabled(player, RingElement.AIR);
+        if (!fireOn && !waterOn && !earthOn && !airOn) {
+            return;
+        }
+
+        double maxRadius = Math.max(Math.max(FIRE_RADIUS, WATER_RADIUS), Math.max(EARTH_RADIUS, AIR_RADIUS));
+        AABB area = player.getBoundingBox().inflate(maxRadius);
+        List<LivingEntity> nearby = level.getEntitiesOfClass(LivingEntity.class, area,
+                entity -> entity != player && entity.isAlive());
+        if (nearby.isEmpty()) {
+            return;
+        }
+
+        boolean damageTick = player.tickCount % RING_DAMAGE_INTERVAL_TICKS == 0;
+        Vec3 center = player.position();
+
+        for (LivingEntity target : nearby) {
+            double dist = target.position().distanceTo(center);
+
+            if (fireOn && dist <= FIRE_RADIUS) {
+                applyFireRingEffect(level, target, dist, damageTick);
+            }
+            if (waterOn && dist <= WATER_RING_TOUCH_RANGE) {
+                applyWaterRingTouchEffect(level, player, target);
+            }
+            if (earthOn && damageTick && dist <= EARTH_RADIUS) {
+                target.hurt(level.damageSources().indirectMagic(player, player), EARTH_RING_DAMAGE);
+            }
+            if (airOn && dist <= AIR_RADIUS) {
+                applyAirRingRepulsionEffect(level, player, target, damageTick);
+            }
+        }
+    }
+
+    /** Fogo: mantém o alvo pegando fogo e aplica dano que cresce conforme ele chega mais perto do centro do anel. */
+    private static void applyFireRingEffect(ServerLevel level, LivingEntity target, double dist, boolean damageTick) {
+        target.setRemainingFireTicks(Math.max(target.getRemainingFireTicks(), FIRE_RING_BURN_TICKS));
+        if (!damageTick) {
+            return;
+        }
+        double closeness = 1.0 - Math.min(1.0, dist / FIRE_RADIUS); // 0 na borda do anel, 1 no centro
+        float damage = FIRE_RING_BASE_DAMAGE + (float) (FIRE_RING_MAX_BONUS_DAMAGE * closeness);
+        target.hurt(level.damageSources().onFire(), damage);
+    }
+
+    /** Água: só quem chega perto o bastante pra "tocar" o Avatar sofre -- sufocamento rápido + congelamento. */
+    private static void applyWaterRingTouchEffect(ServerLevel level, ServerPlayer player, LivingEntity target) {
+        // Sufocamento "muito rápido": esvazia o ar quase na hora e aplica
+        // dano de afogamento num intervalo bem mais curto que o afogar
+        // normal do jogo.
+        target.setAirSupply(Math.max(-20, target.getAirSupply() - 40));
+        if (player.tickCount % WATER_RING_SUFFOCATE_INTERVAL_TICKS == 0) {
+            target.hurt(level.damageSources().drown(), WATER_RING_SUFFOCATE_DAMAGE);
+        }
+        // Congelamento: trava o alvo com lentidão quase total (igual
+        // FrostNovaAbility) e ativa a textura/estado congelado do
+        // vanilla enquanto ele insistir em ficar colado no Avatar.
+        target.setTicksFrozen(target.getTicksRequiredToFreeze());
+        target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 6, false, false, true));
+        target.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 20, 3, false, false, true));
+    }
+
+    /** Ar: empurra pra fora todo tick (nunca deixa chegar perto) e corta com dano periódico. */
+    private static void applyAirRingRepulsionEffect(ServerLevel level, ServerPlayer player, LivingEntity target, boolean damageTick) {
+        Vec3 away = target.position().subtract(player.position());
+        if (away.lengthSqr() < 1.0E-4) {
+            away = new Vec3(level.random.nextDouble() - 0.5, 0, level.random.nextDouble() - 0.5);
+        }
+        Vec3 push = away.normalize().scale(AIR_RING_PUSH).add(0, 0.2, 0);
+        target.push(push.x, push.y, push.z);
+        target.hurtMarked = true;
+        if (damageTick) {
+            target.hurt(level.damageSources().playerAttack(player), AIR_RING_SLASH_DAMAGE);
         }
     }
 
@@ -776,6 +962,8 @@ public final class AvatarStateManager {
         if (event.getEntity() instanceof ServerPlayer sp) {
             ACTIVE.remove(sp.getUUID());
             DISABLED_RINGS.remove(sp.getUUID());
+            MANUAL_RINGS.remove(sp.getUUID());
+            RING_AUTO_EXPIRE_TICK.remove(sp.getUUID());
             removeAllRings(sp);
         }
     }
@@ -797,6 +985,8 @@ public final class AvatarStateManager {
         PlayerAvatarData avatarData = player.getData(ModAttachments.AVATAR);
         if (avatarData.isAvatarState()) {
             ACTIVE.add(player.getUUID());
+            MANUAL_RINGS.remove(player.getUUID());
+            RING_AUTO_EXPIRE_TICK.put(player.getUUID(), player.tickCount + (long) RING_AUTO_DURATION_TICKS);
             applyBuffs(player);
             grantAvatarFlight(player);
             spawnAllRings(player);
