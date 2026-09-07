@@ -60,6 +60,44 @@ public final class SituationChecks {
         });
     }
 
+    /**
+     * Verdadeiro assim que a primeira posição no raio esférico bater com o
+     * predicado -- para na hora, sem escanear o volume inteiro. Prefira isso a
+     * {@link #countNearby} quando só interessa "tem ou não tem" por perto,
+     * principalmente em raios grandes (tipo 50 blocos), onde contar tudo
+     * fica caro demais pra rodar num cast de habilidade.
+     */
+    public static boolean hasNearby(ServerPlayer player, int radius, BiPredicate<Level, BlockPos> predicate) {
+        Level level = player.level();
+        BlockPos center = player.blockPosition();
+        double radiusSq = (double) radius * radius;
+
+        for (BlockPos pos : BlockPos.betweenClosed(
+                center.offset(-radius, -radius, -radius),
+                center.offset(radius, radius, radius))) {
+            if (pos.distSqr(center) > radiusSq) {
+                continue;
+            }
+            if (predicate.test(level, pos)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** Atalho pra {@link #hasNearby} checando se algum dos blocos listados está por perto. */
+    public static boolean hasNearbyBlock(ServerPlayer player, int radius, Block... blocks) {
+        return hasNearby(player, radius, (level, pos) -> {
+            BlockState state = level.getBlockState(pos);
+            for (Block block : blocks) {
+                if (state.is(block)) {
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
+
     /** Atalho pra {@link #countNearby} checando o fluido (lava, água, etc). */
     public static int countNearbyFluid(ServerPlayer player, int radius, TagKey<Fluid> fluidTag) {
         return countNearby(player, radius, (level, pos) -> level.getFluidState(pos).is(fluidTag));
@@ -140,4 +178,51 @@ public final class SituationChecks {
             Blocks.OXEYE_DAISY, Blocks.CORNFLOWER, Blocks.LILY_OF_THE_VALLEY, Blocks.WITHER_ROSE,
             Blocks.TORCHFLOWER, Blocks.SUNFLOWER, Blocks.LILAC, Blocks.ROSE_BUSH, Blocks.PEONY
     };
+    /**
+     * Qualquer bloco que vem de vida vegetal -- madeira, folhas, flores,
+     * mudas, lavoura, trepadeiras, etc. Usado pra detectar "tem vida vegetal
+     * por perto" de forma bem mais ampla que só folha/floresta, ver
+     * {@link com.elementals.morebendings.bending.watersubbendings.plant.PlantVineWallAbility}.
+     */
+    public static final Block[] PLANT_DERIVED_BLOCKS = concat(
+            LEAF_BLOCKS,
+            FLOWER_BLOCKS,
+            MUSHROOM_BLOCKS,
+            new Block[] {
+                    // troncos
+                    Blocks.OAK_LOG, Blocks.BIRCH_LOG, Blocks.SPRUCE_LOG, Blocks.JUNGLE_LOG,
+                    Blocks.ACACIA_LOG, Blocks.DARK_OAK_LOG, Blocks.MANGROVE_LOG, Blocks.CHERRY_LOG,
+                    // mudas / propágulos / arbustos
+                    Blocks.OAK_SAPLING, Blocks.BIRCH_SAPLING, Blocks.SPRUCE_SAPLING, Blocks.JUNGLE_SAPLING,
+                    Blocks.ACACIA_SAPLING, Blocks.DARK_OAK_SAPLING, Blocks.CHERRY_SAPLING, Blocks.MANGROVE_PROPAGULE,
+                    Blocks.AZALEA, Blocks.FLOWERING_AZALEA,
+                    // grama e afins
+                    Blocks.SHORT_GRASS, Blocks.TALL_GRASS, Blocks.FERN, Blocks.LARGE_FERN,
+                    // trepadeiras
+                    Blocks.VINE, Blocks.WEEPING_VINES, Blocks.WEEPING_VINES_PLANT,
+                    Blocks.TWISTING_VINES, Blocks.TWISTING_VINES_PLANT,
+                    Blocks.CAVE_VINES, Blocks.CAVE_VINES_PLANT,
+                    // lavoura
+                    Blocks.WHEAT, Blocks.CARROTS, Blocks.POTATOES, Blocks.BEETROOTS, Blocks.NETHER_WART,
+                    Blocks.PUMPKIN, Blocks.MELON, Blocks.PUMPKIN_STEM, Blocks.MELON_STEM,
+                    // outras plantas
+                    Blocks.BAMBOO, Blocks.BAMBOO_SAPLING, Blocks.CACTUS, Blocks.SUGAR_CANE, Blocks.LILY_PAD,
+                    Blocks.KELP, Blocks.KELP_PLANT, Blocks.SEAGRASS, Blocks.TALL_SEAGRASS,
+                    Blocks.MOSS_BLOCK, Blocks.MOSS_CARPET, Blocks.HAY_BLOCK,
+            }
+    );
+
+    private static Block[] concat(Block[]... arrays) {
+        int total = 0;
+        for (Block[] a : arrays) {
+            total += a.length;
+        }
+        Block[] result = new Block[total];
+        int idx = 0;
+        for (Block[] a : arrays) {
+            System.arraycopy(a, 0, result, idx, a.length);
+            idx += a.length;
+        }
+        return result;
+    }
 }
