@@ -133,4 +133,11 @@ public final class SituationChecks {
             Blocks.ACACIA_LEAVES, Blocks.DARK_OAK_LEAVES, Blocks.MANGROVE_LEAVES, Blocks.CHERRY_LEAVES,
             Blocks.AZALEA_LEAVES, Blocks.FLOWERING_AZALEA_LEAVES
     };
+    /** Flores "soltas" -- usadas como fonte alternativa de poder pra Plant Bending fora de floresta. */
+    public static final Block[] FLOWER_BLOCKS = {
+            Blocks.DANDELION, Blocks.POPPY, Blocks.BLUE_ORCHID, Blocks.ALLIUM, Blocks.AZURE_BLUET,
+            Blocks.RED_TULIP, Blocks.ORANGE_TULIP, Blocks.WHITE_TULIP, Blocks.PINK_TULIP,
+            Blocks.OXEYE_DAISY, Blocks.CORNFLOWER, Blocks.LILY_OF_THE_VALLEY, Blocks.WITHER_ROSE,
+            Blocks.TORCHFLOWER, Blocks.SUNFLOWER, Blocks.LILAC, Blocks.ROSE_BUSH, Blocks.PEONY
+    };
 }
