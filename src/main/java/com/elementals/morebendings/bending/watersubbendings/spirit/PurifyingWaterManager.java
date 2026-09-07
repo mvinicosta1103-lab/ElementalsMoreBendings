@@ -13,15 +13,20 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.Blaze;
-import net.minecraft.world.entity.monster.Husk;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Evoker;
+import net.minecraft.world.entity.monster.Illusioner;
 import net.minecraft.world.entity.monster.Pillager;
-import net.minecraft.world.entity.monster.Skeleton;
+import net.minecraft.world.entity.monster.Ravager;
+import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.monster.Vindicator;
 import net.minecraft.world.entity.monster.Witch;
-import net.minecraft.world.entity.monster.WitherSkeleton;
-import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.monster.Zoglin;
 import net.minecraft.world.entity.monster.ZombieVillager;
+import net.minecraft.world.entity.monster.ZombifiedPiglin;
+import net.minecraft.world.entity.monster.hoglin.Hoglin;
+import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
@@ -72,10 +77,22 @@ import java.util.UUID;
  *     deixar de ser válido antes (alguém quebrou a água/poça, por
  *     exemplo), {@link #cancelCatch} solta a vítima sem efeito.
  *
- * REGRAS DE RESOLUÇÃO -- ela cita Wither Skeleton nos dois grupos (mortos-
- * vivos "menores" que se dissolvem E como virando Snow Golem), o que é
- * contraditório; aqui ele SÓ vira Snow Golem, regra mais específica:
+ * REGRAS DE RESOLUÇÃO (ver {@link #resolve}):
  *
+ *  - Enderman -- é neutro no jogo, mas por exceção explícita também é
+ *    purificado e desaparece em partículas (mesmo destino dos hostis).
+ *  - Witch, Zombie Villager, Pillager, Vindicator, Evoker, Illusioner,
+ *    Ravager, Vex -- viram Villager (preservando idade quando o alvo
+ *    também é {@link AgeableMob}, caso do Zombie Villager bebê).
+ *  - Piglin, Zombified Piglin (Zombie Pigman), Zoglin, Hoglin -- viram
+ *    Pig comum (idem, preservando idade quando aplicável).
+ *  - Iron Golem -- curado totalmente com o efeito/som próprio dele
+ *    (mantido do comportamento original).
+ *  - Qualquer outro {@link Mob} que implemente {@link Enemy} (hostil
+ *    "genérico") -- purificado/morto, desaparece em partículas via
+ *    {@link #startDissolve}.
+ *  - Tudo o mais (pacífico ou neutro, exceto Enderman) -- curado
+ *    totalmente, sem conversão.
  */
 public final class PurifyingWaterManager {
 
@@ -297,7 +314,33 @@ public final class PurifyingWaterManager {
         LivingEntity victim = c.victim;
         ServerLevel level = c.level;
 
-        if (victim instanceof IronGolem golem) {
+        if (!(victim instanceof Mob mob)) {
+            cancelCatch(c);
+            return false; // captura expira sem efeito em qualquer coisa que não seja um Mob
+        }
+
+        // Enderman: neutro no jogo, mas por exceção explícita também é purificado e some.
+        if (mob instanceof EnderMan) {
+            startDissolve(c);
+            return true;
+        }
+
+        // Grupo que vira Villager (preserva idade -- relevante pro Zombie Villager bebê).
+        if (mob instanceof Witch || mob instanceof ZombieVillager || mob instanceof Pillager
+                || mob instanceof Vindicator || mob instanceof Evoker || mob instanceof Illusioner
+                || mob instanceof Ravager || mob instanceof Vex) {
+            convertTo(c, EntityType.VILLAGER, true);
+            return false;
+        }
+
+        // Grupo que vira Pig comum (família Piglin/Hoglin corrompida).
+        if (mob instanceof Piglin || mob instanceof ZombifiedPiglin || mob instanceof Zoglin || mob instanceof Hoglin) {
+            convertTo(c, EntityType.PIG, true);
+            return false;
+        }
+
+        // Iron Golem: curado totalmente, com o efeito/som próprio dele (comportamento original mantido).
+        if (mob instanceof IronGolem golem) {
             if (golem.getHealth() < golem.getMaxHealth()) {
                 golem.setHealth(golem.getMaxHealth());
                 level.sendParticles(ParticleTypes.HAPPY_VILLAGER, golem.getX(), golem.getY() + golem.getBbHeight() * 0.5,
@@ -308,30 +351,27 @@ public final class PurifyingWaterManager {
             return false;
         }
 
-        if (!(victim instanceof Mob mob)) {
-            cancelCatch(c);
-            return false; // captura expira sem efeito em qualquer coisa que não seja um Mob
-        }
-
-        if (mob instanceof WitherSkeleton) {
-            convertTo(c, EntityType.SNOW_GOLEM, false);
-            return false;
-        }
-        if (mob instanceof Witch || mob instanceof Pillager || mob instanceof Vindicator || mob instanceof ZombieVillager) {
-            convertTo(c, EntityType.VILLAGER, true);
-            return false;
-        }
-        if (mob instanceof Skeleton || mob instanceof Husk || mob instanceof Blaze
-                || (mob instanceof Zombie && mob.isBaby() && !(mob instanceof ZombieVillager))) {
-            // Inicia a dissolução -- o Catch continua ativo (mantém noAi/poça) até discard().
-            c.dissolving = true;
-            c.dissolveTicks = DISSOLVE_TICKS;
+        // Qualquer outro mob hostil "genérico" (implementa Enemy): purificado/morto, desaparece em partículas.
+        if (mob instanceof Enemy) {
+            startDissolve(c);
             return true;
         }
 
-        // qualquer outra criatura: sem efeito, captura só expira.
+        // Tudo o mais -- pacífico ou neutro (exceto Enderman, já tratado acima): curado totalmente.
+        if (mob.getHealth() < mob.getMaxHealth()) {
+            mob.setHealth(mob.getMaxHealth());
+            level.sendParticles(ParticleTypes.HAPPY_VILLAGER, mob.getX(), mob.getY() + mob.getBbHeight() * 0.5,
+                    mob.getZ(), 16, 0.4, 0.5, 0.4, 0.0);
+            level.playSound(null, mob.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.NEUTRAL, 0.6f, 1.4f);
+        }
         cancelCatch(c);
         return false;
+    }
+
+    /** Inicia a fase de dissolução -- o Catch continua ativo (mantém noAi/poça) até {@code discard()} em {@link #onServerTick}. */
+    private static void startDissolve(Catch c) {
+        c.dissolving = true;
+        c.dissolveTicks = DISSOLVE_TICKS;
     }
 
     /** Converte preservando idade (bebê) quando o resultado também é um {@link AgeableMob}. */
