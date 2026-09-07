@@ -17,6 +17,8 @@ import com.elementals.morebendings.bending.earthsubbendings.lava.MagmaSpikeManag
 import com.elementals.morebendings.bending.earthsubbendings.lava.VolcanicEruptionManager;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudSpikeManager;
 import com.elementals.morebendings.bending.earthsubbendings.mud.MudTrapManager;
+import com.elementals.morebendings.bending.earthsubbendings.mud.MudWallManager;
+import com.elementals.morebendings.bending.earthsubbendings.mud.MudShellManager;
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandQuicksandManager;
 import com.elementals.morebendings.bending.earthsubbendings.sand.SandTornadoManager;
 import com.elementals.morebendings.bending.airsubbendings.atmosphere.PressureZoneManager;
@@ -106,6 +108,14 @@ public class ElementalsMoreBendingsMod {
         // Desmancha os clusters de farpas de mudSpikes ativos depois do
         // tempo, devolvendo o terreno original -- ver MudSpikeManager.
         NeoForge.EVENT_BUS.addListener(MudSpikeManager::onServerTick);
+
+        // Desmancha as paredes de mudWall ativas depois do tempo -- ver
+        // MudWallManager. Mesmo esquema do CrystalWallManager.
+        NeoForge.EVENT_BUS.addListener(MudWallManager::onServerTick);
+
+        // Desmancha os abrigos/cúpulas de mudShell ativos depois do tempo
+        // -- ver MudShellManager. Mesmo esquema do MudWallManager.
+        NeoForge.EVENT_BUS.addListener(MudShellManager::onServerTick);
 
         // Dirige os tornados de sandTornado ativos (giro/sucção/dano) --
         // ver SandTornadoManager. Mesmo esquema do MudTrapManager.

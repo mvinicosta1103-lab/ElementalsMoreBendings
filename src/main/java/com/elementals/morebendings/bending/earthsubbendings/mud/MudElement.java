@@ -16,28 +16,57 @@ import dev.saperate.elementals.elements.earth.EarthElement;
  * checado no momento da concessão (ver MoreBendingCommand) — o Element em
  * si não impede o jogador de "ter" o elemento por fora, só documentamos a
  * regra aqui pra ficar num lugar só.
+ *
+ * Exatamente 4 filhos diretos na raiz -- é o máximo que
+ * {@code UpgradeTreeScreen#render()} desenha (ver o comentário detalhado
+ * em {@code LavaElement} sobre essa limitação do mod base). mudWall e
+ * mudShell entraram DEPOIS que os 4 slots já estavam ocupados por
+ * mudSurge/mudTrap/mudBall/mudSpikes -- por isso, igual LavaElement, elas
+ * entram como {@code children} aninhados de dois dos ramos existentes em
+ * vez de um 5º/6º Upgrade solto na raiz.
  */
 public class MudElement extends Element {
 
     public static final String NAME = "Mud";
 
+    public static final String MUD_SURGE = "mudSurge";
+    public static final String MUD_TRAP = "mudTrap";
+    public static final String MUD_BALL = "mudBall";
+    public static final String MUD_SPIKES = "mudSpikes";
+    public static final String MUD_WALL = "mudWall";
+    public static final String MUD_SHELL = "mudShell";
+
     public MudElement() {
-        // Exatamente 4 filhos diretos na raiz -- é o máximo que
-        // UpgradeTreeScreen#render() desenha (root.children[0..3], ver o
-        // comentário detalhado em LavaElement sobre essa limitação do mod
-        // base). Com mudBall e mudSpikes, Mud chega no limite: qualquer
-        // habilidade futura precisa entrar como `children` aninhado dentro
-        // de um desses 4, não como um 5º Upgrade solto aqui.
         super(NAME, new Upgrade[]{
-                new Upgrade("mudSurge", 0),  // grátis
-                new Upgrade("mudTrap", 0),   // grátis -- ver MudTrapAbility
-                new Upgrade("mudBall", 0),   // grátis -- ver MudBallAbility
-                new Upgrade("mudSpikes", 0)  // grátis -- ver MudSpikesAbility
+                new Upgrade(MUD_SURGE, 0),  // grátis
+                new Upgrade(MUD_TRAP, new Upgrade[]{
+                        new Upgrade(MUD_WALL, 0)   // ver MudWallAbility
+                }, 0),
+                new Upgrade(MUD_BALL, 0),   // grátis -- ver MudBallAbility
+                new Upgrade(MUD_SPIKES, new Upgrade[]{
+                        new Upgrade(MUD_SHELL, 0)  // ver MudShellAbility
+                }, 0)
         });
+
         addAbility(new MudSurgeAbility(), 0);
         addAbility(new MudTrapAbility(), 1);
         addAbility(new MudBallAbility(), 2);
         addAbility(new MudSpikesAbility(), 3);
+        addAbility(new MudWallAbility(), 4);
+        addAbility(new MudShellAbility(), 5);
+
+        // Sem isso, Element#getKeybindSlotForUpgrade() sobe a árvore, não
+        // acha nada em upgradeKeybinds e cai pro índice do RAMO da raiz
+        // (0-3) em vez do índice real da ability (0-5) -- mudWall e
+        // mudShell (aninhados) mostrariam a mesma tecla de mudTrap/
+        // mudSpikes na tooltip. Registrando explicitamente cada upgrade
+        // -> índice real da ability, exatamente como LavaElement faz.
+        registerUpgradeKeybind(MUD_SURGE, 0);
+        registerUpgradeKeybind(MUD_TRAP, 1);
+        registerUpgradeKeybind(MUD_BALL, 2);
+        registerUpgradeKeybind(MUD_SPIKES, 3);
+        registerUpgradeKeybind(MUD_WALL, 4);
+        registerUpgradeKeybind(MUD_SHELL, 5);
     }
 
     /** Registra a instância única no mod base. Chame uma vez, no load do mod. */
@@ -67,9 +96,11 @@ public class MudElement extends Element {
     @Override
     public boolean isSkillTreeComplete(Bender bender) {
         return bender.hasElement(this)
-                && bender.getData().canUseUpgrade("mudSurge")
-                && bender.getData().canUseUpgrade("mudTrap")
-                && bender.getData().canUseUpgrade("mudBall")
-                && bender.getData().canUseUpgrade("mudSpikes");
+                && bender.getData().canUseUpgrade(MUD_SURGE)
+                && bender.getData().canUseUpgrade(MUD_TRAP)
+                && bender.getData().canUseUpgrade(MUD_BALL)
+                && bender.getData().canUseUpgrade(MUD_SPIKES)
+                && bender.getData().canUseUpgrade(MUD_WALL)
+                && bender.getData().canUseUpgrade(MUD_SHELL);
     }
 }
