@@ -322,6 +322,10 @@
   "upgrade.elementals.iceMastery.description": "Passive. Once bought, permanently strengthens your Ice Spikes and Ice Shards (larger eruption, more shards per volley) and your Frost Nova (larger radius, longer freeze).",
   "upgrade.elementals.iceMastery.use": "Use: %d",
   "upgrade.elementals.iceMastery.icon": "ice_mastery",
+  "upgrade.elementals.iceRing": "Ice Ring",
+  "upgrade.elementals.iceRing.description": "Summons a ring of ice spinning around you. Left Click flings one shard at a time from the ring (up to 20 total) at whatever you're aiming at; Right Click unleashes every shard left in the ring at once, in all directions, shattering it. While up, the ring pushes back nearby enemies and shatters fragile blocks (glass, leaves, webs, snow, torches) that get too close.",
+  "upgrade.elementals.iceRing.use": "Use: %d",
+  "upgrade.elementals.iceRing.icon": "ice_shard",
 
   "upgrade.elementals.boneControl": "Bone Control",
   "upgrade.elementals.boneControl.description": "Seizes a living creature by its skeleton and lets you freely hoist it up/down, side to side, and closer/further with your aim and scroll wheel, like a telekinetic pickup, then hurl it at will.",

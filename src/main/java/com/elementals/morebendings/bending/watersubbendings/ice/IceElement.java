@@ -41,6 +41,13 @@ public class IceElement extends Element {
     public static final String ICE_FORM = "iceForm";
     /** Nó filho de {@link #FROST_NOVA} -- ver {@link IcePrisonAbility}. */
     public static final String ICE_PRISON = "icePrison";
+    /**
+     * Novo nó RAIZ -- ver {@link IceRingAbility}. Anel de gelo que gira ao
+     * redor do bender: Left Click arremessa um estilhaço por vez (até
+     * {@code IceRingAbility.MAX_SHARDS}), Right Click descarrega todos os
+     * estilhaços restantes de uma vez e desfaz o anel.
+     */
+    public static final String ICE_RING = "iceRing";
 
     public IceElement() {
         super(NAME, new Upgrade[]{
@@ -52,13 +59,15 @@ public class IceElement extends Element {
                 }, 0),
                 new Upgrade(FROST_NOVA, new Upgrade[]{
                         new Upgrade(ICE_PRISON, 0) // ver IcePrisonAbility
-                }, 0)
+                }, 0),
+                new Upgrade(ICE_RING, 0) // ver IceRingAbility -- raiz nova, sem filhos
         });
         addAbility(new IceSpikeAbility(), 0);
         addAbility(new IceShardAbility(), 1);
         addAbility(new FrostNovaAbility(), 2);
         addAbility(new IceFormAbility(), 3);
         addAbility(new IcePrisonAbility(), 4);
+        addAbility(new IceRingAbility(), 5);
         // iceMastery não tem Ability/keybind -- é consultada direto via
         // canUseUpgrade() por IceSpikeAbility/IceShardAbility pra dar
         // bônus depois que o jogador compra esse nó.
@@ -74,6 +83,13 @@ public class IceElement extends Element {
         registerUpgradeKeybind(FROST_NOVA, 2);
         registerUpgradeKeybind(ICE_FORM, 3);
         registerUpgradeKeybind(ICE_PRISON, 4);
+        registerUpgradeKeybind(ICE_RING, 5);
+        // NOTA: índice 5 é uma 6ª tecla dedicada -- confira
+        // dev.saperate.elementals.elements.Ability.MAX_KEYBINDS na sua
+        // versão do mod base. Se o cap for menor que 6, troque o índice
+        // acima por um já usado (ex: reaproveitar 4) ou vincule iceRing a
+        // um slot livre direto pela árvore de skills no jogo, do mesmo
+        // jeito que o addon do Obsidian Wake resolve isso pro Lava.
     }
 
     /** Registra a instância única no mod base. Chame uma vez, no load do mod. */
@@ -114,6 +130,7 @@ public class IceElement extends Element {
                 && bender.getData().canUseUpgrade(FROST_NOVA)
                 && bender.getData().canUseUpgrade(ICE_MASTERY)
                 && bender.getData().canUseUpgrade(ICE_FORM)
-                && bender.getData().canUseUpgrade(ICE_PRISON);
+                && bender.getData().canUseUpgrade(ICE_PRISON)
+                && bender.getData().canUseUpgrade(ICE_RING);
     }
 }
