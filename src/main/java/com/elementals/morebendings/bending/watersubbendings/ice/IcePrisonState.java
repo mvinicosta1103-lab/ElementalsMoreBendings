@@ -28,13 +28,12 @@ import java.util.Map;
  *     uma cela completa de {@link Blocks#PACKED_ICE} (não derrete sozinho,
  *     diferente de {@link Blocks#ICE} comum).
  *
- *  2. Duração MÍNIMA de {@link #MIN_DURATION_TICKS} (60s): diferente de
- *     {@code MudTrapState}, que libera assim que o caster solta o agachar,
- *     aqui soltar o agachar ANTES do mínimo é ignorado -- a prisão só
- *     considera o release depois que {@link #MIN_DURATION_TICKS} já
- *     passaram E o caster não estiver mais agachado naquele tick. Enquanto
- *     o caster mantiver o agachar, a prisão continua de pé indefinidamente
- *     (até {@link #MAX_DURATION_TICKS}, failsafe de segurança).
+ *  2. Duração indefinida presa ao agachar: igual {@code MudTrapState},
+ *     libera assim que o caster solta o agachar (sem mínimo garantido) --
+ *     enquanto o caster mantiver o Shift pressionado, a prisão continua de
+ *     pé pra sempre, até {@link #MAX_DURATION_TICKS} (failsafe de
+ *     segurança, pra não travar o alvo indefinidamente numa queda de
+ *     conexão silenciosa do caster que ainda reporte isAlive()).
  *
  * A vítima fica travada com {@code STUNNED} (efeito de verdade do mod base,
  * mesmo usado por {@code CrystalPrisonAbility}) reaplicado a cada tick com

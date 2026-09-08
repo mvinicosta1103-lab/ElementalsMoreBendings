@@ -2,7 +2,6 @@ package com.elementals.morebendings.bending.watersubbendings.ice;
 
 import dev.saperate.elementals.data.Bender;
 import dev.saperate.elementals.elements.Ability;
-import dev.saperate.elementals.utils.SapsUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -11,11 +10,13 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Set;
 
@@ -24,8 +25,17 @@ import java.util.Set;
  * {@code CrystalStepAbility} pendurada embaixo de {@code crystalShard}):
  * aponta pra um bloco e alterna o estado dele entre água e gelo.
  *
- * Raycast simples via {@link SapsUtils#raycastFull} até {@link #RANGE}. Dois
- * casos, decididos pelo bloco mirado:
+ * Raycast MANUAL via {@code level.clip(ClipContext)} até {@link #RANGE},
+ * com {@link ClipContext.Fluid#ANY} -- diferente da maioria das outras
+ * abilities do addon, que usam {@code SapsUtils.raycastFull(player, RANGE,
+ * false)}: esse utilitário passa {@code Fluid.NONE} pro clip, então o raio
+ * atravessa a água direto e acerta o bloco sólido debaixo dela -- por isso
+ * o "congelar" nunca disparava (a mira nunca era reconhecida como água),
+ * só o "derreter" (gelo é sólido, sempre acertado normalmente). Fazendo o
+ * clip aqui mesmo com {@code Fluid.ANY} a água passa a parar o raio na sua
+ * própria superfície, igual {@code MetalGrappleAbility} faz pra blocos.
+ *
+ * Dois casos, decididos pelo bloco/fluido mirado:
  *
  *  - Água (fonte, {@link Fluids#WATER}) -- vira {@link Blocks#ICE}.
  *  - Gelo já formado ({@link #MELTABLE}, inclui {@code PACKED_ICE}/
@@ -56,7 +66,12 @@ public class IceFormAbility implements Ability {
             return;
         }
 
-        HitResult hit = SapsUtils.raycastFull(player, RANGE, false);
+        Vec3 eye = caster.getEyePosition();
+        Vec3 reach = eye.add(caster.getLookAngle().scale(RANGE));
+        // Fluid.ANY -- sem isso o raio ignora água e atravessa até o bloco
+        // sólido debaixo dela, nunca detectando a mira em água (ver JavaDoc).
+        HitResult hit = level.clip(new ClipContext(eye, reach,
+                ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, caster));
         if (!(hit instanceof BlockHitResult blockHit) || hit.getType() != HitResult.Type.BLOCK) {
             caster.displayClientMessage(Component.literal("Aponte para água ou gelo."), true);
             bender.setCurrAbility(null);
