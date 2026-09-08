@@ -37,21 +37,43 @@ public class IceElement extends Element {
     public static final String FROST_NOVA = "frostNova";
     /** Nó passivo -- sem Ability própria, ver {@link #hasMastery}. */
     public static final String ICE_MASTERY = "iceMastery";
+    /** Nó filho de {@link #ICE_SHARD} -- ver {@link IceFormAbility}. */
+    public static final String ICE_FORM = "iceForm";
+    /** Nó filho de {@link #FROST_NOVA} -- ver {@link IcePrisonAbility}. */
+    public static final String ICE_PRISON = "icePrison";
 
     public IceElement() {
         super(NAME, new Upgrade[]{
                 new Upgrade(ICE_SPIKE, new Upgrade[]{
                         new Upgrade(ICE_MASTERY, 0) // grátis -- passivo, ver hasMastery()
                 }, 0),
-                new Upgrade(ICE_SHARD, 0),   // grátis
-                new Upgrade(FROST_NOVA, 0)   // grátis
+                new Upgrade(ICE_SHARD, new Upgrade[]{
+                        new Upgrade(ICE_FORM, 0)   // ver IceFormAbility
+                }, 0),
+                new Upgrade(FROST_NOVA, new Upgrade[]{
+                        new Upgrade(ICE_PRISON, 0) // ver IcePrisonAbility
+                }, 0)
         });
         addAbility(new IceSpikeAbility(), 0);
         addAbility(new IceShardAbility(), 1);
         addAbility(new FrostNovaAbility(), 2);
+        addAbility(new IceFormAbility(), 3);
+        addAbility(new IcePrisonAbility(), 4);
         // iceMastery não tem Ability/keybind -- é consultada direto via
         // canUseUpgrade() por IceSpikeAbility/IceShardAbility pra dar
         // bônus depois que o jogador compra esse nó.
+
+        // Sem isso, Element#getKeybindSlotForUpgrade() sobe a árvore, não
+        // acha nada em upgradeKeybinds e cai pro índice do RAMO da raiz
+        // (0-2) em vez do índice real da ability (0-4) -- iceForm e
+        // icePrison (aninhados) mostrariam a mesma tecla de iceShard/
+        // frostNova na tooltip. Registrando explicitamente cada upgrade
+        // -> índice real da ability, exatamente como MudElement/LavaElement fazem.
+        registerUpgradeKeybind(ICE_SPIKE, 0);
+        registerUpgradeKeybind(ICE_SHARD, 1);
+        registerUpgradeKeybind(FROST_NOVA, 2);
+        registerUpgradeKeybind(ICE_FORM, 3);
+        registerUpgradeKeybind(ICE_PRISON, 4);
     }
 
     /** Registra a instância única no mod base. Chame uma vez, no load do mod. */
@@ -90,6 +112,8 @@ public class IceElement extends Element {
                 && bender.getData().canUseUpgrade(ICE_SPIKE)
                 && bender.getData().canUseUpgrade(ICE_SHARD)
                 && bender.getData().canUseUpgrade(FROST_NOVA)
-                && bender.getData().canUseUpgrade(ICE_MASTERY);
+                && bender.getData().canUseUpgrade(ICE_MASTERY)
+                && bender.getData().canUseUpgrade(ICE_FORM)
+                && bender.getData().canUseUpgrade(ICE_PRISON);
     }
 }
