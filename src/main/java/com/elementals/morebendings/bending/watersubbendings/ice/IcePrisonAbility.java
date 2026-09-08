@@ -15,8 +15,8 @@ import net.minecraft.world.phys.EntityHitResult;
  * {@code CrystalArmorAbility} pendurada embaixo de {@code crystalWall}):
  * encapsula um alvo numa cela de gelo. Diferente de {@code
  * CrystalPrisonAbility} (duração fixa de 5s, solta sozinha), esta é
- * CANALIZADA e de duração mínima garantida -- ver {@link IcePrisonState}
- * pros detalhes exatos da trava de 60s.
+ * CANALIZADA enquanto o caster mantiver o Shift pressionado -- solta assim
+ * que o Shift é largado (ver {@link IcePrisonState} pros detalhes exatos).
  *
  * Igual {@code MudTrapAbility}, sobrescreve {@link #activatesOnPress()} pra
  * disparar o raycast imediatamente ao apertar a tecla (sem precisar
@@ -79,7 +79,7 @@ public class IcePrisonAbility implements Ability {
             bender.setCurrAbility(null);
         }
         // Enquanto a prisão estiver ativa, o IcePrisonManager (via tick do
-        // servidor) já cuida sozinho do stun/duração mínima/release -- essa
+        // servidor) já cuida sozinho do stun/duração/release -- essa
         // Ability só larga a trava de currAbility quando o Manager decide
         // (tick a tick, através de hasActivePrison) que a prisão acabou.
     }

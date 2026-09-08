@@ -2,13 +2,13 @@ package com.elementals.morebendings.bending.watersubbendings.ice;
 
 import dev.saperate.elementals.effects.ElementalsStatusEffects;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Blocks;
@@ -23,17 +23,23 @@ import java.util.Map;
  * Mesmo esquema geral de {@code MudTrapState}, mas com dois diferenciais:
  *
  *  1. A "gaiola" é uma caixa fechada de verdade em vez de só uma coluna --
- *     paredes nos quatro lados (dois níveis de altura, mesmo esquema de
- *     {@code CrystalPrisonAbility#raiseCage}), MAIS piso e teto, formando
- *     uma cela completa de {@link Blocks#PACKED_ICE} (não derrete sozinho,
- *     diferente de {@link Blocks#ICE} comum).
+ *     paredes nos 8 blocos ao redor da vítima (não só os 4 lados
+ *     cardeais -- as quinas também são seladas, senão mobs mais largos que
+ *     1 bloco escapavam pela diagonal), MAIS piso e teto, formando uma
+ *     cela completa de {@link Blocks#PACKED_ICE} (não derrete sozinho,
+ *     diferente de {@link Blocks#ICE} comum). A altura da cela acompanha a
+ *     altura real da vítima ({@link LivingEntity#getBbHeight()}) em vez de
+ *     um valor fixo de 2 blocos -- mobs com 2 blocos de altura ou mais
+ *     (zumbi, esqueleto, etc. já têm ~1.95; hostis maiores como Ravager,
+ *     Iron Golem, Enderman passam de 2) tinham a cabeça acima do teto e
+ *     conseguiam sair andando.
  *
- *  2. Duração indefinida presa ao agachar: igual {@code MudTrapState},
- *     libera assim que o caster solta o agachar (sem mínimo garantido) --
- *     enquanto o caster mantiver o Shift pressionado, a prisão continua de
- *     pé pra sempre, até {@link #MAX_DURATION_TICKS} (failsafe de
- *     segurança, pra não travar o alvo indefinidamente numa queda de
- *     conexão silenciosa do caster que ainda reporte isAlive()).
+ *  2. Duração presa ao agachar: igual {@code MudTrapState}, libera assim
+ *     que o caster solta o agachar, sem mínimo garantido -- enquanto o
+ *     caster mantiver o Shift pressionado, a prisão continua de pé até
+ *     {@link #MAX_DURATION_TICKS} (failsafe de segurança, pra não travar o
+ *     alvo indefinidamente numa queda de conexão silenciosa do caster que
+ *     ainda reporte isAlive()).
  *
  * A vítima fica travada com {@code STUNNED} (efeito de verdade do mod base,
  * mesmo usado por {@code CrystalPrisonAbility}) reaplicado a cada tick com
@@ -43,8 +49,6 @@ import java.util.Map;
  */
 public class IcePrisonState {
 
-    /** 60s -- soltar o agachar antes disso não desfaz a prisão. */
-    private static final int MIN_DURATION_TICKS = 20 * 60;
     /** Trava de segurança: se o caster nunca soltar o agachar, desfaz sozinho depois de 5min. */
     private static final int MAX_DURATION_TICKS = 20 * 60 * 5;
     /** Duração curta reaplicada a cada tick -- suficiente pra cobrir folgas de tick sem "vencer" sozinha. */
@@ -82,7 +86,7 @@ public class IcePrisonState {
         if (ticksElapsed > MAX_DURATION_TICKS) {
             return false;
         }
-        if (ticksElapsed >= MIN_DURATION_TICKS && !caster.isShiftKeyDown()) {
+        if (!caster.isShiftKeyDown()) {
             return false;
         }
 
@@ -91,22 +95,31 @@ public class IcePrisonState {
     }
 
     /**
-     * Ergue a cela: paredes nos 4 lados cardeais (2 níveis de altura, mesmo
-     * esquema de {@code CrystalPrisonAbility#raiseCage}), mais piso e teto
-     * -- só nas posições substituíveis (ar, grama alta etc.), nunca
-     * sobrescrevendo terreno sólido de verdade.
+     * Ergue a cela: paredes nos 8 blocos ao redor da vítima (cardeais +
+     * quinas), com altura igual a {@code cageHeight} (calculada a partir da
+     * altura real do alvo), mais piso e teto -- só nas posições
+     * substituíveis (ar, grama alta etc.), nunca sobrescrevendo terreno
+     * sólido de verdade.
      */
     private void raiseCell() {
         BlockPos feet = victim.blockPosition();
-        Direction[] sides = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
+        // Acompanha a altura real do alvo em vez de um valor fixo de 2 --
+        // é isso que fazia mobs com 2+ blocos de altura ficarem com a
+        // cabeça acima do teto e saírem andando.
+        int cageHeight = Math.max(2, Mth.ceil(victim.getBbHeight()));
 
-        for (Direction side : sides) {
-            for (int h = 0; h <= 1; h++) {
-                place(feet.relative(side).above(h));
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dz = -1; dz <= 1; dz++) {
+                if (dx == 0 && dz == 0) {
+                    continue; // coluna central é onde a vítima está
+                }
+                for (int h = 0; h < cageHeight; h++) {
+                    place(feet.offset(dx, h, dz));
+                }
             }
         }
-        place(feet.below());     // piso
-        place(feet.above(2));    // teto
+        place(feet.below());            // piso
+        place(feet.above(cageHeight));  // teto, agora acima da cabeça real do alvo
 
         if (!savedStates.isEmpty()) {
             level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.PACKED_ICE.defaultBlockState()),
