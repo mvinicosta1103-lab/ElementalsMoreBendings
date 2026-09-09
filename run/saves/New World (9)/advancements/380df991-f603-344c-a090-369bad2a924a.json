@@ -1,4 +1,23 @@
 {
+  "minecraft:recipes/decorations/crafting_table": {
+    "criteria": {
+      "unlock_right_away": "2026-09-08 22:25:05 -0300"
+    },
+    "done": true
+  },
+  "elementals:root": {
+    "criteria": {
+      "trigger": "2026-09-08 22:25:05 -0300"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:old_growth_birch_forest": "2026-09-08 22:25:06 -0300",
+      "minecraft:beach": "2026-09-08 23:19:37 -0300"
+    },
+    "done": false
+  },
   "elementals:waterbending": {
     "criteria": {
       "element": "2026-09-08 22:25:36 -0300"
@@ -23,23 +42,29 @@
     },
     "done": true
   },
-  "minecraft:recipes/decorations/crafting_table": {
+  "minecraft:recipes/food/cooked_porkchop": {
     "criteria": {
-      "unlock_right_away": "2026-09-08 22:25:05 -0300"
+      "has_porkchop": "2026-09-08 23:17:34 -0300"
     },
     "done": true
   },
-  "elementals:root": {
+  "minecraft:adventure/root": {
     "criteria": {
-      "trigger": "2026-09-08 22:25:05 -0300"
+      "killed_something": "2026-09-08 23:17:34 -0300"
     },
     "done": true
   },
-  "minecraft:adventure/adventuring_time": {
+  "minecraft:recipes/food/cooked_porkchop_from_campfire_cooking": {
     "criteria": {
-      "minecraft:old_growth_birch_forest": "2026-09-08 22:25:06 -0300"
+      "has_porkchop": "2026-09-08 23:17:34 -0300"
     },
-    "done": false
+    "done": true
+  },
+  "minecraft:recipes/food/cooked_porkchop_from_smoking": {
+    "criteria": {
+      "has_porkchop": "2026-09-08 23:17:34 -0300"
+    },
+    "done": true
   },
   "DataVersion": 3955
 }

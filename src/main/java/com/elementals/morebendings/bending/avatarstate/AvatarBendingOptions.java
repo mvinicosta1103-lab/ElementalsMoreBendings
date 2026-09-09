@@ -222,7 +222,7 @@ public final class AvatarBendingOptions {
             return false;
         }
 
-        if (!casterBender.reduceChi(grant ? GRANT_CHI_COST : REMOVE_CHI_COST)) {
+        if (!casterBender.reduceChi(null, grant ? GRANT_CHI_COST : REMOVE_CHI_COST)) {
             caster.displayClientMessage(Component.literal("§7Not enough chi."), true);
             return false;
         }
@@ -283,7 +283,7 @@ public final class AvatarBendingOptions {
             return false;
         }
 
-        if (!casterBender.reduceChi(grant ? GRANT_CHI_COST : REMOVE_CHI_COST)) {
+        if (!casterBender.reduceChi(null, grant ? GRANT_CHI_COST : REMOVE_CHI_COST)) {
             caster.displayClientMessage(Component.literal("§7Not enough chi."), true);
             return false;
         }

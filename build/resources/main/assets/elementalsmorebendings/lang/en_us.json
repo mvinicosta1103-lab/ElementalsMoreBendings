@@ -623,6 +623,10 @@
   "upgrade.elementals.bloomingGround.description": "Blesses the ground where you're aiming with the same growth that bone meal gives -- saplings sprout, crops advance a stage, grass spreads flowers, and so on, in a small area.",
   "upgrade.elementals.bloomingGround.use": "Use: %d",
   "upgrade.elementals.bloomingGround.icon": "blooming_ground",
+  "upgrade.elementals.witheringTouch": "Withering Touch",
+  "upgrade.elementals.witheringTouch.description": "Touches a living creature within reach, afflicting it with unending Poison, Hunger, and slow, periodic damage until it dies -- unless you touch it again, which lifts the curse entirely.",
+  "upgrade.elementals.witheringTouch.use": "Use: %d",
+  "upgrade.elementals.witheringTouch.icon": "withering_touch",
 
   "upgrade.elementals.bloodVeinLock": "Vein Lock",
   "upgrade.elementals.bloodVeinLock.description": "Reach out and lock your target's veins and joints from a distance, afflicting heavy Slowness and Mining Fatigue for several seconds. Lasts longer and hits harder at night.",

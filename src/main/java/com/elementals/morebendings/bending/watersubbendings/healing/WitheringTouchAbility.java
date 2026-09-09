@@ -69,7 +69,7 @@ public class WitheringTouchAbility implements Ability {
 
         level.sendParticles(ParticleTypes.SOUL, victim.getX(), victim.getY() + victim.getBbHeight() * 0.5,
                 victim.getZ(), 20, 0.3, 0.4, 0.3, 0.02);
-        level.playSound(null, victim.blockPosition(), SoundEvents.SOUL_ESCAPE, SoundSource.PLAYERS, 0.8f, 0.6f);
+        level.playSound(null, victim.blockPosition(), SoundEvents.SOUL_ESCAPE.value(), SoundSource.PLAYERS, 0.8f, 0.6f);
 
         String targetName = victim.getName().getString();
         caster.displayClientMessage(Component.literal("§4You afflicted " + targetName + " with a withering touch."), true);
