@@ -17,6 +17,7 @@ import com.elementals.morebendings.bending.firesubbendings.combustion.Combustion
 import com.elementals.morebendings.bending.firesubbendings.plasma.PlasmaElement;
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantElement;
 import com.elementals.morebendings.bending.watersubbendings.spirit.SpiritElement;
+import com.elementals.morebendings.bending.watersubbendings.healing.HealingElement;
 import com.elementals.morebendings.commands.MoreBendingCommand;
 import com.elementals.morebendings.data.SubbendingType;
 import dev.saperate.elementals.data.Bender;
@@ -129,7 +130,7 @@ public final class AvatarBendingOptions {
     /** Elemento-base do qual cada sub-bending depende (pré-requisito de {@code canAcquire}) -- ver os pacotes de cada Element. */
     private static Element parentBase(SubbendingType type) {
         return switch (type) {
-            case PLANT, SPIRIT, ICE -> WaterElement.get();
+            case PLANT, SPIRIT, ICE, HEALING -> WaterElement.get();
             case MUD, CRYSTAL, BONE, SAND, GLASS, PETRIFICATION, LAVA -> EarthElement.get();
             case PLASMA, COMBUSTION -> FireElement.get();
             default -> AirElement.get(); // GAS, ATMOSPHERE, MIST, SOUND, TEMPERATURE, VOID
@@ -336,6 +337,7 @@ public final class AvatarBendingOptions {
             case COMBUSTION -> CombustionElement.canAcquire(bender);
             case PLANT -> PlantElement.canAcquire(bender);
             case SPIRIT -> SpiritElement.canAcquire(bender);
+            case HEALING -> HealingElement.canAcquire(bender);
             case SOUND -> SoundElement.canAcquire(bender);
             case TEMPERATURE -> TemperatureElement.canAcquire(bender);
             case VOID -> VoidElement.canAcquire(bender);

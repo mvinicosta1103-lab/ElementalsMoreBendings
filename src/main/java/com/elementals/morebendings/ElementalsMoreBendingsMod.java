@@ -49,6 +49,7 @@ import com.elementals.morebendings.bending.airsubbendings.sound.EchoSenseManager
 import com.elementals.morebendings.bending.airsubbendings.sound.SilenceFieldManager;
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantVineWallManager;
 import com.elementals.morebendings.bending.watersubbendings.spirit.CurseMinionManager;
+import com.elementals.morebendings.bending.watersubbendings.healing.WitheringTouchManager;
 import com.elementals.morebendings.bending.watersubbendings.spirit.PurifyingWaterManager;
 import com.elementals.morebendings.bending.avatarstate.AvatarStateManager;
 import com.elementals.morebendings.bending.avatarstate.AvatarNearDeathGuardian;
@@ -212,6 +213,8 @@ public class ElementalsMoreBendingsMod {
         // Força o retarget contínuo de quem estiver amaldiçoado por
         // curseMinion -- ver CurseMinionManager.
         NeoForge.EVENT_BUS.addListener(CurseMinionManager::onServerTick);
+        // witheringTouch -- ver WitheringTouchManager.
+        NeoForge.EVENT_BUS.addListener(WitheringTouchManager::onServerTick);
 
         // Move os fantoches ativos de bonePuppeteer na direção que o caster
         // está olhando, tick a tick, e libera a IA quando a possessão acaba

@@ -49,6 +49,7 @@ import com.elementals.morebendings.bending.firesubbendings.combustion.Combustion
 import com.elementals.morebendings.bending.firesubbendings.plasma.PlasmaElement;
 import com.elementals.morebendings.bending.watersubbendings.plant.PlantElement;
 import com.elementals.morebendings.bending.watersubbendings.spirit.SpiritElement;
+import com.elementals.morebendings.bending.watersubbendings.healing.HealingElement;
 
 /**
  * /morebending grant <player> <subbending>
@@ -114,7 +115,7 @@ public class MoreBendingCommand {
         return switch (type) {
             case MUD, CRYSTAL, SAND, PETRIFICATION, LAVA -> "precisa ter Earth e ter masterizado a árvore de Earth inteira";
             case ATMOSPHERE, GAS, MIST, SOUND, TEMPERATURE, VOID -> "precisa ter Air e ter masterizado a árvore de Air inteira";
-            case PLANT, SPIRIT -> "precisa ter Water e ter masterizado a árvore de Water inteira";
+            case PLANT, SPIRIT, HEALING -> "precisa ter Water e ter masterizado a árvore de Water inteira";
             case PLASMA, COMBUSTION -> "precisa ter Fire e ter masterizado a árvore de Fire inteira";
             case BONE -> "precisa ter Earth e já ter estado a até "
                     + (int) BoneElement.BLOOD_PROXIMITY_RANGE + " blocos de um Blood bender em algum momento";
@@ -250,6 +251,7 @@ public class MoreBendingCommand {
             case COMBUSTION -> CombustionElement.get();
             case PLANT -> PlantElement.get();
             case SPIRIT -> SpiritElement.get();
+            case HEALING -> HealingElement.get();
             case SOUND -> SoundElement.get();
             case TEMPERATURE -> TemperatureElement.get();
             case VOID -> VoidElement.get();
@@ -425,6 +427,7 @@ public class MoreBendingCommand {
                 case COMBUSTION -> CombustionElement.canAcquire(bender);
                 case PLANT -> PlantElement.canAcquire(bender);
                 case SPIRIT -> SpiritElement.canAcquire(bender);
+                case HEALING -> HealingElement.canAcquire(bender);
                 case SOUND -> SoundElement.canAcquire(bender);
                 case TEMPERATURE -> TemperatureElement.canAcquire(bender);
                 case VOID -> VoidElement.canAcquire(bender);
