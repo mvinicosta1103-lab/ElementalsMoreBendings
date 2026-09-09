@@ -228,8 +228,13 @@ public class MoreBendingCommand {
         StateDataSaverAndLoader.getServerState(target.getServer()).setDirty();
     }
 
-    /** Mapeamento sub-bending -> Element real correspondente. FLYING não tem Element de verdade (flag-only, ver PlayerSubbendingData). */
-    private static Element elementFor(SubbendingType type) {
+    /**
+     * Mapeamento sub-bending -> Element real correspondente. FLYING não tem
+     * Element de verdade (flag-only, ver PlayerSubbendingData). Público --
+     * reaproveitado fora deste arquivo por {@code AvatarBendingOptions}
+     * (GUI de Energybend do Avatar State).
+     */
+    public static Element elementFor(SubbendingType type) {
         return switch (type) {
             case MUD -> MudElement.get();
             case CRYSTAL -> CrystalElement.get();
