@@ -292,7 +292,13 @@ public final class AvatarBendingOptions {
                 .withSuppressedOutput();
         String command = "morebending " + (grant ? "grant" : "remove") + " "
                 + target.getGameProfile().getName() + " " + type.getId();
-        int result = caster.getServer().getCommands().performCommand(source, command);
+        int result;
+        try {
+            var parseResults = caster.getServer().getCommands().getDispatcher().parse(command, source);
+            result = caster.getServer().getCommands().getDispatcher().execute(parseResults);
+        } catch (Exception e) {
+            result = 0;
+        }
         if (result <= 0) {
             // Não deveria acontecer (já validamos hasElement/elegibilidade
             // acima), mas por segurança não deixa o Avatar sem chi à toa.

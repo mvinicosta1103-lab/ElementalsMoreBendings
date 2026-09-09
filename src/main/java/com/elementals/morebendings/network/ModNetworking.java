@@ -27,6 +27,9 @@ import com.elementals.morebendings.network.packets.ToggleAirRingPacket;
 import com.elementals.morebendings.network.packets.CycleAvatarBendingPacket;
 import com.elementals.morebendings.network.packets.CastAvatarBendingGrantPacket;
 import com.elementals.morebendings.network.packets.CastAvatarBendingRemovePacket;
+import com.elementals.morebendings.network.packets.OpenAvatarBendingChoicePacket;
+import com.elementals.morebendings.network.packets.ChooseAvatarBendingPacket;
+import com.elementals.morebendings.network.packets.CancelAvatarBendingChoicePacket;
 
 public final class ModNetworking {
 
@@ -99,6 +102,15 @@ public final class ModNetworking {
     public static final ResourceLocation CAST_AVATAR_BENDING_REMOVE_ID =
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cast_avatar_bending_remove");
 
+    public static final ResourceLocation OPEN_AVATAR_BENDING_CHOICE_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "open_avatar_bending_choice");
+
+    public static final ResourceLocation CHOOSE_AVATAR_BENDING_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "choose_avatar_bending");
+
+    public static final ResourceLocation CANCEL_AVATAR_BENDING_CHOICE_ID =
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "cancel_avatar_bending_choice");
+
     public static void register() {
         Network.registerPacket(ToggleFlyingPacket.type(), ToggleFlyingPacket.class,
                 ToggleFlyingPacket.STREAM_CODEC, ToggleFlyingPacket::handle);
@@ -146,6 +158,12 @@ public final class ModNetworking {
                 CastAvatarBendingGrantPacket.STREAM_CODEC, CastAvatarBendingGrantPacket::handle);
         Network.registerPacket(CastAvatarBendingRemovePacket.type(), CastAvatarBendingRemovePacket.class,
                 CastAvatarBendingRemovePacket.STREAM_CODEC, CastAvatarBendingRemovePacket::handle);
+        Network.registerPacket(OpenAvatarBendingChoicePacket.type(), OpenAvatarBendingChoicePacket.class,
+                OpenAvatarBendingChoicePacket.STREAM_CODEC, OpenAvatarBendingChoicePacket::handle);
+        Network.registerPacket(ChooseAvatarBendingPacket.type(), ChooseAvatarBendingPacket.class,
+                ChooseAvatarBendingPacket.STREAM_CODEC, ChooseAvatarBendingPacket::handle);
+        Network.registerPacket(CancelAvatarBendingChoicePacket.type(), CancelAvatarBendingChoicePacket.class,
+                CancelAvatarBendingChoicePacket.STREAM_CODEC, CancelAvatarBendingChoicePacket::handle);
     }
 
     public static void expectSideOrThrow(Side current, Side expected) {
