@@ -44,7 +44,13 @@ public class PlayerAvatarData {
             // jogador pro mesmo elemento ativo que ele estava usando (em vez de sempre
             // cair no primeiro da lista).
             Codec.INT.optionalFieldOf("savedActiveElementIndex", 0)
-                    .forGetter(data -> data.savedActiveElementIndex)
+                    .forGetter(data -> data.savedActiveElementIndex),
+            // Quantas vezes o jogador já COMPLETOU uma entrada no Avatar State (ver
+            // AvatarStateManager#activate) -- nunca decresce, é o histórico usado por
+            // AvatarProgressionLevel#forTransformationCount pra decidir o nível atual
+            // (Recém Avatar / Iniciante / Experiente / Mestre).
+            Codec.INT.optionalFieldOf("transformationCount", 0)
+                    .forGetter(data -> data.transformationCount)
     ).apply(instance, PlayerAvatarData::fromSaved));
 
     private boolean avatarState = false;
@@ -52,10 +58,11 @@ public class PlayerAvatarData {
     private final Set<SubbendingType> grantedFlagSubbendings = new HashSet<>();
     private final List<String> savedElements = new java.util.ArrayList<>();
     private int savedActiveElementIndex = 0;
+    private int transformationCount = 0;
 
     private static PlayerAvatarData fromSaved(boolean avatarState, List<String> grantedElements,
                                               List<String> grantedFlagIds, List<String> savedElements,
-                                              int savedActiveElementIndex) {
+                                              int savedActiveElementIndex, int transformationCount) {
         PlayerAvatarData data = new PlayerAvatarData();
         data.avatarState = avatarState;
         data.grantedElements.addAll(grantedElements);
@@ -64,6 +71,7 @@ public class PlayerAvatarData {
         }
         data.savedElements.addAll(savedElements);
         data.savedActiveElementIndex = savedActiveElementIndex;
+        data.transformationCount = transformationCount;
         return data;
     }
 
@@ -128,5 +136,15 @@ public class PlayerAvatarData {
 
     public int getSavedActiveElementIndex() {
         return savedActiveElementIndex;
+    }
+
+    /** @return quantas vezes o jogador já completou uma entrada no Avatar State (ver {@link #incrementTransformationCount}). */
+    public int getTransformationCount() {
+        return transformationCount;
+    }
+
+    /** Chamado uma única vez por entrada bem-sucedida, em {@code AvatarStateManager#activate}. Nunca decresce. */
+    public void incrementTransformationCount() {
+        transformationCount++;
     }
 }

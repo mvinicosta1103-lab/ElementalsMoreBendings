@@ -110,6 +110,23 @@ public final class AvatarStateManager {
      * 60s, esteja o anel ligado ou desligado no momento. */
     private static final Map<UUID, Set<RingElement>> MANUAL_RINGS = new HashMap<>();
 
+    // ---- Progressão (ver AvatarProgressionLevel) ----
+    //
+    // Cada ativação "trava" o nível de progressão que o jogador tinha NO
+    // MOMENTO de entrar (ACTIVE_ENTRY_LEVEL) -- é esse nível travado que
+    // decide a duração desta ativação específica e o cooldown aplicado
+    // quando ela terminar, mesmo que #activate seja chamado de novo (por
+    // instinto de sobrevivência) e o contador mude no meio do caminho.
+
+    /** Nível travado da ativação atual de cada jogador -- ver acima. Removido em #finishDeactivation. */
+    private static final Map<UUID, AvatarProgressionLevel> ACTIVE_ENTRY_LEVEL = new HashMap<>();
+
+    /** Tick do mundo (level#getGameTime) em que a ativação atual começou -- ausente = sem limite de duração nesta ativação (Mestre) ou não está ativo. */
+    private static final Map<UUID, Long> ACTIVATION_START_TICK = new HashMap<>();
+
+    /** Tick do mundo até quando a entrada MANUAL (tecla) fica bloqueada por cooldown. Ausente ou já expirado = sem cooldown pendente. */
+    private static final Map<UUID, Long> COOLDOWN_UNTIL_TICK = new HashMap<>();
+
     private AvatarStateManager() {
     }
 
@@ -125,12 +142,82 @@ public final class AvatarStateManager {
                 && bender.hasElement(FireElement.get());
     }
 
+    /** @return o nível de progressão ATUAL do jogador (baseado no histórico -- ver {@code PlayerAvatarData#getTransformationCount}). */
+    public static AvatarProgressionLevel progressionLevel(ServerPlayer player) {
+        int count = player.getData(ModAttachments.AVATAR).getTransformationCount();
+        return AvatarProgressionLevel.forTransformationCount(count);
+    }
+
+    /** @return ticks restantes de cooldown antes da entrada manual liberar de novo (0 = sem cooldown pendente). */
+    public static long cooldownRemainingTicks(ServerPlayer player) {
+        Long until = COOLDOWN_UNTIL_TICK.get(player.getUUID());
+        if (until == null || !(player.level() instanceof ServerLevel level)) {
+            return 0L;
+        }
+        return Math.max(0L, until - level.getGameTime());
+    }
+
+    /** @return ticks restantes até a ativação ATUAL desligar sozinha, ou {@code -1} se não estiver ativo ou não tiver limite de duração (Mestre). */
+    public static long durationRemainingTicks(ServerPlayer player) {
+        Long start = ACTIVATION_START_TICK.get(player.getUUID());
+        AvatarProgressionLevel entryLevel = ACTIVE_ENTRY_LEVEL.get(player.getUUID());
+        if (start == null || entryLevel == null || !entryLevel.hasDurationLimit()
+                || !(player.level() instanceof ServerLevel level)) {
+            return -1L;
+        }
+        return Math.max(0L, entryLevel.getDurationTicks() - (level.getGameTime() - start));
+    }
+
+    /** Formata ticks (20/s) como "Xm Ys" (ou só "Ys" se menos de um minuto), pras mensagens de cooldown/duração. */
+    private static String formatTicksAsTime(long ticks) {
+        long totalSeconds = (ticks + 19) / 20; // arredonda pra cima -- nunca mostra "0s" com cooldown ainda ativo
+        long minutes = totalSeconds / 60;
+        long seconds = totalSeconds % 60;
+        return minutes > 0 ? minutes + "m " + seconds + "s" : seconds + "s";
+    }
+
     /** @return o novo estado (true = ligou, false = desligou/não conseguiu ligar). */
     public static boolean toggle(ServerPlayer player) {
         if (isActive(player)) {
             deactivate(player);
             return false;
         }
+        return activateManual(player);
+    }
+
+    /**
+     * Entrada VOLUNTÁRIA pela tecla (ver {@code ToggleAvatarStatePacket}) --
+     * diferente de {@link #activate} puro (chamado também pelo instinto de
+     * sobrevivência em {@link AvatarNearDeathGuardian}, que NUNCA passa por
+     * aqui, então a emergência sempre funciona independente de nível ou
+     * cooldown). Aqui sim: só libera se o nível atual permitir entrada
+     * manual (ver {@link AvatarProgressionLevel#allowsManualEntry}) e não
+     * houver cooldown pendente da ativação anterior.
+     */
+    public static boolean activateManual(ServerPlayer player) {
+        if (isActive(player)) {
+            return true;
+        }
+        if (!isEligible(player)) {
+            player.displayClientMessage(Component.literal(
+                    "§7You need to master all 4 base elements (Air, Water, Earth, and Fire) before entering the Avatar State."), true);
+            return false;
+        }
+
+        AvatarProgressionLevel level = progressionLevel(player);
+        if (!level.allowsManualEntry()) {
+            player.displayClientMessage(Component.literal(
+                    "§7You haven't mastered the Avatar State yet -- for now, only your survival instinct (near death) can trigger it."), true);
+            return false;
+        }
+
+        long cooldownLeft = cooldownRemainingTicks(player);
+        if (cooldownLeft > 0) {
+            player.displayClientMessage(Component.literal(
+                    "§7The Avatar State is still recovering -- " + formatTicksAsTime(cooldownLeft) + " left."), true);
+            return false;
+        }
+
         return activate(player);
     }
 
@@ -193,6 +280,20 @@ public final class AvatarStateManager {
             avatarData.setAvatarState(true);
         }
 
+        // Trava o nível de progressão PRA ESTA ativação (com base no
+        // histórico ATÉ AGORA, antes de contar a transformação que está
+        // começando) -- é ele que decide a duração desta sessão e o
+        // cooldown quando ela terminar, ver AvatarProgressionLevel.
+        AvatarProgressionLevel entryLevel = AvatarProgressionLevel.forTransformationCount(avatarData.getTransformationCount());
+        avatarData.incrementTransformationCount();
+        ACTIVE_ENTRY_LEVEL.put(player.getUUID(), entryLevel);
+        if (entryLevel.hasDurationLimit() && player.level() instanceof ServerLevel level) {
+            ACTIVATION_START_TICK.put(player.getUUID(), level.getGameTime());
+        } else {
+            ACTIVATION_START_TICK.remove(player.getUUID());
+        }
+        COOLDOWN_UNTIL_TICK.remove(player.getUUID()); // ativação bem sucedida -- qualquer cooldown residual não se aplica mais
+
         ACTIVE.add(player.getUUID());
         MANUAL_RINGS.remove(player.getUUID()); // nenhum anel foi tocado manualmente ainda nesta ativação
         RING_AUTO_EXPIRE_TICK.put(player.getUUID(), player.tickCount + (long) RING_AUTO_DURATION_TICKS);
@@ -202,7 +303,8 @@ public final class AvatarStateManager {
         spawnActivationBurst(player);
         broadcastSync(player, true);
         player.displayClientMessage(Component.literal(
-                "§bYou entered the Avatar State! Your other bendings are locked -- only Avatar and Energy are available to cycle."), true);
+                "§bYou entered the Avatar State (" + entryLevel.getDisplayName()
+                        + ")! Your other bendings are locked -- only Avatar and Energy are available to cycle."), true);
         return true;
     }
 
@@ -211,10 +313,24 @@ public final class AvatarStateManager {
             return;
         }
         ACTIVE.remove(player.getUUID());
+        finishDeactivation(player);
+    }
+
+    /**
+     * Limpeza compartilhada de "sair do Avatar State" -- chamada tanto por
+     * {@link #deactivate} (saída pela tecla) quanto pelo laço de {@link
+     * #onServerTick} quando a duração expira sozinha. Nunca mexe em {@link
+     * #ACTIVE} -- cada chamador já cuidou disso do jeito certo pra sua
+     * situação (direto vs. via {@code Iterator#remove}, pra nunca
+     * disparar {@code ConcurrentModificationException} durante o tick).
+     */
+    private static void finishDeactivation(ServerPlayer player) {
         removeAllRings(player);
         DISABLED_RINGS.remove(player.getUUID());
         MANUAL_RINGS.remove(player.getUUID());
         RING_AUTO_EXPIRE_TICK.remove(player.getUUID());
+        ACTIVATION_START_TICK.remove(player.getUUID());
+        AvatarProgressionLevel enteredLevel = ACTIVE_ENTRY_LEVEL.remove(player.getUUID());
 
         PlayerAvatarData avatarData = player.getData(ModAttachments.AVATAR);
         if (avatarData.isAvatarState()) {
@@ -223,6 +339,16 @@ public final class AvatarStateManager {
         }
         removeBuffs(player);
         revokeAvatarFlight(player);
+
+        // Cooldown da PRÓXIMA entrada manual -- usa o nível de quando esta
+        // ativação COMEÇOU, não o nível atual (que só muda na próxima
+        // entrada de qualquer forma, mas mantém a intenção explícita).
+        if (enteredLevel != null && enteredLevel.hasCooldown() && player.level() instanceof ServerLevel level) {
+            COOLDOWN_UNTIL_TICK.put(player.getUUID(), level.getGameTime() + enteredLevel.getCooldownTicks());
+        } else {
+            COOLDOWN_UNTIL_TICK.remove(player.getUUID());
+        }
+
         broadcastSync(player, false);
         player.displayClientMessage(Component.literal("§7You left the Avatar State. Your previous bendings have been restored."), true);
     }
@@ -404,6 +530,13 @@ public final class AvatarStateManager {
                 it.remove();
                 continue;
             }
+            if (hasDurationExpired(player)) {
+                player.displayClientMessage(Component.literal(
+                        "§7Your time as the Avatar has run out -- you were pulled back to normal."), true);
+                it.remove(); // via Iterator -- nunca chamar #deactivate aqui, causaria ConcurrentModificationException
+                finishDeactivation(player);
+                continue;
+            }
             if (player.tickCount % EFFECT_REFRESH_INTERVAL == 0) {
                 applyBuffs(player);
             }
@@ -411,6 +544,19 @@ public final class AvatarStateManager {
             updateAllRings(player);
             applyRingCombatEffects(player);
         }
+    }
+
+    /** @return se a ativação ATUAL do jogador já passou da duração do seu nível travado (sempre {@code false} pro Mestre -- sem limite). */
+    private static boolean hasDurationExpired(ServerPlayer player) {
+        Long start = ACTIVATION_START_TICK.get(player.getUUID());
+        if (start == null) {
+            return false;
+        }
+        AvatarProgressionLevel entryLevel = ACTIVE_ENTRY_LEVEL.get(player.getUUID());
+        if (entryLevel == null || !entryLevel.hasDurationLimit() || !(player.level() instanceof ServerLevel level)) {
+            return false;
+        }
+        return (level.getGameTime() - start) >= entryLevel.getDurationTicks();
     }
 
     /**
@@ -964,6 +1110,11 @@ public final class AvatarStateManager {
             DISABLED_RINGS.remove(sp.getUUID());
             MANUAL_RINGS.remove(sp.getUUID());
             RING_AUTO_EXPIRE_TICK.remove(sp.getUUID());
+            // Cooldown e nível/timer de duração de propósito NÃO são limpos aqui --
+            // são o estado de progressão do jogador, precisam sobreviver a um
+            // logout/login (o cooldown de quem sai no meio da espera continua
+            // contando; ver onPlayerLoggedIn, que retoma ACTIVATION_START_TICK
+            // implicitamente ao reativar os anéis/buffs sem resetar duração).
             removeAllRings(sp);
         }
     }
