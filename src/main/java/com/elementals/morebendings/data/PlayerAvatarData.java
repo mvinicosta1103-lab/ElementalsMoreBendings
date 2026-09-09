@@ -50,7 +50,14 @@ public class PlayerAvatarData {
             // AvatarProgressionLevel#forTransformationCount pra decidir o nível atual
             // (Recém Avatar / Iniciante / Experiente / Mestre).
             Codec.INT.optionalFieldOf("transformationCount", 0)
-                    .forGetter(data -> data.transformationCount)
+                    .forGetter(data -> data.transformationCount),
+            // Element#getName() dos elementos-base concedidos pelo sistema de
+            // Avatar-TÍTULO (ServerAvatarManager#grantCoreElements) -- separado de
+            // "grantedElements" acima de propósito (aquele é do /morebending avatar
+            // true|false; este é só do título de servidor), pra revogar um sem afetar
+            // o outro. Ver ServerAvatarManager#revokeCoreElementsGrantedByTitle.
+            Codec.STRING.listOf().optionalFieldOf("titleGrantedElements", List.of())
+                    .forGetter(data -> List.copyOf(data.titleGrantedElements))
     ).apply(instance, PlayerAvatarData::fromSaved));
 
     private boolean avatarState = false;
@@ -59,10 +66,12 @@ public class PlayerAvatarData {
     private final List<String> savedElements = new java.util.ArrayList<>();
     private int savedActiveElementIndex = 0;
     private int transformationCount = 0;
+    private final Set<String> titleGrantedElements = new HashSet<>();
 
     private static PlayerAvatarData fromSaved(boolean avatarState, List<String> grantedElements,
                                               List<String> grantedFlagIds, List<String> savedElements,
-                                              int savedActiveElementIndex, int transformationCount) {
+                                              int savedActiveElementIndex, int transformationCount,
+                                              List<String> titleGrantedElements) {
         PlayerAvatarData data = new PlayerAvatarData();
         data.avatarState = avatarState;
         data.grantedElements.addAll(grantedElements);
@@ -72,6 +81,7 @@ public class PlayerAvatarData {
         data.savedElements.addAll(savedElements);
         data.savedActiveElementIndex = savedActiveElementIndex;
         data.transformationCount = transformationCount;
+        data.titleGrantedElements.addAll(titleGrantedElements);
         return data;
     }
 

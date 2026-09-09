@@ -62,8 +62,15 @@ public final class AvatarNearDeathGuardian {
     /** Só reage se, depois do golpe, a vida restante for <= isso (2 corações). */
     private static final float NEAR_DEATH_HEALTH_THRESHOLD = 4.0f;
 
-    /** Nunca reage de novo antes disso (30s) -- evita disparo repetido a cada golpe enquanto a vida seguir baixa. */
-    private static final int COOLDOWN_TICKS = 600;
+    /**
+     * Nunca reage de novo antes disso (10s) -- evita disparo repetido a cada
+     * golpe enquanto a vida continuar baixa. Fica SEMPRE menor que a menor
+     * duracao entre os niveis de {@link AvatarProgressionLevel} (ver
+     * Untrained), senao um jogador ainda perto da morte quando a
+     * transformacao acaba sozinha fica sem instinto de sobrevivencia
+     * disponivel pra salva-lo de novo.
+     */
+    private static final int COOLDOWN_TICKS = 200;
 
     /** Fração do golpe que disparou a reação que é absorvida pelo burst -- amortece, não anula. */
     private static final float DAMAGE_ABSORPTION_FRACTION = 0.65f;

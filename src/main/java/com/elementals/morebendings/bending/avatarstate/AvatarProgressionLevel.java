@@ -18,8 +18,15 @@ package com.elementals.morebendings.bending.avatarstate;
  */
 public enum AvatarProgressionLevel {
 
-    /** Primeira vez (nenhuma transformação completada ainda) -- só entra por instinto de sobrevivência, sessão curta e cooldown longo. */
-    UNTRAINED("Untrained", false, 20 * 20, 5 * 60 * 20),
+    /**
+     * Primeira vez (nenhuma transformação completada ainda) -- só entra por
+     * instinto de sobrevivência, sessão curta e cooldown longo. A duração
+     * (30s) fica de propósito bem acima do cooldown de 10s do próprio
+     * {@code AvatarNearDeathGuardian}, pra nunca deixar o jogador sem
+     * instinto de sobrevivência disponível enquanto ainda está perto da
+     * morte quando esta ativação acaba sozinha.
+     */
+    UNTRAINED("Untrained", false, 30 * 20, 5 * 60 * 20),
 
     /** Algumas transformações completadas -- já pode entrar pela tecla, mas ainda com duração limitada e cooldown considerável. */
     NOVICE("Novice", true, 60 * 20, 3 * 60 * 20),

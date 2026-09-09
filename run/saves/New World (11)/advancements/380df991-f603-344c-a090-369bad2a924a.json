@@ -1,0 +1,63 @@
+{
+  "minecraft:recipes/decorations/crafting_table": {
+    "criteria": {
+      "unlock_right_away": "2026-09-09 13:13:10 -0300"
+    },
+    "done": true
+  },
+  "elementals:root": {
+    "criteria": {
+      "trigger": "2026-09-09 13:13:10 -0300"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:plains": "2026-09-09 13:13:11 -0300"
+    },
+    "done": false
+  },
+  "elementals:waterbending": {
+    "criteria": {
+      "element": "2026-09-09 13:13:17 -0300"
+    },
+    "done": true
+  },
+  "elementals:earthbending": {
+    "criteria": {
+      "element": "2026-09-09 13:13:17 -0300"
+    },
+    "done": true
+  },
+  "elementals:airbending": {
+    "criteria": {
+      "element": "2026-09-09 13:13:17 -0300"
+    },
+    "done": true
+  },
+  "elementals:firebending": {
+    "criteria": {
+      "element": "2026-09-09 13:13:17 -0300"
+    },
+    "done": true
+  },
+  "minecraft:adventure/root": {
+    "criteria": {
+      "killed_something": "2026-09-09 13:13:37 -0300"
+    },
+    "done": true
+  },
+  "minecraft:adventure/kill_all_mobs": {
+    "criteria": {
+      "minecraft:husk": "2026-09-09 13:13:37 -0300"
+    },
+    "done": false
+  },
+  "minecraft:adventure/kill_a_mob": {
+    "criteria": {
+      "minecraft:husk": "2026-09-09 13:13:37 -0300"
+    },
+    "done": true
+  },
+  "DataVersion": 3955
+}
