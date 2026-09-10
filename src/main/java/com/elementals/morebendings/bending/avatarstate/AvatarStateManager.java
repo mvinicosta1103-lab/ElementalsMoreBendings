@@ -526,8 +526,23 @@ public final class AvatarStateManager {
         while (it.hasNext()) {
             UUID id = it.next();
             ServerPlayer player = server.getPlayerList().getPlayer(id);
-            if (player == null || !player.isAlive()) {
+            if (player == null) {
+                // Desconectado -- a limpeza desse caminho já é feita em
+                // onPlayerLoggedOut (rastreamento visual/anéis). O estado
+                // persistido (PlayerAvatarData#isAvatarState) continua
+                // true de propósito, pra onPlayerLoggedIn retomar certo.
                 it.remove();
+                continue;
+            }
+            if (!player.isAlive()) {
+                // Morreu (/kill, dano normal, etc.) -- precisa do MESMO
+                // tratamento que a expiração de duração abaixo: sem isso,
+                // as bendings do Avatar ficam presas pra sempre no slot,
+                // porque restoreLockedBendings() nunca é chamado.
+                player.displayClientMessage(Component.literal(
+                        "§7You died while in the Avatar State -- your previous bendings have been restored."), true);
+                it.remove(); // via Iterator -- nunca chamar #deactivate aqui, causaria ConcurrentModificationException
+                finishDeactivation(player);
                 continue;
             }
             if (hasDurationExpired(player)) {
