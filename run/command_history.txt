@@ -1,5 +1,3 @@
-/bending element add Combustion Dev
-/time set day
 /morebending grant Dev Plasma
 /bending element add Plasma Dev
 /morebending grant Dev Lava
@@ -46,5 +44,7 @@
 /morebending serveravatar start
 /kill
 /kill Dev
+/morebending serveravatar start
+/kill
 /morebending serveravatar start
 /kill
